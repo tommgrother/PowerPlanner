@@ -19,6 +19,10 @@ namespace ShopFloorPlacementPlanner
         public double _hours { get; set; }
 
 
+        public bool _alreadyPlaced { get; set; }
+        public string _existingPlacementType { get; set; }
+        public double _existingPlacementHours { get; set; }
+
         public Placement(DateTime selectedDate, int staffID, string department, string placementType, double hours)
         {
             _selectedDate = selectedDate;
@@ -67,6 +71,32 @@ namespace ShopFloorPlacementPlanner
     
                 
          }
+
+        public void checkPlacement()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+
+            using (SqlCommand cmd = new SqlCommand("SELECT MAX(placement_type) as PT,sum(hours) as sumHours from dbo.power_plan_staff where date_id = @dateID and staff_id = @staffID",conn))
+            {
+                conn.Open();
+                cmd.Parameters.AddWithValue("@dateID", _dateID);
+                cmd.Parameters.AddWithValue("@staffID", _staffID);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                if (rdr.Read())
+                {
+                    _alreadyPlaced = true;
+                    _existingPlacementType = rdr["PT"].ToString();
+                    _existingPlacementHours = Convert.ToDouble(rdr["sumHours"]);
+                }
+                else
+                {
+                    _alreadyPlaced = false;
+                }
+
+            }
+        }
 
 
 

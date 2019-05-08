@@ -28,7 +28,7 @@ namespace ShopFloorPlacementPlanner
             _selectedDate = selectedDate;
 
             ensureDateTableEntry();
-            getStandardHours();
+            //getStandardHours();
             fillGrid();
 
 
@@ -71,7 +71,7 @@ namespace ShopFloorPlacementPlanner
             foreach (DataGridViewRow row in dgSelected.Rows)
                 if (row.Cells[3].Value.ToString() == "Half Day")
                 {
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }  
                 
 
@@ -90,7 +90,10 @@ namespace ShopFloorPlacementPlanner
             DataGridViewRow selectedRow = dgSelected.Rows[selectedrowindex];
 
             int placementID = Convert.ToInt32(selectedRow.Cells["PlacementID"].Value);
+            int staffID = Convert.ToInt32(selectedRow.Cells["Staff Id"].Value);
 
+
+            getStandardHours(staffID);
 
 
             //REMOVE BUTTON
@@ -107,6 +110,29 @@ namespace ShopFloorPlacementPlanner
                     checkExistingSelections();
                 }
             }
+
+
+            //MANUAL BUTTON
+            if (e.ColumnIndex == dgSelected.Columns["Manual"].Index)
+            {
+
+                frmManualHours mh = new frmManualHours();
+                mh.ShowDialog();
+
+
+                SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+
+                using (SqlCommand cmd = new SqlCommand("UPDATE dbo.power_plan_staff set placement_type = 'Manual' , hours = @hours where ID = @placementID", conn))
+                {
+                    cmd.Parameters.AddWithValue("placementID", placementID);
+                    cmd.Parameters.AddWithValue("@hours", mh._manualHours);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    checkExistingSelections();
+                }
+            }
+
 
 
 
@@ -223,15 +249,28 @@ namespace ShopFloorPlacementPlanner
                         dgSelected.Columns.Insert(columnIndex, shiftButton);
                     }
 
-                    DataGridViewButtonColumn deleteButton = new DataGridViewButtonColumn();
+
+                    DataGridViewButtonColumn manualButton = new DataGridViewButtonColumn();
+                    manualButton.Name = "Manual";
+                    manualButton.Text = "Manual";
+                    manualButton.UseColumnTextForButtonValue = true;
+                    columnIndex = 8;
+                    if (dgSelected.Columns["manual_column"] == null)
+                    {
+                        dgSelected.Columns.Insert(columnIndex, manualButton);
+                }
+
+
+                DataGridViewButtonColumn deleteButton = new DataGridViewButtonColumn();
                     deleteButton.Name = "Remove";
                     deleteButton.Text = "Remove";
                     deleteButton.UseColumnTextForButtonValue = true;
-                    columnIndex = 8;
+                    columnIndex = 9;
                     if (dgSelected.Columns["uninstall_column"] == null)
                     {
                         dgSelected.Columns.Insert(columnIndex, deleteButton);
                     }
+
 
                 paintGrid();
 
@@ -290,7 +329,7 @@ namespace ShopFloorPlacementPlanner
             }
         }
 
-        private void getStandardHours()
+        private void getStandardHours(int staffID)
         {
             string dayOfWeek;
             
@@ -298,23 +337,81 @@ namespace ShopFloorPlacementPlanner
 
             if (dayOfWeek == "Friday")
             {
-                _standardHours = 5.6;
+                switch (staffID)
+                {
+                    case 63:
+                        _standardHours = 3.6;
+                        break;
+                    case 165:
+                        _standardHours = 11.2;
+                        break;
+                    default:
+                        _standardHours = 5.6;
+                        break;
+
+                }
+
             }
             else
             {
-                _standardHours = 6.4;
+                switch (staffID)
+                {
+                    case 63:
+                        _standardHours = 4.4;
+                        break;
+                    case 165:
+                        _standardHours = 12.8;
+                        break;
+                    default:
+                        _standardHours = 6.4;
+                        break;
+
+                }
             }
         }
 
         private void lstStaff_DoubleClick(object sender, EventArgs e)
         {
 
+            double remainingHours;
+            string remainingPlacementType;
+
             Staff s = new Staff(lstStaff.SelectedItem.ToString());
 
-
+            getStandardHours(s._staffID);
 
             Placement p = new Placement(_selectedDate, s._staffID, _department, "Full Day", _standardHours);
-            p.addPlacment();
+
+
+            p.checkPlacement();
+            if (p._alreadyPlaced == true)
+            {
+                if (p._existingPlacementHours == _standardHours)
+                {
+                    
+                    MessageBox.Show("Staff member already has a full day placement for this day!","Already Placed",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+                }
+                else
+                {
+                    if(p._existingPlacementHours != _standardHours || p._existingPlacementHours > 0)
+                    {
+                        remainingHours = _standardHours - p._existingPlacementHours;
+                        MessageBox.Show("Staff member already placed for " + p._existingPlacementHours.ToString(),"Staff member part placed",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+
+                        Placement p2 = new Placement(_selectedDate, s._staffID, _department, p._existingPlacementType, remainingHours);
+                        p2.addPlacment();
+                    }
+                    else
+                    {
+                        p.addPlacment();
+                    }
+                }
+            }
+
+
+           
             checkExistingSelections();
             
         }

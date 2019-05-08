@@ -56,6 +56,36 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btnAddLaser = new System.Windows.Forms.Button();
             this.dgLaser = new System.Windows.Forms.DataGridView();
+            this.txtPunchMen = new System.Windows.Forms.TextBox();
+            this.txtPunchHours = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtLaserHours = new System.Windows.Forms.TextBox();
+            this.txtLaserMen = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtBendHours = new System.Windows.Forms.TextBox();
+            this.txtBendMen = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtWeldHours = new System.Windows.Forms.TextBox();
+            this.txtWeldMen = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtBuffHours = new System.Windows.Forms.TextBox();
+            this.txtBuffMen = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtPaintHours = new System.Windows.Forms.TextBox();
+            this.txtPaintMen = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.txtPackHours = new System.Windows.Forms.TextBox();
+            this.txtPackMen = new System.Windows.Forms.TextBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.copyPlacementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -64,6 +94,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgPack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgNotPlaced)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgLaser)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgPunch
@@ -303,10 +334,10 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgNotPlaced.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgNotPlaced.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgNotPlaced.Location = new System.Drawing.Point(1566, 97);
+            this.dgNotPlaced.Location = new System.Drawing.Point(1621, 93);
             this.dgNotPlaced.Name = "dgNotPlaced";
             this.dgNotPlaced.RowHeadersVisible = false;
-            this.dgNotPlaced.Size = new System.Drawing.Size(255, 409);
+            this.dgNotPlaced.Size = new System.Drawing.Size(200, 409);
             this.dgNotPlaced.TabIndex = 19;
             // 
             // label7
@@ -314,7 +345,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Red;
-            this.label7.Location = new System.Drawing.Point(1639, 64);
+            this.label7.Location = new System.Drawing.Point(1662, 64);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(119, 26);
             this.label7.TabIndex = 20;
@@ -322,9 +353,9 @@
             // 
             // splitter1
             // 
-            this.splitter1.Location = new System.Drawing.Point(0, 0);
+            this.splitter1.Location = new System.Drawing.Point(0, 24);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 568);
+            this.splitter1.Size = new System.Drawing.Size(3, 544);
             this.splitter1.TabIndex = 21;
             this.splitter1.TabStop = false;
             // 
@@ -371,11 +402,309 @@
             this.dgLaser.Size = new System.Drawing.Size(200, 409);
             this.dgLaser.TabIndex = 22;
             // 
+            // txtPunchMen
+            // 
+            this.txtPunchMen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPunchMen.Location = new System.Drawing.Point(49, 512);
+            this.txtPunchMen.Name = "txtPunchMen";
+            this.txtPunchMen.Size = new System.Drawing.Size(60, 20);
+            this.txtPunchMen.TabIndex = 25;
+            // 
+            // txtPunchHours
+            // 
+            this.txtPunchHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPunchHours.Location = new System.Drawing.Point(153, 512);
+            this.txtPunchHours.Name = "txtPunchHours";
+            this.txtPunchHours.Size = new System.Drawing.Size(60, 20);
+            this.txtPunchHours.TabIndex = 26;
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 515);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(31, 13);
+            this.label9.TabIndex = 27;
+            this.label9.Text = "Men:";
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(115, 515);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(38, 13);
+            this.label10.TabIndex = 28;
+            this.label10.Text = "Hours:";
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(322, 515);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(38, 13);
+            this.label11.TabIndex = 32;
+            this.label11.Text = "Hours:";
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(219, 515);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(31, 13);
+            this.label12.TabIndex = 31;
+            this.label12.Text = "Men:";
+            // 
+            // txtLaserHours
+            // 
+            this.txtLaserHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtLaserHours.Location = new System.Drawing.Point(360, 512);
+            this.txtLaserHours.Name = "txtLaserHours";
+            this.txtLaserHours.Size = new System.Drawing.Size(60, 20);
+            this.txtLaserHours.TabIndex = 30;
+            // 
+            // txtLaserMen
+            // 
+            this.txtLaserMen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtLaserMen.Location = new System.Drawing.Point(256, 512);
+            this.txtLaserMen.Name = "txtLaserMen";
+            this.txtLaserMen.Size = new System.Drawing.Size(60, 20);
+            this.txtLaserMen.TabIndex = 29;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(527, 515);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(38, 13);
+            this.label13.TabIndex = 36;
+            this.label13.Text = "Hours:";
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(424, 515);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(31, 13);
+            this.label14.TabIndex = 35;
+            this.label14.Text = "Men:";
+            // 
+            // txtBendHours
+            // 
+            this.txtBendHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtBendHours.Location = new System.Drawing.Point(565, 512);
+            this.txtBendHours.Name = "txtBendHours";
+            this.txtBendHours.Size = new System.Drawing.Size(60, 20);
+            this.txtBendHours.TabIndex = 34;
+            // 
+            // txtBendMen
+            // 
+            this.txtBendMen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtBendMen.Location = new System.Drawing.Point(461, 512);
+            this.txtBendMen.Name = "txtBendMen";
+            this.txtBendMen.Size = new System.Drawing.Size(60, 20);
+            this.txtBendMen.TabIndex = 33;
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(734, 515);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(38, 13);
+            this.label15.TabIndex = 40;
+            this.label15.Text = "Hours:";
+            // 
+            // label16
+            // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(631, 515);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(31, 13);
+            this.label16.TabIndex = 39;
+            this.label16.Text = "Men:";
+            // 
+            // txtWeldHours
+            // 
+            this.txtWeldHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtWeldHours.Location = new System.Drawing.Point(772, 512);
+            this.txtWeldHours.Name = "txtWeldHours";
+            this.txtWeldHours.Size = new System.Drawing.Size(60, 20);
+            this.txtWeldHours.TabIndex = 38;
+            // 
+            // txtWeldMen
+            // 
+            this.txtWeldMen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtWeldMen.Location = new System.Drawing.Point(668, 512);
+            this.txtWeldMen.Name = "txtWeldMen";
+            this.txtWeldMen.Size = new System.Drawing.Size(60, 20);
+            this.txtWeldMen.TabIndex = 37;
+            // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(941, 515);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(38, 13);
+            this.label17.TabIndex = 44;
+            this.label17.Text = "Hours:";
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(838, 515);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(31, 13);
+            this.label18.TabIndex = 43;
+            this.label18.Text = "Men:";
+            // 
+            // txtBuffHours
+            // 
+            this.txtBuffHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtBuffHours.Location = new System.Drawing.Point(979, 512);
+            this.txtBuffHours.Name = "txtBuffHours";
+            this.txtBuffHours.Size = new System.Drawing.Size(60, 20);
+            this.txtBuffHours.TabIndex = 42;
+            // 
+            // txtBuffMen
+            // 
+            this.txtBuffMen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtBuffMen.Location = new System.Drawing.Point(875, 512);
+            this.txtBuffMen.Name = "txtBuffMen";
+            this.txtBuffMen.Size = new System.Drawing.Size(60, 20);
+            this.txtBuffMen.TabIndex = 41;
+            // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(1168, 515);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(38, 13);
+            this.label19.TabIndex = 48;
+            this.label19.Text = "Hours:";
+            // 
+            // label20
+            // 
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(1065, 515);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(31, 13);
+            this.label20.TabIndex = 47;
+            this.label20.Text = "Men:";
+            // 
+            // txtPaintHours
+            // 
+            this.txtPaintHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPaintHours.Location = new System.Drawing.Point(1206, 512);
+            this.txtPaintHours.Name = "txtPaintHours";
+            this.txtPaintHours.Size = new System.Drawing.Size(60, 20);
+            this.txtPaintHours.TabIndex = 46;
+            // 
+            // txtPaintMen
+            // 
+            this.txtPaintMen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPaintMen.Location = new System.Drawing.Point(1102, 512);
+            this.txtPaintMen.Name = "txtPaintMen";
+            this.txtPaintMen.Size = new System.Drawing.Size(60, 20);
+            this.txtPaintMen.TabIndex = 45;
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(1384, 515);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(38, 13);
+            this.label21.TabIndex = 52;
+            this.label21.Text = "Hours:";
+            // 
+            // label22
+            // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(1281, 515);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(31, 13);
+            this.label22.TabIndex = 51;
+            this.label22.Text = "Men:";
+            // 
+            // txtPackHours
+            // 
+            this.txtPackHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPackHours.Location = new System.Drawing.Point(1422, 512);
+            this.txtPackHours.Name = "txtPackHours";
+            this.txtPackHours.Size = new System.Drawing.Size(60, 20);
+            this.txtPackHours.TabIndex = 50;
+            // 
+            // txtPackMen
+            // 
+            this.txtPackMen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtPackMen.Location = new System.Drawing.Point(1318, 512);
+            this.txtPackMen.Name = "txtPackMen";
+            this.txtPackMen.Size = new System.Drawing.Size(60, 20);
+            this.txtPackMen.TabIndex = 49;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyPlacementsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1832, 24);
+            this.menuStrip1.TabIndex = 53;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // copyPlacementsToolStripMenuItem
+            // 
+            this.copyPlacementsToolStripMenuItem.Name = "copyPlacementsToolStripMenuItem";
+            this.copyPlacementsToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+            this.copyPlacementsToolStripMenuItem.Text = "Copy Placements";
+            this.copyPlacementsToolStripMenuItem.Click += new System.EventHandler(this.copyPlacementsToolStripMenuItem_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1832, 568);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.txtPackHours);
+            this.Controls.Add(this.txtPackMen);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.txtPaintHours);
+            this.Controls.Add(this.txtPaintMen);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.txtBuffHours);
+            this.Controls.Add(this.txtBuffMen);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.txtWeldHours);
+            this.Controls.Add(this.txtWeldMen);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.txtBendHours);
+            this.Controls.Add(this.txtBendMen);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.txtLaserHours);
+            this.Controls.Add(this.txtLaserMen);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.txtPunchHours);
+            this.Controls.Add(this.txtPunchMen);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btnAddLaser);
             this.Controls.Add(this.dgLaser);
@@ -401,7 +730,9 @@
             this.Controls.Add(this.dgWeld);
             this.Controls.Add(this.dgBend);
             this.Controls.Add(this.dgPunch);
+            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MenuMain";
             this.Text = "PowerPlanner";
             this.Load += new System.EventHandler(this.MenuMain_Load);
@@ -413,6 +744,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgPack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgNotPlaced)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgLaser)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -445,6 +778,36 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnAddLaser;
         private System.Windows.Forms.DataGridView dgLaser;
+        private System.Windows.Forms.TextBox txtPunchMen;
+        private System.Windows.Forms.TextBox txtPunchHours;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtLaserHours;
+        private System.Windows.Forms.TextBox txtLaserMen;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtBendHours;
+        private System.Windows.Forms.TextBox txtBendMen;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtWeldHours;
+        private System.Windows.Forms.TextBox txtWeldMen;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtBuffHours;
+        private System.Windows.Forms.TextBox txtBuffMen;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txtPaintHours;
+        private System.Windows.Forms.TextBox txtPaintMen;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox txtPackHours;
+        private System.Windows.Forms.TextBox txtPackMen;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem copyPlacementsToolStripMenuItem;
     }
 }
 

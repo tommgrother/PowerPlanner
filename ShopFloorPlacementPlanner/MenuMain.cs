@@ -67,6 +67,165 @@ namespace ShopFloorPlacementPlanner
             fillgrid();
         }
 
+        private void countGrid()
+        {
+
+            double punchHours = 0;
+            double laserHours = 0;
+            double bendHours = 0;
+            double weldHours = 0;
+            double buffHours = 0;
+            double paintHours = 0;
+            double packHours = 0;
+
+
+            double punchMen = 0;
+            double laserMen = 0;
+            double bendMen = 0;
+            double weldMen = 0;
+            double buffMen = 0;
+            double paintMen = 0;
+            double packMen = 0;
+
+
+
+            foreach (DataGridViewRow row in dgPunch.Rows)
+            {
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    punchMen = punchMen + 0.5;
+                }
+                else
+                {
+                    punchMen = punchMen + 1;
+                }
+
+
+                punchHours = punchHours + Convert.ToDouble(row.Cells[1].Value);
+
+            }
+
+            foreach (DataGridViewRow row in dgLaser.Rows)
+            {
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    laserMen = laserMen + 0.5;
+                }
+                else
+                {
+                    laserMen = laserMen + 1;
+                }
+
+
+
+                laserHours = laserHours + Convert.ToDouble(row.Cells[1].Value);
+            }
+
+            foreach (DataGridViewRow row in dgBend.Rows)
+            {
+
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    bendMen = bendMen + 0.5;
+                }
+                else
+                {
+                    bendMen = bendMen + 1;
+                }
+
+
+                bendHours = bendHours + Convert.ToDouble(row.Cells[1].Value);
+            }
+
+            foreach (DataGridViewRow row in dgWeld.Rows)
+            {
+
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    weldMen = weldMen + 0.5;
+                }
+                else
+                {
+                    weldMen = weldMen + 1;
+                }
+
+                weldHours = weldHours  + Convert.ToDouble(row.Cells[1].Value);
+            }
+
+            foreach (DataGridViewRow row in dgBuff.Rows)
+            {
+
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    buffMen = buffMen + 0.5;
+                }
+                else
+                {
+                    buffMen = buffMen + 1;
+                }
+
+
+
+                buffHours = buffHours + Convert.ToDouble(row.Cells[1].Value);
+            }
+
+            foreach (DataGridViewRow row in dgPaint.Rows)
+            {
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    paintMen = paintMen + 0.5;
+                }
+                else
+                {
+                    paintMen = paintMen + 1;
+                }
+
+
+                paintHours = paintHours + Convert.ToDouble(row.Cells[1].Value);
+            }
+
+            foreach (DataGridViewRow row in dgPack.Rows)
+            {
+
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    packMen = packMen + 0.5;
+                }
+                else
+                {
+                    packMen = packMen + 1;
+                }
+
+                packHours  = packHours  + Convert.ToDouble(row.Cells[1].Value);
+            }
+
+
+
+
+
+
+            txtPunchHours.Text = punchHours.ToString();
+            txtLaserHours.Text = laserHours.ToString();
+            txtBendHours.Text = bendHours.ToString();
+            txtWeldHours.Text = weldHours.ToString();
+            txtBuffHours.Text = buffHours.ToString();
+            txtPaintHours.Text = paintHours.ToString();
+            txtPackHours.Text = packHours.ToString();
+
+            txtPunchMen.Text = punchMen.ToString();
+            txtLaserMen.Text = laserMen.ToString();
+            txtBendMen.Text = bendMen.ToString();
+            txtWeldMen.Text = weldMen.ToString();
+            txtBuffMen.Text = buffMen.ToString();
+            txtPaintMen.Text = paintMen.ToString();
+            txtPackMen.Text = packMen.ToString();
+
+
+
+
+        }
+
+
         private void paintGrid()
         {
         //PUNCH
@@ -78,7 +237,7 @@ namespace ShopFloorPlacementPlanner
                 foreach (DataGridViewRow row in dgPunch.Rows)
                     if (row.Cells[0].Value.ToString().Contains("Half"))
                     {
-                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                        row.DefaultCellStyle.BackColor = Color.MediumPurple;
                     }
             //LASER
             foreach (DataGridViewRow row in dgLaser.Rows)
@@ -89,7 +248,7 @@ namespace ShopFloorPlacementPlanner
             foreach (DataGridViewRow row in dgLaser.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Half"))
                 {
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
 
             //Bend
@@ -101,7 +260,7 @@ namespace ShopFloorPlacementPlanner
             foreach (DataGridViewRow row in dgBend.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Half"))
                 {
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
 
 
@@ -115,7 +274,7 @@ namespace ShopFloorPlacementPlanner
             foreach (DataGridViewRow row in dgWeld.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Half"))
                 {
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
 
             //Buff
@@ -127,7 +286,7 @@ namespace ShopFloorPlacementPlanner
             foreach (DataGridViewRow row in dgBuff.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Half"))
                 {
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
 
             //Paint
@@ -139,7 +298,7 @@ namespace ShopFloorPlacementPlanner
             foreach (DataGridViewRow row in dgPaint.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Half"))
                 {
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
 
             //Pack
@@ -151,7 +310,7 @@ namespace ShopFloorPlacementPlanner
             foreach (DataGridViewRow row in dgPack.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Half"))
                 {
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
 
             dgPunch.ClearSelection();
@@ -177,6 +336,7 @@ namespace ShopFloorPlacementPlanner
             fillPack();
             fillNotPlaced();
             paintGrid();
+            countGrid();
 
 
 
@@ -379,6 +539,13 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Laser", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
+            fillgrid();
+        }
+
+        private void copyPlacementsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCopyPlacements cp = new frmCopyPlacements(Convert.ToDateTime(dteDateSelection.Text));
+            cp.ShowDialog();
             fillgrid();
         }
     }
