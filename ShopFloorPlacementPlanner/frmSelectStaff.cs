@@ -33,15 +33,14 @@ namespace ShopFloorPlacementPlanner
 
 
             checkExistingSelections();
-          
+            getOvertime();
+
+
 
             this.Text = "Select Staff: " + _department;
             this.lblMessage.Text = "Staff selection for " + _department + " Department ";
             this.lblMessage2.Text = _selectedDate.ToShortDateString();
 
-            
-            
-            
         }
 
         private void ensureDateTableEntry()
@@ -56,9 +55,82 @@ namespace ShopFloorPlacementPlanner
             cmdDate.ExecuteNonQuery();
         }
 
+        private void getOvertime()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+
+            string sql="";
+
+
+            switch (_department)
+            {
+                case "Slimline":
+                    sql = "SELECT slimline_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Laser":
+                    sql = "SELECT laser_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Punching":
+                    sql = "SELECT punching_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Bending":
+                    sql = "SELECT bending_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Welding":
+                    sql = "SELECT welding_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Dressing":
+                    sql = "SELECT buffing_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Painting":
+                    sql = "SELECT painting_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Packing":
+                    sql = "SELECT packing_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+
+            }
+
+
+
+
+
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+
+                conn.Open();
+                Overtime o = new Overtime();
+                o.getDateID(_selectedDate);
+
+
+                cmd.Parameters.AddWithValue("@dateID", o._dateID);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                if (rdr.Read())
+                {
+                    txtOvertime.Text = rdr["FieldName"].ToString();
+                }
+                else
+                {
+                    txtOvertime.Text = 0.ToString(); 
+                }
+            }
+
+
+         
+
+
+
+
+
+
+
+        }
+
         private void frmSelectStaff_Load(object sender, EventArgs e)
         {
-       
+        
         }
 
         private void paintGrid()
@@ -308,11 +380,24 @@ namespace ShopFloorPlacementPlanner
         private void fillGrid()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionStringUser);
+            string sqlDepartment;
 
 
-            using (SqlCommand cmd = new SqlCommand("Select id, forename + ' ' + surname as fullname from dbo.[user] where " +
+            //STAFF DEPARTMENTS WORK DIFFERENTLY IF SLIMLINE
+            if (_department == "Slimline")
+            {
+                sqlDepartment = "select id, forename + ' ' + surname as fullname from dbo.[user] where slimline_staff = -1 and ShopFloor = -1 and [current] = 1 order by fullname";
+            }
+            else
+            {
+                sqlDepartment = "Select id, forename + ' ' + surname as fullname from dbo.[user] where " +
                 "([actual_department] = @department or [allocation_dept_2] = @department or [allocation_dept_3] = @department or " +
-                "[allocation_dept_4] = @department or [allocation_dept_5] = @department or [allocation_dept_6] = @department) and [current]=1 order by fullname", conn))
+                "[allocation_dept_4] = @department or [allocation_dept_5] = @department or [allocation_dept_6] = @department) and [current]=1 order by fullname";
+            }
+
+
+
+            using (SqlCommand cmd = new SqlCommand(sqlDepartment, conn))
             {
                     cmd.Parameters.AddWithValue("@department", _department);
 
@@ -394,7 +479,7 @@ namespace ShopFloorPlacementPlanner
                 }
                 else
                 {
-                    if(p._existingPlacementHours != _standardHours || p._existingPlacementHours > 0)
+                    if(p._existingPlacementHours != _standardHours && p._existingPlacementHours > 0)
                     {
                         remainingHours = _standardHours - p._existingPlacementHours;
                         MessageBox.Show("Staff member already placed for " + p._existingPlacementHours.ToString(),"Staff member part placed",MessageBoxButtons.OK,MessageBoxIcon.Information);
@@ -455,6 +540,40 @@ namespace ShopFloorPlacementPlanner
 
             this.Close();
 
+        }
+
+        private void submitOT()
+        {
+            double overtimeAmount;
+
+            try
+            {
+                overtimeAmount = Convert.ToDouble(txtOvertime.Text);
+            }
+            catch
+            {
+                overtimeAmount = 0;
+            }
+
+            Overtime o = new Overtime();
+            
+            o.updateOT(_selectedDate,_department, overtimeAmount);
+        }
+
+
+        private void frmSelectStaff_Leave(object sender, EventArgs e)
+        {
+
+         
+
+
+
+
+        }
+
+        private void frmSelectStaff_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            submitOT();
         }
     }
 }

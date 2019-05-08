@@ -88,7 +88,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     _alreadyPlaced = true;
                     _existingPlacementType = rdr["PT"].ToString();
-                    _existingPlacementHours = Convert.ToDouble(rdr["sumHours"]);
+                    try
+                    {
+                        _existingPlacementHours = Convert.ToDouble(rdr["sumHours"]);
+                    }
+                    catch
+                    {
+                        _existingPlacementHours = 0;
+                    }
+          
+                    
+
                 }
                 else
                 {

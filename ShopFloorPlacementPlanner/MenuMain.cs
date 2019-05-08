@@ -69,7 +69,7 @@ namespace ShopFloorPlacementPlanner
 
         private void countGrid()
         {
-
+            double slimlineHours = 0;
             double punchHours = 0;
             double laserHours = 0;
             double bendHours = 0;
@@ -78,7 +78,7 @@ namespace ShopFloorPlacementPlanner
             double paintHours = 0;
             double packHours = 0;
 
-
+            double slimlineMen = 0;
             double punchMen = 0;
             double laserMen = 0;
             double bendMen = 0;
@@ -87,7 +87,35 @@ namespace ShopFloorPlacementPlanner
             double paintMen = 0;
             double packMen = 0;
 
+            double slimlineOT = 0;
+            double punchOT = 0;
+            double laserOT = 0;
+            double bendOT = 0;
+            double weldOT = 0;
+            double buffOT = 0;
+            double paintOT = 0;
+            double packOT = 0;
 
+
+
+
+
+
+            foreach (DataGridViewRow row in dgSlimline.Rows)
+            {
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    slimlineMen = slimlineMen + 0.5;
+                }
+                else
+                {
+                    slimlineMen = slimlineMen + 1;
+                }
+
+
+                slimlineHours = slimlineHours + Convert.ToDouble(row.Cells[1].Value);
+
+            }
 
             foreach (DataGridViewRow row in dgPunch.Rows)
             {
@@ -203,7 +231,7 @@ namespace ShopFloorPlacementPlanner
 
 
 
-
+            txtSlimlineHours.Text = slimlineHours.ToString();
             txtPunchHours.Text = punchHours.ToString();
             txtLaserHours.Text = laserHours.ToString();
             txtBendHours.Text = bendHours.ToString();
@@ -212,6 +240,7 @@ namespace ShopFloorPlacementPlanner
             txtPaintHours.Text = paintHours.ToString();
             txtPackHours.Text = packHours.ToString();
 
+            txtSlimlineMen.Text = slimlineMen.ToString();
             txtPunchMen.Text = punchMen.ToString();
             txtLaserMen.Text = laserMen.ToString();
             txtBendMen.Text = bendMen.ToString();
@@ -221,6 +250,45 @@ namespace ShopFloorPlacementPlanner
             txtPackMen.Text = packMen.ToString();
 
 
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            Overtime o = new Overtime();
+            o.getDateID(Convert.ToDateTime(dteDateSelection.Text));
+       
+         
+            using(SqlCommand cmd = new SqlCommand("SELECT * from dbo.power_plan_overtime where date_id = @dateID", conn))
+            {
+                conn.Open();
+                cmd.Parameters.AddWithValue("@dateID", o._dateID);
+
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                if (rdr.Read())
+                {
+                    slimlineOT = Convert.ToDouble(rdr["slimline_OT"]);
+                    laserOT = Convert.ToDouble(rdr["laser_OT"]);
+                    punchOT = Convert.ToDouble(rdr["punching_OT"]);
+                    bendOT = Convert.ToDouble(rdr["bending_OT"]);
+                    weldOT = Convert.ToDouble(rdr["welding_OT"]);
+                    buffOT = Convert.ToDouble(rdr["buffing_OT"]);
+                    paintOT = Convert.ToDouble(rdr["painting_OT"]);
+                    packOT = Convert.ToDouble(rdr["packing_OT"]);
+                }
+
+
+                conn.Close();
+
+            }
+
+
+            txtSlimlineOT.Text = slimlineOT.ToString();
+            txtLaserOT.Text = laserOT.ToString();
+            txtPunchOT.Text = punchOT.ToString();
+            txtBendOT.Text = bendOT.ToString();
+            txtWeldOT.Text = weldOT.ToString();
+            txtBuffOT.Text = buffOT.ToString();
+            txtPaintOT.Text = paintOT.ToString();
+            txtPackOT.Text = packOT.ToString();
 
 
         }
@@ -228,8 +296,20 @@ namespace ShopFloorPlacementPlanner
 
         private void paintGrid()
         {
-        //PUNCH
-                foreach (DataGridViewRow row in dgPunch.Rows)
+
+            //slimline
+            foreach (DataGridViewRow row in dgSlimline.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Shift"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+            foreach (DataGridViewRow row in dgSlimline.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                }
+            //PUNCH
+            foreach (DataGridViewRow row in dgPunch.Rows)
                     if (row.Cells[0].Value.ToString().Contains("Shift"))
                     {
                         row.DefaultCellStyle.BackColor = Color.Red;
@@ -313,6 +393,9 @@ namespace ShopFloorPlacementPlanner
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
 
+
+
+            dgSlimline.ClearSelection();
             dgPunch.ClearSelection();
             dgLaser.ClearSelection();
             dgBend.ClearSelection();
@@ -327,6 +410,7 @@ namespace ShopFloorPlacementPlanner
 
         private void fillgrid()
         {
+            fillSlimline();
             fillPunch();
             fillLaser();
             fillBend();
@@ -339,6 +423,11 @@ namespace ShopFloorPlacementPlanner
             countGrid();
 
 
+            DataGridViewColumn columnSlimline = dgSlimline.Columns[1];
+            columnSlimline.Width = 40;
+
+            DataGridViewColumn columnLaser = dgLaser.Columns[1];
+            columnLaser.Width = 40;
 
             DataGridViewColumn columnPunch = dgPunch.Columns[1];
             columnPunch.Width = 40;
@@ -361,7 +450,23 @@ namespace ShopFloorPlacementPlanner
 
 
 
+        private void fillSlimline()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            cmd.Parameters.AddWithValue("@dept", "Slimline");
 
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            dgSlimline.DataSource = dt;
+
+            conn.Close();
+
+        }
 
 
 
@@ -546,6 +651,13 @@ namespace ShopFloorPlacementPlanner
         {
             frmCopyPlacements cp = new frmCopyPlacements(Convert.ToDateTime(dteDateSelection.Text));
             cp.ShowDialog();
+            fillgrid();
+        }
+
+        private void btnAddSlimline_Click(object sender, EventArgs e)
+        {
+            frmSelectStaff frmSS = new frmSelectStaff("Slimline", Convert.ToDateTime(dteDateSelection.Text));
+            frmSS.ShowDialog();
             fillgrid();
         }
     }

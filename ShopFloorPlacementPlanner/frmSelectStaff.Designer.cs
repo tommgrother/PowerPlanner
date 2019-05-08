@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSelectStaff));
             this.lstStaff = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -38,6 +39,9 @@
             this.Hours = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblMessage = new System.Windows.Forms.Label();
             this.lblMessage2 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtOvertime = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgSelected)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,11 +128,37 @@
             this.lblMessage2.TabIndex = 5;
             this.lblMessage2.Text = "label2";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(747, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(134, 20);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Section Overtime:";
+            // 
+            // txtOvertime
+            // 
+            this.txtOvertime.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtOvertime.Location = new System.Drawing.Point(900, 27);
+            this.txtOvertime.Name = "txtOvertime";
+            this.txtOvertime.Size = new System.Drawing.Size(66, 26);
+            this.txtOvertime.TabIndex = 7;
+            this.txtOvertime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // frmSelectStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 530);
+            this.Controls.Add(this.txtOvertime);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.lblMessage2);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.dgSelected);
@@ -140,7 +170,9 @@
             this.Name = "frmSelectStaff";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Select Staff";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmSelectStaff_FormClosed);
             this.Load += new System.EventHandler(this.frmSelectStaff_Load);
+            this.Leave += new System.EventHandler(this.frmSelectStaff_Leave);
             ((System.ComponentModel.ISupportInitialize)(this.dgSelected)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -158,5 +190,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn StaffFullName;
         private System.Windows.Forms.DataGridViewComboBoxColumn PlacementType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hours;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtOvertime;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
