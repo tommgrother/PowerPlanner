@@ -265,14 +265,14 @@ namespace ShopFloorPlacementPlanner
 
                 if (rdr.Read())
                 {
-                    slimlineOT = Convert.ToDouble(rdr["slimline_OT"]);
-                    laserOT = Convert.ToDouble(rdr["laser_OT"]);
-                    punchOT = Convert.ToDouble(rdr["punching_OT"]);
-                    bendOT = Convert.ToDouble(rdr["bending_OT"]);
-                    weldOT = Convert.ToDouble(rdr["welding_OT"]);
-                    buffOT = Convert.ToDouble(rdr["buffing_OT"]);
-                    paintOT = Convert.ToDouble(rdr["painting_OT"]);
-                    packOT = Convert.ToDouble(rdr["packing_OT"]);
+                    slimlineOT = Convert.ToDouble(rdr["slimline_OT"]) * 0.8;
+                    laserOT = Convert.ToDouble(rdr["laser_OT"]) * 0.8;
+                    punchOT = Convert.ToDouble(rdr["punching_OT"]) * 0.8;
+                    bendOT = Convert.ToDouble(rdr["bending_OT"]) * 0.8;
+                    weldOT = Convert.ToDouble(rdr["welding_OT"]) * 0.8;
+                    buffOT = Convert.ToDouble(rdr["buffing_OT"]) * 0.8;
+                    paintOT = Convert.ToDouble(rdr["painting_OT"]) * 0.8;
+                    packOT = Convert.ToDouble(rdr["packing_OT"]) * 0.8;
                 }
 
 
@@ -659,6 +659,102 @@ namespace ShopFloorPlacementPlanner
             frmSelectStaff frmSS = new frmSelectStaff("Slimline", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             fillgrid();
+        }
+
+        private void sendToDailyGoalsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            double goalHoursSlimline;
+            double goalHoursLaser;
+            double goalHoursPunch;
+            double goalHoursBend;
+            double goalHoursWeld;
+            double goalHoursBuff;
+            double goalHoursPaint;
+            double goalHoursPack;
+
+            double manPowerSlimline;
+            double manPowerLaser;
+            double manPowerPunch;
+            double manPowerBend;
+            double manPowerWeld;
+            double manPowerBuff;
+            double manPowerPaint;
+            double manPowerPack;
+
+
+            goalHoursSlimline = Convert.ToDouble(txtSlimlineHours.Text) + Convert.ToDouble(txtSlimlineOT.Text);
+            goalHoursLaser = Convert.ToDouble(txtLaserHours.Text) + Convert.ToDouble(txtLaserOT.Text);
+            goalHoursPunch = Convert.ToDouble(txtPunchHours.Text) + Convert.ToDouble(txtPunchOT.Text);
+            goalHoursBend = Convert.ToDouble(txtBendHours.Text) + Convert.ToDouble(txtBendOT.Text);
+            goalHoursWeld = Convert.ToDouble(txtWeldHours.Text) + Convert.ToDouble(txtWeldOT.Text);
+            goalHoursBuff = Convert.ToDouble(txtBuffHours.Text) + Convert.ToDouble(txtBuffOT.Text);
+            goalHoursPaint = Convert.ToDouble(txtPaintHours.Text) + Convert.ToDouble(txtPaintOT.Text);
+            goalHoursPack = Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(txtPackOT.Text);
+
+
+            manPowerSlimline = Convert.ToDouble(txtSlimlineMen.Text);
+            manPowerLaser = Convert.ToDouble(txtLaserMen.Text);
+            manPowerPunch = Convert.ToDouble(txtPunchMen.Text);
+            manPowerBend = Convert.ToDouble(txtBendMen.Text);
+            manPowerWeld = Convert.ToDouble(txtWeldMen.Text);
+            manPowerBuff = Convert.ToDouble(txtBuffMen.Text);
+            manPowerPaint = Convert.ToDouble(txtPaintMen.Text);
+            manPowerPack = Convert.ToDouble(txtPackMen.Text);
+
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+            using (SqlCommand cmd = new SqlCommand("UPDATE dbo.daily_department_goal set " +
+                "goal_hours_slimline = @goalHoursSlimline, " +
+                "goal_hours_laser = @goalHoursLaser, " +
+                "goal_hours_punch = @goalHoursPunch, " +
+                "goal_hours_bend = @goalHoursBend, " +
+                "goal_hours_weld = @goalHoursWeld, " +
+                "goal_hours_buff = @goalHoursBuff, " +
+                "goal_hours = @goalHoursPaint, " +
+                "goal_hours_pack = @goalHoursPack, " +
+                "man_power_slimline = @manPowerSlimline, " +
+                "man_power_laser = @manPowerLaser, " +
+                "man_power_punch = @manPowerPunch, " +
+                "man_power_bend = @manPowerBend, " +
+                "man_power_weld = @manPowerWeld, " +
+                "man_power_buff = @manPowerBuff, " +
+                "man_power_paint = @manPowerPaint, " +
+                "man_power_pack = @manPowerPack " +
+                " WHERE date_goal = @dateGoal",conn))
+            {
+
+                cmd.Parameters.AddWithValue("@goalHoursSlimline", goalHoursSlimline);
+                cmd.Parameters.AddWithValue("@goalHoursLaser", goalHoursLaser);
+                cmd.Parameters.AddWithValue("@goalHoursPunch", goalHoursPunch);
+                cmd.Parameters.AddWithValue("@goalHoursBend", goalHoursBend);
+                cmd.Parameters.AddWithValue("@goalHoursWeld", goalHoursWeld);
+                cmd.Parameters.AddWithValue("@goalHoursBuff", goalHoursBuff);
+                cmd.Parameters.AddWithValue("@goalHoursPaint", goalHoursPaint);
+                cmd.Parameters.AddWithValue("@goalHoursPack", goalHoursPack);
+
+                cmd.Parameters.AddWithValue("@manPowerSlimline", manPowerSlimline);
+                cmd.Parameters.AddWithValue("@manPowerLaser", manPowerLaser);
+                cmd.Parameters.AddWithValue("@manPowerPunch", manPowerPunch);
+                cmd.Parameters.AddWithValue("@manPowerBend", manPowerBend);
+                cmd.Parameters.AddWithValue("@manPowerWeld", manPowerWeld);
+                cmd.Parameters.AddWithValue("@manPowerBuff", manPowerBuff);
+                cmd.Parameters.AddWithValue("@manPowerPaint", manPowerPaint);
+                cmd.Parameters.AddWithValue("@manPowerPack", manPowerPack);
+                cmd.Parameters.AddWithValue("@dateGoal", dteDateSelection.Text);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Hours successfully sent to daily goals!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch
+                {
+                    MessageBox.Show("An error has occured, if this error persists please contact IT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+
+            }
+
+
         }
     }
 }

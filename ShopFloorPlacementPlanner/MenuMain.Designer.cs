@@ -112,6 +112,8 @@
             this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
+            this.sendToDailyGoalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printDayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -670,7 +672,9 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyPlacementsToolStripMenuItem});
+            this.copyPlacementsToolStripMenuItem,
+            this.sendToDailyGoalsToolStripMenuItem,
+            this.printDayToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1932, 24);
@@ -919,6 +923,19 @@
             this.label35.TabIndex = 78;
             this.label35.Text = "OT:";
             // 
+            // sendToDailyGoalsToolStripMenuItem
+            // 
+            this.sendToDailyGoalsToolStripMenuItem.Name = "sendToDailyGoalsToolStripMenuItem";
+            this.sendToDailyGoalsToolStripMenuItem.Size = new System.Drawing.Size(120, 20);
+            this.sendToDailyGoalsToolStripMenuItem.Text = "Send to Daily Goals";
+            this.sendToDailyGoalsToolStripMenuItem.Click += new System.EventHandler(this.sendToDailyGoalsToolStripMenuItem_Click);
+            // 
+            // printDayToolStripMenuItem
+            // 
+            this.printDayToolStripMenuItem.Name = "printDayToolStripMenuItem";
+            this.printDayToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.printDayToolStripMenuItem.Text = "Print Day";
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1008,6 +1025,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MenuMain";
             this.Text = "PowerPlanner";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MenuMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).EndInit();
@@ -1107,6 +1125,8 @@
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.ToolStripMenuItem sendToDailyGoalsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printDayToolStripMenuItem;
     }
 }
 
