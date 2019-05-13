@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing.Printing;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -69,6 +70,7 @@ namespace ShopFloorPlacementPlanner
 
         private void countGrid()
         {
+
             double slimlineHours = 0;
             double punchHours = 0;
             double laserHours = 0;
@@ -95,10 +97,6 @@ namespace ShopFloorPlacementPlanner
             double buffOT = 0;
             double paintOT = 0;
             double packOT = 0;
-
-
-
-
 
 
             foreach (DataGridViewRow row in dgSlimline.Rows)
@@ -226,9 +224,6 @@ namespace ShopFloorPlacementPlanner
 
                 packHours  = packHours  + Convert.ToDouble(row.Cells[1].Value);
             }
-
-
-
 
 
             txtSlimlineHours.Text = slimlineHours.ToString();
@@ -392,6 +387,36 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+
+            //NOT PLACED
+            foreach (DataGridViewRow row in dgNotPlaced.Rows)
+                try
+                {
+                    if (row.Cells[1].Value.ToString().Contains("HOLIDAY"))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                    }
+                }
+                catch
+                {
+
+                }
+            foreach (DataGridViewRow row in dgNotPlaced.Rows)
+                try
+                {
+                    if (row.Cells[1].Value.ToString().Contains("ABSENT"))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Salmon;
+                    }
+
+                }
+                catch
+                {
+
+                }
+
+
+
 
 
 
@@ -628,7 +653,6 @@ namespace ShopFloorPlacementPlanner
             dgNotPlaced.DataSource = dt;
 
 
-
         }
 
 
@@ -755,6 +779,71 @@ namespace ShopFloorPlacementPlanner
             }
 
 
+        }
+
+        private void printDayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmEmailPrint ep = new frmEmailPrint(Convert.ToDateTime(dteDateSelection.Text));
+            ep.ShowDialog();
+        }
+
+        private void printScreenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                Image bit = new Bitmap(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
+
+                Graphics gs = Graphics.FromImage(bit);
+
+                gs.CopyFromScreen(new Point(0, 0), new Point(0, 0), bit.Size);
+
+                bit.Save(@"C:\temp\temp.jpg");
+
+                printImage();
+            }
+            catch
+            {
+
+            }
+
+
+        }
+
+        private void printImage()
+        {
+            try
+            {
+                PrintDocument pd = new PrintDocument();
+                pd.PrintPage += (sender, args) =>
+                {
+                    Image i = Image.FromFile(@"C:\temp\temp.jpg");
+                    Point p = new Point(100, 100);
+                    args.Graphics.DrawImage(i, args.MarginBounds);
+
+                };
+
+                pd.DefaultPageSettings.Landscape = true;
+                Margins margins = new Margins(50, 50, 50, 50);
+                pd.DefaultPageSettings.Margins = margins;
+                pd.Print();
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void updateAutomaticAllocationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //CLEARS ALL EXISTING SELECTION FROM THE TABLE FOR THIS DEPARTMENT
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("usp_power_planner_auto_placement", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.ExecuteNonQuery();
+            
         }
     }
 }

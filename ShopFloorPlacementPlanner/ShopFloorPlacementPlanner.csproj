@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
-    <ApplicationRevision>12</ApplicationRevision>
+    <ApplicationRevision>20</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -91,6 +91,12 @@
     <Compile Include="frmCopyPlacements.Designer.cs">
       <DependentUpon>frmCopyPlacements.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmEmailPrint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEmailPrint.Designer.cs">
+      <DependentUpon>frmEmailPrint.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmManualHours.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +122,9 @@
     <Compile Include="Staff.cs" />
     <EmbeddedResource Include="frmCopyPlacements.resx">
       <DependentUpon>frmCopyPlacements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEmailPrint.resx">
+      <DependentUpon>frmEmailPrint.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmManualHours.resx">
       <DependentUpon>frmManualHours.cs</DependentUpon>
