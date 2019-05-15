@@ -17,6 +17,7 @@ namespace ShopFloorPlacementPlanner
         public string _department { get; set; }
         public string _placement_type { get; set; }
         public double _hours { get; set; }
+        public int _notPresentType { get; set; }
 
 
         public bool _alreadyPlaced { get; set; }
@@ -72,6 +73,36 @@ namespace ShopFloorPlacementPlanner
                 
          }
 
+
+        public void notPresent()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            using (SqlCommand cmd = new SqlCommand("select absent_type from dbo.absent_holidays where staff_id=@staffID and date_absent = @dateAbsent",conn))
+            {
+                conn.Open();
+                cmd.Parameters.AddWithValue("@staffID", _staffID);
+                cmd.Parameters.AddWithValue("@dateAbsent", _selectedDate);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                if (rdr.Read())
+                {
+                    _notPresentType =  Convert.ToInt16(rdr["absent_type"]);
+                }
+                else
+                {
+                    _notPresentType = 0;
+                }
+
+
+
+
+            }
+           
+        }
+
+
+
         public void checkPlacement()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -106,6 +137,8 @@ namespace ShopFloorPlacementPlanner
                 }
 
             }
+
+
         }
 
 

@@ -467,33 +467,51 @@ namespace ShopFloorPlacementPlanner
 
             Placement p = new Placement(_selectedDate, s._staffID, _department, "Full Day", _standardHours);
 
-
+            p.notPresent();
             p.checkPlacement();
-            if (p._alreadyPlaced == true)
+
+            if (p._notPresentType == 5 || p._notPresentType == 2)
             {
-                if (p._existingPlacementHours == _standardHours)
+                MessageBox.Show("This staff member is either absent today or has a full day holiday!", "Cannot Place", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if(p._notPresentType == 3)
+            {
+                MessageBox.Show("This staff member has half day holiday so can only be placed for half day", "Half Day Placement", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                remainingHours = _standardHours /2;
+                Placement p3 = new Placement(_selectedDate, s._staffID, _department,"Half Day", remainingHours);
+                p3.addPlacment();
+            }
+            else
+            {
+                if (p._alreadyPlaced == true)
                 {
-                    
-                    MessageBox.Show("Staff member already has a full day placement for this day!","Already Placed",MessageBoxButtons.OK,MessageBoxIcon.Information);
-
-                }
-                else
-                {
-                    if(p._existingPlacementHours != _standardHours && p._existingPlacementHours > 0)
+                    if (p._existingPlacementHours == _standardHours)
                     {
-                        remainingHours = _standardHours - p._existingPlacementHours;
-                        MessageBox.Show("Staff member already placed for " + p._existingPlacementHours.ToString(),"Staff member part placed",MessageBoxButtons.OK,MessageBoxIcon.Information);
 
+                        MessageBox.Show("Staff member already has a full day placement for this day!", "Already Placed", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        Placement p2 = new Placement(_selectedDate, s._staffID, _department, p._existingPlacementType, remainingHours);
-                        p2.addPlacment();
                     }
                     else
                     {
-                        p.addPlacment();
+                        if (p._existingPlacementHours != _standardHours && p._existingPlacementHours > 0)
+                        {
+                            remainingHours = _standardHours - p._existingPlacementHours;
+                            MessageBox.Show("Staff member already placed for " + p._existingPlacementHours.ToString(), "Staff member part placed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+                            Placement p2 = new Placement(_selectedDate, s._staffID, _department, p._existingPlacementType, remainingHours);
+                            p2.addPlacment();
+                        }
+                        else
+                        {
+                            p.addPlacment();
+                        }
                     }
                 }
             }
+
+
+            
 
 
            
