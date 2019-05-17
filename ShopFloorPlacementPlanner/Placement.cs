@@ -115,26 +115,29 @@ namespace ShopFloorPlacementPlanner
 
                 SqlDataReader rdr = cmd.ExecuteReader();
 
-                if (rdr.Read())
-                {
-                    _alreadyPlaced = true;
-                    _existingPlacementType = rdr["PT"].ToString();
-                    try
+                    if (rdr.Read())
                     {
-                        _existingPlacementHours = Convert.ToDouble(rdr["sumHours"]);
-                    }
-                    catch
-                    {
-                        _existingPlacementHours = 0;
-                    }
-          
-                    
+                        _alreadyPlaced = true;
+                        _existingPlacementType = rdr["PT"].ToString();
+                        try
+                        {
+                            _existingPlacementHours = Convert.ToDouble(rdr["sumHours"]);
+                        
+                        }
+                        catch
+                        {
+                            _existingPlacementHours = 0;
+                        }
 
-                }
-                else
-                {
-                    _alreadyPlaced = false;
-                }
+
+
+                    }
+                    else
+                    {
+                        _alreadyPlaced = false;
+                    }
+
+                
 
             }
 

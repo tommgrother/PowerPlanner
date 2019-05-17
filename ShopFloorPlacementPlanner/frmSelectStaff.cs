@@ -436,6 +436,9 @@ namespace ShopFloorPlacementPlanner
 
                 }
 
+            }else if(dayOfWeek == "Saturday" || dayOfWeek == "Sunday")
+            {
+                _standardHours = 0.0001;
             }
             else
             {
@@ -470,6 +473,8 @@ namespace ShopFloorPlacementPlanner
             p.notPresent();
             p.checkPlacement();
 
+           
+
             if (p._notPresentType == 5 || p._notPresentType == 2)
             {
                 MessageBox.Show("This staff member is either absent today or has a full day holiday!", "Cannot Place", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -477,7 +482,7 @@ namespace ShopFloorPlacementPlanner
             else if(p._notPresentType == 3)
             {
                 MessageBox.Show("This staff member has half day holiday so can only be placed for half day", "Half Day Placement", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                remainingHours = _standardHours /2;
+                remainingHours = _standardHours / 2;
                 Placement p3 = new Placement(_selectedDate, s._staffID, _department,"Half Day", remainingHours);
                 p3.addPlacment();
             }
