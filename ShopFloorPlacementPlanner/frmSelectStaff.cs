@@ -462,7 +462,7 @@ namespace ShopFloorPlacementPlanner
         {
 
             double remainingHours;
-            string remainingPlacementType;
+            //string remainingPlacementType;
 
             Staff s = new Staff(lstStaff.SelectedItem.ToString());
 

@@ -845,5 +845,25 @@ namespace ShopFloorPlacementPlanner
             cmd.ExecuteNonQuery();
             
         }
+
+        private void loadDefaultsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+
+            using (SqlCommand cmd = new SqlCommand("usp_power_planner_load_defaults", conn))
+            {
+                conn.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@placementDate", SqlDbType.Date).Value = dteDateSelection.Text;
+                
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+
+            fillgrid();
+
+
+
+        }
     }
 }

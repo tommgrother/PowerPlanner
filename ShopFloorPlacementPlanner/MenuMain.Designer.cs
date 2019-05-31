@@ -99,6 +99,7 @@
             this.sendToDailyGoalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printDayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateAutomaticAllocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -124,7 +125,7 @@
             this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
-            this.updateAutomaticAllocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadDefaultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -701,7 +702,8 @@
             this.sendToDailyGoalsToolStripMenuItem,
             this.printDayToolStripMenuItem,
             this.printScreenToolStripMenuItem,
-            this.updateAutomaticAllocationToolStripMenuItem});
+            this.updateAutomaticAllocationToolStripMenuItem,
+            this.loadDefaultsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1932, 24);
@@ -735,6 +737,13 @@
             this.printScreenToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.printScreenToolStripMenuItem.Text = "Print Screen";
             this.printScreenToolStripMenuItem.Click += new System.EventHandler(this.printScreenToolStripMenuItem_Click);
+            // 
+            // updateAutomaticAllocationToolStripMenuItem
+            // 
+            this.updateAutomaticAllocationToolStripMenuItem.Name = "updateAutomaticAllocationToolStripMenuItem";
+            this.updateAutomaticAllocationToolStripMenuItem.Size = new System.Drawing.Size(173, 20);
+            this.updateAutomaticAllocationToolStripMenuItem.Text = "Update Automatic Allocation";
+            this.updateAutomaticAllocationToolStripMenuItem.Click += new System.EventHandler(this.updateAutomaticAllocationToolStripMenuItem_Click);
             // 
             // label23
             // 
@@ -981,12 +990,12 @@
             this.label35.TabIndex = 78;
             this.label35.Text = "OT:";
             // 
-            // updateAutomaticAllocationToolStripMenuItem
+            // loadDefaultsToolStripMenuItem
             // 
-            this.updateAutomaticAllocationToolStripMenuItem.Name = "updateAutomaticAllocationToolStripMenuItem";
-            this.updateAutomaticAllocationToolStripMenuItem.Size = new System.Drawing.Size(173, 20);
-            this.updateAutomaticAllocationToolStripMenuItem.Text = "Update Automatic Allocation";
-            this.updateAutomaticAllocationToolStripMenuItem.Click += new System.EventHandler(this.updateAutomaticAllocationToolStripMenuItem_Click);
+            this.loadDefaultsToolStripMenuItem.Name = "loadDefaultsToolStripMenuItem";
+            this.loadDefaultsToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+            this.loadDefaultsToolStripMenuItem.Text = "Load Defaults";
+            this.loadDefaultsToolStripMenuItem.Click += new System.EventHandler(this.loadDefaultsToolStripMenuItem_Click);
             // 
             // MenuMain
             // 
@@ -1181,6 +1190,7 @@
         private System.Windows.Forms.ToolStripMenuItem printDayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printScreenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateAutomaticAllocationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadDefaultsToolStripMenuItem;
     }
 }
 
