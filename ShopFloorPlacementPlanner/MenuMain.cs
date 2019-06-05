@@ -285,6 +285,15 @@ namespace ShopFloorPlacementPlanner
             txtPaintOT.Text = paintOT.ToString();
             txtPackOT.Text = packOT.ToString();
 
+            txtSlimlineTotal.Text = (Convert.ToDouble(txtSlimlineHours.Text) + Convert.ToDouble(slimlineOT)).ToString();
+            txtLaserTotal.Text = (Convert.ToDouble(txtLaserHours.Text) + Convert.ToDouble(laserOT)).ToString();
+            txtPunchingTotal.Text = (Convert.ToDouble(txtPunchHours.Text) + Convert.ToDouble(punchOT)).ToString();
+            txtBendingTotal.Text = (Convert.ToDouble(txtBendHours.Text) + Convert.ToDouble(bendOT)).ToString();
+            txtWeldingTotal.Text = (Convert.ToDouble(txtWeldHours.Text) + Convert.ToDouble(weldOT)).ToString();
+            txtBuffingTotal.Text = (Convert.ToDouble(txtBuffHours.Text) + Convert.ToDouble(buffOT)).ToString();
+            txtPaintingTotal.Text = (Convert.ToDouble(txtPaintHours.Text) + Convert.ToDouble(paintOT)).ToString();
+            txtPackingTotal.Text = (Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(packOT)).ToString();
+
 
         }
 

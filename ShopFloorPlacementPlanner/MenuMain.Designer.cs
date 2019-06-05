@@ -100,6 +100,7 @@
             this.printDayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateAutomaticAllocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadDefaultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -125,7 +126,22 @@
             this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
-            this.loadDefaultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label36 = new System.Windows.Forms.Label();
+            this.txtSlimlineTotal = new System.Windows.Forms.TextBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.txtPunchingTotal = new System.Windows.Forms.TextBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.txtLaserTotal = new System.Windows.Forms.TextBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.txtBendingTotal = new System.Windows.Forms.TextBox();
+            this.label40 = new System.Windows.Forms.Label();
+            this.txtWeldingTotal = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.txtBuffingTotal = new System.Windows.Forms.TextBox();
+            this.label42 = new System.Windows.Forms.Label();
+            this.txtPaintingTotal = new System.Windows.Forms.TextBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.txtPackingTotal = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -154,13 +170,13 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgPunch.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgPunch.Enabled = false;
-            this.dgPunch.Location = new System.Drawing.Point(221, 167);
+            this.dgPunch.Location = new System.Drawing.Point(221, 191);
             this.dgPunch.Name = "dgPunch";
             this.dgPunch.RowHeadersVisible = false;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPunch.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgPunch.RowTemplate.Height = 40;
-            this.dgPunch.Size = new System.Drawing.Size(200, 349);
+            this.dgPunch.Size = new System.Drawing.Size(200, 325);
             this.dgPunch.TabIndex = 0;
             // 
             // dgBend
@@ -172,13 +188,13 @@
             this.dgBend.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgBend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgBend.Enabled = false;
-            this.dgBend.Location = new System.Drawing.Point(634, 167);
+            this.dgBend.Location = new System.Drawing.Point(634, 191);
             this.dgBend.Name = "dgBend";
             this.dgBend.RowHeadersVisible = false;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBend.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgBend.RowTemplate.Height = 40;
-            this.dgBend.Size = new System.Drawing.Size(200, 349);
+            this.dgBend.Size = new System.Drawing.Size(200, 325);
             this.dgBend.TabIndex = 1;
             // 
             // dgWeld
@@ -190,13 +206,13 @@
             this.dgWeld.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgWeld.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgWeld.Enabled = false;
-            this.dgWeld.Location = new System.Drawing.Point(840, 167);
+            this.dgWeld.Location = new System.Drawing.Point(840, 191);
             this.dgWeld.Name = "dgWeld";
             this.dgWeld.RowHeadersVisible = false;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgWeld.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgWeld.RowTemplate.Height = 40;
-            this.dgWeld.Size = new System.Drawing.Size(200, 349);
+            this.dgWeld.Size = new System.Drawing.Size(200, 325);
             this.dgWeld.TabIndex = 2;
             // 
             // dgBuff
@@ -208,13 +224,13 @@
             this.dgBuff.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgBuff.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgBuff.Enabled = false;
-            this.dgBuff.Location = new System.Drawing.Point(1046, 167);
+            this.dgBuff.Location = new System.Drawing.Point(1046, 191);
             this.dgBuff.Name = "dgBuff";
             this.dgBuff.RowHeadersVisible = false;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBuff.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgBuff.RowTemplate.Height = 40;
-            this.dgBuff.Size = new System.Drawing.Size(200, 349);
+            this.dgBuff.Size = new System.Drawing.Size(200, 325);
             this.dgBuff.TabIndex = 3;
             // 
             // dgPaint
@@ -226,13 +242,13 @@
             this.dgPaint.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgPaint.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgPaint.Enabled = false;
-            this.dgPaint.Location = new System.Drawing.Point(1252, 167);
+            this.dgPaint.Location = new System.Drawing.Point(1252, 191);
             this.dgPaint.Name = "dgPaint";
             this.dgPaint.RowHeadersVisible = false;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPaint.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgPaint.RowTemplate.Height = 40;
-            this.dgPaint.Size = new System.Drawing.Size(225, 349);
+            this.dgPaint.Size = new System.Drawing.Size(225, 325);
             this.dgPaint.TabIndex = 4;
             // 
             // dgPack
@@ -244,13 +260,13 @@
             this.dgPack.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgPack.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgPack.Enabled = false;
-            this.dgPack.Location = new System.Drawing.Point(1490, 167);
+            this.dgPack.Location = new System.Drawing.Point(1490, 191);
             this.dgPack.Name = "dgPack";
             this.dgPack.RowHeadersVisible = false;
             dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPack.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgPack.RowTemplate.Height = 40;
-            this.dgPack.Size = new System.Drawing.Size(200, 349);
+            this.dgPack.Size = new System.Drawing.Size(200, 325);
             this.dgPack.TabIndex = 5;
             // 
             // dteDateSelection
@@ -448,13 +464,13 @@
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgLaser.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgLaser.Enabled = false;
-            this.dgLaser.Location = new System.Drawing.Point(427, 167);
+            this.dgLaser.Location = new System.Drawing.Point(427, 191);
             this.dgLaser.Name = "dgLaser";
             this.dgLaser.RowHeadersVisible = false;
             dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgLaser.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dgLaser.RowTemplate.Height = 40;
-            this.dgLaser.Size = new System.Drawing.Size(200, 349);
+            this.dgLaser.Size = new System.Drawing.Size(200, 325);
             this.dgLaser.TabIndex = 22;
             // 
             // txtPunchMen
@@ -745,6 +761,13 @@
             this.updateAutomaticAllocationToolStripMenuItem.Text = "Update Automatic Allocation";
             this.updateAutomaticAllocationToolStripMenuItem.Click += new System.EventHandler(this.updateAutomaticAllocationToolStripMenuItem_Click);
             // 
+            // loadDefaultsToolStripMenuItem
+            // 
+            this.loadDefaultsToolStripMenuItem.Name = "loadDefaultsToolStripMenuItem";
+            this.loadDefaultsToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+            this.loadDefaultsToolStripMenuItem.Text = "Load Defaults";
+            this.loadDefaultsToolStripMenuItem.Click += new System.EventHandler(this.loadDefaultsToolStripMenuItem_Click);
+            // 
             // label23
             // 
             this.label23.AutoSize = true;
@@ -823,13 +846,13 @@
             dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgSlimline.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgSlimline.Enabled = false;
-            this.dgSlimline.Location = new System.Drawing.Point(9, 167);
+            this.dgSlimline.Location = new System.Drawing.Point(9, 191);
             this.dgSlimline.Name = "dgSlimline";
             this.dgSlimline.RowHeadersVisible = false;
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgSlimline.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgSlimline.RowTemplate.Height = 40;
-            this.dgSlimline.Size = new System.Drawing.Size(200, 349);
+            this.dgSlimline.Size = new System.Drawing.Size(200, 325);
             this.dgSlimline.TabIndex = 54;
             // 
             // label26
@@ -990,12 +1013,141 @@
             this.label35.TabIndex = 78;
             this.label35.Text = "OT:";
             // 
-            // loadDefaultsToolStripMenuItem
+            // label36
             // 
-            this.loadDefaultsToolStripMenuItem.Name = "loadDefaultsToolStripMenuItem";
-            this.loadDefaultsToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
-            this.loadDefaultsToolStripMenuItem.Text = "Load Defaults";
-            this.loadDefaultsToolStripMenuItem.Click += new System.EventHandler(this.loadDefaultsToolStripMenuItem_Click);
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(79, 167);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(65, 13);
+            this.label36.TabIndex = 80;
+            this.label36.Text = "Total Hours:";
+            // 
+            // txtSlimlineTotal
+            // 
+            this.txtSlimlineTotal.Location = new System.Drawing.Point(150, 164);
+            this.txtSlimlineTotal.Name = "txtSlimlineTotal";
+            this.txtSlimlineTotal.Size = new System.Drawing.Size(60, 20);
+            this.txtSlimlineTotal.TabIndex = 79;
+            this.txtSlimlineTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(291, 167);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(65, 13);
+            this.label37.TabIndex = 82;
+            this.label37.Text = "Total Hours:";
+            // 
+            // txtPunchingTotal
+            // 
+            this.txtPunchingTotal.Location = new System.Drawing.Point(362, 164);
+            this.txtPunchingTotal.Name = "txtPunchingTotal";
+            this.txtPunchingTotal.Size = new System.Drawing.Size(60, 20);
+            this.txtPunchingTotal.TabIndex = 81;
+            this.txtPunchingTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(498, 168);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(65, 13);
+            this.label38.TabIndex = 84;
+            this.label38.Text = "Total Hours:";
+            // 
+            // txtLaserTotal
+            // 
+            this.txtLaserTotal.Location = new System.Drawing.Point(569, 165);
+            this.txtLaserTotal.Name = "txtLaserTotal";
+            this.txtLaserTotal.Size = new System.Drawing.Size(60, 20);
+            this.txtLaserTotal.TabIndex = 83;
+            this.txtLaserTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(703, 168);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(65, 13);
+            this.label39.TabIndex = 86;
+            this.label39.Text = "Total Hours:";
+            // 
+            // txtBendingTotal
+            // 
+            this.txtBendingTotal.Location = new System.Drawing.Point(774, 165);
+            this.txtBendingTotal.Name = "txtBendingTotal";
+            this.txtBendingTotal.Size = new System.Drawing.Size(60, 20);
+            this.txtBendingTotal.TabIndex = 85;
+            this.txtBendingTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(909, 168);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(65, 13);
+            this.label40.TabIndex = 88;
+            this.label40.Text = "Total Hours:";
+            // 
+            // txtWeldingTotal
+            // 
+            this.txtWeldingTotal.Location = new System.Drawing.Point(980, 165);
+            this.txtWeldingTotal.Name = "txtWeldingTotal";
+            this.txtWeldingTotal.Size = new System.Drawing.Size(60, 20);
+            this.txtWeldingTotal.TabIndex = 87;
+            this.txtWeldingTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(1117, 168);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(65, 13);
+            this.label41.TabIndex = 90;
+            this.label41.Text = "Total Hours:";
+            // 
+            // txtBuffingTotal
+            // 
+            this.txtBuffingTotal.Location = new System.Drawing.Point(1188, 165);
+            this.txtBuffingTotal.Name = "txtBuffingTotal";
+            this.txtBuffingTotal.Size = new System.Drawing.Size(60, 20);
+            this.txtBuffingTotal.TabIndex = 89;
+            this.txtBuffingTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(1344, 167);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(65, 13);
+            this.label42.TabIndex = 92;
+            this.label42.Text = "Total Hours:";
+            // 
+            // txtPaintingTotal
+            // 
+            this.txtPaintingTotal.Location = new System.Drawing.Point(1415, 164);
+            this.txtPaintingTotal.Name = "txtPaintingTotal";
+            this.txtPaintingTotal.Size = new System.Drawing.Size(60, 20);
+            this.txtPaintingTotal.TabIndex = 91;
+            this.txtPaintingTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(1560, 167);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(65, 13);
+            this.label43.TabIndex = 94;
+            this.label43.Text = "Total Hours:";
+            // 
+            // txtPackingTotal
+            // 
+            this.txtPackingTotal.Location = new System.Drawing.Point(1631, 164);
+            this.txtPackingTotal.Name = "txtPackingTotal";
+            this.txtPackingTotal.Size = new System.Drawing.Size(60, 20);
+            this.txtPackingTotal.TabIndex = 93;
+            this.txtPackingTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // MenuMain
             // 
@@ -1003,6 +1155,22 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1932, 582);
+            this.Controls.Add(this.label43);
+            this.Controls.Add(this.txtPackingTotal);
+            this.Controls.Add(this.label42);
+            this.Controls.Add(this.txtPaintingTotal);
+            this.Controls.Add(this.label41);
+            this.Controls.Add(this.txtBuffingTotal);
+            this.Controls.Add(this.label40);
+            this.Controls.Add(this.txtWeldingTotal);
+            this.Controls.Add(this.label39);
+            this.Controls.Add(this.txtBendingTotal);
+            this.Controls.Add(this.label38);
+            this.Controls.Add(this.txtLaserTotal);
+            this.Controls.Add(this.label37);
+            this.Controls.Add(this.txtPunchingTotal);
+            this.Controls.Add(this.label36);
+            this.Controls.Add(this.txtSlimlineTotal);
             this.Controls.Add(this.label35);
             this.Controls.Add(this.label34);
             this.Controls.Add(this.label33);
@@ -1191,6 +1359,22 @@
         private System.Windows.Forms.ToolStripMenuItem printScreenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateAutomaticAllocationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadDefaultsToolStripMenuItem;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.TextBox txtSlimlineTotal;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.TextBox txtPunchingTotal;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.TextBox txtLaserTotal;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.TextBox txtBendingTotal;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.TextBox txtWeldingTotal;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.TextBox txtBuffingTotal;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.TextBox txtPaintingTotal;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.TextBox txtPackingTotal;
     }
 }
 
