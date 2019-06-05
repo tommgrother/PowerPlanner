@@ -491,6 +491,7 @@
             // 
             // txtPunchMen
             // 
+            this.txtPunchMen.Enabled = false;
             this.txtPunchMen.Location = new System.Drawing.Point(255, 112);
             this.txtPunchMen.Name = "txtPunchMen";
             this.txtPunchMen.Size = new System.Drawing.Size(40, 20);
@@ -499,6 +500,7 @@
             // 
             // txtPunchHours
             // 
+            this.txtPunchHours.Enabled = false;
             this.txtPunchHours.Location = new System.Drawing.Point(362, 112);
             this.txtPunchHours.Name = "txtPunchHours";
             this.txtPunchHours.Size = new System.Drawing.Size(60, 20);
@@ -543,6 +545,7 @@
             // 
             // txtLaserHours
             // 
+            this.txtLaserHours.Enabled = false;
             this.txtLaserHours.Location = new System.Drawing.Point(569, 112);
             this.txtLaserHours.Name = "txtLaserHours";
             this.txtLaserHours.Size = new System.Drawing.Size(60, 20);
@@ -551,6 +554,7 @@
             // 
             // txtLaserMen
             // 
+            this.txtLaserMen.Enabled = false;
             this.txtLaserMen.Location = new System.Drawing.Point(465, 112);
             this.txtLaserMen.Name = "txtLaserMen";
             this.txtLaserMen.Size = new System.Drawing.Size(40, 20);
@@ -577,6 +581,7 @@
             // 
             // txtBendHours
             // 
+            this.txtBendHours.Enabled = false;
             this.txtBendHours.Location = new System.Drawing.Point(774, 112);
             this.txtBendHours.Name = "txtBendHours";
             this.txtBendHours.Size = new System.Drawing.Size(60, 20);
@@ -585,6 +590,7 @@
             // 
             // txtBendMen
             // 
+            this.txtBendMen.Enabled = false;
             this.txtBendMen.Location = new System.Drawing.Point(670, 112);
             this.txtBendMen.Name = "txtBendMen";
             this.txtBendMen.Size = new System.Drawing.Size(40, 20);
@@ -611,6 +617,7 @@
             // 
             // txtWeldHours
             // 
+            this.txtWeldHours.Enabled = false;
             this.txtWeldHours.Location = new System.Drawing.Point(981, 112);
             this.txtWeldHours.Name = "txtWeldHours";
             this.txtWeldHours.Size = new System.Drawing.Size(60, 20);
@@ -619,6 +626,7 @@
             // 
             // txtWeldMen
             // 
+            this.txtWeldMen.Enabled = false;
             this.txtWeldMen.Location = new System.Drawing.Point(877, 112);
             this.txtWeldMen.Name = "txtWeldMen";
             this.txtWeldMen.Size = new System.Drawing.Size(40, 20);
@@ -645,6 +653,7 @@
             // 
             // txtBuffHours
             // 
+            this.txtBuffHours.Enabled = false;
             this.txtBuffHours.Location = new System.Drawing.Point(1186, 112);
             this.txtBuffHours.Name = "txtBuffHours";
             this.txtBuffHours.Size = new System.Drawing.Size(60, 20);
@@ -653,6 +662,7 @@
             // 
             // txtBuffMen
             // 
+            this.txtBuffMen.Enabled = false;
             this.txtBuffMen.Location = new System.Drawing.Point(1084, 112);
             this.txtBuffMen.Name = "txtBuffMen";
             this.txtBuffMen.Size = new System.Drawing.Size(40, 20);
@@ -679,6 +689,7 @@
             // 
             // txtPaintHours
             // 
+            this.txtPaintHours.Enabled = false;
             this.txtPaintHours.Location = new System.Drawing.Point(1414, 112);
             this.txtPaintHours.Name = "txtPaintHours";
             this.txtPaintHours.Size = new System.Drawing.Size(60, 20);
@@ -687,6 +698,7 @@
             // 
             // txtPaintMen
             // 
+            this.txtPaintMen.Enabled = false;
             this.txtPaintMen.Location = new System.Drawing.Point(1311, 112);
             this.txtPaintMen.Name = "txtPaintMen";
             this.txtPaintMen.Size = new System.Drawing.Size(40, 20);
@@ -713,6 +725,7 @@
             // 
             // txtPackHours
             // 
+            this.txtPackHours.Enabled = false;
             this.txtPackHours.Location = new System.Drawing.Point(1631, 112);
             this.txtPackHours.Name = "txtPackHours";
             this.txtPackHours.Size = new System.Drawing.Size(60, 20);
@@ -721,6 +734,7 @@
             // 
             // txtPackMen
             // 
+            this.txtPackMen.Enabled = false;
             this.txtPackMen.Location = new System.Drawing.Point(1527, 112);
             this.txtPackMen.Name = "txtPackMen";
             this.txtPackMen.Size = new System.Drawing.Size(40, 20);
@@ -804,6 +818,7 @@
             // 
             // txtSlimlineHours
             // 
+            this.txtSlimlineHours.Enabled = false;
             this.txtSlimlineHours.Location = new System.Drawing.Point(150, 112);
             this.txtSlimlineHours.Name = "txtSlimlineHours";
             this.txtSlimlineHours.Size = new System.Drawing.Size(60, 20);
@@ -812,6 +827,7 @@
             // 
             // txtSlimlineMen
             // 
+            this.txtSlimlineMen.Enabled = false;
             this.txtSlimlineMen.Location = new System.Drawing.Point(46, 112);
             this.txtSlimlineMen.Name = "txtSlimlineMen";
             this.txtSlimlineMen.Size = new System.Drawing.Size(40, 20);
@@ -895,6 +911,7 @@
             // 
             // txtSlimlineOT
             // 
+            this.txtSlimlineOT.Enabled = false;
             this.txtSlimlineOT.Location = new System.Drawing.Point(150, 137);
             this.txtSlimlineOT.Name = "txtSlimlineOT";
             this.txtSlimlineOT.Size = new System.Drawing.Size(60, 20);
@@ -903,6 +920,7 @@
             // 
             // txtPunchOT
             // 
+            this.txtPunchOT.Enabled = false;
             this.txtPunchOT.Location = new System.Drawing.Point(362, 137);
             this.txtPunchOT.Name = "txtPunchOT";
             this.txtPunchOT.Size = new System.Drawing.Size(60, 20);
@@ -911,6 +929,7 @@
             // 
             // txtLaserOT
             // 
+            this.txtLaserOT.Enabled = false;
             this.txtLaserOT.Location = new System.Drawing.Point(569, 137);
             this.txtLaserOT.Name = "txtLaserOT";
             this.txtLaserOT.Size = new System.Drawing.Size(60, 20);
@@ -919,6 +938,7 @@
             // 
             // txtBendOT
             // 
+            this.txtBendOT.Enabled = false;
             this.txtBendOT.Location = new System.Drawing.Point(774, 138);
             this.txtBendOT.Name = "txtBendOT";
             this.txtBendOT.Size = new System.Drawing.Size(60, 20);
@@ -927,6 +947,7 @@
             // 
             // txtWeldOT
             // 
+            this.txtWeldOT.Enabled = false;
             this.txtWeldOT.Location = new System.Drawing.Point(981, 137);
             this.txtWeldOT.Name = "txtWeldOT";
             this.txtWeldOT.Size = new System.Drawing.Size(60, 20);
@@ -935,6 +956,7 @@
             // 
             // txtBuffOT
             // 
+            this.txtBuffOT.Enabled = false;
             this.txtBuffOT.Location = new System.Drawing.Point(1186, 138);
             this.txtBuffOT.Name = "txtBuffOT";
             this.txtBuffOT.Size = new System.Drawing.Size(60, 20);
@@ -943,6 +965,7 @@
             // 
             // txtPaintOT
             // 
+            this.txtPaintOT.Enabled = false;
             this.txtPaintOT.Location = new System.Drawing.Point(1414, 138);
             this.txtPaintOT.Name = "txtPaintOT";
             this.txtPaintOT.Size = new System.Drawing.Size(60, 20);
@@ -951,6 +974,7 @@
             // 
             // txtPackOT
             // 
+            this.txtPackOT.Enabled = false;
             this.txtPackOT.Location = new System.Drawing.Point(1631, 138);
             this.txtPackOT.Name = "txtPackOT";
             this.txtPackOT.Size = new System.Drawing.Size(60, 20);
@@ -1040,6 +1064,7 @@
             // 
             // txtSlimlineTotal
             // 
+            this.txtSlimlineTotal.Enabled = false;
             this.txtSlimlineTotal.Location = new System.Drawing.Point(150, 187);
             this.txtSlimlineTotal.Name = "txtSlimlineTotal";
             this.txtSlimlineTotal.Size = new System.Drawing.Size(60, 20);
@@ -1057,6 +1082,7 @@
             // 
             // txtPunchingTotal
             // 
+            this.txtPunchingTotal.Enabled = false;
             this.txtPunchingTotal.Location = new System.Drawing.Point(362, 187);
             this.txtPunchingTotal.Name = "txtPunchingTotal";
             this.txtPunchingTotal.Size = new System.Drawing.Size(60, 20);
@@ -1074,6 +1100,7 @@
             // 
             // txtLaserTotal
             // 
+            this.txtLaserTotal.Enabled = false;
             this.txtLaserTotal.Location = new System.Drawing.Point(569, 188);
             this.txtLaserTotal.Name = "txtLaserTotal";
             this.txtLaserTotal.Size = new System.Drawing.Size(60, 20);
@@ -1091,6 +1118,7 @@
             // 
             // txtBendingTotal
             // 
+            this.txtBendingTotal.Enabled = false;
             this.txtBendingTotal.Location = new System.Drawing.Point(774, 189);
             this.txtBendingTotal.Name = "txtBendingTotal";
             this.txtBendingTotal.Size = new System.Drawing.Size(60, 20);
@@ -1108,6 +1136,7 @@
             // 
             // txtWeldingTotal
             // 
+            this.txtWeldingTotal.Enabled = false;
             this.txtWeldingTotal.Location = new System.Drawing.Point(981, 189);
             this.txtWeldingTotal.Name = "txtWeldingTotal";
             this.txtWeldingTotal.Size = new System.Drawing.Size(60, 20);
@@ -1125,6 +1154,7 @@
             // 
             // txtBuffingTotal
             // 
+            this.txtBuffingTotal.Enabled = false;
             this.txtBuffingTotal.Location = new System.Drawing.Point(1186, 190);
             this.txtBuffingTotal.Name = "txtBuffingTotal";
             this.txtBuffingTotal.Size = new System.Drawing.Size(60, 20);
@@ -1142,6 +1172,7 @@
             // 
             // txtPaintingTotal
             // 
+            this.txtPaintingTotal.Enabled = false;
             this.txtPaintingTotal.Location = new System.Drawing.Point(1414, 191);
             this.txtPaintingTotal.Name = "txtPaintingTotal";
             this.txtPaintingTotal.Size = new System.Drawing.Size(60, 20);
@@ -1159,6 +1190,7 @@
             // 
             // txtPackingTotal
             // 
+            this.txtPackingTotal.Enabled = false;
             this.txtPackingTotal.Location = new System.Drawing.Point(1631, 191);
             this.txtPackingTotal.Name = "txtPackingTotal";
             this.txtPackingTotal.Size = new System.Drawing.Size(60, 20);
@@ -1176,6 +1208,7 @@
             // 
             // txtPaintAD
             // 
+            this.txtPaintAD.Enabled = false;
             this.txtPaintAD.Location = new System.Drawing.Point(1414, 164);
             this.txtPaintAD.Name = "txtPaintAD";
             this.txtPaintAD.Size = new System.Drawing.Size(60, 20);
@@ -1184,6 +1217,7 @@
             // 
             // txtBuffAD
             // 
+            this.txtBuffAD.Enabled = false;
             this.txtBuffAD.Location = new System.Drawing.Point(1186, 163);
             this.txtBuffAD.Name = "txtBuffAD";
             this.txtBuffAD.Size = new System.Drawing.Size(60, 20);
@@ -1192,6 +1226,7 @@
             // 
             // txtWeldAD
             // 
+            this.txtWeldAD.Enabled = false;
             this.txtWeldAD.Location = new System.Drawing.Point(981, 162);
             this.txtWeldAD.Name = "txtWeldAD";
             this.txtWeldAD.Size = new System.Drawing.Size(60, 20);
@@ -1200,6 +1235,7 @@
             // 
             // txtBendAD
             // 
+            this.txtBendAD.Enabled = false;
             this.txtBendAD.Location = new System.Drawing.Point(774, 163);
             this.txtBendAD.Name = "txtBendAD";
             this.txtBendAD.Size = new System.Drawing.Size(60, 20);
@@ -1208,6 +1244,7 @@
             // 
             // txtLaserAD
             // 
+            this.txtLaserAD.Enabled = false;
             this.txtLaserAD.Location = new System.Drawing.Point(569, 163);
             this.txtLaserAD.Name = "txtLaserAD";
             this.txtLaserAD.Size = new System.Drawing.Size(60, 20);
@@ -1216,6 +1253,7 @@
             // 
             // txtPunchAD
             // 
+            this.txtPunchAD.Enabled = false;
             this.txtPunchAD.Location = new System.Drawing.Point(362, 162);
             this.txtPunchAD.Name = "txtPunchAD";
             this.txtPunchAD.Size = new System.Drawing.Size(60, 20);
@@ -1224,6 +1262,7 @@
             // 
             // txtSlimlineAD
             // 
+            this.txtSlimlineAD.Enabled = false;
             this.txtSlimlineAD.Location = new System.Drawing.Point(150, 162);
             this.txtSlimlineAD.Name = "txtSlimlineAD";
             this.txtSlimlineAD.Size = new System.Drawing.Size(60, 20);
@@ -1295,6 +1334,7 @@
             // 
             // txtPackAD
             // 
+            this.txtPackAD.Enabled = false;
             this.txtPackAD.Location = new System.Drawing.Point(1631, 165);
             this.txtPackAD.Name = "txtPackAD";
             this.txtPackAD.Size = new System.Drawing.Size(60, 20);
