@@ -99,6 +99,16 @@ namespace ShopFloorPlacementPlanner
             double packOT = 0;
 
 
+            double slimlineAD = 0;
+            double punchAD = 0;
+            double laserAD = 0;
+            double bendAD = 0;
+            double weldAD = 0;
+            double buffAD = 0;
+            double paintAD = 0;
+            double packAD = 0;
+
+
             foreach (DataGridViewRow row in dgSlimline.Rows)
             {
                 if (row.Cells[0].Value.ToString().Contains("Half"))
@@ -245,6 +255,8 @@ namespace ShopFloorPlacementPlanner
             txtPackMen.Text = packMen.ToString();
 
 
+            //////////ADDS OVERTIME AND ADDITIONS TO THE MAIN SCREEN
+
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             Overtime o = new Overtime();
             o.getDateID(Convert.ToDateTime(dteDateSelection.Text));
@@ -268,6 +280,17 @@ namespace ShopFloorPlacementPlanner
                     buffOT = Convert.ToDouble(rdr["buffing_OT"]) * 0.8;
                     paintOT = Convert.ToDouble(rdr["painting_OT"]) * 0.8;
                     packOT = Convert.ToDouble(rdr["packing_OT"]) * 0.8;
+
+
+
+                    slimlineAD = Convert.ToDouble(rdr["slimline_ad"]);
+                    punchAD = Convert.ToDouble(rdr["punching_AD"]);
+                    laserAD = Convert.ToDouble(rdr["laser_AD"]);
+                    bendAD = Convert.ToDouble(rdr["bending_AD"]);
+                    weldAD = Convert.ToDouble(rdr["welding_AD"]);
+                    buffAD = Convert.ToDouble(rdr["buffing_AD"]);
+                    paintAD = Convert.ToDouble(rdr["painting_AD"]);
+                    packAD = Convert.ToDouble(rdr["packing_AD"]);
                 }
 
 
@@ -285,14 +308,36 @@ namespace ShopFloorPlacementPlanner
             txtPaintOT.Text = paintOT.ToString();
             txtPackOT.Text = packOT.ToString();
 
-            txtSlimlineTotal.Text = (Convert.ToDouble(txtSlimlineHours.Text) + Convert.ToDouble(slimlineOT)).ToString();
-            txtLaserTotal.Text = (Convert.ToDouble(txtLaserHours.Text) + Convert.ToDouble(laserOT)).ToString();
-            txtPunchingTotal.Text = (Convert.ToDouble(txtPunchHours.Text) + Convert.ToDouble(punchOT)).ToString();
-            txtBendingTotal.Text = (Convert.ToDouble(txtBendHours.Text) + Convert.ToDouble(bendOT)).ToString();
-            txtWeldingTotal.Text = (Convert.ToDouble(txtWeldHours.Text) + Convert.ToDouble(weldOT)).ToString();
-            txtBuffingTotal.Text = (Convert.ToDouble(txtBuffHours.Text) + Convert.ToDouble(buffOT)).ToString();
-            txtPaintingTotal.Text = (Convert.ToDouble(txtPaintHours.Text) + Convert.ToDouble(paintOT)).ToString();
-            txtPackingTotal.Text = (Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(packOT)).ToString();
+
+
+            txtSlimlineAD.Text = slimlineAD.ToString();
+            txtLaserAD.Text = laserAD.ToString();
+            txtPunchAD.Text = punchAD.ToString();
+            txtBendAD.Text = bendAD.ToString();
+            txtWeldAD.Text = weldAD.ToString();
+            txtBuffAD.Text = buffAD.ToString();
+            txtPaintAD.Text = paintAD.ToString();
+            txtPackAD.Text = packAD.ToString();
+
+
+
+            /////////////////////////////
+
+
+
+
+
+
+            //TOTALS UP FINAL VALUES
+
+            txtSlimlineTotal.Text = (Convert.ToDouble(txtSlimlineHours.Text) + Convert.ToDouble(slimlineOT) + Convert.ToDouble(slimlineAD)).ToString();
+            txtLaserTotal.Text = (Convert.ToDouble(txtLaserHours.Text) + Convert.ToDouble(laserOT) + Convert.ToDouble(laserAD)).ToString();
+            txtPunchingTotal.Text = (Convert.ToDouble(txtPunchHours.Text) + Convert.ToDouble(punchOT) + Convert.ToDouble(punchAD)).ToString();
+            txtBendingTotal.Text = (Convert.ToDouble(txtBendHours.Text) + Convert.ToDouble(bendOT) + Convert.ToDouble(bendAD)).ToString();
+            txtWeldingTotal.Text = (Convert.ToDouble(txtWeldHours.Text) + Convert.ToDouble(weldOT) + Convert.ToDouble(weldAD)).ToString();
+            txtBuffingTotal.Text = (Convert.ToDouble(txtBuffHours.Text) + Convert.ToDouble(buffOT) + Convert.ToDouble(buffAD)).ToString();
+            txtPaintingTotal.Text = (Convert.ToDouble(txtPaintHours.Text) + Convert.ToDouble(paintOT) + Convert.ToDouble(paintAD)).ToString();
+            txtPackingTotal.Text = (Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(packOT) + Convert.ToDouble(packAD)).ToString();
 
 
         }
@@ -715,14 +760,14 @@ namespace ShopFloorPlacementPlanner
             double manPowerPack;
 
 
-            goalHoursSlimline = Convert.ToDouble(txtSlimlineHours.Text) + Convert.ToDouble(txtSlimlineOT.Text);
-            goalHoursLaser = Convert.ToDouble(txtLaserHours.Text) + Convert.ToDouble(txtLaserOT.Text);
-            goalHoursPunch = Convert.ToDouble(txtPunchHours.Text) + Convert.ToDouble(txtPunchOT.Text);
-            goalHoursBend = Convert.ToDouble(txtBendHours.Text) + Convert.ToDouble(txtBendOT.Text);
-            goalHoursWeld = Convert.ToDouble(txtWeldHours.Text) + Convert.ToDouble(txtWeldOT.Text);
-            goalHoursBuff = Convert.ToDouble(txtBuffHours.Text) + Convert.ToDouble(txtBuffOT.Text);
-            goalHoursPaint = Convert.ToDouble(txtPaintHours.Text) + Convert.ToDouble(txtPaintOT.Text);
-            goalHoursPack = Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(txtPackOT.Text);
+            goalHoursSlimline = Convert.ToDouble(txtSlimlineHours.Text) + Convert.ToDouble(txtSlimlineOT.Text) + Convert.ToDouble(txtSlimlineAD.Text);
+            goalHoursLaser = Convert.ToDouble(txtLaserHours.Text) + Convert.ToDouble(txtLaserOT.Text) + Convert.ToDouble(txtLaserAD.Text);
+            goalHoursPunch = Convert.ToDouble(txtPunchHours.Text) + Convert.ToDouble(txtPunchOT.Text) + Convert.ToDouble(txtPunchAD.Text);
+            goalHoursBend = Convert.ToDouble(txtBendHours.Text) + Convert.ToDouble(txtBendOT.Text) + Convert.ToDouble(txtBendAD.Text);
+            goalHoursWeld = Convert.ToDouble(txtWeldHours.Text) + Convert.ToDouble(txtWeldOT.Text) + Convert.ToDouble(txtWeldAD.Text);
+            goalHoursBuff = Convert.ToDouble(txtBuffHours.Text) + Convert.ToDouble(txtBuffOT.Text) + Convert.ToDouble(txtBuffAD.Text);
+            goalHoursPaint = Convert.ToDouble(txtPaintHours.Text) + Convert.ToDouble(txtPaintOT.Text) + Convert.ToDouble(txtPaintAD.Text);
+            goalHoursPack = Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(txtPackOT.Text) + Convert.ToDouble(txtPackAD.Text);
 
 
             manPowerSlimline = Convert.ToDouble(txtSlimlineMen.Text);

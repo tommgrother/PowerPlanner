@@ -42,6 +42,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtOvertime = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtAD = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgSelected)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,11 +78,11 @@
             this.StaffFullName,
             this.PlacementType,
             this.Hours});
-            this.dgSelected.Location = new System.Drawing.Point(189, 69);
+            this.dgSelected.Location = new System.Drawing.Point(189, 92);
             this.dgSelected.Name = "dgSelected";
             this.dgSelected.RowHeadersVisible = false;
             this.dgSelected.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgSelected.Size = new System.Drawing.Size(777, 417);
+            this.dgSelected.Size = new System.Drawing.Size(777, 394);
             this.dgSelected.TabIndex = 2;
             this.dgSelected.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgSelected_CellContentClick);
             // 
@@ -132,7 +134,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(747, 30);
+            this.label2.Location = new System.Drawing.Point(747, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(134, 20);
             this.label2.TabIndex = 6;
@@ -141,7 +143,7 @@
             // txtOvertime
             // 
             this.txtOvertime.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOvertime.Location = new System.Drawing.Point(900, 27);
+            this.txtOvertime.Location = new System.Drawing.Point(900, 10);
             this.txtOvertime.Name = "txtOvertime";
             this.txtOvertime.Size = new System.Drawing.Size(66, 26);
             this.txtOvertime.TabIndex = 7;
@@ -152,11 +154,32 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(717, 45);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(164, 20);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Additions/Deductions:";
+            // 
+            // txtAD
+            // 
+            this.txtAD.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAD.Location = new System.Drawing.Point(900, 45);
+            this.txtAD.Name = "txtAD";
+            this.txtAD.Size = new System.Drawing.Size(66, 26);
+            this.txtAD.TabIndex = 9;
+            this.txtAD.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // frmSelectStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 530);
+            this.Controls.Add(this.txtAD);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtOvertime);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblMessage2);
@@ -193,5 +216,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtOvertime;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtAD;
     }
 }

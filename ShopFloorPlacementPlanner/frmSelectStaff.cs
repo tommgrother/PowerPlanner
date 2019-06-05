@@ -34,6 +34,7 @@ namespace ShopFloorPlacementPlanner
 
             checkExistingSelections();
             getOvertime();
+            getAD();
 
 
 
@@ -118,7 +119,72 @@ namespace ShopFloorPlacementPlanner
             }
 
 
-         
+        }
+
+        private void getAD()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+
+            string sql = "";
+
+
+            switch (_department)
+            {
+                case "Slimline":
+                    sql = "SELECT slimline_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Laser":
+                    sql = "SELECT laser_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Punching":
+                    sql = "SELECT punching_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Bending":
+                    sql = "SELECT bending_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Welding":
+                    sql = "SELECT welding_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Dressing":
+                    sql = "SELECT buffing_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Painting":
+                    sql = "SELECT painting_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Packing":
+                    sql = "SELECT packing_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+
+            }
+
+
+
+
+
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+
+                conn.Open();
+                AdditionsDeductions ad = new AdditionsDeductions();
+                ad.getDateID(_selectedDate);
+
+
+                cmd.Parameters.AddWithValue("@dateID", ad._dateID);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                if (rdr.Read())
+                {
+                    txtAD.Text = rdr["FieldName"].ToString();
+                }
+                else
+                {
+                    txtAD.Text = 0.ToString();
+                }
+            }
+
+
+
 
 
 
@@ -565,6 +631,27 @@ namespace ShopFloorPlacementPlanner
 
         }
 
+
+        private void submitAD()
+        {
+            double ADAmount;
+
+            try
+            {
+                ADAmount = Convert.ToDouble(txtAD.Text);
+            }
+            catch
+            {
+                ADAmount = 0;
+            }
+
+
+
+            AdditionsDeductions ad = new AdditionsDeductions();
+            ad.updateAD(_selectedDate, _department, ADAmount);
+
+        }
+
         private void submitOT()
         {
             double overtimeAmount;
@@ -597,6 +684,7 @@ namespace ShopFloorPlacementPlanner
         private void frmSelectStaff_FormClosed(object sender, FormClosedEventArgs e)
         {
             submitOT();
+            submitAD();
         }
     }
 }
