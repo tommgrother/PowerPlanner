@@ -580,16 +580,16 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnPack = dgPack.Columns[1];
             columnPack.Width = 40;
 
-            DataGridViewColumn columnStores = dgPack.Columns[1];
+            DataGridViewColumn columnStores = dgStores.Columns[1];
             columnStores.Width = 40;
 
-            DataGridViewColumn columnDispatch = dgPack.Columns[1];
+            DataGridViewColumn columnDispatch = dgDispatch.Columns[1];
             columnDispatch.Width = 40;
 
-            DataGridViewColumn columnToolroom = dgPack.Columns[1];
+            DataGridViewColumn columnToolroom = dgToolRoom.Columns[1];
             columnToolroom.Width = 40;
 
-            DataGridViewColumn columnCleaning = dgPack.Columns[1];
+            DataGridViewColumn columnCleaning = dgCleaning.Columns[1];
             columnCleaning.Width = 40;
         }
 
