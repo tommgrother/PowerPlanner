@@ -89,6 +89,18 @@ namespace ShopFloorPlacementPlanner
                 case "Packing":
                     sql = "SELECT packing_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+                case "Stores":
+                    sql = "SELECT stores_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Dispatch":
+                    sql = "SELECT dispatch_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "toolroom":
+                    sql = "SELECT toolroom_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Cleaning":
+                    sql = "SELECT cleaning_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
 
             }
 
@@ -154,6 +166,19 @@ namespace ShopFloorPlacementPlanner
                 case "Packing":
                     sql = "SELECT packing_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+                case "Stores":
+                    sql = "SELECT stores_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Dispatch":
+                    sql = "SELECT dispatch_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "toolroom":
+                    sql = "SELECT toolroom_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Cleaning":
+                    sql = "SELECT cleaning_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+
 
             }
 

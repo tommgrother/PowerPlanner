@@ -442,6 +442,52 @@ namespace ShopFloorPlacementPlanner
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
 
+            //Stores
+            foreach (DataGridViewRow row in dgStores.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Shift"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+            foreach (DataGridViewRow row in dgStores.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                }
+            //Dispatch
+            foreach (DataGridViewRow row in dgDispatch.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Shift"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+            foreach (DataGridViewRow row in dgDispatch.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                }
+            //ToolRoom
+            foreach (DataGridViewRow row in dgToolRoom.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Shift"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+            foreach (DataGridViewRow row in dgToolRoom.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                }
+
+            //Cleaning
+            foreach (DataGridViewRow row in dgCleaning.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Shift"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+            foreach (DataGridViewRow row in dgCleaning.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                }
+
             //NOT PLACED
             foreach (DataGridViewRow row in dgNotPlaced.Rows)
                 try
@@ -482,6 +528,10 @@ namespace ShopFloorPlacementPlanner
             dgBuff.ClearSelection();
             dgPaint.ClearSelection();
             dgPack.ClearSelection();
+            dgStores.ClearSelection();
+            dgDispatch.ClearSelection();
+            dgToolRoom.ClearSelection();
+            dgCleaning.ClearSelection();
 
 
         }
@@ -497,6 +547,10 @@ namespace ShopFloorPlacementPlanner
             fillBuff();
             fillPaint();
             fillPack();
+            fillStores();
+            fillDispatch();
+            fillToolroom();
+            fillCleaning();
             fillNotPlaced();
             paintGrid();
             countGrid();
@@ -525,6 +579,18 @@ namespace ShopFloorPlacementPlanner
 
             DataGridViewColumn columnPack = dgPack.Columns[1];
             columnPack.Width = 40;
+
+            DataGridViewColumn columnStores = dgPack.Columns[1];
+            columnStores.Width = 40;
+
+            DataGridViewColumn columnDispatch = dgPack.Columns[1];
+            columnDispatch.Width = 40;
+
+            DataGridViewColumn columnToolroom = dgPack.Columns[1];
+            columnToolroom.Width = 40;
+
+            DataGridViewColumn columnCleaning = dgPack.Columns[1];
+            columnCleaning.Width = 40;
         }
 
 
@@ -686,6 +752,73 @@ namespace ShopFloorPlacementPlanner
             conn.Close();
         }
 
+        private void fillStores()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            cmd.Parameters.AddWithValue("@dept", "Stores");
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            dgStores.DataSource = dt;
+
+            conn.Close();
+        }
+
+        private void fillDispatch()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            cmd.Parameters.AddWithValue("@dept", "Dispatch");
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            dgDispatch.DataSource = dt;
+
+            conn.Close();
+        }
+
+        private void fillToolroom()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            cmd.Parameters.AddWithValue("@dept", "Toolroom");
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            dgToolRoom.DataSource = dt;
+
+            conn.Close();
+        }
+
+        private void fillCleaning()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            cmd.Parameters.AddWithValue("@dept", "Cleaning");
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            dgCleaning.DataSource = dt;
+
+            conn.Close();
+        }
 
         private void fillNotPlaced()
         {
@@ -918,6 +1051,34 @@ namespace ShopFloorPlacementPlanner
 
 
 
+        }
+
+        private void btnAddStores_Click(object sender, EventArgs e)
+        {
+            frmSelectStaff frmSS = new frmSelectStaff("Stores", Convert.ToDateTime(dteDateSelection.Text));
+            frmSS.ShowDialog();
+            fillgrid();
+        }
+
+        private void btnAddDispatch_Click(object sender, EventArgs e)
+        {
+            frmSelectStaff frmSS = new frmSelectStaff("Dispatch", Convert.ToDateTime(dteDateSelection.Text));
+            frmSS.ShowDialog();
+            fillgrid();
+        }
+
+        private void btnAddToolRoom_Click(object sender, EventArgs e)
+        {
+            frmSelectStaff frmSS = new frmSelectStaff("toolroom", Convert.ToDateTime(dteDateSelection.Text));
+            frmSS.ShowDialog();
+            fillgrid();
+        }
+
+        private void btnAddCleaning_Click(object sender, EventArgs e)
+        {
+            frmSelectStaff frmSS = new frmSelectStaff("Cleaning", Convert.ToDateTime(dteDateSelection.Text));
+            frmSS.ShowDialog();
+            fillgrid();
         }
     }
 }

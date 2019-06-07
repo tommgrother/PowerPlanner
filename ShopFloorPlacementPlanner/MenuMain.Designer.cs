@@ -40,6 +40,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuMain));
             this.dgPunch = new System.Windows.Forms.DataGridView();
             this.dgBend = new System.Windows.Forms.DataGridView();
@@ -158,6 +166,18 @@
             this.label44 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
             this.txtPackAD = new System.Windows.Forms.TextBox();
+            this.label52 = new System.Windows.Forms.Label();
+            this.btnAddStores = new System.Windows.Forms.Button();
+            this.label53 = new System.Windows.Forms.Label();
+            this.btnAddToolRoom = new System.Windows.Forms.Button();
+            this.label54 = new System.Windows.Forms.Label();
+            this.label55 = new System.Windows.Forms.Label();
+            this.btnAddCleaning = new System.Windows.Forms.Button();
+            this.btnAddDispatch = new System.Windows.Forms.Button();
+            this.dgStores = new System.Windows.Forms.DataGridView();
+            this.dgToolRoom = new System.Windows.Forms.DataGridView();
+            this.dgCleaning = new System.Windows.Forms.DataGridView();
+            this.dgDispatch = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -168,6 +188,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgLaser)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSlimline)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgStores)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgToolRoom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgCleaning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgDispatch)).BeginInit();
             this.SuspendLayout();
             // 
             // dgPunch
@@ -192,7 +216,7 @@
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPunch.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgPunch.RowTemplate.Height = 40;
-            this.dgPunch.Size = new System.Drawing.Size(200, 296);
+            this.dgPunch.Size = new System.Drawing.Size(200, 158);
             this.dgPunch.TabIndex = 0;
             // 
             // dgBend
@@ -210,7 +234,7 @@
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBend.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgBend.RowTemplate.Height = 40;
-            this.dgBend.Size = new System.Drawing.Size(200, 296);
+            this.dgBend.Size = new System.Drawing.Size(200, 158);
             this.dgBend.TabIndex = 1;
             // 
             // dgWeld
@@ -228,7 +252,7 @@
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgWeld.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgWeld.RowTemplate.Height = 40;
-            this.dgWeld.Size = new System.Drawing.Size(200, 296);
+            this.dgWeld.Size = new System.Drawing.Size(200, 158);
             this.dgWeld.TabIndex = 2;
             // 
             // dgBuff
@@ -246,7 +270,7 @@
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBuff.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgBuff.RowTemplate.Height = 40;
-            this.dgBuff.Size = new System.Drawing.Size(200, 296);
+            this.dgBuff.Size = new System.Drawing.Size(200, 158);
             this.dgBuff.TabIndex = 3;
             // 
             // dgPaint
@@ -264,7 +288,7 @@
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPaint.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgPaint.RowTemplate.Height = 40;
-            this.dgPaint.Size = new System.Drawing.Size(225, 296);
+            this.dgPaint.Size = new System.Drawing.Size(225, 158);
             this.dgPaint.TabIndex = 4;
             // 
             // dgPack
@@ -282,7 +306,7 @@
             dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPack.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgPack.RowTemplate.Height = 40;
-            this.dgPack.Size = new System.Drawing.Size(200, 296);
+            this.dgPack.Size = new System.Drawing.Size(200, 158);
             this.dgPack.TabIndex = 5;
             // 
             // dteDateSelection
@@ -422,7 +446,7 @@
             this.dgNotPlaced.Location = new System.Drawing.Point(1706, 167);
             this.dgNotPlaced.Name = "dgNotPlaced";
             this.dgNotPlaced.RowHeadersVisible = false;
-            this.dgNotPlaced.Size = new System.Drawing.Size(200, 349);
+            this.dgNotPlaced.Size = new System.Drawing.Size(200, 334);
             this.dgNotPlaced.TabIndex = 19;
             // 
             // label7
@@ -440,7 +464,7 @@
             // 
             this.splitter1.Location = new System.Drawing.Point(0, 24);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 558);
+            this.splitter1.Size = new System.Drawing.Size(3, 543);
             this.splitter1.TabIndex = 21;
             this.splitter1.TabStop = false;
             // 
@@ -486,7 +510,7 @@
             dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgLaser.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dgLaser.RowTemplate.Height = 40;
-            this.dgLaser.Size = new System.Drawing.Size(200, 296);
+            this.dgLaser.Size = new System.Drawing.Size(200, 158);
             this.dgLaser.TabIndex = 22;
             // 
             // txtPunchMen
@@ -884,7 +908,7 @@
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgSlimline.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgSlimline.RowTemplate.Height = 40;
-            this.dgSlimline.Size = new System.Drawing.Size(200, 296);
+            this.dgSlimline.Size = new System.Drawing.Size(200, 158);
             this.dgSlimline.TabIndex = 54;
             // 
             // label26
@@ -1341,12 +1365,209 @@
             this.txtPackAD.TabIndex = 115;
             this.txtPackAD.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // label52
+            // 
+            this.label52.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label52.Location = new System.Drawing.Point(43, 390);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(75, 26);
+            this.label52.TabIndex = 124;
+            this.label52.Text = "Stores";
+            // 
+            // btnAddStores
+            // 
+            this.btnAddStores.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnAddStores.Location = new System.Drawing.Point(152, 393);
+            this.btnAddStores.Name = "btnAddStores";
+            this.btnAddStores.Size = new System.Drawing.Size(57, 23);
+            this.btnAddStores.TabIndex = 123;
+            this.btnAddStores.Text = "Update";
+            this.btnAddStores.UseVisualStyleBackColor = true;
+            this.btnAddStores.Click += new System.EventHandler(this.btnAddStores_Click);
+            // 
+            // label53
+            // 
+            this.label53.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label53.AutoSize = true;
+            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label53.Location = new System.Drawing.Point(443, 390);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(118, 26);
+            this.label53.TabIndex = 122;
+            this.label53.Text = "Tool Room";
+            // 
+            // btnAddToolRoom
+            // 
+            this.btnAddToolRoom.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnAddToolRoom.Location = new System.Drawing.Point(570, 393);
+            this.btnAddToolRoom.Name = "btnAddToolRoom";
+            this.btnAddToolRoom.Size = new System.Drawing.Size(57, 23);
+            this.btnAddToolRoom.TabIndex = 121;
+            this.btnAddToolRoom.Text = "Update";
+            this.btnAddToolRoom.UseVisualStyleBackColor = true;
+            this.btnAddToolRoom.Click += new System.EventHandler(this.btnAddToolRoom_Click);
+            // 
+            // label54
+            // 
+            this.label54.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label54.AutoSize = true;
+            this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label54.Location = new System.Drawing.Point(657, 389);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(98, 26);
+            this.label54.TabIndex = 120;
+            this.label54.Text = "Cleaning";
+            // 
+            // label55
+            // 
+            this.label55.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label55.AutoSize = true;
+            this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label55.Location = new System.Drawing.Point(255, 390);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(97, 26);
+            this.label55.TabIndex = 119;
+            this.label55.Text = "Dispatch";
+            // 
+            // btnAddCleaning
+            // 
+            this.btnAddCleaning.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnAddCleaning.Location = new System.Drawing.Point(777, 393);
+            this.btnAddCleaning.Name = "btnAddCleaning";
+            this.btnAddCleaning.Size = new System.Drawing.Size(57, 23);
+            this.btnAddCleaning.TabIndex = 118;
+            this.btnAddCleaning.Text = "Update";
+            this.btnAddCleaning.UseVisualStyleBackColor = true;
+            this.btnAddCleaning.Click += new System.EventHandler(this.btnAddCleaning_Click);
+            // 
+            // btnAddDispatch
+            // 
+            this.btnAddDispatch.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnAddDispatch.Location = new System.Drawing.Point(364, 393);
+            this.btnAddDispatch.Name = "btnAddDispatch";
+            this.btnAddDispatch.Size = new System.Drawing.Size(57, 23);
+            this.btnAddDispatch.TabIndex = 117;
+            this.btnAddDispatch.Text = "Update";
+            this.btnAddDispatch.UseVisualStyleBackColor = true;
+            this.btnAddDispatch.Click += new System.EventHandler(this.btnAddDispatch_Click);
+            // 
+            // dgStores
+            // 
+            this.dgStores.AllowUserToAddRows = false;
+            this.dgStores.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.dgStores.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgStores.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            this.dgStores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgStores.DefaultCellStyle = dataGridViewCellStyle14;
+            this.dgStores.Enabled = false;
+            this.dgStores.Location = new System.Drawing.Point(12, 422);
+            this.dgStores.Name = "dgStores";
+            this.dgStores.RowHeadersVisible = false;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgStores.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            this.dgStores.RowTemplate.Height = 40;
+            this.dgStores.Size = new System.Drawing.Size(200, 117);
+            this.dgStores.TabIndex = 128;
+            // 
+            // dgToolRoom
+            // 
+            this.dgToolRoom.AllowUserToAddRows = false;
+            this.dgToolRoom.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.dgToolRoom.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgToolRoom.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgToolRoom.DefaultCellStyle = dataGridViewCellStyle16;
+            this.dgToolRoom.Enabled = false;
+            this.dgToolRoom.Location = new System.Drawing.Point(430, 422);
+            this.dgToolRoom.Name = "dgToolRoom";
+            this.dgToolRoom.RowHeadersVisible = false;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgToolRoom.RowsDefaultCellStyle = dataGridViewCellStyle17;
+            this.dgToolRoom.RowTemplate.Height = 40;
+            this.dgToolRoom.Size = new System.Drawing.Size(200, 117);
+            this.dgToolRoom.TabIndex = 127;
+            // 
+            // dgCleaning
+            // 
+            this.dgCleaning.AllowUserToAddRows = false;
+            this.dgCleaning.AllowUserToDeleteRows = false;
+            this.dgCleaning.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.dgCleaning.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgCleaning.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgCleaning.Enabled = false;
+            this.dgCleaning.Location = new System.Drawing.Point(637, 422);
+            this.dgCleaning.Name = "dgCleaning";
+            this.dgCleaning.RowHeadersVisible = false;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgCleaning.RowsDefaultCellStyle = dataGridViewCellStyle18;
+            this.dgCleaning.RowTemplate.Height = 40;
+            this.dgCleaning.Size = new System.Drawing.Size(200, 117);
+            this.dgCleaning.TabIndex = 126;
+            // 
+            // dgDispatch
+            // 
+            this.dgDispatch.AllowUserToAddRows = false;
+            this.dgDispatch.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.dgDispatch.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgDispatch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgDispatch.DefaultCellStyle = dataGridViewCellStyle19;
+            this.dgDispatch.Enabled = false;
+            this.dgDispatch.Location = new System.Drawing.Point(224, 422);
+            this.dgDispatch.Name = "dgDispatch";
+            this.dgDispatch.RowHeadersVisible = false;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgDispatch.RowsDefaultCellStyle = dataGridViewCellStyle20;
+            this.dgDispatch.RowTemplate.Height = 40;
+            this.dgDispatch.Size = new System.Drawing.Size(200, 117);
+            this.dgDispatch.TabIndex = 125;
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1932, 582);
+            this.ClientSize = new System.Drawing.Size(1932, 567);
+            this.Controls.Add(this.dgStores);
+            this.Controls.Add(this.dgToolRoom);
+            this.Controls.Add(this.dgCleaning);
+            this.Controls.Add(this.dgDispatch);
+            this.Controls.Add(this.label52);
+            this.Controls.Add(this.btnAddStores);
+            this.Controls.Add(this.label53);
+            this.Controls.Add(this.btnAddToolRoom);
+            this.Controls.Add(this.label54);
+            this.Controls.Add(this.label55);
+            this.Controls.Add(this.btnAddCleaning);
+            this.Controls.Add(this.btnAddDispatch);
             this.Controls.Add(this.label49);
             this.Controls.Add(this.txtPackAD);
             this.Controls.Add(this.label44);
@@ -1475,6 +1696,10 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSlimline)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgStores)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgToolRoom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgCleaning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgDispatch)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1599,6 +1824,18 @@
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.TextBox txtPackAD;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.Button btnAddStores;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Button btnAddToolRoom;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.Button btnAddCleaning;
+        private System.Windows.Forms.Button btnAddDispatch;
+        private System.Windows.Forms.DataGridView dgStores;
+        private System.Windows.Forms.DataGridView dgToolRoom;
+        private System.Windows.Forms.DataGridView dgCleaning;
+        private System.Windows.Forms.DataGridView dgDispatch;
     }
 }
 
