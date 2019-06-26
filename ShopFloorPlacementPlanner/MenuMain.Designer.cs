@@ -785,6 +785,7 @@
             this.copyPlacementsToolStripMenuItem.Name = "copyPlacementsToolStripMenuItem";
             this.copyPlacementsToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
             this.copyPlacementsToolStripMenuItem.Text = "Copy Placements";
+            this.copyPlacementsToolStripMenuItem.Visible = false;
             this.copyPlacementsToolStripMenuItem.Click += new System.EventHandler(this.copyPlacementsToolStripMenuItem_Click);
             // 
             // sendToDailyGoalsToolStripMenuItem

@@ -961,7 +961,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     MessageBox.Show("An error has occured, if this error persists please contact IT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+
+                try
+                {
+                    //UPDATES AUTOPLACEMENTS IN AUTOMATIC ALLOCATION
+                    updateAutomaticAllocation();
+
+                }
+                catch
+                {
+                    MessageBox.Show("An error has occured with automatic allocation script, if this error persists please contact IT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
             }
 
@@ -1023,6 +1033,12 @@ namespace ShopFloorPlacementPlanner
 
         private void updateAutomaticAllocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            updateAutomaticAllocation();
+            
+        }
+
+        private void updateAutomaticAllocation()
+        {
             //CLEARS ALL EXISTING SELECTION FROM THE TABLE FOR THIS DEPARTMENT
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
@@ -1030,7 +1046,7 @@ namespace ShopFloorPlacementPlanner
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.ExecuteNonQuery();
-            
+            MessageBox.Show("Automatic allocation updated successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void loadDefaultsToolStripMenuItem_Click(object sender, EventArgs e)
