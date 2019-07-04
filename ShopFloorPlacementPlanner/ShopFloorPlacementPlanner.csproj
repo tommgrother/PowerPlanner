@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
-    <ApplicationRevision>32</ApplicationRevision>
+    <ApplicationRevision>33</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -118,6 +118,13 @@
     </Compile>
     <Compile Include="Overtime.cs" />
     <Compile Include="Placement.cs" />
+    <Compile Include="PlacementNote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlacementNote.Designer.cs">
+      <DependentUpon>PlacementNote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlacementNoteClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Staff.cs" />
@@ -135,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MenuMain.resx">
       <DependentUpon>MenuMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlacementNote.resx">
+      <DependentUpon>PlacementNote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

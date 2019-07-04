@@ -345,7 +345,7 @@ namespace ShopFloorPlacementPlanner
 
         private void paintGrid()
         {
-
+            int placementID = 0;
             //slimline
             foreach (DataGridViewRow row in dgSlimline.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
@@ -357,6 +357,19 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+
+            foreach(DataGridViewRow row in dgSlimline.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
+
             //PUNCH
             foreach (DataGridViewRow row in dgPunch.Rows)
                     if (row.Cells[0].Value.ToString().Contains("Shift"))
@@ -368,6 +381,17 @@ namespace ShopFloorPlacementPlanner
                     {
                         row.DefaultCellStyle.BackColor = Color.MediumPurple;
                     }
+                foreach (DataGridViewRow row in dgPunch.Rows)
+                {
+                    placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                    PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                    pnc.getNote();
+
+                    if (pnc._hasNote == true)
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                    }
+                }
             //LASER
             foreach (DataGridViewRow row in dgLaser.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
@@ -379,6 +403,18 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+            foreach (DataGridViewRow row in dgLaser.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
+
 
             //Bend
             foreach (DataGridViewRow row in dgBend.Rows)
@@ -391,6 +427,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+            foreach (DataGridViewRow row in dgBend.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
 
 
 
@@ -405,6 +452,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+            foreach (DataGridViewRow row in dgWeld.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
 
             //Buff
             foreach (DataGridViewRow row in dgBuff.Rows)
@@ -417,6 +475,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+            foreach (DataGridViewRow row in dgBuff.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
 
             //Paint
             foreach (DataGridViewRow row in dgPaint.Rows)
@@ -429,6 +498,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+            foreach (DataGridViewRow row in dgPaint.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
 
             //Pack
             foreach (DataGridViewRow row in dgPack.Rows)
@@ -441,6 +521,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+            foreach (DataGridViewRow row in dgPack.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
 
             //Stores
             foreach (DataGridViewRow row in dgStores.Rows)
@@ -453,6 +544,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+            foreach (DataGridViewRow row in dgStores.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
             //Dispatch
             foreach (DataGridViewRow row in dgDispatch.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
@@ -464,6 +566,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+            foreach (DataGridViewRow row in dgDispatch.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
             //ToolRoom
             foreach (DataGridViewRow row in dgToolRoom.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
@@ -475,6 +588,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+            foreach (DataGridViewRow row in dgToolRoom.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
 
             //Cleaning
             foreach (DataGridViewRow row in dgCleaning.Rows)
@@ -487,6 +611,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+            foreach (DataGridViewRow row in dgCleaning.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
 
             //NOT PLACED
             foreach (DataGridViewRow row in dgNotPlaced.Rows)
@@ -514,6 +649,12 @@ namespace ShopFloorPlacementPlanner
                 {
 
                 }
+
+
+
+
+
+
 
 
 
@@ -556,39 +697,74 @@ namespace ShopFloorPlacementPlanner
             countGrid();
 
 
+
+            DataGridViewColumn columnSlimlineID = dgSlimline.Columns[2];
+            columnSlimlineID.Visible = false;
             DataGridViewColumn columnSlimline = dgSlimline.Columns[1];
             columnSlimline.Width = 40;
 
+
+            DataGridViewColumn columnLaserID = dgLaser.Columns[2];
+            columnLaserID.Visible = false;
             DataGridViewColumn columnLaser = dgLaser.Columns[1];
             columnLaser.Width = 40;
 
+
+            DataGridViewColumn columnPunchID = dgPunch.Columns[2];
+            columnPunchID.Visible = false;
             DataGridViewColumn columnPunch = dgPunch.Columns[1];
             columnPunch.Width = 40;
 
+
+            DataGridViewColumn columnBendID = dgBend.Columns[2];
+            columnBendID.Visible = false;
             DataGridViewColumn columnBend = dgBend.Columns[1];
             columnBend.Width = 40;
 
+
+            DataGridViewColumn columnWeldID = dgWeld.Columns[2];
+            columnWeldID.Visible = false;
             DataGridViewColumn columnWeld = dgWeld.Columns[1];
             columnWeld.Width = 40;
 
+            DataGridViewColumn columnBuffID = dgBuff.Columns[2];
+            columnBuffID.Visible = false;
             DataGridViewColumn columnBuff = dgBuff.Columns[1];
             columnBuff.Width = 40;
 
+
+            DataGridViewColumn columnPaintID = dgPaint.Columns[2];
+            columnPaintID.Visible = false;
             DataGridViewColumn columnPaint = dgPaint.Columns[1];
             columnPaint.Width = 40;
 
+
+            DataGridViewColumn columnPackID = dgPack.Columns[2];
+            columnPackID.Visible = false;
             DataGridViewColumn columnPack = dgPack.Columns[1];
             columnPack.Width = 40;
 
+
+            DataGridViewColumn columnStoresID = dgStores.Columns[2];
+            columnStoresID.Visible = false;
             DataGridViewColumn columnStores = dgStores.Columns[1];
             columnStores.Width = 40;
 
+
+            DataGridViewColumn columnDispatchID = dgDispatch.Columns[2];
+            columnDispatchID.Visible = false;
             DataGridViewColumn columnDispatch = dgDispatch.Columns[1];
             columnDispatch.Width = 40;
 
+
+            DataGridViewColumn columnToolRoomID = dgToolRoom.Columns[2];
+            columnToolRoomID.Visible = false;
             DataGridViewColumn columnToolroom = dgToolRoom.Columns[1];
             columnToolroom.Width = 40;
 
+
+            DataGridViewColumn columnCleaningID = dgCleaning.Columns[2];
+            columnCleaningID.Visible = false;
             DataGridViewColumn columnCleaning = dgCleaning.Columns[1];
             columnCleaning.Width = 40;
         }
@@ -599,7 +775,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Slimline");
 
@@ -619,7 +795,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Punching");
 
@@ -637,7 +813,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Laser");
 
@@ -657,7 +833,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Bending");
 
@@ -676,7 +852,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Welding");
 
@@ -697,7 +873,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Dressing");
 
@@ -718,7 +894,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Painting");
 
@@ -739,7 +915,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Packing");
 
@@ -756,7 +932,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Stores");
 
@@ -773,7 +949,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Dispatch");
 
@@ -790,7 +966,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Toolroom");
 
@@ -807,7 +983,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Cleaning");
 

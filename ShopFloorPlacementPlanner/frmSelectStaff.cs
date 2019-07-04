@@ -226,16 +226,37 @@ namespace ShopFloorPlacementPlanner
 
         private void paintGrid()
         {
+            int placementID=0;
+
+
             foreach (DataGridViewRow row in dgSelected.Rows)
+            {
                 if (row.Cells[3].Value.ToString() == "Shift")
                 {
                     row.DefaultCellStyle.BackColor = Color.Red;
                 }
+            }
+
             foreach (DataGridViewRow row in dgSelected.Rows)
+            {
                 if (row.Cells[3].Value.ToString() == "Half Day")
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
-                }  
+                }
+            }
+               
+            foreach (DataGridViewRow row in dgSelected.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[0].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
+              
                 
 
 
@@ -348,6 +369,13 @@ namespace ShopFloorPlacementPlanner
                 }
             }
 
+            //Note BUTTON
+            if (e.ColumnIndex == dgSelected.Columns["Note"].Index)
+            {
+                PlacementNote pn = new PlacementNote(placementID);
+                pn.ShowDialog();
+                checkExistingSelections();
+            }
 
 
 
@@ -421,10 +449,10 @@ namespace ShopFloorPlacementPlanner
                     if (dgSelected.Columns["manual_column"] == null)
                     {
                         dgSelected.Columns.Insert(columnIndex, manualButton);
-                }
+                    }
 
 
-                DataGridViewButtonColumn deleteButton = new DataGridViewButtonColumn();
+                    DataGridViewButtonColumn deleteButton = new DataGridViewButtonColumn();
                     deleteButton.Name = "Remove";
                     deleteButton.Text = "Remove";
                     deleteButton.UseColumnTextForButtonValue = true;
@@ -432,6 +460,16 @@ namespace ShopFloorPlacementPlanner
                     if (dgSelected.Columns["uninstall_column"] == null)
                     {
                         dgSelected.Columns.Insert(columnIndex, deleteButton);
+                    }
+
+                    DataGridViewButtonColumn noteButton = new DataGridViewButtonColumn();
+                    noteButton.Name = "Note";
+                    noteButton.Text = "Note";
+                    noteButton.UseColumnTextForButtonValue = true;
+                    columnIndex = 10;
+                    if (dgSelected.Columns["note_column"] == null)
+                    {
+                        dgSelected.Columns.Insert(columnIndex, noteButton);
                     }
 
 
