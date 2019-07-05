@@ -29,9 +29,10 @@ namespace ShopFloorPlacementPlanner
 
             SqlDataReader rdr = cmd.ExecuteReader();
 
-
+          
             if (rdr.Read())
             {
+                
                 if (string.IsNullOrWhiteSpace(rdr["placement_note"].ToString()))
                 {
                     _hasNote = false;
@@ -44,12 +45,13 @@ namespace ShopFloorPlacementPlanner
             }
             else
             {
+              
                 _hasNote = false;
             }
 
-            
 
-          
+            conn.Close();
+
 
         }
 
