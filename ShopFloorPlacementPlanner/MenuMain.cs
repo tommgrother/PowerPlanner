@@ -653,14 +653,6 @@ namespace ShopFloorPlacementPlanner
 
 
 
-
-
-
-
-
-
-
-
             dgSlimline.ClearSelection();
             dgPunch.ClearSelection();
             dgLaser.ClearSelection();
