@@ -1264,5 +1264,10 @@ namespace ShopFloorPlacementPlanner
             frmSS.ShowDialog();
             fillgrid();
         }
+
+        private void dgWeld_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

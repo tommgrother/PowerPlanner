@@ -406,9 +406,6 @@ namespace ShopFloorPlacementPlanner
                     populateExisting();
                    
 
-
-
-
                     DataGridViewButtonColumn fullDayButton = new DataGridViewButtonColumn();
                     fullDayButton.Name = "Full";
                     fullDayButton.Text = "Full";
@@ -490,7 +487,7 @@ namespace ShopFloorPlacementPlanner
             //Adds the existing selections back into the selection window
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-            using (SqlCommand cmd = new SqlCommand("SELECT PlacementID,staff_id as 'Staff ID',[Staff Name] as 'Full Name',Placement as 'Placement Type',hours as 'Hours' from dbo.view_planner_punch_staff where date_plan = @selectedDate and department = @dept and [current]=1 order by placementID ", conn))
+            using (SqlCommand cmd = new SqlCommand("SELECT PlacementID,staff_id as 'Staff ID',[Staff Name] as 'Full Name',Placement as 'Placement Type',hours as 'Hours' from dbo.view_planner_punch_staff where date_plan = @selectedDate and department = @dept order by placementID ", conn))
             {
                 cmd.Parameters.AddWithValue("@selectedDate", _selectedDate);
                 cmd.Parameters.AddWithValue("@dept", _department);
@@ -549,6 +546,9 @@ namespace ShopFloorPlacementPlanner
             
             dayOfWeek = _selectedDate.DayOfWeek.ToString();
 
+            //Differing standard hours for certain users
+
+
             if (dayOfWeek == "Friday")
             {
                 switch (staffID)
@@ -602,7 +602,26 @@ namespace ShopFloorPlacementPlanner
             p.notPresent();
             p.checkPlacement();
 
-           
+            p.getWeldTeamUserID();
+            p.checkWeldTeamAbsence();
+
+
+            //CHECKS IF STAFF MEMBERS IN WELD TEAM 2 ARE CURRENTLY ON HOLIDAY OR ABSENT
+            if (s._staffID == 165)
+            {
+                if (p._weldTeamMembersPresent == 1)
+                {
+                    p._hours = _standardHours / 2;
+                    MessageBox.Show("One member of this weld team is either absent or on holiday. Adding half the hours", "Half Placement", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                if (p._weldTeamMembersPresent == 2)
+                {
+                    p._hours = _standardHours * 0;
+                    MessageBox.Show("Both members of this team are either absent or on holiday", "Zero Placement", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+            }
+            
 
             if (p._notPresentType == 5 || p._notPresentType == 2)
             {

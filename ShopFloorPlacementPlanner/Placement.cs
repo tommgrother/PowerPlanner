@@ -18,6 +18,8 @@ namespace ShopFloorPlacementPlanner
         public string _placement_type { get; set; }
         public double _hours { get; set; }
         public int _notPresentType { get; set; }
+        public int[] _weldTeamStaffID { get; set; }
+        public int _weldTeamMembersPresent { get; set; }
 
 
         public bool _alreadyPlaced { get; set; }
@@ -49,7 +51,62 @@ namespace ShopFloorPlacementPlanner
                 conn.Close();
             }
         }
-     
+
+        public void getWeldTeamUserID()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+
+            using (SqlCommand cmd = new SqlCommand("SELECT * from dbo.allocation_welding_team where linked_staff_id= @id", conn))
+            {
+                cmd.Parameters.AddWithValue("@id", _staffID);
+                conn.Open();
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                if (rdr.Read())
+                {
+                    _weldTeamStaffID = new int[2] {Convert.ToInt16(rdr["user_id_1"]), Convert.ToInt16(rdr["user_id_2"]) };
+                }
+
+                conn.Close();
+               
+
+            }
+        }
+
+        public void checkWeldTeamAbsence()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+
+            int members = 0;
+
+            int userId1= _weldTeamStaffID[0];
+            int userID2= _weldTeamStaffID[1];
+
+            using (SqlCommand cmd = new SqlCommand("SELECT * from dbo.absent_holidays WHERE (staff_id = @staffID1 or staff_id = @staffID2) and date_absent = @dateAbsent", conn))
+            {
+                cmd.Parameters.AddWithValue("@staffID1", _weldTeamStaffID[0]);
+                cmd.Parameters.AddWithValue("@staffID2", _weldTeamStaffID[1]);
+                cmd.Parameters.AddWithValue("@dateAbsent", _selectedDate);
+                conn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                if (rdr.HasRows)
+                {
+                    while (rdr.Read())
+                    {
+                        members++;
+                    }
+                }
+
+                conn.Close();
+
+                _weldTeamMembersPresent = members;
+
+
+
+            }
+        }
 
 
 

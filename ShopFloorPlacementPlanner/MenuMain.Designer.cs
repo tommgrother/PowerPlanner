@@ -179,6 +179,7 @@
             this.dgCleaning = new System.Windows.Forms.DataGridView();
             this.dgDispatch = new System.Windows.Forms.DataGridView();
             this.label56 = new System.Windows.Forms.Label();
+            this.floorListingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -255,6 +256,7 @@
             this.dgWeld.RowTemplate.Height = 40;
             this.dgWeld.Size = new System.Drawing.Size(200, 154);
             this.dgWeld.TabIndex = 2;
+            this.dgWeld.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeld_CellClick);
             // 
             // dgBuff
             // 
@@ -774,7 +776,8 @@
             this.printDayToolStripMenuItem,
             this.printScreenToolStripMenuItem,
             this.updateAutomaticAllocationToolStripMenuItem,
-            this.loadDefaultsToolStripMenuItem});
+            this.loadDefaultsToolStripMenuItem,
+            this.floorListingsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1932, 24);
@@ -1564,6 +1567,12 @@
             this.label56.TabIndex = 129;
             this.label56.Text = "Note";
             // 
+            // floorListingsToolStripMenuItem
+            // 
+            this.floorListingsToolStripMenuItem.Name = "floorListingsToolStripMenuItem";
+            this.floorListingsToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
+            this.floorListingsToolStripMenuItem.Text = "Floor Listings";
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1852,6 +1861,7 @@
         private System.Windows.Forms.DataGridView dgCleaning;
         private System.Windows.Forms.DataGridView dgDispatch;
         private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.ToolStripMenuItem floorListingsToolStripMenuItem;
     }
 }
 
