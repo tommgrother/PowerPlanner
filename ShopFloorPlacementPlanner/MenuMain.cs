@@ -24,6 +24,7 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Punching", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
+            updateDailyGoals();
             fillgrid();
         }
 
@@ -31,6 +32,7 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Bending", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
+            updateDailyGoals();
             fillgrid();
         }
 
@@ -38,6 +40,7 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Welding", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
+            updateDailyGoals();
             fillgrid();
         }
 
@@ -45,6 +48,7 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Dressing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
+            updateDailyGoals();
             fillgrid();
         }
 
@@ -52,6 +56,7 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Painting", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
+            updateDailyGoals();
             fillgrid();
         }
 
@@ -59,6 +64,7 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Packing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
+            updateDailyGoals();
             fillgrid();
         }
 
@@ -1023,6 +1029,7 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Laser", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
+            updateDailyGoals();
             fillgrid();
         }
 
@@ -1037,10 +1044,17 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Slimline", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
+            updateDailyGoals();
             fillgrid();
         }
 
         private void sendToDailyGoalsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            updateDailyGoals();
+
+        }
+
+        private void updateDailyGoals()
         {
             double goalHoursSlimline;
             double goalHoursLaser;
@@ -1099,7 +1113,7 @@ namespace ShopFloorPlacementPlanner
                 "man_power_buff = @manPowerBuff, " +
                 "man_power_paint = @manPowerPaint, " +
                 "man_power_pack = @manPowerPack " +
-                " WHERE date_goal = @dateGoal",conn))
+                " WHERE date_goal = @dateGoal", conn))
             {
 
                 cmd.Parameters.AddWithValue("@goalHoursSlimline", goalHoursSlimline);
@@ -1142,7 +1156,6 @@ namespace ShopFloorPlacementPlanner
                 }
 
             }
-
 
         }
 
