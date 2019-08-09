@@ -76,32 +76,38 @@ namespace ShopFloorPlacementPlanner
 
         public void checkWeldTeamAbsence()
         {
-            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-            int members = 0;
 
-            int userId1= _weldTeamStaffID[0];
-            int userID2= _weldTeamStaffID[1];
-
-            using (SqlCommand cmd = new SqlCommand("SELECT * from dbo.absent_holidays WHERE (staff_id = @staffID1 or staff_id = @staffID2) and date_absent = @dateAbsent", conn))
+            if (_staffID == 165)
             {
-                cmd.Parameters.AddWithValue("@staffID1", _weldTeamStaffID[0]);
-                cmd.Parameters.AddWithValue("@staffID2", _weldTeamStaffID[1]);
-                cmd.Parameters.AddWithValue("@dateAbsent", _selectedDate);
-                conn.Open();
-                SqlDataReader rdr = cmd.ExecuteReader();
+                SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-                if (rdr.HasRows)
+                int members = 0;
+
+                int userId1 = _weldTeamStaffID[0];
+                int userID2 = _weldTeamStaffID[1];
+
+                using (SqlCommand cmd = new SqlCommand("SELECT * from dbo.absent_holidays WHERE (staff_id = @staffID1 or staff_id = @staffID2) and date_absent = @dateAbsent", conn))
                 {
-                    while (rdr.Read())
+                    cmd.Parameters.AddWithValue("@staffID1", _weldTeamStaffID[0]);
+                    cmd.Parameters.AddWithValue("@staffID2", _weldTeamStaffID[1]);
+                    cmd.Parameters.AddWithValue("@dateAbsent", _selectedDate);
+                    conn.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+
+                    if (rdr.HasRows)
                     {
-                        members++;
+                        while (rdr.Read())
+                        {
+                            members++;
+                        }
                     }
+
+                    conn.Close();
+
+                    _weldTeamMembersPresent = members;
                 }
-
-                conn.Close();
-
-                _weldTeamMembersPresent = members;
+            
 
 
 
