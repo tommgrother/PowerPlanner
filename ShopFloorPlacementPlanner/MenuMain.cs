@@ -720,6 +720,7 @@ namespace ShopFloorPlacementPlanner
             dgCleaning.ClearSelection();
             dgManagement.ClearSelection();
             dgHS.ClearSelection();
+            dgNotPlaced.ClearSelection();
 
 
         }
