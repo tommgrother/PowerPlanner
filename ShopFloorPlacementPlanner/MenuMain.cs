@@ -745,6 +745,7 @@ namespace ShopFloorPlacementPlanner
             fillNotPlaced();
             paintGrid();
             countGrid();
+            countMen();
 
 
 
@@ -830,7 +831,22 @@ namespace ShopFloorPlacementPlanner
             columnHS.Width = 40;
         }
 
+        private void countMen()
+        {
 
+            double menCount=0;
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("usp_power_planner_count_men", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@dateSelected", SqlDbType.Date).Value = dteDateSelection.Text;
+
+            menCount = Convert.ToDouble(cmd.ExecuteScalar());
+            conn.Close();
+
+            lblMenCount.Text = "Total amount of men: " + menCount.ToString();
+
+        }
 
         private void fillSlimline()
         {

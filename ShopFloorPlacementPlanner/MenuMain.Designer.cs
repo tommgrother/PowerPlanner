@@ -188,6 +188,7 @@
             this.dgHS = new System.Windows.Forms.DataGridView();
             this.label58 = new System.Windows.Forms.Label();
             this.btnAddHS = new System.Windows.Forms.Button();
+            this.lblMenCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -1662,12 +1663,23 @@
             this.btnAddHS.UseVisualStyleBackColor = true;
             this.btnAddHS.Click += new System.EventHandler(this.BtnAddHS_Click);
             // 
+            // lblMenCount
+            // 
+            this.lblMenCount.AutoSize = true;
+            this.lblMenCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMenCount.Location = new System.Drawing.Point(185, 28);
+            this.lblMenCount.Name = "lblMenCount";
+            this.lblMenCount.Size = new System.Drawing.Size(60, 20);
+            this.lblMenCount.TabIndex = 136;
+            this.lblMenCount.Text = "label59";
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1932, 563);
+            this.Controls.Add(this.lblMenCount);
             this.Controls.Add(this.btnAddHS);
             this.Controls.Add(this.label58);
             this.Controls.Add(this.dgHS);
@@ -1965,6 +1977,7 @@
         private System.Windows.Forms.DataGridView dgHS;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Button btnAddHS;
+        private System.Windows.Forms.Label lblMenCount;
     }
 }
 
