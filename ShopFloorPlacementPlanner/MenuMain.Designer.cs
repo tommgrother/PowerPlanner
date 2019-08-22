@@ -48,6 +48,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuMain));
             this.dgPunch = new System.Windows.Forms.DataGridView();
             this.dgBend = new System.Windows.Forms.DataGridView();
@@ -180,6 +182,12 @@
             this.dgCleaning = new System.Windows.Forms.DataGridView();
             this.dgDispatch = new System.Windows.Forms.DataGridView();
             this.label56 = new System.Windows.Forms.Label();
+            this.dgManagement = new System.Windows.Forms.DataGridView();
+            this.label57 = new System.Windows.Forms.Label();
+            this.btnAddManagement = new System.Windows.Forms.Button();
+            this.dgHS = new System.Windows.Forms.DataGridView();
+            this.label58 = new System.Windows.Forms.Label();
+            this.btnAddHS = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -194,6 +202,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgToolRoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgCleaning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgDispatch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgManagement)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgHS)).BeginInit();
             this.SuspendLayout();
             // 
             // dgPunch
@@ -1573,12 +1583,96 @@
             this.label56.TabIndex = 129;
             this.label56.Text = "Note";
             // 
+            // dgManagement
+            // 
+            this.dgManagement.AllowUserToAddRows = false;
+            this.dgManagement.AllowUserToDeleteRows = false;
+            this.dgManagement.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.dgManagement.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgManagement.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgManagement.Enabled = false;
+            this.dgManagement.Location = new System.Drawing.Point(840, 380);
+            this.dgManagement.Name = "dgManagement";
+            this.dgManagement.RowHeadersVisible = false;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgManagement.RowsDefaultCellStyle = dataGridViewCellStyle21;
+            this.dgManagement.RowTemplate.Height = 40;
+            this.dgManagement.Size = new System.Drawing.Size(200, 155);
+            this.dgManagement.TabIndex = 130;
+            // 
+            // label57
+            // 
+            this.label57.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label57.AutoSize = true;
+            this.label57.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label57.Location = new System.Drawing.Point(842, 347);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(139, 26);
+            this.label57.TabIndex = 131;
+            this.label57.Text = "Management";
+            // 
+            // btnAddManagement
+            // 
+            this.btnAddManagement.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnAddManagement.Location = new System.Drawing.Point(983, 351);
+            this.btnAddManagement.Name = "btnAddManagement";
+            this.btnAddManagement.Size = new System.Drawing.Size(57, 23);
+            this.btnAddManagement.TabIndex = 132;
+            this.btnAddManagement.Text = "Update";
+            this.btnAddManagement.UseVisualStyleBackColor = true;
+            this.btnAddManagement.Click += new System.EventHandler(this.BtnAddManagement_Click);
+            // 
+            // dgHS
+            // 
+            this.dgHS.AllowUserToAddRows = false;
+            this.dgHS.AllowUserToDeleteRows = false;
+            this.dgHS.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.dgHS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgHS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgHS.Enabled = false;
+            this.dgHS.Location = new System.Drawing.Point(1046, 380);
+            this.dgHS.Name = "dgHS";
+            this.dgHS.RowHeadersVisible = false;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgHS.RowsDefaultCellStyle = dataGridViewCellStyle22;
+            this.dgHS.RowTemplate.Height = 40;
+            this.dgHS.Size = new System.Drawing.Size(200, 155);
+            this.dgHS.TabIndex = 133;
+            // 
+            // label58
+            // 
+            this.label58.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label58.AutoSize = true;
+            this.label58.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label58.Location = new System.Drawing.Point(1103, 347);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(58, 26);
+            this.label58.TabIndex = 134;
+            this.label58.Text = "H&&S";
+            // 
+            // btnAddHS
+            // 
+            this.btnAddHS.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnAddHS.Location = new System.Drawing.Point(1189, 352);
+            this.btnAddHS.Name = "btnAddHS";
+            this.btnAddHS.Size = new System.Drawing.Size(57, 23);
+            this.btnAddHS.TabIndex = 135;
+            this.btnAddHS.Text = "Update";
+            this.btnAddHS.UseVisualStyleBackColor = true;
+            this.btnAddHS.Click += new System.EventHandler(this.BtnAddHS_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1932, 563);
+            this.Controls.Add(this.btnAddHS);
+            this.Controls.Add(this.label58);
+            this.Controls.Add(this.dgHS);
+            this.Controls.Add(this.btnAddManagement);
+            this.Controls.Add(this.label57);
+            this.Controls.Add(this.dgManagement);
             this.Controls.Add(this.label56);
             this.Controls.Add(this.dgStores);
             this.Controls.Add(this.dgToolRoom);
@@ -1724,6 +1818,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgToolRoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgCleaning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgDispatch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgManagement)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgHS)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1862,6 +1958,12 @@
         private System.Windows.Forms.DataGridView dgDispatch;
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.ToolStripMenuItem floorListingsToolStripMenuItem;
+        private System.Windows.Forms.DataGridView dgManagement;
+        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.Button btnAddManagement;
+        private System.Windows.Forms.DataGridView dgHS;
+        private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.Button btnAddHS;
     }
 }
 

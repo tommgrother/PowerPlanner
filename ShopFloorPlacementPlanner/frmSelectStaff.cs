@@ -101,6 +101,12 @@ namespace ShopFloorPlacementPlanner
                 case "Cleaning":
                     sql = "SELECT cleaning_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+                case "Management":
+                    sql = "SELECT management_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "HS":
+                    sql = "SELECT hs_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
 
             }
 
@@ -177,6 +183,13 @@ namespace ShopFloorPlacementPlanner
                     break;
                 case "Cleaning":
                     sql = "SELECT cleaning_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "Management":
+                    sql = "SELECT management_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+
+                case "HS":
+                    sql = "SELECT hs_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
 
 
