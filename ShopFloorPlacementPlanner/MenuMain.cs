@@ -844,7 +844,7 @@ namespace ShopFloorPlacementPlanner
             menCount = Convert.ToDouble(cmd.ExecuteScalar());
             conn.Close();
 
-            lblMenCount.Text = "Total amount of men: " + menCount.ToString();
+            lblMenCount.Text = "Total amount of men selected: " + menCount.ToString();
 
         }
 
