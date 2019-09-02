@@ -189,6 +189,7 @@
             this.label58 = new System.Windows.Forms.Label();
             this.btnAddHS = new System.Windows.Forms.Button();
             this.lblMenCount = new System.Windows.Forms.Label();
+            this.label59 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -1669,11 +1670,22 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMenCount.AutoSize = true;
             this.lblMenCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMenCount.Location = new System.Drawing.Point(185, 28);
+            this.lblMenCount.Location = new System.Drawing.Point(360, 28);
             this.lblMenCount.Name = "lblMenCount";
             this.lblMenCount.Size = new System.Drawing.Size(67, 20);
             this.lblMenCount.TabIndex = 136;
             this.lblMenCount.Text = "label59";
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label59.ForeColor = System.Drawing.Color.Blue;
+            this.label59.Location = new System.Drawing.Point(185, 28);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(150, 20);
+            this.label59.TabIndex = 137;
+            this.label59.Text = "Non-Default Dept";
             // 
             // MenuMain
             // 
@@ -1681,6 +1693,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1932, 563);
+            this.Controls.Add(this.label59);
             this.Controls.Add(this.lblMenCount);
             this.Controls.Add(this.btnAddHS);
             this.Controls.Add(this.label58);
@@ -1980,6 +1993,7 @@
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Button btnAddHS;
         private System.Windows.Forms.Label lblMenCount;
+        private System.Windows.Forms.Label label59;
     }
 }
 

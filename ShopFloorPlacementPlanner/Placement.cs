@@ -115,7 +115,6 @@ namespace ShopFloorPlacementPlanner
         }
 
 
-
         public void addPlacment()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);

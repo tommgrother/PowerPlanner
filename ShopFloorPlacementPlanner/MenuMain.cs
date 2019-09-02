@@ -374,6 +374,13 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
                 }
+
+                pnc.checkNonStandard();
+
+                if(pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
             }
 
             //PUNCH
@@ -397,7 +404,15 @@ namespace ShopFloorPlacementPlanner
                     {
                         row.DefaultCellStyle.BackColor = Color.Yellow;
                     }
-                }
+
+                    pnc.checkNonStandard();
+
+                    if (pnc._nonStandardPlacment == true)
+                    {
+                        row.DefaultCellStyle.ForeColor = Color.Blue;
+                    }
+
+            }
             //LASER
             foreach (DataGridViewRow row in dgLaser.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
@@ -418,6 +433,13 @@ namespace ShopFloorPlacementPlanner
                 if (pnc._hasNote == true)
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
             }
 
@@ -442,6 +464,13 @@ namespace ShopFloorPlacementPlanner
                 if (pnc._hasNote == true)
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
             }
 
@@ -468,6 +497,13 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
                 }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
             }
 
             //Buff
@@ -490,6 +526,13 @@ namespace ShopFloorPlacementPlanner
                 if (pnc._hasNote == true)
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
             }
 
@@ -514,6 +557,13 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
                 }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
             }
 
             //Pack
@@ -536,6 +586,13 @@ namespace ShopFloorPlacementPlanner
                 if (pnc._hasNote == true)
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
             }
 
@@ -560,6 +617,13 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
                 }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
             }
             //Dispatch
             foreach (DataGridViewRow row in dgDispatch.Rows)
@@ -582,6 +646,13 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
                 }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
             }
             //ToolRoom
             foreach (DataGridViewRow row in dgToolRoom.Rows)
@@ -603,6 +674,13 @@ namespace ShopFloorPlacementPlanner
                 if (pnc._hasNote == true)
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
             }
 
@@ -627,6 +705,13 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
                 }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
             }
 
             //Management
@@ -650,7 +735,15 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
                 }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
             }
+
 
 
 
@@ -674,6 +767,13 @@ namespace ShopFloorPlacementPlanner
                 if (pnc._hasNote == true)
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
             }
             //NOT PLACED

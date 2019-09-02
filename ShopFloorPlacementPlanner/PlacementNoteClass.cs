@@ -13,6 +13,7 @@ namespace ShopFloorPlacementPlanner
 
         public int _pID { get; set; }
         public bool _hasNote { get; set; }
+        public bool _nonStandardPlacment { get; set; }
 
 
         public PlacementNoteClass(int pID)
@@ -20,6 +21,41 @@ namespace ShopFloorPlacementPlanner
             _pID = pID;
         }
 
+        public void checkNonStandard()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+
+
+            SqlCommand cmd = new SqlCommand("Select * from dbo.view_planner_non_default_placements where id=@placementID", conn);
+            cmd.Parameters.AddWithValue("@placementID", _pID);
+         
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            if (rdr.Read())
+            {
+
+                if (rdr["department"].ToString() != rdr["default_in_department"].ToString())
+                {
+                    _nonStandardPlacment = true;
+
+                }
+                else
+                {
+                    _nonStandardPlacment = false;
+                }
+            }
+            else
+            {
+
+                _nonStandardPlacment = false;
+            }
+
+            conn.Close();
+        }
+
+        
         public void getNote()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
