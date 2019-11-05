@@ -107,9 +107,6 @@ namespace ShopFloorPlacementPlanner
 
                     _weldTeamMembersPresent = members;
                 }
-            
-
-
 
             }
         }
@@ -156,9 +153,6 @@ namespace ShopFloorPlacementPlanner
                     _notPresentType = 0;
                 }
 
-
-
-
             }
            
         }
@@ -191,23 +185,16 @@ namespace ShopFloorPlacementPlanner
                             _existingPlacementHours = 0;
                         }
 
-
-
                     }
                     else
                     {
                         _alreadyPlaced = false;
                     }
 
-                
-
             }
 
 
         }
-
-
-
 
 
     }

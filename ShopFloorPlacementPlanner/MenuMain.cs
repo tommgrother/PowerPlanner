@@ -24,48 +24,54 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Punching", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            updateDailyGoals();
+            
             fillgrid();
+            updateDailyGoals();
         }
 
         private void btnAddBend_Click(object sender, EventArgs e)
         {
             frmSelectStaff frmSS = new frmSelectStaff("Bending", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            updateDailyGoals();
+            
             fillgrid();
+            updateDailyGoals();
         }
 
         private void btnAddWeld_Click(object sender, EventArgs e)
         {
             frmSelectStaff frmSS = new frmSelectStaff("Welding", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            updateDailyGoals();
+           
             fillgrid();
+            updateDailyGoals();
         }
 
         private void btnAddBuff_Click(object sender, EventArgs e)
         {
             frmSelectStaff frmSS = new frmSelectStaff("Dressing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            updateDailyGoals();
+            
             fillgrid();
+            updateDailyGoals();
         }
 
         private void btnAddPaint_Click(object sender, EventArgs e)
         {
             frmSelectStaff frmSS = new frmSelectStaff("Painting", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            updateDailyGoals();
+           
             fillgrid();
+            updateDailyGoals();
         }
 
         private void btnAddPack_Click(object sender, EventArgs e)
         {
             frmSelectStaff frmSS = new frmSelectStaff("Packing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            updateDailyGoals();
+        
             fillgrid();
+            updateDailyGoals();
         }
 
 
@@ -328,10 +334,6 @@ namespace ShopFloorPlacementPlanner
 
 
             /////////////////////////////
-
-
-
-
 
 
             //TOTALS UP FINAL VALUES
@@ -744,9 +746,6 @@ namespace ShopFloorPlacementPlanner
                 }
             }
 
-
-
-
             //Health and safety
             foreach (DataGridViewRow row in dgHS.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
@@ -803,9 +802,6 @@ namespace ShopFloorPlacementPlanner
 
                 }
 
-
-
-
             dgSlimline.ClearSelection();
             dgPunch.ClearSelection();
             dgLaser.ClearSelection();
@@ -821,7 +817,6 @@ namespace ShopFloorPlacementPlanner
             dgManagement.ClearSelection();
             dgHS.ClearSelection();
             dgNotPlaced.ClearSelection();
-
 
         }
 
@@ -846,8 +841,6 @@ namespace ShopFloorPlacementPlanner
             paintGrid();
             countGrid();
             countMen();
-
-
 
             DataGridViewColumn columnSlimlineID = dgSlimline.Columns[2];
             columnSlimlineID.Visible = false;
@@ -966,8 +959,6 @@ namespace ShopFloorPlacementPlanner
 
         }
 
-
-
         private void fillPunch()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -1004,8 +995,6 @@ namespace ShopFloorPlacementPlanner
 
         }
 
-
-
         private void fillBend()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -1021,7 +1010,6 @@ namespace ShopFloorPlacementPlanner
             dgBend.DataSource = dt;
 
             conn.Close();
-
 
         }
 
@@ -1041,9 +1029,6 @@ namespace ShopFloorPlacementPlanner
 
             conn.Close();
 
-
-
-
         }
 
         private void fillBuff()
@@ -1062,9 +1047,6 @@ namespace ShopFloorPlacementPlanner
 
             conn.Close();
 
-
-
-
         }
 
         private void fillPaint()
@@ -1082,9 +1064,6 @@ namespace ShopFloorPlacementPlanner
             dgPaint.DataSource = dt;
 
             conn.Close();
-
-
-
 
         }
 
@@ -1173,7 +1152,6 @@ namespace ShopFloorPlacementPlanner
             conn.Close();
         }
 
-
         private void fillManagement()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -1227,12 +1205,7 @@ namespace ShopFloorPlacementPlanner
 
             dgNotPlaced.DataSource = dt;
 
-
         }
-
-
-
-
 
         private void dteDateSelection_ValueChanged(object sender, EventArgs e)
         {
@@ -1243,8 +1216,9 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Laser", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            updateDailyGoals();
+           
             fillgrid();
+            updateDailyGoals();
         }
 
         private void copyPlacementsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1258,8 +1232,9 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("Slimline", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            updateDailyGoals();
+            
             fillgrid();
+            updateDailyGoals();
         }
 
         private void sendToDailyGoalsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1460,8 +1435,6 @@ namespace ShopFloorPlacementPlanner
 
             fillgrid();
 
-
-
         }
 
         private void btnAddStores_Click(object sender, EventArgs e)
@@ -1478,12 +1451,14 @@ namespace ShopFloorPlacementPlanner
             fillgrid();
         }
 
+
         private void btnAddToolRoom_Click(object sender, EventArgs e)
         {
             frmSelectStaff frmSS = new frmSelectStaff("toolroom", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             fillgrid();
         }
+
 
         private void btnAddCleaning_Click(object sender, EventArgs e)
         {
@@ -1508,6 +1483,14 @@ namespace ShopFloorPlacementPlanner
         {
             frmSelectStaff frmSS = new frmSelectStaff("HS", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
+            fillgrid();
+        }
+
+        private void BatchOperationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmBatchPlacement bp = new frmBatchPlacement();
+            bp.ShowDialog();
+            updateDailyGoals();
             fillgrid();
         }
     }

@@ -112,6 +112,7 @@
             this.updateAutomaticAllocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadDefaultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.floorListingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.batchOperationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -190,6 +191,14 @@
             this.btnAddHS = new System.Windows.Forms.Button();
             this.lblMenCount = new System.Windows.Forms.Label();
             this.label59 = new System.Windows.Forms.Label();
+            this.label60 = new System.Windows.Forms.Label();
+            this.label61 = new System.Windows.Forms.Label();
+            this.label62 = new System.Windows.Forms.Label();
+            this.label63 = new System.Windows.Forms.Label();
+            this.label64 = new System.Windows.Forms.Label();
+            this.label65 = new System.Windows.Forms.Label();
+            this.label66 = new System.Windows.Forms.Label();
+            this.label67 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -790,7 +799,8 @@
             this.printScreenToolStripMenuItem,
             this.updateAutomaticAllocationToolStripMenuItem,
             this.loadDefaultsToolStripMenuItem,
-            this.floorListingsToolStripMenuItem});
+            this.floorListingsToolStripMenuItem,
+            this.batchOperationsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1932, 24);
@@ -845,6 +855,13 @@
             this.floorListingsToolStripMenuItem.Name = "floorListingsToolStripMenuItem";
             this.floorListingsToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
             this.floorListingsToolStripMenuItem.Text = "Floor Listings";
+            // 
+            // batchOperationsToolStripMenuItem
+            // 
+            this.batchOperationsToolStripMenuItem.Name = "batchOperationsToolStripMenuItem";
+            this.batchOperationsToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
+            this.batchOperationsToolStripMenuItem.Text = "Batch Operations";
+            this.batchOperationsToolStripMenuItem.Click += new System.EventHandler(this.BatchOperationsToolStripMenuItem_Click);
             // 
             // label23
             // 
@@ -1687,12 +1704,92 @@
             this.label59.TabIndex = 137;
             this.label59.Text = "Non-Default Dept";
             // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.Location = new System.Drawing.Point(9, 96);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(63, 13);
+            this.label60.TabIndex = 138;
+            this.label60.Text = "Men Req: 4";
+            // 
+            // label61
+            // 
+            this.label61.AutoSize = true;
+            this.label61.Location = new System.Drawing.Point(218, 96);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(63, 13);
+            this.label61.TabIndex = 139;
+            this.label61.Text = "Men Req: 2";
+            // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.Location = new System.Drawing.Point(428, 96);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(63, 13);
+            this.label62.TabIndex = 140;
+            this.label62.Text = "Men Req: 1";
+            // 
+            // label63
+            // 
+            this.label63.AutoSize = true;
+            this.label63.Location = new System.Drawing.Point(634, 96);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(63, 13);
+            this.label63.TabIndex = 141;
+            this.label63.Text = "Men Req: 4";
+            // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.Location = new System.Drawing.Point(840, 96);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(69, 13);
+            this.label64.TabIndex = 142;
+            this.label64.Text = "Men Req: 12";
+            // 
+            // label65
+            // 
+            this.label65.AutoSize = true;
+            this.label65.Location = new System.Drawing.Point(1047, 96);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(63, 13);
+            this.label65.TabIndex = 143;
+            this.label65.Text = "Men Req: 6";
+            // 
+            // label66
+            // 
+            this.label66.AutoSize = true;
+            this.label66.Location = new System.Drawing.Point(1274, 96);
+            this.label66.Name = "label66";
+            this.label66.Size = new System.Drawing.Size(63, 13);
+            this.label66.TabIndex = 144;
+            this.label66.Text = "Men Req: 8";
+            // 
+            // label67
+            // 
+            this.label67.AutoSize = true;
+            this.label67.Location = new System.Drawing.Point(1490, 96);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(69, 13);
+            this.label67.TabIndex = 145;
+            this.label67.Text = "Men Req: 12";
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1932, 563);
+            this.Controls.Add(this.label67);
+            this.Controls.Add(this.label66);
+            this.Controls.Add(this.label65);
+            this.Controls.Add(this.label64);
+            this.Controls.Add(this.label63);
+            this.Controls.Add(this.label62);
+            this.Controls.Add(this.label61);
+            this.Controls.Add(this.label60);
             this.Controls.Add(this.label59);
             this.Controls.Add(this.lblMenCount);
             this.Controls.Add(this.btnAddHS);
@@ -1994,6 +2091,15 @@
         private System.Windows.Forms.Button btnAddHS;
         private System.Windows.Forms.Label lblMenCount;
         private System.Windows.Forms.Label label59;
+        private System.Windows.Forms.ToolStripMenuItem batchOperationsToolStripMenuItem;
+        private System.Windows.Forms.Label label60;
+        private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.Label label62;
+        private System.Windows.Forms.Label label63;
+        private System.Windows.Forms.Label label64;
+        private System.Windows.Forms.Label label65;
+        private System.Windows.Forms.Label label66;
+        private System.Windows.Forms.Label label67;
     }
 }
 
