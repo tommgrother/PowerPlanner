@@ -100,6 +100,7 @@ namespace ShopFloorPlacementPlanner
             double buffMen = 0;
             double paintMen = 0;
             double packMen = 0;
+            double storesMen = 0;
 
             double slimlineOT = 0;
             double punchOT = 0;
@@ -135,6 +136,18 @@ namespace ShopFloorPlacementPlanner
 
                 slimlineHours = slimlineHours + Convert.ToDouble(row.Cells[1].Value);
 
+            }
+
+            foreach (DataGridViewRow row in dgStores.Rows)
+            {
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    storesMen = storesMen + 0.5;
+                }
+                else
+                {
+                    storesMen = storesMen + 1;
+                }
             }
 
             foreach (DataGridViewRow row in dgPunch.Rows)
@@ -265,6 +278,7 @@ namespace ShopFloorPlacementPlanner
             txtBuffMen.Text = buffMen.ToString();
             txtPaintMen.Text = paintMen.ToString();
             txtPackMen.Text = packMen.ToString();
+            txtStoresMen.Text = storesMen.ToString();
 
 
             //////////ADDS OVERTIME AND ADDITIONS TO THE MAIN SCREEN
@@ -1253,6 +1267,8 @@ namespace ShopFloorPlacementPlanner
             double goalHoursBuff;
             double goalHoursPaint;
             double goalHoursPack;
+            double goalBoxes = 0;
+          
 
             double manPowerSlimline;
             double manPowerLaser;
@@ -1262,7 +1278,7 @@ namespace ShopFloorPlacementPlanner
             double manPowerBuff;
             double manPowerPaint;
             double manPowerPack;
-
+            double manPowerStores;
 
             goalHoursSlimline = Convert.ToDouble(txtSlimlineHours.Text) + Convert.ToDouble(txtSlimlineOT.Text) + Convert.ToDouble(txtSlimlineAD.Text);
             goalHoursLaser = Convert.ToDouble(txtLaserHours.Text) + Convert.ToDouble(txtLaserOT.Text) + Convert.ToDouble(txtLaserAD.Text);
@@ -1272,7 +1288,7 @@ namespace ShopFloorPlacementPlanner
             goalHoursBuff = Convert.ToDouble(txtBuffHours.Text) + Convert.ToDouble(txtBuffOT.Text) + Convert.ToDouble(txtBuffAD.Text);
             goalHoursPaint = Convert.ToDouble(txtPaintHours.Text) + Convert.ToDouble(txtPaintOT.Text) + Convert.ToDouble(txtPaintAD.Text);
             goalHoursPack = Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(txtPackOT.Text) + Convert.ToDouble(txtPackAD.Text);
-
+            
 
             manPowerSlimline = Convert.ToDouble(txtSlimlineMen.Text);
             manPowerLaser = Convert.ToDouble(txtLaserMen.Text);
@@ -1282,6 +1298,20 @@ namespace ShopFloorPlacementPlanner
             manPowerBuff = Convert.ToDouble(txtBuffMen.Text);
             manPowerPaint = Convert.ToDouble(txtPaintMen.Text);
             manPowerPack = Convert.ToDouble(txtPackMen.Text);
+            manPowerStores = Convert.ToDouble(txtStoresMen.Text);
+
+            if (manPowerStores == 1)
+            {
+                goalBoxes = 25;
+            }
+            if (manPowerStores == 2)
+            {
+                goalBoxes = 70;
+            }
+            if (manPowerStores == 3)
+            {
+                goalBoxes = 120;
+            }
 
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
@@ -1294,6 +1324,7 @@ namespace ShopFloorPlacementPlanner
                 "goal_hours_buff = @goalHoursBuff, " +
                 "goal_hours = @goalHoursPaint, " +
                 "goal_hours_pack = @goalHoursPack, " +
+                "goal_boxes = @goalBoxes, " +
                 "man_power_slimline = @manPowerSlimline, " +
                 "man_power_laser = @manPowerLaser, " +
                 "man_power_punch = @manPowerPunch, " +
@@ -1301,7 +1332,8 @@ namespace ShopFloorPlacementPlanner
                 "man_power_weld = @manPowerWeld, " +
                 "man_power_buff = @manPowerBuff, " +
                 "man_power_paint = @manPowerPaint, " +
-                "man_power_pack = @manPowerPack " +
+                "man_power_pack = @manPowerPack, " +
+                "man_power_stores = @manPowerStores " +
                 " WHERE date_goal = @dateGoal", conn))
             {
 
@@ -1313,6 +1345,7 @@ namespace ShopFloorPlacementPlanner
                 cmd.Parameters.AddWithValue("@goalHoursBuff", goalHoursBuff);
                 cmd.Parameters.AddWithValue("@goalHoursPaint", goalHoursPaint);
                 cmd.Parameters.AddWithValue("@goalHoursPack", goalHoursPack);
+                cmd.Parameters.AddWithValue("@goalBoxes", goalBoxes);
 
                 cmd.Parameters.AddWithValue("@manPowerSlimline", manPowerSlimline);
                 cmd.Parameters.AddWithValue("@manPowerLaser", manPowerLaser);
@@ -1322,6 +1355,7 @@ namespace ShopFloorPlacementPlanner
                 cmd.Parameters.AddWithValue("@manPowerBuff", manPowerBuff);
                 cmd.Parameters.AddWithValue("@manPowerPaint", manPowerPaint);
                 cmd.Parameters.AddWithValue("@manPowerPack", manPowerPack);
+                cmd.Parameters.AddWithValue("@manPowerStores", manPowerStores);
                 cmd.Parameters.AddWithValue("@dateGoal", dteDateSelection.Text);
                 try
                 {
@@ -1442,6 +1476,7 @@ namespace ShopFloorPlacementPlanner
             frmSelectStaff frmSS = new frmSelectStaff("Stores", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             fillgrid();
+            updateDailyGoals();
         }
 
         private void btnAddDispatch_Click(object sender, EventArgs e)
@@ -1491,6 +1526,26 @@ namespace ShopFloorPlacementPlanner
             frmBatchPlacement bp = new frmBatchPlacement();
             bp.ShowDialog();
             updateDailyGoals();
+            fillgrid();
+        }
+
+        private void ClearPlanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            //CLEARS ALL EXISTING SELECTION
+
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+
+            using (SqlCommand cmd = new SqlCommand("usp_power_planner_clear_day", conn))
+            {
+                conn.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@placementDate", SqlDbType.Date).Value = dteDateSelection.Text;
+
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+
             fillgrid();
         }
     }

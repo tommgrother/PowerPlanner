@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -199,6 +200,10 @@
             this.label65 = new System.Windows.Forms.Label();
             this.label66 = new System.Windows.Forms.Label();
             this.label67 = new System.Windows.Forms.Label();
+            this.txtStoresMen = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.label68 = new System.Windows.Forms.Label();
+            this.clearPlanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -800,7 +805,8 @@
             this.updateAutomaticAllocationToolStripMenuItem,
             this.loadDefaultsToolStripMenuItem,
             this.floorListingsToolStripMenuItem,
-            this.batchOperationsToolStripMenuItem});
+            this.batchOperationsToolStripMenuItem,
+            this.clearPlanToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1932, 24);
@@ -812,7 +818,6 @@
             this.copyPlacementsToolStripMenuItem.Name = "copyPlacementsToolStripMenuItem";
             this.copyPlacementsToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
             this.copyPlacementsToolStripMenuItem.Text = "Copy Placements";
-            this.copyPlacementsToolStripMenuItem.Visible = false;
             this.copyPlacementsToolStripMenuItem.Click += new System.EventHandler(this.copyPlacementsToolStripMenuItem_Click);
             // 
             // sendToDailyGoalsToolStripMenuItem
@@ -1411,7 +1416,7 @@
             this.label52.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label52.AutoSize = true;
             this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.Location = new System.Drawing.Point(43, 348);
+            this.label52.Location = new System.Drawing.Point(58, 348);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(75, 26);
             this.label52.TabIndex = 124;
@@ -1776,12 +1781,44 @@
             this.label67.TabIndex = 145;
             this.label67.Text = "Men Req: 12";
             // 
+            // txtStoresMen
+            // 
+            this.txtStoresMen.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.txtStoresMen.Location = new System.Drawing.Point(16, 353);
+            this.txtStoresMen.Name = "txtStoresMen";
+            this.txtStoresMen.Size = new System.Drawing.Size(33, 20);
+            this.txtStoresMen.TabIndex = 146;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // label68
+            // 
+            this.label68.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label68.AutoSize = true;
+            this.label68.Location = new System.Drawing.Point(19, 336);
+            this.label68.Name = "label68";
+            this.label68.Size = new System.Drawing.Size(28, 13);
+            this.label68.TabIndex = 148;
+            this.label68.Text = "Men";
+            // 
+            // clearPlanToolStripMenuItem
+            // 
+            this.clearPlanToolStripMenuItem.Name = "clearPlanToolStripMenuItem";
+            this.clearPlanToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.clearPlanToolStripMenuItem.Text = "Clear Plan";
+            this.clearPlanToolStripMenuItem.Click += new System.EventHandler(this.ClearPlanToolStripMenuItem_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1932, 563);
+            this.Controls.Add(this.label68);
+            this.Controls.Add(this.txtStoresMen);
             this.Controls.Add(this.label67);
             this.Controls.Add(this.label66);
             this.Controls.Add(this.label65);
@@ -2100,6 +2137,10 @@
         private System.Windows.Forms.Label label65;
         private System.Windows.Forms.Label label66;
         private System.Windows.Forms.Label label67;
+        private System.Windows.Forms.TextBox txtStoresMen;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label label68;
+        private System.Windows.Forms.ToolStripMenuItem clearPlanToolStripMenuItem;
     }
 }
 
