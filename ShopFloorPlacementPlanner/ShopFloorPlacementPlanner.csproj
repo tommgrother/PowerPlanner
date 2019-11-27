@@ -69,7 +69,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -117,11 +117,23 @@
     <Compile Include="frmManualHours.Designer.cs">
       <DependentUpon>frmManualHours.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmMoveDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMoveDept.Designer.cs">
+      <DependentUpon>frmMoveDept.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSelectStaff.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmSelectStaff.Designer.cs">
       <DependentUpon>frmSelectStaff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmWeeklyOT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWeeklyOT.Designer.cs">
+      <DependentUpon>frmWeeklyOT.cs</DependentUpon>
     </Compile>
     <Compile Include="MenuMain.cs">
       <SubType>Form</SubType>
@@ -161,8 +173,14 @@
     <EmbeddedResource Include="frmManualHours.resx">
       <DependentUpon>frmManualHours.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmMoveDept.resx">
+      <DependentUpon>frmMoveDept.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmSelectStaff.resx">
       <DependentUpon>frmSelectStaff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWeeklyOT.resx">
+      <DependentUpon>frmWeeklyOT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuMain.resx">
       <DependentUpon>MenuMain.cs</DependentUpon>
