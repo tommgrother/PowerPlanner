@@ -20,10 +20,10 @@ namespace ShopFloorPlacementPlanner
         public string dept { get; set; }
         public int dateID { get; set; }
         public int overtimeForSD { get; set; }
-        public frmWeeklyOT(DateTime selectedDate,string department)
+        public frmWeeklyOT(DateTime selectedDate, string department)
         {
             InitializeComponent();
-            
+
             passedDate = selectedDate;
             dept = department;
             getDates(selectedDate);
@@ -40,16 +40,27 @@ namespace ShopFloorPlacementPlanner
             //get end of week
             Sunday = date.AddDays(6);
             // MessageBox.Show(Sunday.ToString());
-            
+
             //from here fill DT based on sql using monday+sunday
             //dataGridView1.Columns[0].HeaderText = "Date";
             //dataGridView1.Columns[1].HeaderText = "Department Over Time";
             using (SqlConnection CONNECT = new SqlConnection(connectionStrings.ConnectionString))
             {
-                string sql = "Select a.id,CAST(a.date_plan as date), b." + dept + "_OT" +
-                     " FROM dbo.power_plan_date a " +
-                     "LEFT JOIN dbo.power_plan_overtime b on b.date_id = a.id " +
-                     "WHERE date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Sunday.ToString("yyyyMMdd") + "' ORDER BY date_plan ASC";
+                string sql = "";
+                if (dept == "Dressing")
+                {
+                    sql = "Select a.id,CAST(a.date_plan as date), b.buffing_OT" +
+                             " FROM dbo.power_plan_date a " +
+                             "LEFT JOIN dbo.power_plan_overtime b on b.date_id = a.id " +
+                             "WHERE date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Sunday.ToString("yyyyMMdd") + "' ORDER BY date_plan ASC";
+                }
+                else
+                {
+                    sql = "Select a.id,CAST(a.date_plan as date), b." + dept + "_OT" +
+                              " FROM dbo.power_plan_date a " +
+                              "LEFT JOIN dbo.power_plan_overtime b on b.date_id = a.id " +
+                              "WHERE date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Sunday.ToString("yyyyMMdd") + "' ORDER BY date_plan ASC";
+                }
                 using (SqlCommand COMMAND = new SqlCommand(sql, CONNECT))
                 {
                     CONNECT.Open();
@@ -60,11 +71,11 @@ namespace ShopFloorPlacementPlanner
                     CONNECT.Close();
                 }
                 sql = "Select id from  dbo.power_plan_date where date_plan = '" + passedDate.ToString("yyyyMMdd") + "'";
-                using (SqlCommand cmd = new SqlCommand(sql,CONNECT))
+                using (SqlCommand cmd = new SqlCommand(sql, CONNECT))
                 {
                     CONNECT.Open();
                     dateID = Convert.ToInt32(cmd.ExecuteScalar());
-                   // MessageBox.Show("dateID = " + dateID.ToString());
+                    // MessageBox.Show("dateID = " + dateID.ToString());
                     CONNECT.Close();
                 }
             }
@@ -121,7 +132,7 @@ namespace ShopFloorPlacementPlanner
 
         private void dataGridView1_KeyPress(object sender, KeyPressEventArgs e)
         {
-           // e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+            // e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -149,4 +160,4 @@ namespace ShopFloorPlacementPlanner
 
         //    return dt;
     }
-   }
+}
