@@ -44,6 +44,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.txtAD = new System.Windows.Forms.TextBox();
+            this.btn_overtime = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgSelected)).BeginInit();
             this.SuspendLayout();
             // 
@@ -173,11 +174,22 @@
             this.txtAD.TabIndex = 9;
             this.txtAD.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // btn_overtime
+            // 
+            this.btn_overtime.Location = new System.Drawing.Point(638, 10);
+            this.btn_overtime.Name = "btn_overtime";
+            this.btn_overtime.Size = new System.Drawing.Size(103, 29);
+            this.btn_overtime.TabIndex = 10;
+            this.btn_overtime.Text = "Weekly Overtime";
+            this.btn_overtime.UseVisualStyleBackColor = true;
+            this.btn_overtime.Click += new System.EventHandler(this.btn_overtime_Click);
+            // 
             // frmSelectStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 530);
+            this.Controls.Add(this.btn_overtime);
             this.Controls.Add(this.txtAD);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtOvertime);
@@ -218,5 +230,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtAD;
+        private System.Windows.Forms.Button btn_overtime;
     }
 }

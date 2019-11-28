@@ -288,8 +288,11 @@ namespace ShopFloorPlacementPlanner
 
             int placementID = Convert.ToInt32(selectedRow.Cells["PlacementID"].Value);
             int staffID = Convert.ToInt32(selectedRow.Cells["Staff Id"].Value);
+            //for my department swap - ryucxd 27/11/19
+            string PT = Convert.ToString(selectedRow.Cells["placement type"].Value);
+            double hour = Convert.ToDouble(selectedRow.Cells["Hours"].Value);
 
-
+            //MessageBox.Show(_selectedDate.ToString());
             getStandardHours(staffID);
 
 
@@ -297,6 +300,7 @@ namespace ShopFloorPlacementPlanner
             if (e.ColumnIndex == dgSelected.Columns["Remove"].Index)
             {
                 SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+                // the below code is only commented out because it would remove the user and we cant have that ^-^
 
                 using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where ID = @placementID", conn))
                 {
@@ -305,6 +309,16 @@ namespace ShopFloorPlacementPlanner
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     checkExistingSelections();
+                }
+
+                //ask if the user wants to move this person to another location ---
+                DialogResult result = MessageBox.Show("Would you like to move this user to another department?", "Move user?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (result == DialogResult.Yes)
+                {
+                    //find out where they are heading
+                    //form with combobox maybe?
+                    frmMoveDept md = new frmMoveDept(staffID,_selectedDate,PT,hour);
+                    md.ShowDialog();
                 }
             }
 
@@ -780,6 +794,16 @@ namespace ShopFloorPlacementPlanner
         {
             submitOT();
             submitAD();
+        }
+
+        private void btn_overtime_Click(object sender, EventArgs e)
+        {
+            //open form and pass over current date
+            frmWeeklyOT OT = new frmWeeklyOT(_selectedDate, _department);
+            OT.ShowDialog();
+            //need to pass the NEW overtime value into the upper right textbox to stop the value over-writing it
+            txtOvertime.Text = OT.overtimeForSD.ToString();
+            this.Close();
         }
     }
 }

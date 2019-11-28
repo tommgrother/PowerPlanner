@@ -14,6 +14,7 @@ namespace ShopFloorPlacementPlanner
 {
     public partial class MenuMain : Form
     {
+        public int skipMessageBox { get; set; }
         public MenuMain()
         {
             InitializeComponent();
@@ -22,6 +23,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddPunch_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Punching", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             
@@ -31,6 +33,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddBend_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2; 
             frmSelectStaff frmSS = new frmSelectStaff("Bending", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             
@@ -40,6 +43,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddWeld_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Welding", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
            
@@ -49,6 +53,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddBuff_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Dressing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             
@@ -58,6 +63,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddPaint_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2; 
             frmSelectStaff frmSS = new frmSelectStaff("Painting", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
            
@@ -67,6 +73,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddPack_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Packing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
         
@@ -1228,6 +1235,7 @@ namespace ShopFloorPlacementPlanner
 
         private void button1_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Laser", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
            
@@ -1237,6 +1245,7 @@ namespace ShopFloorPlacementPlanner
 
         private void copyPlacementsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             frmCopyPlacements cp = new frmCopyPlacements(Convert.ToDateTime(dteDateSelection.Text));
             cp.ShowDialog();
             fillgrid();
@@ -1244,6 +1253,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddSlimline_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Slimline", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             
@@ -1360,7 +1370,8 @@ namespace ShopFloorPlacementPlanner
                 try
                 {
                     cmd.ExecuteNonQuery();
-                    MessageBox.Show("Hours successfully sent to daily goals!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (skipMessageBox == 0)
+                        MessageBox.Show("Hours successfully sent to daily goals!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch
                 {
@@ -1450,7 +1461,10 @@ namespace ShopFloorPlacementPlanner
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.ExecuteNonQuery();
-            MessageBox.Show("Automatic allocation updated successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (skipMessageBox > 0)
+                skipMessageBox = 0;
+            else
+                MessageBox.Show("Automatic allocation updated successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void loadDefaultsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1473,6 +1487,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddStores_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Stores", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             fillgrid();
@@ -1481,6 +1496,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddDispatch_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Dispatch", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             fillgrid();
@@ -1489,6 +1505,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddToolRoom_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("toolroom", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             fillgrid();
@@ -1497,6 +1514,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddCleaning_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Cleaning", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             fillgrid();
@@ -1509,6 +1527,7 @@ namespace ShopFloorPlacementPlanner
 
         private void BtnAddManagement_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Management", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             fillgrid();
@@ -1516,6 +1535,7 @@ namespace ShopFloorPlacementPlanner
 
         private void BtnAddHS_Click(object sender, EventArgs e)
         {
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("HS", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             fillgrid();

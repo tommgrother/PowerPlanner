@@ -39,7 +39,7 @@ namespace ShopFloorPlacementPlanner
             getDateID();
         }
 
-        private void getDateID()
+        private void getDateID() 
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
@@ -159,7 +159,7 @@ namespace ShopFloorPlacementPlanner
 
 
 
-        public void checkPlacement()
+        public void checkPlacement() 
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
