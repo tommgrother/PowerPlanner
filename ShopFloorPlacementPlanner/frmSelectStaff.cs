@@ -800,7 +800,10 @@ namespace ShopFloorPlacementPlanner
         {
             //open form and pass over current date
             frmWeeklyOT OT = new frmWeeklyOT(_selectedDate, _department);
-            OT.Show();
+            OT.ShowDialog();
+            //need to pass the NEW overtime value into the upper right textbox to stop the value over-writing it
+            txtOvertime.Text = OT.overtimeForSD.ToString();
+            this.Close();
         }
     }
 }

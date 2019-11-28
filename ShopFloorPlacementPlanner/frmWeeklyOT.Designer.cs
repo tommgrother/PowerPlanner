@@ -36,16 +36,24 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToOrderColumns = true;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(272, 255);
+            this.dataGridView1.Size = new System.Drawing.Size(272, 211);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
+            this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
+            this.dataGridView1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dataGridView1_KeyPress);
             // 
             // btn_cancel
             // 
-            this.btn_cancel.Location = new System.Drawing.Point(12, 273);
+            this.btn_cancel.Location = new System.Drawing.Point(12, 229);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(75, 23);
             this.btn_cancel.TabIndex = 1;
@@ -55,7 +63,7 @@
             // 
             // btn_update
             // 
-            this.btn_update.Location = new System.Drawing.Point(209, 273);
+            this.btn_update.Location = new System.Drawing.Point(209, 229);
             this.btn_update.Name = "btn_update";
             this.btn_update.Size = new System.Drawing.Size(75, 23);
             this.btn_update.TabIndex = 2;
@@ -67,7 +75,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(296, 328);
+            this.ClientSize = new System.Drawing.Size(296, 258);
             this.Controls.Add(this.btn_update);
             this.Controls.Add(this.btn_cancel);
             this.Controls.Add(this.dataGridView1);

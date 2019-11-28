@@ -18,6 +18,8 @@ namespace ShopFloorPlacementPlanner
         public DateTime Sunday { get; set; }
         public DateTime passedDate { get; set; }
         public string dept { get; set; }
+        public int dateID { get; set; }
+        public int overtimeForSD { get; set; }
         public frmWeeklyOT(DateTime selectedDate,string department)
         {
             InitializeComponent();
@@ -57,6 +59,14 @@ namespace ShopFloorPlacementPlanner
                     dataGridView1.DataSource = dt;
                     CONNECT.Close();
                 }
+                sql = "Select id from  dbo.power_plan_date where date_plan = '" + passedDate.ToString("yyyyMMdd") + "'";
+                using (SqlCommand cmd = new SqlCommand(sql,CONNECT))
+                {
+                    CONNECT.Open();
+                    dateID = Convert.ToInt32(cmd.ExecuteScalar());
+                   // MessageBox.Show("dateID = " + dateID.ToString());
+                    CONNECT.Close();
+                }
             }
             this.dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -65,6 +75,14 @@ namespace ShopFloorPlacementPlanner
             dataGridView1.Columns[2].HeaderText = dept + " Over Time";
             dataGridView1.Columns[0].ReadOnly = true;
             dataGridView1.Columns[1].ReadOnly = true;
+
+            //if there is a blank entry fill it with 0 to avoid sql error
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[2].Value.ToString() == "")
+                    dataGridView1.Rows[i].Cells[2].Value = "0";
+
+            }
         }
 
         private void btn_cancel_Click(object sender, EventArgs e)
@@ -83,9 +101,46 @@ namespace ShopFloorPlacementPlanner
                     sql = "update dbo.power_plan_overtime SET " + dept + "_OT  = " + dataGridView1.Rows[i].Cells[2].Value.ToString() + " WHERE date_id = " + dataGridView1.Rows[i].Cells[0].Value.ToString() + "";
                     using (SqlCommand COMMAND = new SqlCommand(sql, CONNECT))
                     {
-                        MessageBox.Show(sql); // ready to fire!!!!!
+                        CONNECT.Open();
+                        COMMAND.ExecuteNonQuery();
+                        CONNECT.Close();
+
+                        if (dataGridView1.Rows[i].Cells[0].Value.ToString() == dateID.ToString())
+                            overtimeForSD = Convert.ToInt32(dataGridView1.Rows[i].Cells[2].Value);
+
                     }
                 }
+            }
+            this.Close();
+        }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            //wrong one oops
+        }
+
+        private void dataGridView1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+           // e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            e.Control.KeyPress -= new KeyPressEventHandler(Column_KeyPress);
+            if (dataGridView1.CurrentCell.ColumnIndex == 2) //Desired Column
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    tb.KeyPress += new KeyPressEventHandler(Column_KeyPress);
+                }
+            }
+        }
+        private void Column_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
 
