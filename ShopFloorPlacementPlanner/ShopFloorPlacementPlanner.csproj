@@ -129,6 +129,12 @@
     <Compile Include="frmSelectStaff.Designer.cs">
       <DependentUpon>frmSelectStaff.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmWeeklyInsert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWeeklyInsert.Designer.cs">
+      <DependentUpon>frmWeeklyInsert.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmWeeklyOT.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSelectStaff.resx">
       <DependentUpon>frmSelectStaff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWeeklyInsert.resx">
+      <DependentUpon>frmWeeklyInsert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmWeeklyOT.resx">
       <DependentUpon>frmWeeklyOT.cs</DependentUpon>
