@@ -690,7 +690,7 @@ namespace ShopFloorPlacementPlanner
                             if (weekly == DialogResult.Yes)
                             {
                                 //open form
-                                frmWeeklyInsert frm = new frmWeeklyInsert();
+                                frmWeeklyInsert frm = new frmWeeklyInsert(s._staffID,s._fullname,_selectedDate,_department);
                                 frm.ShowDialog();
                             }
                             
