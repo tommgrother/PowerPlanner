@@ -72,16 +72,10 @@ namespace ShopFloorPlacementPlanner
                     dataGridView1.DataSource = dt;
                     CONNECT.Close();
                 }
-                //add check box here
-                DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
-                checkBoxColumn.Name = "X";
-                checkBoxColumn.HeaderText = "X";
-                checkBoxColumn.ReadOnly = false;
-                checkBoxColumn.FillWeight = 10;
-                dataGridView1.Columns.Add(checkBoxColumn);
+                
 
                 //format
-                dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 foreach (DataGridViewColumn col in dataGridView1.Columns)
                 {
                     col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -89,22 +83,26 @@ namespace ShopFloorPlacementPlanner
                 }
                 dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dataGridView1.DefaultCellStyle.Font = new Font("Calibri", 13F, FontStyle.Regular, GraphicsUnit.Pixel);
+                //------------
+
+                dataGridView1.Columns[1].HeaderText = "Date";
 
                 //set the CURRENT dates checkbox to true
                 DateTime dgv; //date in the DGV
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
+                    //row.Cells[2].Value = CheckState.Unchecked;
                     dgv = Convert.ToDateTime(dataGridView1.Rows[row.Index].Cells[1].Value);
                     if (dgv == passed_date)
                     {
-                        dataGridView1.Columns[2].ReadOnly = false;
-                        DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)row.Cells[2];
-                        if (chk.Value == chk.FalseValue || chk.Value == null)
-                            chk.Value = chk.TrueValue;
 
+                        //row.Cells[2].Value = CheckState.Checked;
+                        dataGridView1.Rows.RemoveAt(row.Index);
                     }
 
                 }
+
+                dataGridView1.Refresh();
             }
         }
 
@@ -133,6 +131,34 @@ namespace ShopFloorPlacementPlanner
         {
             lbl_title.Text = "Select Which days you want " + _staff_fullname + " in " + _dept;
         }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSeaGreen;
+        }
+
+        private void btn_cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btn_update_Click(object sender, EventArgs e)
+        {
+            //loop through every single colour 
+            //if its green THEN run through absent-already placed-placement to make sure there are no doubles in this code.
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                //everything inside here is already within a connection string
+               for (int i = 0; i < dataGridView1.Rows.Count;i++)
+                { //loop for colour
+                    if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.LightSeaGreen)
+                    { //the correct colour
+                        Placement p = new Placement()
+
+                    }//end of if back colour = green
+                } //end of for loop
+            }
+        }
     }
 }
-}
+

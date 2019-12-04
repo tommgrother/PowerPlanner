@@ -86,6 +86,13 @@ namespace ShopFloorPlacementPlanner
             dataGridView1.Columns[2].HeaderText = dept + " Over Time";
             dataGridView1.Columns[0].ReadOnly = true;
             dataGridView1.Columns[1].ReadOnly = true;
+            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
+                col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                col.HeaderCell.Style.Font = new Font("Calibri", 15F, FontStyle.Regular, GraphicsUnit.Pixel);
+            }
+            dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView1.DefaultCellStyle.Font = new Font("Calibri", 13F, FontStyle.Regular, GraphicsUnit.Pixel);
 
             //if there is a blank entry fill it with 0 to avoid sql error
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
