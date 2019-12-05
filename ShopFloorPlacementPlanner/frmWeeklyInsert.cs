@@ -20,6 +20,7 @@ namespace ShopFloorPlacementPlanner
         public DateTime sunday { get; set; }
         public DateTime passed_date { get; set; }
         public string _dept { get; set; }
+        public double _standardHours { get; set; }
         public frmWeeklyInsert(int staff_id, string staff_fullname, DateTime searchDate, string department)
         {
             InitializeComponent();
@@ -72,7 +73,7 @@ namespace ShopFloorPlacementPlanner
                     dataGridView1.DataSource = dt;
                     CONNECT.Close();
                 }
-                
+
 
                 //format
                 dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -134,7 +135,10 @@ namespace ShopFloorPlacementPlanner
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSeaGreen;
+            if (dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor == Color.LightSeaGreen)
+                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
+            else
+                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSeaGreen;
         }
 
         private void btn_cancel_Click(object sender, EventArgs e)
@@ -146,19 +150,134 @@ namespace ShopFloorPlacementPlanner
         {
             //loop through every single colour 
             //if its green THEN run through absent-already placed-placement to make sure there are no doubles in this code.
+            //declare variables
+
+            DateTime dgvDate;
+            double remainingHours;
+            int placement_id;
+            //get standard hours
+
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
                 //everything inside here is already within a connection string
-               for (int i = 0; i < dataGridView1.Rows.Count;i++)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 { //loop for colour
+                    placement_id = 0;
                     if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.LightSeaGreen)
                     { //the correct colour
-                        Placement p = new Placement()
+                      //get variables
+
+                        dgvDate = Convert.ToDateTime(dataGridView1.Rows[i].Cells[1].Value);
+                        getStandardHours(_staff_id, dgvDate);
+                        Placement p = new Placement(dgvDate, _staff_id, _dept, "full day", _standardHours); //initate the class
+                        p.checkPlacement();
+                        // if they are already placed that day then move them
+                        //possibly add a brance here "user is already placed, move them?
+                        if (p._alreadyPlaced == true)
+                        {
+                            //get the placement id using date_id and staff_id
+                            string sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
+                           //MessageBox.Show(sql);
+                            using (SqlCommand cmd = new SqlCommand(sql, conn))
+                            {
+                            
+                                conn.Open();
+                                cmd.ExecuteNonQuery();
+                                object isItNull = cmd.ExecuteScalar();
+                                if (isItNull != null)
+                                    placement_id = (Int32)cmd.ExecuteScalar(); //get placement ID for removing a person from a placement already
+                                else
+                                {
+                                    conn.Close();
+                                    continue; // pop an error message because there is no date returned
+                                }
+                                conn.Close();
+                              //  MessageBox.Show(test.ToString());
+                            }
+                            //they are already placed so just remove them  so they can be added down the line
+                            using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where ID = @placementID", conn))
+                            {
+                                cmd.Parameters.AddWithValue("@placementID", placement_id);
+                                conn.Open();
+                                cmd.ExecuteNonQuery();
+                                conn.Close();
+                            }
+                        }
+                        
+
+                        p.notPresent(); //check for attendance
+
+                        if (p._notPresentType == 5 || p._notPresentType == 2) // find out what 5 and 2 
+                        {
+                            continue; // they have full holiday so they cannot be placed   maybe have a running msgbox  - monday 11th cant be placed because of holiday etc
+                        }
+                        else if (p._notPresentType == 3) // has half a day booked
+                        {
+                            remainingHours = _standardHours / 2;
+                            Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Half Day", remainingHours); // adds them in but its for /half/ the time 
+                            p3.addPlacment(); // a new instance of adding placement
+                        }
+                        else
+                        {//  they are present and they dont have time off == they also aren't placed in another dept
+                            p.addPlacment();
+                        }
+
 
                     }//end of if back colour = green
                 } //end of for loop
+                MessageBox.Show("Placements updated!");
+                this.Close();
             }
         }
+
+        private void getStandardHours(int staffID, DateTime dgvDate)
+        {
+            string dayOfWeek;
+
+            dayOfWeek = dgvDate.DayOfWeek.ToString();
+
+            //Differing standard hours for certain users
+
+
+            if (dayOfWeek == "Friday")
+            {
+                switch (staffID)
+                {
+                    case 63:
+                        _standardHours = 3.6;
+                        break;
+                    case 165:
+                        _standardHours = 11.2;
+                        break;
+                    default:
+                        _standardHours = 5.6;
+                        break;
+
+                }
+
+            }
+            else if (dayOfWeek == "Saturday" || dayOfWeek == "Sunday")
+            {
+                _standardHours = 0.0001;
+            }
+            else
+            {
+                switch (staffID)
+                {
+                    case 63:
+                        _standardHours = 4.4;
+                        break;
+                    case 165:
+                        _standardHours = 12.8;
+                        break;
+                    default:
+                        _standardHours = 6.4;
+                        break;
+
+                }
+            }
+        }
+
     }
 }
 
