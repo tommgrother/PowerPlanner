@@ -21,6 +21,7 @@ namespace ShopFloorPlacementPlanner
         public DateTime passed_date { get; set; }
         public string _dept { get; set; }
         public double _standardHours { get; set; }
+        public bool alreadyPlaced { get; set; }
         public frmWeeklyInsert(int staff_id, string staff_fullname, DateTime searchDate, string department)
         {
             InitializeComponent();
@@ -52,7 +53,7 @@ namespace ShopFloorPlacementPlanner
             {
                 if (_dept == "Dressing")
                 {
-                    sql = "Select a.id,CAST(a.date_plan as date), b.buffing_OT" +
+                    sql = "Select a.id,CAST(a.date_plan as date)" +   //dressing onLY --
                              " FROM dbo.power_plan_date a " +
                              "LEFT JOIN dbo.power_plan_overtime b on b.date_id = a.id " +
                              "WHERE date_plan >= '" + monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + sunday.ToString("yyyyMMdd") + "' ORDER BY date_plan ASC";
@@ -110,24 +111,6 @@ namespace ShopFloorPlacementPlanner
 
 
 
-        //    sql = "Select id from  dbo.power_plan_date where date_plan = '" + passedDate.ToString("yyyyMMdd") + "'";
-        //    using (SqlCommand cmd = new SqlCommand(sql, CONNECT))
-        //    {
-        //        CONNECT.Open();
-        //        dateID = Convert.ToInt32(cmd.ExecuteScalar());
-        //        // MessageBox.Show("dateID = " + dateID.ToString());
-        //        CONNECT.Close();
-        //    }
-        //}
-        //this.dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-        //this.dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-        //dataGridView1.Columns[0].HeaderText = "ID";
-        //dataGridView1.Columns[1].HeaderText = "Date";
-        //dataGridView1.Columns[2].HeaderText = dept + " Over Time";
-        //dataGridView1.Columns[0].ReadOnly = true;
-        //dataGridView1.Columns[1].ReadOnly = true;
-
-
         private void frmWeeklyInsert_Load(object sender, EventArgs e)
         {
             lbl_title.Text = "Select Which days you want " + _staff_fullname + " in " + _dept;
@@ -153,8 +136,11 @@ namespace ShopFloorPlacementPlanner
             //declare variables
 
             DateTime dgvDate;
+
             double remainingHours;
             int placement_id;
+            string sql = "";
+            int validationID = 0;
             //get standard hours
 
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
@@ -162,6 +148,7 @@ namespace ShopFloorPlacementPlanner
                 //everything inside here is already within a connection string
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 { //loop for colour
+                    alreadyPlaced = false;
                     placement_id = 0;
                     if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.LightSeaGreen)
                     { //the correct colour
@@ -169,18 +156,48 @@ namespace ShopFloorPlacementPlanner
 
                         dgvDate = Convert.ToDateTime(dataGridView1.Rows[i].Cells[1].Value);
                         getStandardHours(_staff_id, dgvDate);
-                        Placement p = new Placement(dgvDate, _staff_id, _dept, "full day", _standardHours); //initate the class
-                        p.checkPlacement();
-                        // if they are already placed that day then move them
-                        //possibly add a brance here "user is already placed, move them?
-                        if (p._alreadyPlaced == true)
+                        Placement p = new Placement(dgvDate, _staff_id, _dept, "Full Day", _standardHours); //initate the class
+                        p._alreadyPlaced = false;
+                        //p.checkPlacement();
+                        //time to make my own  checkplacement()
+
+                        sql = "Select id from dbo.power_plan_date where date_plan = '" + dgvDate.ToString("yyyy - MM - dd") + "'";
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
                         {
-                            //get the placement id using date_id and staff_id
-                            string sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
-                           //MessageBox.Show(sql);
+                            conn.Open();
+                           // cmd.ExecuteNonQuery();
+                            object toNullOrNotToNull = cmd.ExecuteScalar();
+                            if (toNullOrNotToNull != null)
+                                validationID = Convert.ToInt32(cmd.ExecuteScalar());
+                            conn.Close();
+                        }
+                        //now we have the DATE id we can get into the validation
+                        if (validationID != 0)
+                        {
+                            sql = "SELECT id from dbo.power_plan_staff WHERE date_id = " + validationID.ToString() + " AND staff_id = " + _staff_id;
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                             {
-                            
+                                conn.Open();
+                                object nullification = cmd.ExecuteScalar();
+                                if (nullification != null)
+                                    alreadyPlaced = true;
+                                else
+                                    alreadyPlaced = false;
+                                conn.Close();
+                            }
+                        }
+                        //get the current DATEID
+
+                        // if they are already placed that day then move them
+                        //possibly add a brance here "user is already placed, move them?
+                        if (alreadyPlaced == true)
+                        {
+                            //get the placement id using date_id and staff_id
+                            sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
+                            //MessageBox.Show(sql);
+                            using (SqlCommand cmd = new SqlCommand(sql, conn))
+                            {
+
                                 conn.Open();
                                 cmd.ExecuteNonQuery();
                                 object isItNull = cmd.ExecuteScalar();
@@ -192,7 +209,7 @@ namespace ShopFloorPlacementPlanner
                                     continue; // pop an error message because there is no date returned
                                 }
                                 conn.Close();
-                              //  MessageBox.Show(test.ToString());
+                                //  MessageBox.Show(test.ToString());
                             }
                             //they are already placed so just remove them  so they can be added down the line
                             using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where ID = @placementID", conn))
@@ -203,12 +220,14 @@ namespace ShopFloorPlacementPlanner
                                 conn.Close();
                             }
                         }
-                        
+
 
                         p.notPresent(); //check for attendance
 
                         if (p._notPresentType == 5 || p._notPresentType == 2) // find out what 5 and 2 
                         {
+                            //add the messagebox note here 
+                           // note = new
                             continue; // they have full holiday so they cannot be placed   maybe have a running msgbox  - monday 11th cant be placed because of holiday etc
                         }
                         else if (p._notPresentType == 3) // has half a day booked

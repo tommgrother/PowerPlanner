@@ -616,7 +616,6 @@ namespace ShopFloorPlacementPlanner
 
         private void lstStaff_DoubleClick(object sender, EventArgs e)
         {
-
             double remainingHours;
             //string remainingPlacementType;
 
