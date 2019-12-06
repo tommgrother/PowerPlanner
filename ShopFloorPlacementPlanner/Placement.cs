@@ -76,8 +76,6 @@ namespace ShopFloorPlacementPlanner
 
         public void checkWeldTeamAbsence()
         {
-
-
             if (_staffID == 165)
             {
                 SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);

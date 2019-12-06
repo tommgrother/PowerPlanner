@@ -86,6 +86,13 @@ namespace ShopFloorPlacementPlanner
             dataGridView1.Columns[2].HeaderText = dept + " Over Time";
             dataGridView1.Columns[0].ReadOnly = true;
             dataGridView1.Columns[1].ReadOnly = true;
+            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
+                col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                col.HeaderCell.Style.Font = new Font("Calibri", 15F, FontStyle.Regular, GraphicsUnit.Pixel);
+            }
+            dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView1.DefaultCellStyle.Font = new Font("Calibri", 13F, FontStyle.Regular, GraphicsUnit.Pixel);
 
             //if there is a blank entry fill it with 0 to avoid sql error
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -109,7 +116,10 @@ namespace ShopFloorPlacementPlanner
                 string sql = "";
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    sql = "update dbo.power_plan_overtime SET " + dept + "_OT  = " + dataGridView1.Rows[i].Cells[2].Value.ToString() + " WHERE date_id = " + dataGridView1.Rows[i].Cells[0].Value.ToString() + "";
+                    if (dept == "Dressing")
+                        sql = "update dbo.power_plan_overtime SET buffing_OT  = " + dataGridView1.Rows[i].Cells[2].Value.ToString() + " WHERE date_id = " + dataGridView1.Rows[i].Cells[0].Value.ToString() + "";
+                    else
+                        sql = "update dbo.power_plan_overtime SET " + dept + "_OT  = " + dataGridView1.Rows[i].Cells[2].Value.ToString() + " WHERE date_id = " + dataGridView1.Rows[i].Cells[0].Value.ToString() + "";
                     using (SqlCommand COMMAND = new SqlCommand(sql, CONNECT))
                     {
                         CONNECT.Open();
@@ -149,10 +159,11 @@ namespace ShopFloorPlacementPlanner
         }
         private void Column_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
             {
                 e.Handled = true;
             }
+ 
         }
 
         //public static DateTime FirstDateInWeek(this DateTime dt)

@@ -616,7 +616,6 @@ namespace ShopFloorPlacementPlanner
 
         private void lstStaff_DoubleClick(object sender, EventArgs e)
         {
-
             double remainingHours;
             //string remainingPlacementType;
 
@@ -685,6 +684,18 @@ namespace ShopFloorPlacementPlanner
                         else
                         {
                             p.addPlacment();
+
+                            DialogResult weekly = MessageBox.Show("Would you like to assign '" + s._fullname + "' more days in " + _department + " this week?","Weekly Placement",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                            if (weekly == DialogResult.Yes)
+                            {
+                                //open form
+                                frmWeeklyInsert frm = new frmWeeklyInsert(s._staffID,s._fullname,_selectedDate,_department);
+                                frm.ShowDialog();
+                            }
+                            
+                            
+
+                            
                         }
                     }
                 }
