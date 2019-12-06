@@ -140,6 +140,7 @@ namespace ShopFloorPlacementPlanner
             double remainingHours;
             int placement_id;
             string sql = "";
+            string note = "Placement errors:";
             int validationID = 0;
             //get standard hours
 
@@ -227,7 +228,8 @@ namespace ShopFloorPlacementPlanner
                         if (p._notPresentType == 5 || p._notPresentType == 2) // find out what 5 and 2 
                         {
                             //add the messagebox note here 
-                           // note = new
+                            note = "\nUnable to place on " + dgvDate + ".";
+                            note = note.Substring(0, note.Length - 8);
                             continue; // they have full holiday so they cannot be placed   maybe have a running msgbox  - monday 11th cant be placed because of holiday etc
                         }
                         else if (p._notPresentType == 3) // has half a day booked
@@ -235,6 +237,8 @@ namespace ShopFloorPlacementPlanner
                             remainingHours = _standardHours / 2;
                             Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Half Day", remainingHours); // adds them in but its for /half/ the time 
                             p3.addPlacment(); // a new instance of adding placement
+                            note = note + "\nHalf day placement on " + dgvDate + "";
+                            note = note.Substring(0, note.Length - 8);
                         }
                         else
                         {//  they are present and they dont have time off == they also aren't placed in another dept
@@ -245,6 +249,8 @@ namespace ShopFloorPlacementPlanner
                     }//end of if back colour = green
                 } //end of for loop
                 MessageBox.Show("Placements updated!");
+                if (note != "Placement errors:")
+                    MessageBox.Show(note);
                 this.Close();
             }
         }
