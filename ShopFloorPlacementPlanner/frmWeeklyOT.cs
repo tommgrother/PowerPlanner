@@ -116,7 +116,10 @@ namespace ShopFloorPlacementPlanner
                 string sql = "";
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    sql = "update dbo.power_plan_overtime SET " + dept + "_OT  = " + dataGridView1.Rows[i].Cells[2].Value.ToString() + " WHERE date_id = " + dataGridView1.Rows[i].Cells[0].Value.ToString() + "";
+                    if (dept == "Dressing")
+                        sql = "update dbo.power_plan_overtime SET buffing_OT  = " + dataGridView1.Rows[i].Cells[2].Value.ToString() + " WHERE date_id = " + dataGridView1.Rows[i].Cells[0].Value.ToString() + "";
+                    else
+                        sql = "update dbo.power_plan_overtime SET " + dept + "_OT  = " + dataGridView1.Rows[i].Cells[2].Value.ToString() + " WHERE date_id = " + dataGridView1.Rows[i].Cells[0].Value.ToString() + "";
                     using (SqlCommand COMMAND = new SqlCommand(sql, CONNECT))
                     {
                         CONNECT.Open();
