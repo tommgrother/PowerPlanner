@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
-    <ApplicationRevision>50</ApplicationRevision>
+    <ApplicationRevision>53</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -129,6 +129,12 @@
     <Compile Include="frmSelectStaff.Designer.cs">
       <DependentUpon>frmSelectStaff.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmWeeklyAD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWeeklyAD.Designer.cs">
+      <DependentUpon>frmWeeklyAD.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmWeeklyInsert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSelectStaff.resx">
       <DependentUpon>frmSelectStaff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWeeklyAD.resx">
+      <DependentUpon>frmWeeklyAD.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmWeeklyInsert.resx">
       <DependentUpon>frmWeeklyInsert.cs</DependentUpon>

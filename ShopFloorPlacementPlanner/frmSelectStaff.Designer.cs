@@ -45,6 +45,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtAD = new System.Windows.Forms.TextBox();
             this.btn_overtime = new System.Windows.Forms.Button();
+            this.btn_additions = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgSelected)).BeginInit();
             this.SuspendLayout();
             // 
@@ -176,7 +177,7 @@
             // 
             // btn_overtime
             // 
-            this.btn_overtime.Location = new System.Drawing.Point(638, 10);
+            this.btn_overtime.Location = new System.Drawing.Point(608, 10);
             this.btn_overtime.Name = "btn_overtime";
             this.btn_overtime.Size = new System.Drawing.Size(103, 29);
             this.btn_overtime.TabIndex = 10;
@@ -184,11 +185,22 @@
             this.btn_overtime.UseVisualStyleBackColor = true;
             this.btn_overtime.Click += new System.EventHandler(this.btn_overtime_Click);
             // 
+            // btn_additions
+            // 
+            this.btn_additions.Location = new System.Drawing.Point(608, 42);
+            this.btn_additions.Name = "btn_additions";
+            this.btn_additions.Size = new System.Drawing.Size(103, 29);
+            this.btn_additions.TabIndex = 11;
+            this.btn_additions.Text = "Weekly Additions";
+            this.btn_additions.UseVisualStyleBackColor = true;
+            this.btn_additions.Click += new System.EventHandler(this.Btn_additions_Click);
+            // 
             // frmSelectStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 530);
+            this.Controls.Add(this.btn_additions);
             this.Controls.Add(this.btn_overtime);
             this.Controls.Add(this.txtAD);
             this.Controls.Add(this.label3);
@@ -231,5 +243,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtAD;
         private System.Windows.Forms.Button btn_overtime;
+        private System.Windows.Forms.Button btn_additions;
     }
 }

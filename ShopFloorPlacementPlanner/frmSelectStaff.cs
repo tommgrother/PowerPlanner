@@ -816,5 +816,15 @@ namespace ShopFloorPlacementPlanner
             txtOvertime.Text = OT.overtimeForSD.ToString();
             this.Close();
         }
+
+        private void Btn_additions_Click(object sender, EventArgs e)
+        {
+            //open form and pass over current date
+            frmWeeklyAD AD = new frmWeeklyAD(_selectedDate, _department);
+            AD.ShowDialog();
+            //need to pass the NEW overtime value into the upper right textbox to stop the value over-writing it
+            txtAD.Text = AD.additionForSD.ToString();
+            this.Close();
+        }
     }
 }

@@ -92,5 +92,28 @@ namespace ShopFloorPlacementPlanner
         }
 
 
+        public void updateAD(DateTime selectedDate, string department, double amount)
+        {
+            getDateID(selectedDate);
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+
+            using (SqlCommand cmd = new SqlCommand("usp_update_power_plan_AD", conn))
+            {
+
+                conn.Open();
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@dateId", _dateID);
+                cmd.Parameters.AddWithValue("@dept", department);
+                cmd.Parameters.AddWithValue("@amount", amount);
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            conn.Close();
+
+        }
+
+
     }
 }
