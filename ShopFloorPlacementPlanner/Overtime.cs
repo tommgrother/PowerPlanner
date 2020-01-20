@@ -44,7 +44,6 @@ namespace ShopFloorPlacementPlanner
 
                 }
 
-
                 rdr.Close();
                 if (dateExists == true)
                 {
@@ -61,9 +60,6 @@ namespace ShopFloorPlacementPlanner
                     cmdDate.Parameters.AddWithValue("@department", SqlDbType.NVarChar).Value = "";
                     cmdDate.ExecuteNonQuery();
                 }
-
-
-
 
             }
         }

@@ -73,8 +73,44 @@ namespace ShopFloorPlacementPlanner
                 MessageBox.Show("Please select a new department before updating.");
                 return;
             }
-            Placement p = new Placement(date, staffID, dept, PT, hours);
-            p.addPlacment();
+
+            //CODE HERE PROMPTING FOR MULTIPLE DAYS
+            
+
+
+
+
+
+            DialogResult result = MessageBox.Show("Would you like to perform this operation over multiple dates?", "Multiple Dates?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                //INSERTS THE CURRENT DAY
+                Placement p = new Placement(date, staffID, dept, PT, hours);
+                p.addPlacment();
+
+
+
+                //INSERTS REST OF WEEK
+                string staffName;
+
+                SqlConnection conn = new SqlConnection(connectionStrings.ConnectionStringUser);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT forename + ' '  + surname from dbo.[user] where id = @staffId", conn);
+                cmd.Parameters.AddWithValue("@staffId", staffID);
+                staffName = cmd.ExecuteScalar().ToString(); ;
+                conn.Close();
+
+                frmWeeklyInsert wi = new frmWeeklyInsert(staffID, staffName, date, dept);
+                wi.ShowDialog();
+            }
+            else
+            {
+                Placement p = new Placement(date, staffID, dept, PT, hours);
+                p.addPlacment();
+            }
+
+
             this.Close();
         }
 

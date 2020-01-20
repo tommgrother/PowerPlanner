@@ -117,15 +117,11 @@ namespace ShopFloorPlacementPlanner
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
 
-
                     Overtime o = new Overtime();
                     o.updateOT(Convert.ToDateTime(dataGridView1.Rows[i].Cells[1].Value), dept, Convert.ToDouble(dataGridView1.Rows[i].Cells[2].Value));
 
-
-
                     if (dataGridView1.Rows[i].Cells[0].Value.ToString() == dateID.ToString())
                         overtimeForSD = Convert.ToInt32(dataGridView1.Rows[i].Cells[2].Value);
-
 
                 }
             }
