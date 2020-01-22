@@ -77,7 +77,7 @@
             this.lbl_title.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_title.Location = new System.Drawing.Point(-1, 9);
             this.lbl_title.Name = "lbl_title";
-            this.lbl_title.Size = new System.Drawing.Size(487, 13);
+            this.lbl_title.Size = new System.Drawing.Size(298, 13);
             this.lbl_title.TabIndex = 6;
             this.lbl_title.Text = "Select which days you want this person in PAINTING";
             this.lbl_title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -86,7 +86,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 283);
+            this.ClientSize = new System.Drawing.Size(299, 283);
             this.Controls.Add(this.lbl_title);
             this.Controls.Add(this.btn_update);
             this.Controls.Add(this.btn_cancel);
