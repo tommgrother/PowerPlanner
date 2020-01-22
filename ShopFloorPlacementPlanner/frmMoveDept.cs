@@ -74,13 +74,8 @@ namespace ShopFloorPlacementPlanner
                 return;
             }
 
-            //CODE HERE PROMPTING FOR MULTIPLE DAYS
-            
-
-
-
-
-
+      
+ 
             DialogResult result = MessageBox.Show("Would you like to perform this operation over multiple dates?", "Multiple Dates?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
@@ -88,7 +83,6 @@ namespace ShopFloorPlacementPlanner
                 //INSERTS THE CURRENT DAY
                 Placement p = new Placement(date, staffID, dept, PT, hours);
                 p.addPlacment();
-
 
 
                 //INSERTS REST OF WEEK

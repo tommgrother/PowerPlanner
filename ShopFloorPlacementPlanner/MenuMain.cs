@@ -823,6 +823,21 @@ namespace ShopFloorPlacementPlanner
 
                 }
 
+
+            foreach (DataGridViewRow row in dgNotPlaced.Rows)
+                try
+                {
+                    if (row.Cells[1].Value.ToString().Contains("UNPAID"))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.DeepPink;
+                    }
+
+                }
+                catch
+                {
+
+                }
+
             dgSlimline.ClearSelection();
             dgPunch.ClearSelection();
             dgLaser.ClearSelection();
