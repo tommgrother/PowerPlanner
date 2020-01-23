@@ -201,7 +201,7 @@ namespace ShopFloorPlacementPlanner
                     //loop for colour
                     alreadyPlaced = false;
                     placement_id = 0;
-                    if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.LightSeaGreen)
+                    if (dataGridView1.Rows[i].DefaultCellStyle.BackColor != Color.Empty)
                     { //the correct colour
                       //get variables
 
@@ -413,13 +413,13 @@ namespace ShopFloorPlacementPlanner
             {//3.2
                 dataGridView1.Rows[e.RowIndex].Cells[7].Value = _standardHours / 2;
                 dataGridView1.Rows[e.RowIndex].Cells[6].Value = "Half Day";
-                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSeaGreen;
+                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MediumPurple;
             }
             if (e.ColumnIndex == dataGridView1.Columns["Shift"].Index)
             {//6.4
                 dataGridView1.Rows[e.RowIndex].Cells[7].Value = _standardHours;
                 dataGridView1.Rows[e.RowIndex].Cells[6].Value = "Shift";
-                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSeaGreen;
+                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
             }
             if (e.ColumnIndex == dataGridView1.Columns["Manual"].Index)
             {
