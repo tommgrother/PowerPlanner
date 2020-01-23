@@ -683,7 +683,7 @@ namespace ShopFloorPlacementPlanner
                         }
                         else
                         {
-                            p.addPlacment();
+
 
                             DialogResult weekly = MessageBox.Show("Would you like to assign '" + s._fullname + "' more days in " + _department + " this week?","Weekly Placement",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
                             if (weekly == DialogResult.Yes)
@@ -691,6 +691,10 @@ namespace ShopFloorPlacementPlanner
                                 //open form
                                 frmWeeklyInsert frm = new frmWeeklyInsert(s._staffID,s._fullname,_selectedDate,_department);
                                 frm.ShowDialog();
+                            }
+                            else
+                            {
+                                p.addPlacment(); // add placement is here so there is no way it should be the reason for changing the placements  on the next form close
                             }
                             
                             
