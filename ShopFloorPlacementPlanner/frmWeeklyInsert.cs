@@ -90,7 +90,7 @@ namespace ShopFloorPlacementPlanner
             monday = _selectedDate;
             //MessageBox.Show("monday = " + monday.ToString());
             //get end of week
-            sunday = _selectedDate.AddDays(6);
+            sunday = _selectedDate.AddDays(4);
             // MessageBox.Show("sunday = " + sunday.ToString());
         }
         private void DGV()
@@ -141,18 +141,18 @@ namespace ShopFloorPlacementPlanner
 
                 //set the CURRENT dates checkbox to true
                 DateTime dgv; //date in the DGV
-                foreach (DataGridViewRow row in dataGridView1.Rows)
-                {
-                    //row.Cells[2].Value = CheckState.Unchecked;
-                    dgv = Convert.ToDateTime(dataGridView1.Rows[row.Index].Cells[1].Value);
-                    if (dgv == passed_date)
-                    {
+                //foreach (DataGridViewRow row in dataGridView1.Rows)
+                //{
+                //    //row.Cells[2].Value = CheckState.Unchecked;
+                //    dgv = Convert.ToDateTime(dataGridView1.Rows[row.Index].Cells[1].Value);
+                //    if (dgv == passed_date)
+                //    {                                                 //TOM WANTED THIS REMOVED 23/01/2020
 
-                        //row.Cells[2].Value = CheckState.Checked;
-                        dataGridView1.Rows.RemoveAt(row.Index);
-                    }
+                //        //row.Cells[2].Value = CheckState.Checked;
+                //        dataGridView1.Rows.RemoveAt(row.Index);
+                //    }
 
-                }
+                //}
 
                 dataGridView1.Refresh();
             }
@@ -348,7 +348,7 @@ namespace ShopFloorPlacementPlanner
         }
 
 
-        private void getStandardHours(int staffID, DateTime dgvDate)
+        private void getStandardHours(int staffID, DateTime dgvDate) //call this to get the time for each day of the week
         {
             string dayOfWeek;
 
@@ -395,6 +395,7 @@ namespace ShopFloorPlacementPlanner
                 }
             }
         }
+
 
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
