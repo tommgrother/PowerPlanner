@@ -33,8 +33,55 @@ namespace ShopFloorPlacementPlanner
             //now get date range
             getDates();
             DGV();
+            buttons();
         }
 
+        private void buttons()
+        {
+            // f u l l   shift
+            DataGridViewButtonColumn fullDayButton = new DataGridViewButtonColumn();
+            fullDayButton.Name = "Full";
+            fullDayButton.Text = "Full";
+            fullDayButton.UseColumnTextForButtonValue = true;
+            int columnIndex = 4;
+            if (dataGridView1.Columns["full_column"] == null)
+            {
+                dataGridView1.Columns.Insert(columnIndex, fullDayButton);
+            }
+
+            // h a l f   shft
+            DataGridViewButtonColumn halfDayButton = new DataGridViewButtonColumn();
+            halfDayButton.Name = "Half";
+            halfDayButton.Text = "Half";
+            halfDayButton.UseColumnTextForButtonValue = true;
+            columnIndex = 5;
+            if (dataGridView1.Columns["half_column"] == null)
+            {
+                dataGridView1.Columns.Insert(columnIndex, halfDayButton);
+            }
+
+            //s h i f t  shift
+            DataGridViewButtonColumn shiftButton = new DataGridViewButtonColumn();
+            shiftButton.Name = "Shift";
+            shiftButton.Text = "Shift";
+            shiftButton.UseColumnTextForButtonValue = true;
+            columnIndex = 6;
+            if (dataGridView1.Columns["shift_column"] == null)
+            {
+                dataGridView1.Columns.Insert(columnIndex, shiftButton);
+            }
+
+            // m a n u a l shift
+            DataGridViewButtonColumn manualButton = new DataGridViewButtonColumn();
+            manualButton.Name = "Manual";
+            manualButton.Text = "Manual";
+            manualButton.UseColumnTextForButtonValue = true;
+            columnIndex = 7;
+            if (dataGridView1.Columns["manual_column"] == null)
+            {
+                dataGridView1.Columns.Insert(columnIndex, manualButton);
+            }
+        }
         private void getDates()
         {
             passed_date = _selectedDate;
@@ -71,13 +118,16 @@ namespace ShopFloorPlacementPlanner
                     DataTable dt = new DataTable();
                     SqlDataAdapter da = new SqlDataAdapter(COMMAND);
                     da.Fill(dt);
+                    //add time and placement columns
+                    dt.Columns.Add("Placement Type", typeof(System.String));
+                    dt.Columns.Add("Time", typeof(System.Double));
                     dataGridView1.DataSource = dt;
                     CONNECT.Close();
                 }
 
 
                 //format
-                dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 foreach (DataGridViewColumn col in dataGridView1.Columns)
                 {
                     col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -118,10 +168,10 @@ namespace ShopFloorPlacementPlanner
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor == Color.LightSeaGreen)
-                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
-            else
-                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSeaGreen;
+            //if (dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor == Color.LightSeaGreen)
+            //    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
+            //else
+            //    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSeaGreen;
         }
 
         private void btn_cancel_Click(object sender, EventArgs e)
@@ -134,7 +184,6 @@ namespace ShopFloorPlacementPlanner
             //loop through every single colour 
             //if its green THEN run through absent-already placed-placement to make sure there are no doubles in this code.
             //declare variables
-
             DateTime dgvDate;
 
             double remainingHours;
@@ -143,19 +192,20 @@ namespace ShopFloorPlacementPlanner
             string note = "Placement errors:";
             int validationID = 0;
             //get standard hours
-
+            int _dateID;
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
                 //everything inside here is already within a connection string
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                { //loop for colour
+                {
+                    //loop for colour
                     alreadyPlaced = false;
                     placement_id = 0;
                     if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.LightSeaGreen)
                     { //the correct colour
                       //get variables
 
-                        dgvDate = Convert.ToDateTime(dataGridView1.Rows[i].Cells[1].Value);
+                        dgvDate = Convert.ToDateTime(dataGridView1.Rows[i].Cells[5].Value);
                         getStandardHours(_staff_id, dgvDate);
                         Placement p = new Placement(dgvDate, _staff_id, _dept, "Full Day", _standardHours); //initate the class
                         p._alreadyPlaced = false;
@@ -166,7 +216,7 @@ namespace ShopFloorPlacementPlanner
                         using (SqlCommand cmd = new SqlCommand(sql, conn))
                         {
                             conn.Open();
-                           // cmd.ExecuteNonQuery();
+                            // cmd.ExecuteNonQuery();
                             object toNullOrNotToNull = cmd.ExecuteScalar();
                             if (toNullOrNotToNull != null)
                                 validationID = Convert.ToInt32(cmd.ExecuteScalar());
@@ -190,7 +240,7 @@ namespace ShopFloorPlacementPlanner
                         //get the current DATEID
 
                         // if they are already placed that day then move them
-                        //possibly add a brance here "user is already placed, move them?
+                        //possibly add a branch here "user is already placed, move them?
                         if (alreadyPlaced == true)
                         {
                             //get the placement id using date_id and staff_id
@@ -224,7 +274,8 @@ namespace ShopFloorPlacementPlanner
 
 
                         p.notPresent(); //check for attendance
-
+                        string placement_type = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                        double h_o_u_r_s = Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value.ToString());
                         if (p._notPresentType == 5 || p._notPresentType == 2) // find out what 5 and 2 
                         {
                             //add the messagebox note here 
@@ -233,27 +284,69 @@ namespace ShopFloorPlacementPlanner
                             continue; // they have full holiday so they cannot be placed   maybe have a running msgbox  - monday 11th cant be placed because of holiday etc
                         }
                         else if (p._notPresentType == 3) // has half a day booked
-                        {
-                            remainingHours = _standardHours / 2;
-                            Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Half Day", remainingHours); // adds them in but its for /half/ the time 
-                            p3.addPlacment(); // a new instance of adding placement
-                            note = note + "\nHalf day placement on " + dgvDate + "";
-                            note = note.Substring(0, note.Length - 8);
+                        {  //max placement on friday through half day is 5.6 / 2 
+                           //max placement on a normal day with half day is 6.4 / 2
+                            if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "Manual")
+                            {
+                                //unique case of when the user has manually inputted more hours than the user can have (because of half day)
+                                //if its above the max hous then reset it to max hours otherwise carry on as normal
+                                remainingHours = _standardHours / 2; // max hours
+                                double ManualHours = Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value.ToString());
+                                if ( ManualHours > remainingHours)
+                                {
+                                    //reduce it back to half and add note 
+                                    Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Manual", remainingHours);
+                                    p3.addPlacment();
+                                    note = note + "\n Manual Hours reduced because placement has half day on " + dgvDate + "";
+                                    note = note.Substring(0, note.Length - 8);
+                                }
+                                else
+                                {
+                                    Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Manual", remainingHours);
+                                    p3.addPlacment();
+                                }
+                            }
+                            else
+                            {//should be the same as normal
+                                remainingHours = _standardHours / 2;
+                                Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Half Day", remainingHours); // adds them in but its for /half/ the time 
+                                p3.addPlacment(); // a new instance of adding placement
+                                note = note + "\nHalf day placement on " + dgvDate + "";
+                                note = note.Substring(0, note.Length - 8);
+                            }
                         }
                         else
                         {//  they are present and they dont have time off == they also aren't placed in another dept
-                            p.addPlacment();
+                            //p.addPlacment();
+                            //no obscure data to consider, just plaster it in
+                            using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
+                            {
+                                //placement type and hours assign
+                                using (SqlCommand cmd = new SqlCommand("insert into dbo.power_plan_staff(date_id, staff_id, department, placement_type, hours) VALUES(@dateID, @staffID, @department, @placementType, @hours)", conn))
+                                {
+                                    cmd.Parameters.AddWithValue("@dateID", validationID);
+                                    cmd.Parameters.AddWithValue("@staffID", _staff_id);
+                                    cmd.Parameters.AddWithValue("@department", _dept);
+                                    cmd.Parameters.AddWithValue("@placementType", placement_type);
+                                    cmd.Parameters.AddWithValue("@hours", h_o_u_r_s);
+                                    conn.Open();
+                                    cmd.ExecuteNonQuery();
+                                    conn.Close();
+                                }
+                            }
                         }
 
+                    }
 
-                    }//end of if back colour = green
-                } //end of for loop
-                MessageBox.Show("Placements updated!");
-                if (note != "Placement errors:")
-                    MessageBox.Show(note);
-                this.Close();
-            }
+
+                }//end of if back colour = green
+            } //end of for loop
+            MessageBox.Show("Placements updated!");
+            if (note != "Placement errors:")
+                MessageBox.Show(note);
+            this.Close();
         }
+
 
         private void getStandardHours(int staffID, DateTime dgvDate)
         {
@@ -303,6 +396,41 @@ namespace ShopFloorPlacementPlanner
             }
         }
 
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //get standard hours for that day
+            getStandardHours(_staff_id, Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells[5].Value));
+            if (e.ColumnIndex == dataGridView1.Columns["Full"].Index)
+            {
+                //6.40 hours - full Day
+                dataGridView1.Rows[e.RowIndex].Cells[7].Value = _standardHours;
+                dataGridView1.Rows[e.RowIndex].Cells[6].Value = "Full Day";
+                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSeaGreen;
+            }
+            if (e.ColumnIndex == dataGridView1.Columns["Half"].Index)
+            {//3.2
+                dataGridView1.Rows[e.RowIndex].Cells[7].Value = _standardHours / 2;
+                dataGridView1.Rows[e.RowIndex].Cells[6].Value = "Half Day";
+                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSeaGreen;
+            }
+            if (e.ColumnIndex == dataGridView1.Columns["Shift"].Index)
+            {//6.4
+                dataGridView1.Rows[e.RowIndex].Cells[7].Value = _standardHours;
+                dataGridView1.Rows[e.RowIndex].Cells[6].Value = "Shift";
+                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSeaGreen;
+            }
+            if (e.ColumnIndex == dataGridView1.Columns["Manual"].Index)
+            {
+                //grab time from user input
+                //open form
+                frmManualHours mh = new frmManualHours();
+                mh.ShowDialog();
+                dataGridView1.Rows[e.RowIndex].Cells[7].Value = mh._manualHours;
+                dataGridView1.Rows[e.RowIndex].Cells[6].Value = "Manual";
+                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSeaGreen;
+            }
+        }
     }
 }
 
