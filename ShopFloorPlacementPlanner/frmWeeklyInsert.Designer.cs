@@ -38,7 +38,8 @@
             // 
             // btn_update
             // 
-            this.btn_update.Location = new System.Drawing.Point(209, 250);
+            this.btn_update.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_update.Location = new System.Drawing.Point(710, 250);
             this.btn_update.Name = "btn_update";
             this.btn_update.Size = new System.Drawing.Size(75, 23);
             this.btn_update.TabIndex = 5;
@@ -68,16 +69,17 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(272, 211);
+            this.dataGridView1.Size = new System.Drawing.Size(778, 211);
             this.dataGridView1.TabIndex = 3;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // lbl_title
             // 
             this.lbl_title.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbl_title.Location = new System.Drawing.Point(-1, 9);
+            this.lbl_title.Location = new System.Drawing.Point(-1, 7);
             this.lbl_title.Name = "lbl_title";
-            this.lbl_title.Size = new System.Drawing.Size(298, 13);
+            this.lbl_title.Size = new System.Drawing.Size(796, 13);
             this.lbl_title.TabIndex = 6;
             this.lbl_title.Text = "Select which days you want this person in PAINTING";
             this.lbl_title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -86,7 +88,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(299, 283);
+            this.ClientSize = new System.Drawing.Size(797, 278);
             this.Controls.Add(this.lbl_title);
             this.Controls.Add(this.btn_update);
             this.Controls.Add(this.btn_cancel);
