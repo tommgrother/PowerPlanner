@@ -311,7 +311,7 @@ namespace ShopFloorPlacementPlanner
                                 remainingHours = _standardHours / 2;
                                 Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Half Day", remainingHours); // adds them in but its for /half/ the time 
                                 p3.addPlacment(); // a new instance of adding placement
-                                note = note + "\nHalf day placement on " + dgvDate + "";
+                                note = note + "\nHalf day placement on " + dgvDate + ""; //
                                 note = note.Substring(0, note.Length - 8);
                             }
                         }
