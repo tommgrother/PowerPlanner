@@ -105,7 +105,7 @@ namespace ShopFloorPlacementPlanner
                              "LEFT JOIN dbo.power_plan_overtime b on b.date_id = a.id " +
                              "WHERE date_plan >= '" + monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + sunday.ToString("yyyyMMdd") + "' ORDER BY date_plan ASC";
                 }
-                else
+                else//
                 {
                     sql = "Select a.id,CAST(a.date_plan as date)" +
                               " FROM dbo.power_plan_date a " +
