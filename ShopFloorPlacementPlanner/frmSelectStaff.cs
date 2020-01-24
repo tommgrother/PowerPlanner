@@ -688,6 +688,9 @@ namespace ShopFloorPlacementPlanner
                             DialogResult weekly = MessageBox.Show("Would you like to assign '" + s._fullname + "' more days in " + _department + " this week?","Weekly Placement",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
                             if (weekly == DialogResult.Yes)
                             {
+                                //run procedure to populate all the dates for this week --
+                                dateInsert di = new dateInsert();
+                                di.check_date(_selectedDate);
                                 //open form
                                 frmWeeklyInsert frm = new frmWeeklyInsert(s._staffID,s._fullname,_selectedDate,_department);
                                 frm.ShowDialog();
@@ -814,6 +817,9 @@ namespace ShopFloorPlacementPlanner
         private void btn_overtime_Click(object sender, EventArgs e)
         {
             //open form and pass over current date
+            //run procedure to populate all the dates for this week --
+            dateInsert di = new dateInsert();
+            di.check_date(_selectedDate);
             frmWeeklyOT OT = new frmWeeklyOT(_selectedDate, _department);
             OT.ShowDialog();
             //need to pass the NEW overtime value into the upper right textbox to stop the value over-writing it
@@ -824,6 +830,9 @@ namespace ShopFloorPlacementPlanner
         private void Btn_additions_Click(object sender, EventArgs e)
         {
             //open form and pass over current date
+            //run procedure to populate all the dates for this week --
+            dateInsert di = new dateInsert();
+            di.check_date(_selectedDate);
             frmWeeklyAD AD = new frmWeeklyAD(_selectedDate, _department);
             AD.ShowDialog();
             //need to pass the NEW overtime value into the upper right textbox to stop the value over-writing it

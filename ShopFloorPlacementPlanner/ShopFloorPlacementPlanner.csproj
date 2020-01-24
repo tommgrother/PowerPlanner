@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="AdditionsDeductions.cs" />
     <Compile Include="connectionStrings.cs" />
+    <Compile Include="dateInsert.cs" />
     <Compile Include="FloorListings.cs">
       <SubType>Form</SubType>
     </Compile>
