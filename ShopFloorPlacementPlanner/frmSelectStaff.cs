@@ -404,6 +404,18 @@ namespace ShopFloorPlacementPlanner
                 checkExistingSelections();
             }
 
+            //Note BUTTON
+            if (e.ColumnIndex == dgSelected.Columns["Sub Dept"].Index)
+            {
+
+                //MessageBox.Show("Sub Dept");
+                frmSubDept sd = new frmSubDept(placementID);
+                sd.ShowDialog();
+                //PlacementNote pn = new PlacementNote(placementID);
+                //pn.ShowDialog();
+                //checkExistingSelections();
+            }
+
 
 
 
@@ -486,15 +498,26 @@ namespace ShopFloorPlacementPlanner
                         dgSelected.Columns.Insert(columnIndex, deleteButton);
                     }
 
-                    DataGridViewButtonColumn noteButton = new DataGridViewButtonColumn();
-                    noteButton.Name = "Note";
-                    noteButton.Text = "Note";
-                    noteButton.UseColumnTextForButtonValue = true;
-                    columnIndex = 10;
-                    if (dgSelected.Columns["note_column"] == null)
-                    {
-                        dgSelected.Columns.Insert(columnIndex, noteButton);
-                    }
+                DataGridViewButtonColumn noteButton = new DataGridViewButtonColumn();
+                noteButton.Name = "Note";
+                noteButton.Text = "Note";
+                noteButton.UseColumnTextForButtonValue = true;
+                columnIndex = 10;
+                if (dgSelected.Columns["note_column"] == null)
+                {
+                    dgSelected.Columns.Insert(columnIndex, noteButton);
+                }
+
+                //sub dept button
+                DataGridViewButtonColumn subDeptButton = new DataGridViewButtonColumn();
+                subDeptButton.Name = "Sub Dept";
+                subDeptButton.Text = "Sub_Dept";
+                subDeptButton.UseColumnTextForButtonValue = true;
+                columnIndex = 11;
+                if (dgSelected.Columns["Sub_Dept_column"] == null)
+                {
+                    dgSelected.Columns.Insert(columnIndex, subDeptButton);
+                }
 
 
                 paintGrid();
@@ -513,6 +536,7 @@ namespace ShopFloorPlacementPlanner
 
             //Adds the existing selections back into the selection window
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString); //this is where the DGV is selected 
+
 
             using (SqlCommand cmd = new SqlCommand("SELECT PlacementID,staff_id as 'Staff ID',[Staff Name] as 'Full Name',Placement as 'Placement Type',hours as 'Hours' from dbo.view_planner_punch_staff where date_plan = @selectedDate and department = @dept order by placementID ", conn))
             {

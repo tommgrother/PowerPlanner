@@ -558,7 +558,7 @@ namespace ShopFloorPlacementPlanner
                     row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
             }
-
+            //ryucxd PAINT IS COMMENTED OUT BECAUSE THERE IS A FUCK LOAD OF ERRORS RN
             //Paint
             foreach (DataGridViewRow row in dgPaint.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
@@ -1087,14 +1087,21 @@ namespace ShopFloorPlacementPlanner
 
         private void fillPaint()
         {
+            //adjust dgv here cause why not? 
+
+
 
             //ryucxd paint
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
-            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
-            cmd.Parameters.AddWithValue("@dept", "Painting");
+                string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + d.sub_department  AS [Staff Name], a.hours, a.id " +
+            "FROM dbo.power_plan_staff AS a " +
+            "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
+            "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
+            "LEFT JOIN dbo.power_plan_paint_sub_dept_test_temp_2 as d ON a.id = d.placement_id " +
+            "WHERE c.date_plan = '" + dteDateSelection.Text + "' and a.department = 'Painting'  order by a.id";
 
+            SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
@@ -1102,6 +1109,9 @@ namespace ShopFloorPlacementPlanner
             dgPaint.DataSource = dt;
 
             conn.Close();
+            dgPaint.Columns[0].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgPaint.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgPaint.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
         }
 
