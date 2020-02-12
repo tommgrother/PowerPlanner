@@ -49,6 +49,7 @@ namespace ShopFloorPlacementPlanner
                     conn.Close();
                 }
             }
+            this.Close();
         }
     }
 }
