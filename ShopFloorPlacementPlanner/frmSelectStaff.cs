@@ -404,7 +404,7 @@ namespace ShopFloorPlacementPlanner
                 checkExistingSelections();
             }
 
-            //Note BUTTON
+            //Sub Dept BUTTON
             if (e.ColumnIndex == dgSelected.Columns["Sub Dept"].Index)
             {
 
@@ -511,10 +511,10 @@ namespace ShopFloorPlacementPlanner
                 //sub dept button
                 DataGridViewButtonColumn subDeptButton = new DataGridViewButtonColumn();
                 subDeptButton.Name = "Sub Dept";
-                subDeptButton.Text = "Sub_Dept";
+                subDeptButton.Text = "Sub Dept";
                 subDeptButton.UseColumnTextForButtonValue = true;
                 columnIndex = 11;
-                if (dgSelected.Columns["Sub_Dept_column"] == null)
+                if (dgSelected.Columns["Sub Dept_column"] == null && _department == "Painting")
                 {
                     dgSelected.Columns.Insert(columnIndex, subDeptButton);
                 }

@@ -1094,7 +1094,7 @@ namespace ShopFloorPlacementPlanner
             //ryucxd paint
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-                string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + d.sub_department  AS [Staff Name], a.hours, a.id " +
+                string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(d.sub_department,'')  AS [Staff Placement], a.hours, a.id " +
             "FROM dbo.power_plan_staff AS a " +
             "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
             "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
@@ -1111,6 +1111,7 @@ namespace ShopFloorPlacementPlanner
             conn.Close();
             dgPaint.Columns[0].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgPaint.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgPaint.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgPaint.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
         }

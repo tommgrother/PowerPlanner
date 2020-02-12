@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionsDeductions.cs" />
+    <Compile Include="SubDeptClass.cs" />
     <Compile Include="connectionStrings.cs" />
     <Compile Include="dateInsert.cs" />
     <Compile Include="FloorListings.cs">

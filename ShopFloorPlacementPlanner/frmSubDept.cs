@@ -14,6 +14,7 @@ namespace ShopFloorPlacementPlanner
     public partial class frmSubDept : Form
     {
         public int placement_ID { get; set; }
+        public bool alreadyPlaced { get; set; }
         public frmSubDept(int _placement_ID)
         {
             InitializeComponent();
@@ -39,17 +40,13 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            string sql = "INSERT INTO dbo.[power_plan_paint_sub_dept_test_temp_2] (sub_department,placement_id) VALUES ('" + cmbSubDept.Text +"'," + placement_ID + ");";
-            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
-            {
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                }
-            }
+            //first we gotta check if they are already in the table
+            SubDeptClass check = new SubDeptClass();
+            check.checkPlacement(placement_ID);
+            check.add_placement(placement_ID, cmbSubDept.Text); //this seems to work fine
             this.Close();
         }
+
+
     }
 }
