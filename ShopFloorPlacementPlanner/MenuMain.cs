@@ -1087,6 +1087,8 @@ namespace ShopFloorPlacementPlanner
 
         private void fillPaint()
         {
+
+            //ryucxd paint
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);

@@ -512,7 +512,7 @@ namespace ShopFloorPlacementPlanner
 
 
             //Adds the existing selections back into the selection window
-            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString); //this is where the DGV is selected 
 
             using (SqlCommand cmd = new SqlCommand("SELECT PlacementID,staff_id as 'Staff ID',[Staff Name] as 'Full Name',Placement as 'Placement Type',hours as 'Hours' from dbo.view_planner_punch_staff where date_plan = @selectedDate and department = @dept order by placementID ", conn))
             {
