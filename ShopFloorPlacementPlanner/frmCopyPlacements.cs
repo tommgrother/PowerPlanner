@@ -32,17 +32,31 @@ namespace ShopFloorPlacementPlanner
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
-
-           using (SqlCommand cmd = new SqlCommand("usp_power_planner_copy_placements", conn))
+            using(SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
-                conn.Open();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@toDate", SqlDbType.Date).Value = _placementDate;
-                cmd.Parameters.AddWithValue("@fromDate", SqlDbType.Date).Value = dteNewDate.Text;
-                cmd.ExecuteNonQuery();
-                conn.Close();
+
+                using (SqlCommand cmd = new SqlCommand("usp_power_planner_copy_placements", conn))
+                {
+                    conn.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@toDate", SqlDbType.Date).Value = _placementDate;
+                    cmd.Parameters.AddWithValue("@fromDate", SqlDbType.Date).Value = dteNewDate.Text;
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+
+
+                using (SqlCommand cmd = new SqlCommand("usp_power_planner_copy_sub_dept", conn))
+                {
+                    conn.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@toDate", SqlDbType.Date).Value = _placementDate;
+                    cmd.Parameters.AddWithValue("@fromDate", SqlDbType.Date).Value = dteNewDate.Text;
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
             }
+
 
             this.Close();
 
