@@ -104,7 +104,7 @@ namespace ShopFloorPlacementPlanner
                     int MAXplacementID = 0;
                     using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
                     {
-                        using (SqlCommand command = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", conn))
+                        using (SqlCommand command = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", connection))
                         {
                             connection.Open();
                             MAXplacementID = Convert.ToInt32(command.ExecuteScalar());
@@ -131,6 +131,29 @@ namespace ShopFloorPlacementPlanner
             {
                 Placement p = new Placement(date, staffID, dept, PT, hours);
                 p.addPlacment();
+                //only one date... and if its painting then select a dept
+                string subDept = "";
+                if (dept == "Painting")
+                {
+                    //quickly grab the max placement type
+                    int MAXplacementID = 0;
+                    using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
+                    {
+                        using (SqlCommand command = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", connection))
+                        {
+                            connection.Open();
+                            MAXplacementID = Convert.ToInt32(command.ExecuteScalar());
+                            connection.Close();
+                        }
+                    }
+                    //now prompt the user to select which area they want the user in
+                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple();
+                    frmSDM.ShowDialog();
+                    subDept = frmSDM.location;
+                    SubDeptClass add = new SubDeptClass();
+                    add.checkPlacement(MAXplacementID);
+                    add.add_placement(MAXplacementID, subDept);
+                }
             }
 
 
