@@ -22,7 +22,7 @@ namespace ShopFloorPlacementPlanner
         {
 
             InitializeComponent();
-          
+
             dgSelected.CellClick += dataGridViewSoftware_CellClick;
             _department = department;
             _selectedDate = selectedDate;
@@ -46,7 +46,7 @@ namespace ShopFloorPlacementPlanner
 
         private void ensureDateTableEntry()
         {
-          
+
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmdDate = new SqlCommand("usp_update_planner_clear", conn);
@@ -60,7 +60,7 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-            string sql="";
+            string sql = "";
 
 
             switch (_department)
@@ -132,7 +132,7 @@ namespace ShopFloorPlacementPlanner
                 }
                 else
                 {
-                    txtOvertime.Text = 0.ToString(); 
+                    txtOvertime.Text = 0.ToString();
                 }
             }
 
@@ -234,12 +234,12 @@ namespace ShopFloorPlacementPlanner
 
         private void frmSelectStaff_Load(object sender, EventArgs e)
         {
-        
+
         }
 
         private void paintGrid()
         {
-            int placementID=0;
+            int placementID = 0;
 
 
             foreach (DataGridViewRow row in dgSelected.Rows)
@@ -257,7 +257,7 @@ namespace ShopFloorPlacementPlanner
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
             }
-               
+
             foreach (DataGridViewRow row in dgSelected.Rows)
             {
                 placementID = Convert.ToInt16(row.Cells[0].Value.ToString());
@@ -269,14 +269,14 @@ namespace ShopFloorPlacementPlanner
                     row.DefaultCellStyle.BackColor = Color.Yellow;
                 }
             }
-              
-                
+
+
 
 
             dgSelected.ClearSelection();
             dgSelected.DefaultCellStyle.SelectionBackColor = dgSelected.DefaultCellStyle.BackColor;
             dgSelected.DefaultCellStyle.SelectionForeColor = dgSelected.DefaultCellStyle.ForeColor;
-            
+
         }
 
         private void dataGridViewSoftware_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -311,13 +311,28 @@ namespace ShopFloorPlacementPlanner
                     checkExistingSelections();
                 }
 
+                //if this user is in painting then this needs to be removed from dbo.power_plan_paint_sub_dept_test_temp_2
+                if (_department == "Painting")
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("DELETE FROM dbo.power_plan_paint_sub_dept_test_temp_2 WHERE placement_ID = " + placementID, connection))
+                        {
+                            connection.Open();
+                            cmd.ExecuteNonQuery();
+                            connection.Close();
+                        }
+                    }
+                }
+
+
                 //ask if the user wants to move this person to another location ---
                 DialogResult result = MessageBox.Show("Would you like to move this user to another department?", "Move user?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (result == DialogResult.Yes)
                 {
                     //find out where they are heading
                     //form with combobox maybe?
-                    frmMoveDept md = new frmMoveDept(staffID,_selectedDate,PT,hour);
+                    frmMoveDept md = new frmMoveDept(staffID, _selectedDate, PT, hour);
                     md.ShowDialog();
                 }
             }
@@ -388,7 +403,7 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand("UPDATE dbo.power_plan_staff set placement_type = 'Half Day' , hours = @hours where ID = @placementID", conn))
                 {
                     cmd.Parameters.AddWithValue("placementID", placementID);
-                    cmd.Parameters.AddWithValue("@hours", _standardHours / 2 );
+                    cmd.Parameters.AddWithValue("@hours", _standardHours / 2);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     conn.Close();
@@ -405,15 +420,18 @@ namespace ShopFloorPlacementPlanner
             }
 
             //Sub Dept BUTTON
-            if (e.ColumnIndex == dgSelected.Columns["Sub Dept"].Index)
+            if (_department == "Painting")
             {
+                if (e.ColumnIndex == dgSelected.Columns["Sub Dept"].Index)
+                {
 
-                //MessageBox.Show("Sub Dept");
-                frmSubDept sd = new frmSubDept(placementID);
-                sd.ShowDialog();
-                //PlacementNote pn = new PlacementNote(placementID);
-                //pn.ShowDialog();
-                //checkExistingSelections();
+                    //MessageBox.Show("Sub Dept");
+                    frmSubDept sd = new frmSubDept(placementID);
+                    sd.ShowDialog();
+                    //PlacementNote pn = new PlacementNote(placementID);
+                    //pn.ShowDialog();
+                    //checkExistingSelections();
+                }
             }
 
 
@@ -440,63 +458,63 @@ namespace ShopFloorPlacementPlanner
                 SqlDataReader rdr = cmd.ExecuteReader();
 
 
-                    // dgSelected.DataSource = null;
-                    dgSelected.Columns.Clear();
-                    populateExisting();
-                   
-
-                    DataGridViewButtonColumn fullDayButton = new DataGridViewButtonColumn();
-                    fullDayButton.Name = "Full";
-                    fullDayButton.Text = "Full";
-                    fullDayButton.UseColumnTextForButtonValue = true;
-                    int columnIndex = 5;
-                    if (dgSelected.Columns["full_column"] == null)
-                    {
-                        dgSelected.Columns.Insert(columnIndex, fullDayButton);
-                    }
+                // dgSelected.DataSource = null;
+                dgSelected.Columns.Clear();
+                populateExisting();
 
 
-                    DataGridViewButtonColumn halfDayButton = new DataGridViewButtonColumn();
-                    halfDayButton.Name = "Half";
-                    halfDayButton.Text = "Half";
-                    halfDayButton.UseColumnTextForButtonValue = true;
-                    columnIndex = 6;
-                    if (dgSelected.Columns["half_column"] == null)
-                    {
-                        dgSelected.Columns.Insert(columnIndex, halfDayButton);
-                    }
-
-                    DataGridViewButtonColumn shiftButton = new DataGridViewButtonColumn();
-                    shiftButton.Name = "Shift";
-                    shiftButton.Text = "Shift";
-                    shiftButton.UseColumnTextForButtonValue = true;
-                    columnIndex = 7;
-                    if (dgSelected.Columns["shift_column"] == null)
-                    {
-                        dgSelected.Columns.Insert(columnIndex, shiftButton);
-                    }
+                DataGridViewButtonColumn fullDayButton = new DataGridViewButtonColumn();
+                fullDayButton.Name = "Full";
+                fullDayButton.Text = "Full";
+                fullDayButton.UseColumnTextForButtonValue = true;
+                int columnIndex = 5;
+                if (dgSelected.Columns["full_column"] == null)
+                {
+                    dgSelected.Columns.Insert(columnIndex, fullDayButton);
+                }
 
 
-                    DataGridViewButtonColumn manualButton = new DataGridViewButtonColumn();
-                    manualButton.Name = "Manual";
-                    manualButton.Text = "Manual";
-                    manualButton.UseColumnTextForButtonValue = true;
-                    columnIndex = 8;
-                    if (dgSelected.Columns["manual_column"] == null)
-                    {
-                        dgSelected.Columns.Insert(columnIndex, manualButton);
-                    }
+                DataGridViewButtonColumn halfDayButton = new DataGridViewButtonColumn();
+                halfDayButton.Name = "Half";
+                halfDayButton.Text = "Half";
+                halfDayButton.UseColumnTextForButtonValue = true;
+                columnIndex = 6;
+                if (dgSelected.Columns["half_column"] == null)
+                {
+                    dgSelected.Columns.Insert(columnIndex, halfDayButton);
+                }
+
+                DataGridViewButtonColumn shiftButton = new DataGridViewButtonColumn();
+                shiftButton.Name = "Shift";
+                shiftButton.Text = "Shift";
+                shiftButton.UseColumnTextForButtonValue = true;
+                columnIndex = 7;
+                if (dgSelected.Columns["shift_column"] == null)
+                {
+                    dgSelected.Columns.Insert(columnIndex, shiftButton);
+                }
 
 
-                    DataGridViewButtonColumn deleteButton = new DataGridViewButtonColumn();
-                    deleteButton.Name = "Remove";
-                    deleteButton.Text = "Remove";
-                    deleteButton.UseColumnTextForButtonValue = true;
-                    columnIndex = 9;
-                    if (dgSelected.Columns["uninstall_column"] == null)
-                    {
-                        dgSelected.Columns.Insert(columnIndex, deleteButton);
-                    }
+                DataGridViewButtonColumn manualButton = new DataGridViewButtonColumn();
+                manualButton.Name = "Manual";
+                manualButton.Text = "Manual";
+                manualButton.UseColumnTextForButtonValue = true;
+                columnIndex = 8;
+                if (dgSelected.Columns["manual_column"] == null)
+                {
+                    dgSelected.Columns.Insert(columnIndex, manualButton);
+                }
+
+
+                DataGridViewButtonColumn deleteButton = new DataGridViewButtonColumn();
+                deleteButton.Name = "Remove";
+                deleteButton.Text = "Remove";
+                deleteButton.UseColumnTextForButtonValue = true;
+                columnIndex = 9;
+                if (dgSelected.Columns["uninstall_column"] == null)
+                {
+                    dgSelected.Columns.Insert(columnIndex, deleteButton);
+                }
 
                 DataGridViewButtonColumn noteButton = new DataGridViewButtonColumn();
                 noteButton.Name = "Note";
@@ -576,17 +594,17 @@ namespace ShopFloorPlacementPlanner
 
             using (SqlCommand cmd = new SqlCommand(sqlDepartment, conn))
             {
-                    cmd.Parameters.AddWithValue("@department", _department);
+                cmd.Parameters.AddWithValue("@department", _department);
 
-                    conn.Open();
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            lstStaff.Items.Add(reader["fullname"].ToString());
-                        }
-                        reader.Close();
+                        lstStaff.Items.Add(reader["fullname"].ToString());
                     }
+                    reader.Close();
+                }
                 conn.Close();
             }
         }
@@ -594,7 +612,7 @@ namespace ShopFloorPlacementPlanner
         private void getStandardHours(int staffID)
         {
             string dayOfWeek;
-            
+
             dayOfWeek = _selectedDate.DayOfWeek.ToString();
 
             //Differing standard hours for certain users
@@ -616,7 +634,8 @@ namespace ShopFloorPlacementPlanner
 
                 }
 
-            }else if(dayOfWeek == "Saturday" || dayOfWeek == "Sunday")
+            }
+            else if (dayOfWeek == "Saturday" || dayOfWeek == "Sunday")
             {
                 _standardHours = 0.0001;
             }
@@ -671,17 +690,17 @@ namespace ShopFloorPlacementPlanner
                 }
 
             }
-            
+
 
             if (p._notPresentType == 5 || p._notPresentType == 2)
             {
                 MessageBox.Show("This staff member is either absent today or has a full day holiday!", "Cannot Place", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if(p._notPresentType == 3)
+            else if (p._notPresentType == 3)
             {
                 MessageBox.Show("This staff member has half day holiday so can only be placed for half day", "Half Day Placement", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 remainingHours = _standardHours / 2;
-                Placement p3 = new Placement(_selectedDate, s._staffID, _department,"Half Day", remainingHours);
+                Placement p3 = new Placement(_selectedDate, s._staffID, _department, "Half Day", remainingHours);
                 p3.addPlacment();
             }
             else
@@ -708,37 +727,84 @@ namespace ShopFloorPlacementPlanner
                         else
                         {
 
-
-                            DialogResult weekly = MessageBox.Show("Would you like to assign '" + s._fullname + "' more days in " + _department + " this week?","Weekly Placement",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                            DialogResult weekly = MessageBox.Show("Would you like to assign '" + s._fullname + "' more days in " + _department + " this week?", "Weekly Placement", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                             if (weekly == DialogResult.Yes)
                             {
+                                string subDept = "";
+                                //im pretty sure at this point the entry has been made so from here we should start adding placements for the sub-dept IF it is painting
+                                if (_department == "Painting")
+                                {
+                                    //quickly grab the max placement type
+                                    int MAXplacementID = 0;
+                                    using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+                                    {
+                                        using (SqlCommand cmd = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", conn))
+                                        {
+                                            conn.Open();
+                                            MAXplacementID = Convert.ToInt32(cmd.ExecuteScalar());
+                                            conn.Close();
+                                        }
+                                    }
+                                    //now prompt the user to select which area they want the user in
+                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple();
+                                    frmSDM.ShowDialog();
+                                    subDept = frmSDM.location;
+                                    //SubDeptClass add = new SubDeptClass();
+                                    //add.checkPlacement(MAXplacementID);
+                                    //add.add_placement(MAXplacementID, subDept);
+                                }
                                 //run procedure to populate all the dates for this week --
                                 dateInsert di = new dateInsert();
                                 di.check_date(_selectedDate);
+                                if (subDept.Length < 1)
+                                    subDept = "ERROR";
                                 //open form
-                                frmWeeklyInsert frm = new frmWeeklyInsert(s._staffID,s._fullname,_selectedDate,_department);
+                                frmWeeklyInsert frm = new frmWeeklyInsert(s._staffID, s._fullname, _selectedDate, _department,subDept);
                                 frm.ShowDialog();
                             }
                             else
                             {
-                                p.addPlacment(); // add placement is here so there is no way it should be the reason for changing the placements  on the next form close
-                            }
-                            
-                            
 
-                            
+                                p.addPlacment(); // add placement is here so there is no way it should be the reason for changing the placements  on the next form close
+                                 //im pretty sure at this point the entry has been made so from here we should start adding placements for the sub-dept IF it is painting
+                                if (_department == "Painting")
+                                {
+                                    //quickly grab the max placement type
+                                    int MAXplacementID = 0;
+                                    using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+                                    {
+                                        using (SqlCommand cmd = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", conn))
+                                        {
+                                            conn.Open();
+                                            MAXplacementID = Convert.ToInt32(cmd.ExecuteScalar());
+                                            conn.Close();
+                                        }
+                                    }
+                                    //now prompt the user to select which area they want the user in
+                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple();
+                                    frmSDM.ShowDialog();
+                                    string subDept = frmSDM.location;
+                                    SubDeptClass add = new SubDeptClass();
+                                    add.checkPlacement(MAXplacementID);
+                                    add.add_placement(MAXplacementID, subDept);
+                                }
+                            }
+
+
+
+
                         }
                     }
                 }
             }
 
 
-            
 
 
-           
+
+
             checkExistingSelections();
-            
+
         }
 
         private void lstStaff_SelectedIndexChanged(object sender, EventArgs e)
@@ -762,7 +828,7 @@ namespace ShopFloorPlacementPlanner
             cmdDate.Parameters.AddWithValue("@plannerDate", SqlDbType.Date).Value = _selectedDate;
             cmdDate.Parameters.AddWithValue("@department", SqlDbType.NVarChar).Value = _department;
             cmdDate.ExecuteNonQuery();
-         
+
             foreach (DataGridViewRow row in dgSelected.Rows)
             {
 
@@ -817,15 +883,15 @@ namespace ShopFloorPlacementPlanner
             }
 
             Overtime o = new Overtime();
-            
-            o.updateOT(_selectedDate,_department, overtimeAmount);
+
+            o.updateOT(_selectedDate, _department, overtimeAmount);
         }
 
 
         private void frmSelectStaff_Leave(object sender, EventArgs e)
         {
 
-         
+
 
 
 

@@ -94,8 +94,37 @@ namespace ShopFloorPlacementPlanner
                 cmd.Parameters.AddWithValue("@staffId", staffID);
                 staffName = cmd.ExecuteScalar().ToString(); ;
                 conn.Close();
+                //uhhhhhhh
+                //does this also need the painting thing???
+                //ye i think so, ask the user for the dept IF its painting then carry on as normal
+                string subDept = "";
+                if (dept == "Painting")
+                {
+                    //quickly grab the max placement type
+                    int MAXplacementID = 0;
+                    using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
+                    {
+                        using (SqlCommand command = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", conn))
+                        {
+                            connection.Open();
+                            MAXplacementID = Convert.ToInt32(command.ExecuteScalar());
+                            connection.Close();
+                        }
+                    }
+                    //now prompt the user to select which area they want the user in
+                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple();
+                    frmSDM.ShowDialog();
+                    subDept = frmSDM.location;
+                    //SubDeptClass add = new SubDeptClass();
+                    //add.checkPlacement(MAXplacementID);
+                    //add.add_placement(MAXplacementID, subDept);
+                }
 
-                frmWeeklyInsert wi = new frmWeeklyInsert(staffID, staffName, date, dept);
+                if (subDept.Length < 1)
+                    subDept = "ERROR";
+
+
+                frmWeeklyInsert wi = new frmWeeklyInsert(staffID, staffName, date, dept, subDept);
                 wi.ShowDialog();
             }
             else

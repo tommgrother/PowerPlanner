@@ -22,14 +22,17 @@ namespace ShopFloorPlacementPlanner
         public string _dept { get; set; }
         public double _standardHours { get; set; }
         public bool alreadyPlaced { get; set; }
-        public frmWeeklyInsert(int staff_id, string staff_fullname, DateTime searchDate, string department)
+        public string _subDept { get; set; }
+        public frmWeeklyInsert(int staff_id, string staff_fullname, DateTime searchDate, string department,string subDept)
         {
             InitializeComponent();
             // add all the variables into new props
+            
             _staff_id = staff_id;
             _staff_fullname = staff_fullname;
             _selectedDate = searchDate;
             _dept = department;
+            _subDept = subDept;
             //now get date range
             getDates();
             DGV();
@@ -270,6 +273,16 @@ namespace ShopFloorPlacementPlanner
                                 cmd.ExecuteNonQuery();
                                 conn.Close();
                             }
+                            //if its painting also delete it from here (as it will likely already have a placement??
+                            if (_dept == "Painting")
+                            {
+                                using (SqlCommand cmd = new SqlCommand("DELETE FROM dbo.power_plan_paint_sub_dept_test_temp_2 WHERE placement_id = " + placement_id, conn))
+                                {
+                                    conn.Open();
+                                    cmd.ExecuteNonQuery();
+                                    conn.Close();
+                                }
+                            }
                         }
 
 
@@ -305,6 +318,24 @@ namespace ShopFloorPlacementPlanner
                                     Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Manual", remainingHours);
                                     p3.addPlacment();
                                 }
+                                //if i add painting here it should make a difference (either way if its manual it will fall into this else and then run thhis block of code
+                                if (_dept == "Painting")
+                                {
+                                    //get max id here maybe????
+                                    int MAXplacementID = 0;
+                                    using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
+                                    {
+                                        using (SqlCommand cmd = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", connection))
+                                        {
+                                            connection.Open();
+                                            MAXplacementID = Convert.ToInt32(cmd.ExecuteScalar());
+                                            connection.Close();
+                                        }
+                                    }
+                                    SubDeptClass place = new SubDeptClass();
+                                    place.checkPlacement(placement_id);
+                                    place.add_placement(placement_id, _subDept);
+                                }
                             }
                             else
                             {//should be the same as normal
@@ -313,6 +344,25 @@ namespace ShopFloorPlacementPlanner
                                 p3.addPlacment(); // a new instance of adding placement
                                 note = note + "\nHalf day placement on " + dgvDate + ""; 
                                 note = note.Substring(0, note.Length - 8);
+
+                                //another iteration for painting to be added
+                                if (_dept == "Painting")
+                                {
+                                    //get max id here maybe????
+                                    int MAXplacementID = 0;
+                                    using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
+                                    {
+                                        using (SqlCommand cmd = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", connection))
+                                        {
+                                            connection.Open();
+                                            MAXplacementID = Convert.ToInt32(cmd.ExecuteScalar());
+                                            connection.Close();
+                                        }
+                                    }
+                                    SubDeptClass place = new SubDeptClass();
+                                    place.checkPlacement(placement_id);
+                                    place.add_placement(placement_id, _subDept);
+                                }
                             }
                         }
                         else
@@ -333,6 +383,24 @@ namespace ShopFloorPlacementPlanner
                                     cmd.ExecuteNonQuery();
                                     conn.Close();
                                 }
+                            }
+                            //this one is a bit weird but as far as my above commet says lets do the same and just /plaster/ it in
+                            if (_dept == "Painting")
+                            {
+                                //get max id here maybe????
+                                int MAXplacementID = 0;
+                                using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
+                                {
+                                    using (SqlCommand cmd = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", connection))
+                                    {
+                                        connection.Open();
+                                        MAXplacementID = Convert.ToInt32(cmd.ExecuteScalar());
+                                        connection.Close();
+                                    }
+                                }
+                                SubDeptClass place = new SubDeptClass();
+                                place.checkPlacement(MAXplacementID);
+                                place.add_placement(MAXplacementID, _subDept);
                             }
                         }
 

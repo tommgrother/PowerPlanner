@@ -86,6 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionsDeductions.cs" />
+    <Compile Include="frmSubDeptMultiple.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSubDeptMultiple.Designer.cs">
+      <DependentUpon>frmSubDeptMultiple.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubDeptClass.cs" />
     <Compile Include="connectionStrings.cs" />
     <Compile Include="dateInsert.cs" />
@@ -201,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSubDept.resx">
       <DependentUpon>frmSubDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSubDeptMultiple.resx">
+      <DependentUpon>frmSubDeptMultiple.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmWeeklyAD.resx">
       <DependentUpon>frmWeeklyAD.cs</DependentUpon>

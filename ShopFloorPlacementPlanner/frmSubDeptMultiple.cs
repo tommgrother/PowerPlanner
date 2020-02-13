@@ -7,19 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 
 namespace ShopFloorPlacementPlanner
 {
-    public partial class frmSubDept : Form
+    public partial class frmSubDeptMultiple : Form
     {
-        public int placement_ID { get; set; }
-        public bool alreadyPlaced { get; set; }
-        public frmSubDept(int _placement_ID)
+        public string location { get; set; }
+        public frmSubDeptMultiple()
         {
             InitializeComponent();
-            placement_ID = _placement_ID;
-
             //add items to the combobox
             cmbSubDept.Items.Add("Up");
             cmbSubDept.Items.Add("Wash/Wipe");
@@ -35,23 +31,19 @@ namespace ShopFloorPlacementPlanner
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            //force him to pick one
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             if (cmbSubDept.Text.Length > 0)
             {
-                //first we gotta check if they are already in the table
-                SubDeptClass check = new SubDeptClass();
-                check.checkPlacement(placement_ID);
-                check.add_placement(placement_ID, cmbSubDept.Text); //this seems to work fine
+                location = cmbSubDept.Text;
                 this.Close();
             }
             else
                 MessageBox.Show("Please select a department!", "ERROR", MessageBoxButtons.OK);
         }
-
-
     }
 }
+

@@ -17,11 +17,11 @@ namespace ShopFloorPlacementPlanner
 
         public void add_placement(int placement_ID, string sub_dept)
         {
-            getDateID(placement_ID);
+           // getDateID(placement_ID); dont ever need this now really...
             getStaffID(placement_ID);
             if (alreadyPlaced == false) //aslong as checkplacement has been run first running this right after selects the right one! just make sure to run the checkplacments again before adding/changing someone else!
             {
-                string sql = "INSERT INTO dbo.[power_plan_paint_sub_dept_test_temp_2] (date_id,staff_id,sub_department,placement_id) VALUES (" + dateID.ToString() + ", " +staffID + ",'" + sub_dept + "'," + placement_ID + ");";
+                string sql = "INSERT INTO dbo.[power_plan_paint_sub_dept_test_temp_2] (staff_id,sub_department,placement_id) VALUES (" +staffID + ",'" + sub_dept + "'," + placement_ID + ");";
                 using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -71,7 +71,7 @@ namespace ShopFloorPlacementPlanner
         private void getStaffID(int placementID)
         {
             //get staff id using the placement id from the main powerplan table
-            string sql = "SELECT staff_id FROM dbo.view_planner_punch_staff WHERE PlacementID = " + placementID;
+            string sql = "SELECT COALESCE(staff_id,0) FROM dbo.view_planner_punch_staff WHERE PlacementID = " + placementID;
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
