@@ -26,7 +26,6 @@ namespace ShopFloorPlacementPlanner
             cmbSubDept.Items.Add("Oven");
             cmbSubDept.Items.Add("Wet Prep");
             cmbSubDept.Items.Add("Wet Paint");
-            cmbSubDept.Items.Add("Oven 2");
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
