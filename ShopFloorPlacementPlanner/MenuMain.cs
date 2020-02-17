@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Drawing.Printing;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -1595,6 +1597,21 @@ namespace ShopFloorPlacementPlanner
             }
 
             fillgrid();
+        }
+
+        private void ryucxdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExcelClass excel = new ExcelClass();
+            excel.openExcel();
+            excel.addData(Convert.ToDouble(txtPunchHours.Text), Convert.ToDouble(txtPaintOT.Text), Convert.ToDouble(txtPunchAD.Text), Convert.ToDouble(txtPunchingTotal.Text),
+                                       Convert.ToDouble(txtLaserHours.Text), Convert.ToDouble(txtLaserOT.Text), Convert.ToDouble(txtLaserAD.Text), Convert.ToDouble(txtLaserTotal.Text),
+                                       Convert.ToDouble(txtBendHours.Text), Convert.ToDouble(txtBendOT.Text), Convert.ToDouble(txtBendAD.Text), Convert.ToDouble(txtBendingTotal.Text),
+                                       Convert.ToDouble(txtWeldHours.Text), Convert.ToDouble(txtWeldOT.Text), Convert.ToDouble(txtWeldAD.Text), Convert.ToDouble(txtWeldingTotal.Text),
+                                       Convert.ToDouble(txtBuffHours.Text), Convert.ToDouble(txtBuffOT.Text), Convert.ToDouble(txtBuffAD.Text), Convert.ToDouble(txtBuffingTotal.Text),
+                                       Convert.ToDouble(txtPaintHours.Text), Convert.ToDouble(txtPaintOT.Text), Convert.ToDouble(txtPaintAD.Text), Convert.ToDouble(txtPaintingTotal.Text),
+                                       Convert.ToDouble(txtPackHours.Text), Convert.ToDouble(txtPackOT.Text), Convert.ToDouble(txtPackAD.Text), Convert.ToDouble(txtPackingTotal.Text)
+);
+            excel.closeExcel();
         }
     }
 }

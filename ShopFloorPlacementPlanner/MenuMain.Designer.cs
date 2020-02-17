@@ -114,6 +114,7 @@
             this.loadDefaultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.floorListingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.batchOperationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearPlanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -203,7 +204,7 @@
             this.txtStoresMen = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.label68 = new System.Windows.Forms.Label();
-            this.clearPlanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ryucxdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -806,7 +807,8 @@
             this.loadDefaultsToolStripMenuItem,
             this.floorListingsToolStripMenuItem,
             this.batchOperationsToolStripMenuItem,
-            this.clearPlanToolStripMenuItem});
+            this.clearPlanToolStripMenuItem,
+            this.ryucxdToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1932, 24);
@@ -867,6 +869,13 @@
             this.batchOperationsToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
             this.batchOperationsToolStripMenuItem.Text = "Batch Operations";
             this.batchOperationsToolStripMenuItem.Click += new System.EventHandler(this.BatchOperationsToolStripMenuItem_Click);
+            // 
+            // clearPlanToolStripMenuItem
+            // 
+            this.clearPlanToolStripMenuItem.Name = "clearPlanToolStripMenuItem";
+            this.clearPlanToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.clearPlanToolStripMenuItem.Text = "Clear Plan";
+            this.clearPlanToolStripMenuItem.Click += new System.EventHandler(this.ClearPlanToolStripMenuItem_Click);
             // 
             // label23
             // 
@@ -1804,12 +1813,12 @@
             this.label68.TabIndex = 148;
             this.label68.Text = "Men";
             // 
-            // clearPlanToolStripMenuItem
+            // ryucxdToolStripMenuItem
             // 
-            this.clearPlanToolStripMenuItem.Name = "clearPlanToolStripMenuItem";
-            this.clearPlanToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
-            this.clearPlanToolStripMenuItem.Text = "Clear Plan";
-            this.clearPlanToolStripMenuItem.Click += new System.EventHandler(this.ClearPlanToolStripMenuItem_Click);
+            this.ryucxdToolStripMenuItem.Name = "ryucxdToolStripMenuItem";
+            this.ryucxdToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.ryucxdToolStripMenuItem.Text = "ryucxd";
+            this.ryucxdToolStripMenuItem.Click += new System.EventHandler(this.ryucxdToolStripMenuItem_Click);
             // 
             // MenuMain
             // 
@@ -2141,6 +2150,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Label label68;
         private System.Windows.Forms.ToolStripMenuItem clearPlanToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ryucxdToolStripMenuItem;
     }
 }
 
