@@ -1662,7 +1662,7 @@ namespace ShopFloorPlacementPlanner
                         SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
-                            punching_OT = Convert.ToDouble(reader["punching_OT"]) * 0.8;
+                            punching_OT = Convert.ToDouble(reader["punching_OT"]) * 0.8; //this is broke for buffing i think
                             punching_AD = Convert.ToDouble(reader["punching_AD"]);
                             laser_OT = Convert.ToDouble(reader["laser_OT"]) * 0.8;
                             laser_AD = Convert.ToDouble(reader["laser_AD"]);
