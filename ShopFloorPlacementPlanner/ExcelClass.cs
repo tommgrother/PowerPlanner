@@ -11,7 +11,7 @@ namespace ShopFloorPlacementPlanner
     class ExcelClass
     {
         public string filePath = @"\\designsvr1\DropBox\TEMPLATE.xlsx";
-        
+
 
         Excel.Application app;
         Excel.Workbook workBook;
@@ -50,7 +50,7 @@ namespace ShopFloorPlacementPlanner
             workSheet.Cells[rowNumber, "A"] = punchH;
             workSheet.Cells[rowNumber, "B"] = punchO;
             workSheet.Cells[rowNumber, "C"] = punchA;
-           // workSheet.Cells[rowNumber, "D"] = punchTH;
+            // workSheet.Cells[rowNumber, "D"] = punchTH;
             //laser
             workSheet.Cells[rowNumber, "E"] = laserH;
             workSheet.Cells[rowNumber, "F"] = laserO;
@@ -65,7 +65,7 @@ namespace ShopFloorPlacementPlanner
             workSheet.Cells[rowNumber, "M"] = weldingH;
             workSheet.Cells[rowNumber, "N"] = weldingO;
             workSheet.Cells[rowNumber, "O"] = weldingA;
-          //  workSheet.Cells[rowNumber, "P"] = weldingTH;
+            //  workSheet.Cells[rowNumber, "P"] = weldingTH;
             //buffing
             workSheet.Cells[rowNumber, "Q"] = buffingH;
             workSheet.Cells[rowNumber, "R"] = buffingO;
@@ -80,7 +80,7 @@ namespace ShopFloorPlacementPlanner
             workSheet.Cells[rowNumber, "Y"] = packingH;
             workSheet.Cells[rowNumber, "Z"] = packingO;
             workSheet.Cells[rowNumber, "AA"] = packingA;
-           // workSheet.Cells[rowNumber, "AB"] = packingTH;
+            // workSheet.Cells[rowNumber, "AB"] = packingTH;
         }
 
 
@@ -92,33 +92,39 @@ namespace ShopFloorPlacementPlanner
                 Type.Missing, Type.Missing, Type.Missing, Type.Missing);
 
             // Cleanup:
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            //GC.Collect();
+            //GC.WaitForPendingFinalizers();
         }
 
 
-        public  void closeExcel()
+        public void closeExcel()
         {
-            try
+            //workBook.Close(0);
+            System.Diagnostics.Process[] process = System.Diagnostics.Process.GetProcessesByName("Excel");
+            foreach (System.Diagnostics.Process p in process)
             {
-                //no idea how this works ----again
-                workBook.SaveAs(filePath, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-                System.Reflection.Missing.Value, System.Reflection.Missing.Value, Excel.XlSaveAsAccessMode.xlNoChange,
-                System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-                System.Reflection.Missing.Value, System.Reflection.Missing.Value); 
-                // Save data in excel
-
-
-                workBook.Close(true, filePath, System.Reflection.Missing.Value); // close the worksheet
-
-
-            }
-            finally
-            {
-                if (app != null)
+                if (!string.IsNullOrEmpty(p.ProcessName))
                 {
-                    app.Quit(); // close the excel application
+                    try
+                    {
+                        p.Kill();
+                    }
+                    catch { }
                 }
+            }
+            //KillSpecificExcelFileProcess("TEMPLATE.xlsx");
+
+        }
+
+        private void KillSpecificExcelFileProcess(string excelFileName)
+        {
+            var processes = from p in System.Diagnostics.Process.GetProcessesByName("EXCEL")
+                            select p;
+
+            foreach (var process in processes)
+            {
+                if (process.MainWindowTitle == "Microsoft Excel - " + excelFileName)
+                    process.Kill();
             }
         }
 
