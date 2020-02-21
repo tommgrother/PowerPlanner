@@ -1601,6 +1601,7 @@ namespace ShopFloorPlacementPlanner
 
         private void ryucxdToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ExcelClass excel = new ExcelClass();
             string sql = "";
             //from the current day, get all the days in that week (to iterate through
             DateTime date = Convert.ToDateTime(dteDateSelection.Value.ToShortDateString());
@@ -1695,7 +1696,7 @@ namespace ShopFloorPlacementPlanner
                         if (z == 3)
                             dept = "Welding";
                         if (z == 4)
-                            dept = "Buffing";
+                            dept = "Dressing";
                         if (z == 5)
                             dept = "Painting";
                         if (z == 6)
@@ -1722,7 +1723,7 @@ namespace ShopFloorPlacementPlanner
                             conn.Close();
                         }
                     }
-                    ExcelClass excel = new ExcelClass();
+                   
                     excel.openExcel(i);
                     excel.addData(Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
                                                Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
@@ -1736,15 +1737,16 @@ namespace ShopFloorPlacementPlanner
 
 
                     excel.addDAtes(mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR);
-                    excel.closeExcel();
+                   // excel.closeExcel();
 
                     
                     row++;
                 }
             }
-
             //get the right fields into this and 
-            MessageBox.Show("complete");
+            excel.print();
+            excel.closeExcel();
+            MessageBox.Show("Printout has been sent to your default printer!");
         }
     }
 }

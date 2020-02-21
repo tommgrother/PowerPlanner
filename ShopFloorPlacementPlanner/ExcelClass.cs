@@ -84,6 +84,19 @@ namespace ShopFloorPlacementPlanner
         }
 
 
+        public void print()
+        {
+            // Print out 1 copy to the default printer:
+            workSheet.PrintOut(
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+            // Cleanup:
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+
         public  void closeExcel()
         {
             try
