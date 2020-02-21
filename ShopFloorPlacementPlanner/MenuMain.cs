@@ -20,7 +20,7 @@ namespace ShopFloorPlacementPlanner
         public MenuMain()
         {
             InitializeComponent();
-        
+
         }
 
         private void btnAddPunch_Click(object sender, EventArgs e)
@@ -28,17 +28,17 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Punching", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            
+
             fillgrid();
             updateDailyGoals();
         }
 
         private void btnAddBend_Click(object sender, EventArgs e)
         {
-            skipMessageBox = 2; 
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Bending", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            
+
             fillgrid();
             updateDailyGoals();
         }
@@ -48,7 +48,7 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Welding", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-           
+
             fillgrid();
             updateDailyGoals();
         }
@@ -58,17 +58,17 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Dressing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            
+
             fillgrid();
             updateDailyGoals();
         }
 
         private void btnAddPaint_Click(object sender, EventArgs e)
         {
-            skipMessageBox = 2; 
+            skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Painting", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-           
+
             fillgrid();
             updateDailyGoals();
         }
@@ -78,7 +78,7 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Packing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-        
+
             fillgrid();
             updateDailyGoals();
         }
@@ -219,7 +219,7 @@ namespace ShopFloorPlacementPlanner
                     weldMen = weldMen + 1;
                 }
 
-                weldHours = weldHours  + Convert.ToDouble(row.Cells[1].Value);
+                weldHours = weldHours + Convert.ToDouble(row.Cells[1].Value);
             }
 
             foreach (DataGridViewRow row in dgBuff.Rows)
@@ -266,7 +266,7 @@ namespace ShopFloorPlacementPlanner
                     packMen = packMen + 1;
                 }
 
-                packHours  = packHours  + Convert.ToDouble(row.Cells[1].Value);
+                packHours = packHours + Convert.ToDouble(row.Cells[1].Value);
             }
 
 
@@ -295,9 +295,9 @@ namespace ShopFloorPlacementPlanner
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             Overtime o = new Overtime();
             o.getDateID(Convert.ToDateTime(dteDateSelection.Text));
-       
-         
-            using(SqlCommand cmd = new SqlCommand("SELECT * from dbo.power_plan_overtime where date_id = @dateID", conn))
+
+
+            using (SqlCommand cmd = new SqlCommand("SELECT * from dbo.power_plan_overtime where date_id = @dateID", conn))
             {
                 conn.Open();
                 cmd.Parameters.AddWithValue("@dateID", o._dateID);
@@ -389,7 +389,7 @@ namespace ShopFloorPlacementPlanner
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
 
-            foreach(DataGridViewRow row in dgSlimline.Rows)
+            foreach (DataGridViewRow row in dgSlimline.Rows)
             {
                 placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
@@ -402,7 +402,7 @@ namespace ShopFloorPlacementPlanner
 
                 pnc.checkNonStandard();
 
-                if(pnc._nonStandardPlacment == true)
+                if (pnc._nonStandardPlacment == true)
                 {
                     row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
@@ -410,32 +410,32 @@ namespace ShopFloorPlacementPlanner
 
             //PUNCH
             foreach (DataGridViewRow row in dgPunch.Rows)
-                    if (row.Cells[0].Value.ToString().Contains("Shift"))
-                    {
-                        row.DefaultCellStyle.BackColor = Color.Red;
-                    }
-                foreach (DataGridViewRow row in dgPunch.Rows)
-                    if (row.Cells[0].Value.ToString().Contains("Half"))
-                    {
-                        row.DefaultCellStyle.BackColor = Color.MediumPurple;
-                    }
-                foreach (DataGridViewRow row in dgPunch.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Shift"))
                 {
-                    placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
-                    PlacementNoteClass pnc = new PlacementNoteClass(placementID);
-                    pnc.getNote();
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+            foreach (DataGridViewRow row in dgPunch.Rows)
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                }
+            foreach (DataGridViewRow row in dgPunch.Rows)
+            {
+                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
 
-                    if (pnc._hasNote == true)
-                    {
-                        row.DefaultCellStyle.BackColor = Color.Yellow;
-                    }
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
 
-                    pnc.checkNonStandard();
+                pnc.checkNonStandard();
 
-                    if (pnc._nonStandardPlacment == true)
-                    {
-                        row.DefaultCellStyle.ForeColor = Color.Blue;
-                    }
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
 
             }
             //LASER
@@ -965,7 +965,7 @@ namespace ShopFloorPlacementPlanner
         private void countMen()
         {
 
-            double menCount=0;
+            double menCount = 0;
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("usp_power_planner_count_men", conn);
@@ -1096,12 +1096,12 @@ namespace ShopFloorPlacementPlanner
             //ryucxd paint
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-                string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(d.sub_department,'')  AS [Staff Placement], a.hours, a.id " +
-            "FROM dbo.power_plan_staff AS a " +
-            "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
-            "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
-            "LEFT JOIN dbo.power_plan_paint_sub_dept_test_temp_2 as d ON a.id = d.placement_id " +
-            "WHERE c.date_plan = '" + dteDateSelection.Text + "' and a.department = 'Painting'  order by a.id";
+            string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(d.sub_department,'')  AS [Staff Placement], a.hours, a.id " +
+        "FROM dbo.power_plan_staff AS a " +
+        "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
+        "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
+        "LEFT JOIN dbo.power_plan_paint_sub_dept_test_temp_2 as d ON a.id = d.placement_id " +
+        "WHERE c.date_plan = '" + dteDateSelection.Text + "' and a.department = 'Painting'  order by a.id";
 
             SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -1268,7 +1268,7 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Laser", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-           
+
             fillgrid();
             updateDailyGoals();
         }
@@ -1286,7 +1286,7 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Slimline", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            
+
             fillgrid();
             updateDailyGoals();
         }
@@ -1308,7 +1308,7 @@ namespace ShopFloorPlacementPlanner
             double goalHoursPaint;
             double goalHoursPack;
             double goalBoxes = 0;
-          
+
 
             double manPowerSlimline;
             double manPowerLaser;
@@ -1328,7 +1328,7 @@ namespace ShopFloorPlacementPlanner
             goalHoursBuff = Convert.ToDouble(txtBuffHours.Text) + Convert.ToDouble(txtBuffOT.Text) + Convert.ToDouble(txtBuffAD.Text);
             goalHoursPaint = Convert.ToDouble(txtPaintHours.Text) + Convert.ToDouble(txtPaintOT.Text) + Convert.ToDouble(txtPaintAD.Text);
             goalHoursPack = Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(txtPackOT.Text) + Convert.ToDouble(txtPackAD.Text);
-            
+
 
             manPowerSlimline = Convert.ToDouble(txtSlimlineMen.Text);
             manPowerLaser = Convert.ToDouble(txtLaserMen.Text);
@@ -1479,7 +1479,7 @@ namespace ShopFloorPlacementPlanner
         private void updateAutomaticAllocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             updateAutomaticAllocation();
-            
+
         }
 
         private void updateAutomaticAllocation()
@@ -1506,7 +1506,7 @@ namespace ShopFloorPlacementPlanner
                 conn.Open();
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@placementDate", SqlDbType.Date).Value = dteDateSelection.Text;
-                
+
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
@@ -1601,17 +1601,152 @@ namespace ShopFloorPlacementPlanner
 
         private void ryucxdToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ExcelClass excel = new ExcelClass();
-            excel.openExcel();
-            excel.addData(Convert.ToDouble(txtPunchHours.Text), Convert.ToDouble(txtPaintOT.Text), Convert.ToDouble(txtPunchAD.Text), Convert.ToDouble(txtPunchingTotal.Text),
-                                       Convert.ToDouble(txtLaserHours.Text), Convert.ToDouble(txtLaserOT.Text), Convert.ToDouble(txtLaserAD.Text), Convert.ToDouble(txtLaserTotal.Text),
-                                       Convert.ToDouble(txtBendHours.Text), Convert.ToDouble(txtBendOT.Text), Convert.ToDouble(txtBendAD.Text), Convert.ToDouble(txtBendingTotal.Text),
-                                       Convert.ToDouble(txtWeldHours.Text), Convert.ToDouble(txtWeldOT.Text), Convert.ToDouble(txtWeldAD.Text), Convert.ToDouble(txtWeldingTotal.Text),
-                                       Convert.ToDouble(txtBuffHours.Text), Convert.ToDouble(txtBuffOT.Text), Convert.ToDouble(txtBuffAD.Text), Convert.ToDouble(txtBuffingTotal.Text),
-                                       Convert.ToDouble(txtPaintHours.Text), Convert.ToDouble(txtPaintOT.Text), Convert.ToDouble(txtPaintAD.Text), Convert.ToDouble(txtPaintingTotal.Text),
-                                       Convert.ToDouble(txtPackHours.Text), Convert.ToDouble(txtPackOT.Text), Convert.ToDouble(txtPackAD.Text), Convert.ToDouble(txtPackingTotal.Text)
-);
-            excel.closeExcel();
+            string sql = "";
+            //from the current day, get all the days in that week (to iterate through
+            DateTime date = Convert.ToDateTime(dteDateSelection.Value.ToShortDateString());
+            DateTime Monday = new DateTime();
+            DateTime Friday = new DateTime();
+            while (date.DayOfWeek != System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
+                date = date.AddDays(-1);
+            Monday = date;
+            //get end of week
+            Friday = date.AddDays(4);
+
+            //now we just need the finishing touches ¬   finishing touches even tho we are at the start of the button press :p
+            //the name of the day and date for each one
+            string mondaySTR = "", tuesdaySTR = "", wednesdaySTR = "", thursdaySTR = "", fridaySTR = "";
+            mondaySTR = "Monday - " + Monday.ToShortDateString();
+            DateTime stringDate = Monday.AddDays(0);
+            tuesdaySTR = "Tuesday - " + stringDate.ToShortDateString();
+            stringDate = Monday.AddDays(1);
+            tuesdaySTR = "Tuesday - " + stringDate.ToShortDateString();
+            stringDate = Monday.AddDays(2);
+            wednesdaySTR = "Wednesday - " + stringDate.ToShortDateString();
+            stringDate = Monday.AddDays(3);
+            thursdaySTR = "Thursday - " + stringDate.ToShortDateString();
+            stringDate = Monday.AddDays(4);
+            fridaySTR = "Friday - " + stringDate.ToShortDateString();
+
+
+
+            //now we have monday - friday, get the DATEID of each of these
+            //store these in a DT
+            DataTable dt = new DataTable();// declare this outside so it can be called outside
+            sql = "select id from dbo.power_plan_date WHERE date_plan >= '" + Monday.ToString("yyyy-MM-dd") + "' AND date_plan <= '" + Friday.ToString("yyyy-MM-dd") + "' ORDER BY date_plan ASC";
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    conn.Open();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                    conn.Close();
+                }
+            }
+            //call the DataTable using this /dt.Rows[0][0]/
+            //now we can zip through everyday of that week
+            //all the variables we'll ever need for overtime
+            double punching_OT = 0, punching_AD = 0, laser_OT = 0, laser_AD = 0, bending_OT = 0, bending_AD = 0, welding_OT = 0, welding_AD = 0, buffing_OT = 0, buffing_AD = 0, painting_OT = 0, painting_AD = 0, packing_AD = 0, packing_OT = 0;
+            //variable for flicking through datatable
+            int row = 0;
+            for (int i = 4; i < 21; i = i + 4)
+            {//one connectiong string to rule them all
+                using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+                {
+
+                    //get the figures for OT + AD
+                    sql = "select date_id,punching_OT,punching_AD,laser_OT,laser_AD,bending_OT,bending_AD,welding_OT,welding_AD,buffing_OT,buffing_AD,painting_OT,painting_AD,packing_AD,packing_OT from dbo.power_plan_overtime WHERE date_id = " + dt.Rows[row][0];
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        conn.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            punching_OT = Convert.ToDouble(reader["punching_OT"]) * 0.8;
+                            punching_AD = Convert.ToDouble(reader["punching_AD"]);
+                            laser_OT = Convert.ToDouble(reader["laser_OT"]) * 0.8;
+                            laser_AD = Convert.ToDouble(reader["laser_AD"]);
+                            bending_OT = Convert.ToDouble(reader["bending_OT"]) * 0.8;
+                            bending_AD = Convert.ToDouble(reader["bending_AD"]);
+                            welding_OT = Convert.ToDouble(reader["welding_OT"]) * 0.8;
+                            welding_AD = Convert.ToDouble(reader["welding_AD"]);
+                            buffing_OT = Convert.ToDouble(reader["buffing_OT"]) * 0.8;
+                            buffing_AD = Convert.ToDouble(reader["buffing_AD"]);
+                            painting_OT = Convert.ToDouble(reader["painting_OT"]) * 0.8;
+                            painting_AD = Convert.ToDouble(reader["painting_AD"]);
+                            packing_OT = Convert.ToDouble(reader["packing_OT"]) * 0.8;
+                            packing_AD = Convert.ToDouble(reader["packing_AD"]);
+                        }
+                        conn.Close();
+                    }
+                    //get normal hours here i think?
+                    //variables for houys
+                    double punching_hours = 0, laser_hours = 0, bending_hours = 0, welding_hours =0,buffing_hours = 0,painting_hours = 0,packing_hours = 0;
+                    //loop through each section and paste them into a variable thats declared anoive
+                    string dept = "";
+                    for (int z = 0; z <= 7; z++)
+                    { //first get the department
+                        if (z == 0)
+                            dept = "Punching";
+                        if (z == 1)
+                            dept = "Laser";
+                        if (z == 2)
+                            dept = "Bending";
+                        if (z == 3)
+                            dept = "Welding";
+                        if (z == 4)
+                            dept = "Buffing";
+                        if (z == 5)
+                            dept = "Painting";
+                        if (z == 6)
+                            dept = "Packing";
+
+                        sql = "select distinct sum([hours]) as [hours] from  dbo.power_plan_staff where department = '" + dept + "'  AND date_id = " + dt.Rows[row][0]  + " group by department";
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+                            conn.Open();
+                            if (z == 0)
+                                punching_hours = Convert.ToDouble(cmd.ExecuteScalar());
+                            if (z == 1)
+                                laser_hours = Convert.ToDouble(cmd.ExecuteScalar());
+                            if (z == 2)
+                                bending_hours = Convert.ToDouble(cmd.ExecuteScalar());
+                            if (z == 3)
+                                welding_hours = Convert.ToDouble(cmd.ExecuteScalar());
+                            if (z == 4)
+                                buffing_hours = Convert.ToDouble(cmd.ExecuteScalar());
+                            if (z == 5)
+                                painting_hours = Convert.ToDouble(cmd.ExecuteScalar());
+                            if (z == 6)
+                                packing_hours = Convert.ToDouble(cmd.ExecuteScalar());
+                            conn.Close();
+                        }
+                    }
+                    ExcelClass excel = new ExcelClass();
+                    excel.openExcel(i);
+                    excel.addData(Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
+                                               Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
+                                               Convert.ToDouble(bending_hours), Convert.ToDouble(bending_OT), Convert.ToDouble(bending_AD),
+                                               Convert.ToDouble(welding_hours), Convert.ToDouble(welding_OT), Convert.ToDouble(welding_AD),
+                                               Convert.ToDouble(buffing_hours), Convert.ToDouble(buffing_OT), Convert.ToDouble(buffing_AD),
+                                               Convert.ToDouble(painting_hours), Convert.ToDouble(painting_OT), Convert.ToDouble(painting_AD),
+                                               Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD)
+        );
+
+
+
+                    excel.addDAtes(mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR);
+                    excel.closeExcel();
+
+                    
+                    row++;
+                }
+            }
+
+            //get the right fields into this and 
+            MessageBox.Show("complete");
         }
     }
 }
+
+
