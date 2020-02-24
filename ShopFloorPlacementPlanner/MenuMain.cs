@@ -1615,7 +1615,9 @@ namespace ShopFloorPlacementPlanner
 
             //now we just need the finishing touches ¬   finishing touches even tho we are at the start of the button press :p
             //the name of the day and date for each one
-            string mondaySTR = "", tuesdaySTR = "", wednesdaySTR = "", thursdaySTR = "", fridaySTR = "";
+            string mondaySTR = "", tuesdaySTR = "", wednesdaySTR = "", thursdaySTR = "", fridaySTR = "", fileName = "";
+            fileName = date.ToShortDateString();
+            fileName = fileName.Replace("/", "-");
             mondaySTR = "Monday - " + Monday.ToShortDateString();
             DateTime stringDate = Monday.AddDays(0);
             tuesdaySTR = "Tuesday - " + stringDate.ToShortDateString();
@@ -1628,6 +1630,7 @@ namespace ShopFloorPlacementPlanner
             stringDate = Monday.AddDays(4);
             fridaySTR = "Friday - " + stringDate.ToShortDateString();
 
+            //check if the file already exsits and if it does then skip everything below maybe? or delete whats there
 
 
             //now we have monday - friday, get the DATEID of each of these
@@ -1652,6 +1655,7 @@ namespace ShopFloorPlacementPlanner
             int row = 0;
             for (int i = 4; i < 21; i = i + 4)
             {//one connectiong string to rule them all
+                //MessageBox.Show(i.ToString());
                 using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {
 
@@ -1723,20 +1727,30 @@ namespace ShopFloorPlacementPlanner
                             conn.Close();
                         }
                     }
-                   
-                    excel.openExcel(i);
-                    excel.addData(Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
+                    int print = 0;
+                    if (i == 20)
+                        print = 1;
+                    excel.openExcel(print,i,fileName, mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR,Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
                                                Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
                                                Convert.ToDouble(bending_hours), Convert.ToDouble(bending_OT), Convert.ToDouble(bending_AD),
                                                Convert.ToDouble(welding_hours), Convert.ToDouble(welding_OT), Convert.ToDouble(welding_AD),
                                                Convert.ToDouble(buffing_hours), Convert.ToDouble(buffing_OT), Convert.ToDouble(buffing_AD),
                                                Convert.ToDouble(painting_hours), Convert.ToDouble(painting_OT), Convert.ToDouble(painting_AD),
-                                               Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD)
-        );
+                                               Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD));
+
+
+                    //excel.addData(Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
+                    //                           Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
+                    //                           Convert.ToDouble(bending_hours), Convert.ToDouble(bending_OT), Convert.ToDouble(bending_AD),
+                    //                           Convert.ToDouble(welding_hours), Convert.ToDouble(welding_OT), Convert.ToDouble(welding_AD),
+                    //                           Convert.ToDouble(buffing_hours), Convert.ToDouble(buffing_OT), Convert.ToDouble(buffing_AD),
+                    //                           Convert.ToDouble(painting_hours), Convert.ToDouble(painting_OT), Convert.ToDouble(painting_AD),
+                    //                           Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD)
+        //);
 
 
 
-                    excel.addDAtes(mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR);
+                    //excel.addDAtes(mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR);
                    // excel.closeExcel();
 
                     
@@ -1744,8 +1758,8 @@ namespace ShopFloorPlacementPlanner
                 }
             }
             //get the right fields into this and 
-            excel.print();
-            excel.closeExcel();
+            //excel.print();
+            //excel.closeExcel();
             MessageBox.Show("Printout has been sent to your default printer!");
         }
     }
