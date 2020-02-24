@@ -83,7 +83,7 @@ namespace ShopFloorPlacementPlanner
             excelBook = workbooks.Add(filePath);
             Excel.Sheets sheets = excelBook.Worksheets;
             Excel.Worksheet excelSheet = (Excel.Worksheet)(sheets[1]);
-            excelSheet.DisplayRightToLeft = true;
+            excelSheet.DisplayRightToLeft = false;
 
             //no idea how this works
             // workBook = (Excel.Workbook)(app.Workbooks._Open(filePath, System.Reflection.Missing.Value,
@@ -151,7 +151,9 @@ namespace ShopFloorPlacementPlanner
                 //System.Runtime.InteropServices.Marshal.ReleaseComObject(rng);
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(excelSheet);
             System.Runtime.InteropServices.Marshal.ReleaseComObject(sheets);
-            excelBook.Save();
+            //excelBook.Save();
+            excelBook.SaveAs(filePath, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Excel.XlSaveAsAccessMode.xlNoChange, Type.Missing, Type.Missing, Type.Missing,
+            Type.Missing, Type.Missing);
             excelBook.Close(true);
             System.Runtime.InteropServices.Marshal.ReleaseComObject(excelBook);
             System.Runtime.InteropServices.Marshal.ReleaseComObject(workbooks);
