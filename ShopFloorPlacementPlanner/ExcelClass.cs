@@ -13,7 +13,7 @@ namespace ShopFloorPlacementPlanner
 {
     class ExcelClass
     {
-        public string filePath = @"\\designsvr1\DropBox\TEMPLATE.xlsx";
+        public string filePath = @"\\designsvr1\public\Kevin Power Planner\TEMPLATE.xlsx";
 
 
 
