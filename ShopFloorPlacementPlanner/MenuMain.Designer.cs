@@ -880,8 +880,8 @@
             // ryucxdToolStripMenuItem
             // 
             this.ryucxdToolStripMenuItem.Name = "ryucxdToolStripMenuItem";
-            this.ryucxdToolStripMenuItem.Size = new System.Drawing.Size(109, 20);
-            this.ryucxdToolStripMenuItem.Text = "Print weekly data";
+            this.ryucxdToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
+            this.ryucxdToolStripMenuItem.Text = "Print Weekly Data";
             this.ryucxdToolStripMenuItem.Click += new System.EventHandler(this.ryucxdToolStripMenuItem_Click);
             // 
             // label23
