@@ -568,7 +568,7 @@ namespace ShopFloorPlacementPlanner
                     row.DefaultCellStyle.BackColor = Color.Red;
                 }
             foreach (DataGridViewRow row in dgPaint.Rows)
-                if (row.Cells[0].Value.ToString().Contains("Half"))
+                if (row.Cells[1].Value.ToString().Contains("3.20") || row.Cells[1].Value.ToString().Contains("2.80"))
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
