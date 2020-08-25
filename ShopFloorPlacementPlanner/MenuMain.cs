@@ -219,7 +219,7 @@ namespace ShopFloorPlacementPlanner
                     weldMen = weldMen + 1;
                 }
 
-                weldHours = weldHours + Convert.ToDouble(row.Cells[1].Value);
+                weldHours = weldHours + Convert.ToDouble(row.Cells[2].Value);
             }
 
             foreach (DataGridViewRow row in dgBuff.Rows)
@@ -809,7 +809,7 @@ namespace ShopFloorPlacementPlanner
                 }
                 catch
                 {
-
+                    continue;
                 }
             foreach (DataGridViewRow row in dgNotPlaced.Rows)
                 try
@@ -822,7 +822,7 @@ namespace ShopFloorPlacementPlanner
                 }
                 catch
                 {
-
+                    continue;
                 }
 
 
@@ -837,7 +837,7 @@ namespace ShopFloorPlacementPlanner
                 }
                 catch
                 {
-
+                    continue;
                 }
 
             dgSlimline.ClearSelection();
@@ -1055,15 +1055,22 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
-            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
-            cmd.Parameters.AddWithValue("@dept", "Welding");
+            string sql = "";
+            sql = sql + "SELECT MAX(b.forename +' ' + b.surname) AS[Staff Placement],CAST(MAX(a.hours) as nvarchar(max)) + ' / ' + CAST(ROUND(SUM(COALESCE(d.time_for_part, 0)) / 60, 2) as nvarchar(max)) as [Set hours / worked], max(a.id) as id," +
+           " MAX(a.hours) as hours FROM dbo.power_plan_staff AS a  INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id  INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id  LEFT JOIN dbo.door_part_completion_log as d ON d.staff_id = a.staff_id " +
+            "WHERE c.date_plan = '" + dteDateSelection.Text + "' AND a.department = 'Welding'  AND CAST(d.part_complete_date as DATE) = '" + dteDateSelection.Text + "'  " +
+            "GROUP BY (b.forename +' ' + b.surname) ORDER BY MAX(a.id)";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            //cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            //cmd.Parameters.AddWithValue("@dept", "Welding");
 
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
 
             dgWeld.DataSource = dt;
+            dgWeld.Columns["hours"].Visible = false;
+            dgWeld.Columns["Set hours / worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 
             conn.Close();
 
