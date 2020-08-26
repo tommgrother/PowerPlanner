@@ -206,11 +206,13 @@ namespace ShopFloorPlacementPlanner
 
                 bendHours = bendHours + Convert.ToDouble(row.Cells[1].Value);
             }
-
+            int columnIndex = 0;
+            columnIndex = dgWeld.Columns["Staff Placement"].Index;
             foreach (DataGridViewRow row in dgWeld.Rows)
             {
-
-                if (row.Cells[0].Value.ToString().Contains("Half"))
+               // MessageBox.Show(row.Cells[columnIndex].Value.ToString());
+               
+                if (row.Cells[columnIndex].Value.ToString().Contains("Half"))
                 {
                     weldMen = weldMen + 0.5;
                 }
@@ -218,8 +220,8 @@ namespace ShopFloorPlacementPlanner
                 {
                     weldMen = weldMen + 1;
                 }
-
-                weldHours = weldHours + Convert.ToDouble(row.Cells[1].Value);
+                int hoursIndex = dgWeld.Columns["hours"].Index;
+                weldHours = weldHours + Convert.ToDouble(row.Cells[hoursIndex].Value);
             }
 
             foreach (DataGridViewRow row in dgBuff.Rows)
@@ -533,13 +535,13 @@ namespace ShopFloorPlacementPlanner
             //corey added this 25/08/2020
             foreach (DataGridViewRow row in dgWeld.Rows)
             {           //hours is less than worked
-                if (Convert.ToDouble(row.Cells["hours"].Value) > Convert.ToDouble(row.Cells["Worked Hours"].Value))
+                if (Convert.ToDouble(row.Cells["hours"].Value) > Convert.ToDouble(row.Cells["worked"].Value))
                 {
-                    row.Cells[3].Style.BackColor = Color.Red;
+                    row.Cells[4].Style.BackColor = Color.PaleVioletRed;
                 }
-                if (Convert.ToDouble(row.Cells["hours"].Value) < Convert.ToDouble(row.Cells["worked Hours"].Value))
+                if (Convert.ToDouble(row.Cells["hours"].Value) < Convert.ToDouble(row.Cells["worked"].Value))
                 {
-                    row.Cells[3].Style.BackColor = Color.Green;
+                    row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
                 }
             }
 
@@ -571,6 +573,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
+                       //hours is less than worked
+                    if (Convert.ToDouble(row.Cells["hours"].Value) > Convert.ToDouble(row.Cells["worked"].Value))
+                    {
+                        row.Cells[4].Style.BackColor = Color.PaleVioletRed;
+                    }
+                    if (Convert.ToDouble(row.Cells["hours"].Value) < Convert.ToDouble(row.Cells["worked"].Value))
+                    {
+                        row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
+                    }
+                
+
             }
             //ryucxd PAINT IS COMMENTED OUT BECAUSE THERE IS A FUCK LOAD OF ERRORS RN
             //Paint
@@ -630,6 +643,15 @@ namespace ShopFloorPlacementPlanner
                 if (pnc._nonStandardPlacment == true)
                 {
                     row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
+                //hours is less than worked
+                if (Convert.ToDouble(row.Cells["hours"].Value) > Convert.ToDouble(row.Cells["worked"].Value))
+                {
+                    row.Cells[4].Style.BackColor = Color.PaleVioletRed;
+                }
+                if (Convert.ToDouble(row.Cells["hours"].Value) < Convert.ToDouble(row.Cells["worked"].Value))
+                {
+                    row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
                 }
             }
 
@@ -896,24 +918,27 @@ namespace ShopFloorPlacementPlanner
             columnSlimlineID.Visible = false;
             DataGridViewColumn columnSlimline = dgSlimline.Columns[1];
             columnSlimline.Width = 40;
+            dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
 
             DataGridViewColumn columnLaserID = dgLaser.Columns[2];
             columnLaserID.Visible = false;
             DataGridViewColumn columnLaser = dgLaser.Columns[1];
             columnLaser.Width = 40;
-
+            dgLaser.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             DataGridViewColumn columnPunchID = dgPunch.Columns[2];
             columnPunchID.Visible = false;
             DataGridViewColumn columnPunch = dgPunch.Columns[1];
             columnPunch.Width = 40;
+            dgPunch.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
 
             DataGridViewColumn columnBendID = dgBend.Columns[2];
             columnBendID.Visible = false;
             DataGridViewColumn columnBend = dgBend.Columns[1];
             columnBend.Width = 40;
+            dgBend.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             //here here here here
             DataGridViewColumn columnWeldID = dgWeld.Columns[2];
@@ -925,6 +950,7 @@ namespace ShopFloorPlacementPlanner
             columnBuffID.Visible = false;
             DataGridViewColumn columnBuff = dgBuff.Columns[1];
             columnBuff.Width = 40;
+            dgBuff.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
 
             DataGridViewColumn columnPaintID = dgPaint.Columns[2];
@@ -937,41 +963,48 @@ namespace ShopFloorPlacementPlanner
             columnPackID.Visible = false;
             DataGridViewColumn columnPack = dgPack.Columns[1];
             columnPack.Width = 40;
+            dgPack.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
 
             DataGridViewColumn columnStoresID = dgStores.Columns[2];
             columnStoresID.Visible = false;
             DataGridViewColumn columnStores = dgStores.Columns[1];
             columnStores.Width = 40;
+            dgStores.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
 
             DataGridViewColumn columnDispatchID = dgDispatch.Columns[2];
             columnDispatchID.Visible = false;
             DataGridViewColumn columnDispatch = dgDispatch.Columns[1];
             columnDispatch.Width = 40;
+            dgDispatch.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
 
             DataGridViewColumn columnToolRoomID = dgToolRoom.Columns[2];
             columnToolRoomID.Visible = false;
             DataGridViewColumn columnToolroom = dgToolRoom.Columns[1];
             columnToolroom.Width = 40;
+            dgToolRoom.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
 
             DataGridViewColumn columnCleaningID = dgCleaning.Columns[2];
             columnCleaningID.Visible = false;
             DataGridViewColumn columnCleaning = dgCleaning.Columns[1];
             columnCleaning.Width = 40;
+            dgCleaning.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             DataGridViewColumn columnManagementID = dgManagement.Columns[2];
             columnManagementID.Visible = false;
             DataGridViewColumn columnManagement = dgManagement.Columns[1];
             columnManagement.Width = 40;
+            dgManagement.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
 
             DataGridViewColumn columnHSID = dgHS.Columns[2];
             columnHSID.Visible = false;
             DataGridViewColumn columnHS = dgHS.Columns[1];
             columnHS.Width = 40;
+            dgHS.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
         }
 
         private void countMen()
@@ -1065,14 +1098,30 @@ namespace ShopFloorPlacementPlanner
 
         private void fillWeld()
         {
+            if (dgWeld.Columns.Contains("worked") == true)
+            {
+                dgWeld.Columns.Remove("worked");
+            }
+            if (dgWeld.Columns.Contains("set/worked") == true)
+            {
+                dgWeld.Columns.Remove("set/worked");
+            }
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-           
-            string sql = "";
+
+
             SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Welding");
+
+            //
+            //string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(a.placement_type,'')  AS [Staff Placement], a.hours, a.id " +
+            //                    "FROM dbo.power_plan_staff AS a " +
+            //                    "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
+            //                    "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
+            //                    "WHERE c.date_plan = '" + dteDateSelection.Text + "' and a.department = 'Welding'  order by b.forename + ' ' + b.surname";
             //ryucxd
+            //SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
@@ -1092,14 +1141,31 @@ namespace ShopFloorPlacementPlanner
             SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable workedHours = new DataTable();
             da2.Fill(workedHours);
-            dgWeld.Columns.Add("Worked Hours", "Worked Hours");
-            for (int i = 0; i < dgWeld.Rows.Count; i++)
+
+            dgWeld.Columns.Add("worked", "worked");
+            dgWeld.Columns.Add("set/worked", "set/worked");
+            for (int i = 0; i < dgWeld.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
                 dgWeld[3, i].Value = workedHours.Rows[0][i].ToString();
             }
-            dgWeld.Columns["Worked Hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //put the columns together into one column! :D
+            string hours = "";
+            string worked = "";
+            for (int i = 0; i < dgWeld.Rows.Count;i++)
+            {
+                hours = dgWeld.Rows[i].Cells[1].Value.ToString();
+                worked = dgWeld.Rows[i].Cells[3].Value.ToString();
+                dgWeld[4, i].Value = hours + " / " + worked;
+            }
 
+
+            //dgWeld.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dgWeld.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgWeld.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dgWeld.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgWeld.Columns["hours"].Visible = false;
+            dgWeld.Columns["worked"].Visible = false;
 
             conn.Close();
 
@@ -1107,6 +1173,15 @@ namespace ShopFloorPlacementPlanner
 
         private void fillBuff()
         {
+            if (dgBuff.Columns.Contains("worked") == true)
+            {
+                dgBuff.Columns.Remove("worked");
+            }
+            if (dgBuff.Columns.Contains("set/worked") == true)
+            {
+                dgBuff.Columns.Remove("set/worked");
+            }
+
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
@@ -1118,6 +1193,46 @@ namespace ShopFloorPlacementPlanner
             da.Fill(dt);
 
             dgBuff.DataSource = dt;
+
+
+
+            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            cmdryucxd.CommandType = CommandType.StoredProcedure;
+            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Dressing";
+            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable workedHours = new DataTable();
+            da2.Fill(workedHours);
+
+            dgBuff.Columns.Add("worked", "worked");
+            dgBuff.Columns.Add("set/worked", "set/worked");
+            for (int i = 0; i < dgBuff.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
+            {
+                //MessageBox.Show(workedHours.Rows[0][i].ToString());
+                dgBuff[3, i].Value = workedHours.Rows[0][i].ToString();
+            }
+            //put the columns together into one column! :D
+            string hours = "";
+            string worked = "";
+            for (int i = 0; i < dgBuff.Rows.Count; i++)
+            {
+                hours = dgBuff.Rows[i].Cells[1].Value.ToString();
+                worked = dgBuff.Rows[i].Cells[3].Value.ToString();
+                dgBuff[4, i].Value = hours + " / " + worked;
+            }
+
+
+            //dgBuff.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dgBuff.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgBuff.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dgBuff.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgBuff.Columns["hours"].Visible = false;
+            dgBuff.Columns["worked"].Visible = false;
+
+
+
+
+
 
             conn.Close();
 
@@ -1156,6 +1271,15 @@ namespace ShopFloorPlacementPlanner
 
         private void fillPack()
         {
+            if (dgPack.Columns.Contains("worked") == true)
+            {
+                dgPack.Columns.Remove("worked");
+            }
+            if (dgPack.Columns.Contains("set/worked") == true)
+            {
+                dgPack.Columns.Remove("set/worked");
+            }
+
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
@@ -1167,6 +1291,42 @@ namespace ShopFloorPlacementPlanner
             da.Fill(dt);
 
             dgPack.DataSource = dt;
+
+
+            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            cmdryucxd.CommandType = CommandType.StoredProcedure;
+            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Packing";
+            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable workedHours = new DataTable();
+            da2.Fill(workedHours);
+
+            dgPack.Columns.Add("worked", "worked");
+            dgPack.Columns.Add("set/worked", "set/worked");
+            for (int i = 0; i < dgPack.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
+            {
+                //MessageBox.Show(workedHours.Rows[0][i].ToString());
+                dgPack[3, i].Value = workedHours.Rows[0][i].ToString();
+            }
+            //put the columns together into one column! :D
+            string hours = "";
+            string worked = "";
+            for (int i = 0; i < dgPack.Rows.Count; i++)
+            {
+                hours = dgPack.Rows[i].Cells[1].Value.ToString();
+                worked = dgPack.Rows[i].Cells[3].Value.ToString();
+                dgPack[4, i].Value = hours + " / " + worked;
+            }
+
+
+            //dgPack.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dgPack.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgPack.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dgPack.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgPack.Columns["hours"].Visible = false;
+            dgPack.Columns["worked"].Visible = false;
+
+
 
             conn.Close();
         }
