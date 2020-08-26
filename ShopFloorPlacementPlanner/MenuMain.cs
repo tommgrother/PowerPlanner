@@ -219,7 +219,7 @@ namespace ShopFloorPlacementPlanner
                     weldMen = weldMen + 1;
                 }
 
-                weldHours = weldHours + Convert.ToDouble(row.Cells[2].Value);
+                weldHours = weldHours + Convert.ToDouble(row.Cells[1].Value);
             }
 
             foreach (DataGridViewRow row in dgBuff.Rows)
@@ -528,6 +528,18 @@ namespace ShopFloorPlacementPlanner
                 if (pnc._nonStandardPlacment == true)
                 {
                     row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
+            }
+            //corey added this 25/08/2020
+            foreach (DataGridViewRow row in dgWeld.Rows)
+            {           //hours is less than worked
+                if (Convert.ToDouble(row.Cells["hours"].Value) > Convert.ToDouble(row.Cells["Worked Hours"].Value))
+                {
+                    row.Cells[3].Style.BackColor = Color.Red;
+                }
+                if (Convert.ToDouble(row.Cells["hours"].Value) < Convert.ToDouble(row.Cells["worked Hours"].Value))
+                {
+                    row.Cells[3].Style.BackColor = Color.Green;
                 }
             }
 
@@ -903,7 +915,7 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnBend = dgBend.Columns[1];
             columnBend.Width = 40;
 
-
+            //here here here here
             DataGridViewColumn columnWeldID = dgWeld.Columns[2];
             columnWeldID.Visible = false;
             DataGridViewColumn columnWeld = dgWeld.Columns[1];
@@ -1055,22 +1067,39 @@ namespace ShopFloorPlacementPlanner
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
+           
             string sql = "";
-            sql = sql + "SELECT MAX(b.forename +' ' + b.surname) AS[Staff Placement],CAST(MAX(a.hours) as nvarchar(max)) + ' / ' + CAST(ROUND(SUM(COALESCE(d.time_for_part, 0)) / 60, 2) as nvarchar(max)) as [Set hours / worked], max(a.id) as id," +
-           " MAX(a.hours) as hours FROM dbo.power_plan_staff AS a  INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id  INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id  LEFT JOIN dbo.door_part_completion_log as d ON d.staff_id = a.staff_id " +
-            "WHERE c.date_plan = '" + dteDateSelection.Text + "' AND a.department = 'Welding'  AND CAST(d.part_complete_date as DATE) = '" + dteDateSelection.Text + "'  " +
-            "GROUP BY (b.forename +' ' + b.surname) ORDER BY MAX(a.id)";
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            //cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
-            //cmd.Parameters.AddWithValue("@dept", "Welding");
-
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            cmd.Parameters.AddWithValue("@dept", "Welding");
+            //ryucxd
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
 
             dgWeld.DataSource = dt;
-            dgWeld.Columns["hours"].Visible = false;
-            dgWeld.Columns["Set hours / worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dgWeld.Columns["hours"].Visible = false;
+            //dgWeld.Columns["Set hours / worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dgWeld.Columns["workedHours"].Visible = false;
+
+
+            //this procedure works everything out, so if we just staple on another column and insert whatever we grab from the procedure life should be good
+            //usp_power_planner_worked_hours
+            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            cmdryucxd.CommandType = CommandType.StoredProcedure;
+            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Welding";
+            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable workedHours = new DataTable();
+            da2.Fill(workedHours);
+            dgWeld.Columns.Add("Worked Hours", "Worked Hours");
+            for (int i = 0; i < dgWeld.Rows.Count; i++)
+            {
+                //MessageBox.Show(workedHours.Rows[0][i].ToString());
+                dgWeld[3, i].Value = workedHours.Rows[0][i].ToString();
+            }
+            dgWeld.Columns["Worked Hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
 
             conn.Close();
 
