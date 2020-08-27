@@ -1770,10 +1770,11 @@ namespace ShopFloorPlacementPlanner
         private void btnAddDispatch_Click(object sender, EventArgs e)
         {
             skipMessageBox = 2;
-            frmSelectStaff frmSS = new frmSelectStaff("Dispatch", Convert.ToDateTime(dteDateSelection.Text)); //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            frmSelectStaff frmSS = new frmSelectStaff("Dispatch", Convert.ToDateTime(dteDateSelection.Text));
+            frmSS.ShowDialog();
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
            // fillgrid();
             refreshSelectedDepartments();
-            fillgrid();
         }
 
 

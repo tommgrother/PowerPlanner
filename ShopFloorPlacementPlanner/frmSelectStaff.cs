@@ -820,7 +820,8 @@ namespace ShopFloorPlacementPlanner
 
 
 
-
+            department_changed dc = new department_changed();
+            dc.setDepartment(_department);
             checkExistingSelections();
 
         }

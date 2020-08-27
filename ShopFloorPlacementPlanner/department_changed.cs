@@ -58,7 +58,7 @@ namespace ShopFloorPlacementPlanner
                     laserSelected = -1;
                     break;
                 case "Punching":
-                    paintSelected = -1;
+                    punchSelected = -1;
                     break;
                 case "Bending":
                     bendSelected = -1;
