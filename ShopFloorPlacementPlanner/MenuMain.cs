@@ -951,6 +951,7 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnBuff = dgBuff.Columns[1];
             columnBuff.Width = 40;
             dgBuff.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            //dgBuff.RowTemplate.Height = 55;
 
 
             DataGridViewColumn columnPaintID = dgPaint.Columns[2];
@@ -1123,6 +1124,7 @@ namespace ShopFloorPlacementPlanner
             //ryucxd
             //SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
+            conn.Close();
             DataTable dt = new DataTable();
             da.Fill(dt);
 
@@ -1167,7 +1169,7 @@ namespace ShopFloorPlacementPlanner
             dgWeld.Columns["hours"].Visible = false;
             dgWeld.Columns["worked"].Visible = false;
 
-            conn.Close();
+            // conn.Close();
 
         }
 

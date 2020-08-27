@@ -244,7 +244,7 @@
             this.dgPunch.RowHeadersVisible = false;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPunch.RowsDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgPunch.RowTemplate.Height = 40;
+            this.dgPunch.RowTemplate.Height = 50;
             this.dgPunch.Size = new System.Drawing.Size(200, 109);
             this.dgPunch.TabIndex = 0;
             // 
@@ -262,7 +262,7 @@
             this.dgBend.RowHeadersVisible = false;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBend.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgBend.RowTemplate.Height = 40;
+            this.dgBend.RowTemplate.Height = 50;
             this.dgBend.Size = new System.Drawing.Size(200, 109);
             this.dgBend.TabIndex = 1;
             // 
@@ -275,13 +275,13 @@
             this.dgWeld.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgWeld.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgWeld.Enabled = false;
-            this.dgWeld.Location = new System.Drawing.Point(840, 220);
+            this.dgWeld.Location = new System.Drawing.Point(841, 220);
             this.dgWeld.Name = "dgWeld";
             this.dgWeld.RowHeadersVisible = false;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgWeld.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.dgWeld.RowTemplate.Height = 40;
-            this.dgWeld.Size = new System.Drawing.Size(200, 109);
+            this.dgWeld.RowTemplate.Height = 50;
+            this.dgWeld.Size = new System.Drawing.Size(200, 315);
             this.dgWeld.TabIndex = 2;
             this.dgWeld.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeld_CellClick);
             // 
@@ -294,12 +294,12 @@
             this.dgBuff.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgBuff.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgBuff.Enabled = false;
-            this.dgBuff.Location = new System.Drawing.Point(1046, 220);
+            this.dgBuff.Location = new System.Drawing.Point(1047, 220);
             this.dgBuff.Name = "dgBuff";
             this.dgBuff.RowHeadersVisible = false;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBuff.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.dgBuff.RowTemplate.Height = 40;
+            this.dgBuff.RowTemplate.Height = 50;
             this.dgBuff.Size = new System.Drawing.Size(200, 109);
             this.dgBuff.TabIndex = 3;
             // 
@@ -312,12 +312,12 @@
             this.dgPaint.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgPaint.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgPaint.Enabled = false;
-            this.dgPaint.Location = new System.Drawing.Point(1252, 220);
+            this.dgPaint.Location = new System.Drawing.Point(1253, 220);
             this.dgPaint.Name = "dgPaint";
             this.dgPaint.RowHeadersVisible = false;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPaint.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            this.dgPaint.RowTemplate.Height = 40;
+            this.dgPaint.RowTemplate.Height = 50;
             this.dgPaint.Size = new System.Drawing.Size(225, 109);
             this.dgPaint.TabIndex = 4;
             // 
@@ -335,8 +335,8 @@
             this.dgPack.RowHeadersVisible = false;
             dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPack.RowsDefaultCellStyle = dataGridViewCellStyle7;
-            this.dgPack.RowTemplate.Height = 40;
-            this.dgPack.Size = new System.Drawing.Size(200, 109);
+            this.dgPack.RowTemplate.Height = 50;
+            this.dgPack.Size = new System.Drawing.Size(200, 315);
             this.dgPack.TabIndex = 5;
             // 
             // dteDateSelection
@@ -540,7 +540,7 @@
             this.dgLaser.RowHeadersVisible = false;
             dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgLaser.RowsDefaultCellStyle = dataGridViewCellStyle9;
-            this.dgLaser.RowTemplate.Height = 40;
+            this.dgLaser.RowTemplate.Height = 50;
             this.dgLaser.Size = new System.Drawing.Size(200, 109);
             this.dgLaser.TabIndex = 22;
             // 
@@ -969,7 +969,7 @@
             this.dgSlimline.RowHeadersVisible = false;
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgSlimline.RowsDefaultCellStyle = dataGridViewCellStyle12;
-            this.dgSlimline.RowTemplate.Height = 40;
+            this.dgSlimline.RowTemplate.Height = 50;
             this.dgSlimline.Size = new System.Drawing.Size(200, 109);
             this.dgSlimline.TabIndex = 54;
             // 
@@ -1543,7 +1543,7 @@
             this.dgStores.RowHeadersVisible = false;
             dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgStores.RowsDefaultCellStyle = dataGridViewCellStyle15;
-            this.dgStores.RowTemplate.Height = 40;
+            this.dgStores.RowTemplate.Height = 50;
             this.dgStores.Size = new System.Drawing.Size(200, 155);
             this.dgStores.TabIndex = 128;
             // 
@@ -1567,7 +1567,7 @@
             this.dgToolRoom.RowHeadersVisible = false;
             dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgToolRoom.RowsDefaultCellStyle = dataGridViewCellStyle17;
-            this.dgToolRoom.RowTemplate.Height = 40;
+            this.dgToolRoom.RowTemplate.Height = 50;
             this.dgToolRoom.Size = new System.Drawing.Size(200, 155);
             this.dgToolRoom.TabIndex = 127;
             // 
@@ -1584,7 +1584,7 @@
             this.dgCleaning.RowHeadersVisible = false;
             dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgCleaning.RowsDefaultCellStyle = dataGridViewCellStyle18;
-            this.dgCleaning.RowTemplate.Height = 40;
+            this.dgCleaning.RowTemplate.Height = 50;
             this.dgCleaning.Size = new System.Drawing.Size(200, 155);
             this.dgCleaning.TabIndex = 126;
             // 
@@ -1608,7 +1608,7 @@
             this.dgDispatch.RowHeadersVisible = false;
             dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgDispatch.RowsDefaultCellStyle = dataGridViewCellStyle20;
-            this.dgDispatch.RowTemplate.Height = 40;
+            this.dgDispatch.RowTemplate.Height = 50;
             this.dgDispatch.Size = new System.Drawing.Size(200, 155);
             this.dgDispatch.TabIndex = 125;
             // 
@@ -1632,12 +1632,12 @@
             this.dgManagement.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgManagement.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgManagement.Enabled = false;
-            this.dgManagement.Location = new System.Drawing.Point(840, 380);
+            this.dgManagement.Location = new System.Drawing.Point(1052, 380);
             this.dgManagement.Name = "dgManagement";
             this.dgManagement.RowHeadersVisible = false;
             dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgManagement.RowsDefaultCellStyle = dataGridViewCellStyle21;
-            this.dgManagement.RowTemplate.Height = 40;
+            this.dgManagement.RowTemplate.Height = 50;
             this.dgManagement.Size = new System.Drawing.Size(200, 155);
             this.dgManagement.TabIndex = 130;
             // 
@@ -1646,7 +1646,7 @@
             this.label57.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label57.AutoSize = true;
             this.label57.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label57.Location = new System.Drawing.Point(842, 347);
+            this.label57.Location = new System.Drawing.Point(1056, 347);
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(139, 26);
             this.label57.TabIndex = 131;
@@ -1655,7 +1655,7 @@
             // btnAddManagement
             // 
             this.btnAddManagement.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAddManagement.Location = new System.Drawing.Point(983, 351);
+            this.btnAddManagement.Location = new System.Drawing.Point(1196, 351);
             this.btnAddManagement.Name = "btnAddManagement";
             this.btnAddManagement.Size = new System.Drawing.Size(57, 23);
             this.btnAddManagement.TabIndex = 132;
@@ -1671,13 +1671,13 @@
             this.dgHS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgHS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgHS.Enabled = false;
-            this.dgHS.Location = new System.Drawing.Point(1046, 380);
+            this.dgHS.Location = new System.Drawing.Point(1259, 380);
             this.dgHS.Name = "dgHS";
             this.dgHS.RowHeadersVisible = false;
             dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgHS.RowsDefaultCellStyle = dataGridViewCellStyle22;
-            this.dgHS.RowTemplate.Height = 40;
-            this.dgHS.Size = new System.Drawing.Size(200, 155);
+            this.dgHS.RowTemplate.Height = 50;
+            this.dgHS.Size = new System.Drawing.Size(225, 155);
             this.dgHS.TabIndex = 133;
             // 
             // label58
@@ -1685,7 +1685,7 @@
             this.label58.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label58.AutoSize = true;
             this.label58.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label58.Location = new System.Drawing.Point(1103, 347);
+            this.label58.Location = new System.Drawing.Point(1333, 347);
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(58, 26);
             this.label58.TabIndex = 134;
@@ -1694,7 +1694,7 @@
             // btnAddHS
             // 
             this.btnAddHS.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAddHS.Location = new System.Drawing.Point(1189, 352);
+            this.btnAddHS.Location = new System.Drawing.Point(1426, 352);
             this.btnAddHS.Name = "btnAddHS";
             this.btnAddHS.Size = new System.Drawing.Size(57, 23);
             this.btnAddHS.TabIndex = 135;
