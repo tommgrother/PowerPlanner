@@ -919,6 +919,7 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnSlimline = dgSlimline.Columns[1];
             columnSlimline.Width = 40;
             dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgSlimline.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
 
             DataGridViewColumn columnLaserID = dgLaser.Columns[2];
@@ -926,12 +927,14 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnLaser = dgLaser.Columns[1];
             columnLaser.Width = 40;
             dgLaser.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgLaser.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
             DataGridViewColumn columnPunchID = dgPunch.Columns[2];
             columnPunchID.Visible = false;
             DataGridViewColumn columnPunch = dgPunch.Columns[1];
             columnPunch.Width = 40;
             dgPunch.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgPunch.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
 
             DataGridViewColumn columnBendID = dgBend.Columns[2];
@@ -939,6 +942,7 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnBend = dgBend.Columns[1];
             columnBend.Width = 40;
             dgBend.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgBend.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
             //here here here here
             DataGridViewColumn columnWeldID = dgWeld.Columns[2];
@@ -951,6 +955,7 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnBuff = dgBuff.Columns[1];
             columnBuff.Width = 40;
             dgBuff.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgBuff.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             //dgBuff.RowTemplate.Height = 55;
 
 
@@ -965,6 +970,7 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnPack = dgPack.Columns[1];
             columnPack.Width = 40;
             dgPack.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgPack.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
 
             DataGridViewColumn columnStoresID = dgStores.Columns[2];
@@ -972,6 +978,7 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnStores = dgStores.Columns[1];
             columnStores.Width = 40;
             dgStores.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgStores.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
 
             DataGridViewColumn columnDispatchID = dgDispatch.Columns[2];
@@ -979,6 +986,7 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnDispatch = dgDispatch.Columns[1];
             columnDispatch.Width = 40;
             dgDispatch.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgDispatch.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
 
             DataGridViewColumn columnToolRoomID = dgToolRoom.Columns[2];
@@ -986,6 +994,7 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnToolroom = dgToolRoom.Columns[1];
             columnToolroom.Width = 40;
             dgToolRoom.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgToolRoom.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
 
             DataGridViewColumn columnCleaningID = dgCleaning.Columns[2];
@@ -993,12 +1002,14 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnCleaning = dgCleaning.Columns[1];
             columnCleaning.Width = 40;
             dgCleaning.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgCleaning.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
             DataGridViewColumn columnManagementID = dgManagement.Columns[2];
             columnManagementID.Visible = false;
             DataGridViewColumn columnManagement = dgManagement.Columns[1];
             columnManagement.Width = 40;
             dgManagement.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgManagement.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
 
             DataGridViewColumn columnHSID = dgHS.Columns[2];
@@ -1006,6 +1017,7 @@ namespace ShopFloorPlacementPlanner
             DataGridViewColumn columnHS = dgHS.Columns[1];
             columnHS.Width = 40;
             dgHS.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgHS.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
         }
 
         private void countMen()
@@ -1124,8 +1136,10 @@ namespace ShopFloorPlacementPlanner
             //ryucxd
             //SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
-            conn.Close();
+            //var dataReader = cmd.ExecuteReader();
+           // conn.Close();
             DataTable dt = new DataTable();
+            //dt.Load(dataReader);
             da.Fill(dt);
 
             dgWeld.DataSource = dt;
@@ -1140,15 +1154,24 @@ namespace ShopFloorPlacementPlanner
             cmdryucxd.CommandType = CommandType.StoredProcedure;
             cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Welding";
             cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
-            SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+
+            var dataReader = cmdryucxd.ExecuteReader();
+           // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable workedHours = new DataTable();
-            da2.Fill(workedHours);
+            workedHours.Load(dataReader);
+            //da2.Fill(workedHours);
 
             dgWeld.Columns.Add("worked", "worked");
             dgWeld.Columns.Add("set/worked", "set/worked");
+
+            //need to check the datatable for content
+            
+
+
+
             for (int i = 0; i < dgWeld.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
-                //MessageBox.Show(workedHours.Rows[0][i].ToString());
+               // MessageBox.Show(workedHours.Rows[0][i].ToString());
                 dgWeld[3, i].Value = workedHours.Rows[0][i].ToString();
             }
             //put the columns together into one column! :D
@@ -1202,9 +1225,12 @@ namespace ShopFloorPlacementPlanner
             cmdryucxd.CommandType = CommandType.StoredProcedure;
             cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Dressing";
             cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
-            SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+
+            var dataReader = cmdryucxd.ExecuteReader();
+            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable workedHours = new DataTable();
-            da2.Fill(workedHours);
+            workedHours.Load(dataReader);
+            //da2.Fill(workedHours);
 
             dgBuff.Columns.Add("worked", "worked");
             dgBuff.Columns.Add("set/worked", "set/worked");
@@ -1299,9 +1325,12 @@ namespace ShopFloorPlacementPlanner
             cmdryucxd.CommandType = CommandType.StoredProcedure;
             cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Packing";
             cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
-            SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+
+            var dataReader = cmdryucxd.ExecuteReader();
+            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable workedHours = new DataTable();
-            da2.Fill(workedHours);
+            workedHours.Load(dataReader);
+            //da2.Fill(workedHours);
 
             dgPack.Columns.Add("worked", "worked");
             dgPack.Columns.Add("set/worked", "set/worked");
