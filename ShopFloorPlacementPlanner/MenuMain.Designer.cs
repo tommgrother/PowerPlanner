@@ -345,6 +345,7 @@
             this.dteDateSelection.Name = "dteDateSelection";
             this.dteDateSelection.Size = new System.Drawing.Size(154, 20);
             this.dteDateSelection.TabIndex = 6;
+            this.dteDateSelection.CloseUp += new System.EventHandler(this.dteDateSelection_CloseUp);
             this.dteDateSelection.ValueChanged += new System.EventHandler(this.dteDateSelection_ValueChanged);
             // 
             // btnAddPunch

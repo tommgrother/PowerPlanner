@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionsDeductions.cs" />
+    <Compile Include="department_changed.cs" />
     <Compile Include="ExcelClass.cs" />
     <Compile Include="frmSubDeptMultiple.cs">
       <SubType>Form</SubType>
@@ -191,6 +192,7 @@
     </Compile>
     <EmbeddedResource Include="FloorListings.resx">
       <DependentUpon>FloorListings.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBatchPlacement.resx">
       <DependentUpon>frmBatchPlacement.cs</DependentUpon>

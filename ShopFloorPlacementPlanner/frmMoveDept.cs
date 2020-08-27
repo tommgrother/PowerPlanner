@@ -80,6 +80,11 @@ namespace ShopFloorPlacementPlanner
 
             if (result == DialogResult.Yes)
             {
+
+                //grab the dept and just roll the function 
+                department_changed dc = new department_changed();
+                dc.setDepartment(dept);
+
                 //INSERTS THE CURRENT DAY
                 Placement p = new Placement(date, staffID, dept, PT, hours);
                 p.addPlacment();
@@ -129,6 +134,11 @@ namespace ShopFloorPlacementPlanner
             }
             else
             {
+
+                //grab the dept and just roll the function 
+                department_changed dc = new department_changed();
+                dc.setDepartment(dept);
+
                 Placement p = new Placement(date, staffID, dept, PT, hours);
                 p.addPlacment();
                 //only one date... and if its painting then select a dept

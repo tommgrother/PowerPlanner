@@ -36,6 +36,7 @@ namespace ShopFloorPlacementPlanner
             getOvertime();
             getAD();
 
+            
 
 
             this.Text = "Select Staff: " + _department;
@@ -234,7 +235,7 @@ namespace ShopFloorPlacementPlanner
 
         private void frmSelectStaff_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void paintGrid()
@@ -260,7 +261,7 @@ namespace ShopFloorPlacementPlanner
 
             foreach (DataGridViewRow row in dgSelected.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[0].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[0].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -309,6 +310,8 @@ namespace ShopFloorPlacementPlanner
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     checkExistingSelections();
+                    department_changed dc = new department_changed();
+                    dc.setDepartment(_department);
                 }
 
                 //if this user is in painting then this needs to be removed from dbo.power_plan_paint_sub_dept_test_temp_2
@@ -356,6 +359,11 @@ namespace ShopFloorPlacementPlanner
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     checkExistingSelections();
+
+                    //dept change
+                    department_changed dc = new department_changed();
+                    dc.setDepartment(_department);
+
                 }
             }
 
@@ -375,6 +383,8 @@ namespace ShopFloorPlacementPlanner
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     checkExistingSelections();
+                    department_changed dc = new department_changed();
+                    dc.setDepartment(_department);
                 }
             }
 
@@ -391,6 +401,8 @@ namespace ShopFloorPlacementPlanner
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     checkExistingSelections();
+                    department_changed dc = new department_changed();
+                    dc.setDepartment(_department);
                 }
             }
 
@@ -408,6 +420,8 @@ namespace ShopFloorPlacementPlanner
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     checkExistingSelections();
+                    department_changed dc = new department_changed();
+                    dc.setDepartment(_department);
                 }
             }
 
@@ -417,6 +431,8 @@ namespace ShopFloorPlacementPlanner
                 PlacementNote pn = new PlacementNote(placementID);
                 pn.ShowDialog();
                 checkExistingSelections();
+                department_changed dc = new department_changed();
+                dc.setDepartment(_department);
             }
 
             //Sub Dept BUTTON
@@ -431,6 +447,8 @@ namespace ShopFloorPlacementPlanner
                     //PlacementNote pn = new PlacementNote(placementID);
                     //pn.ShowDialog();
                     //checkExistingSelections();
+                    department_changed dc = new department_changed();
+                    dc.setDepartment(_department);
                 }
             }
 

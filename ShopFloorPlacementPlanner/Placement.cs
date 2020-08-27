@@ -65,7 +65,7 @@ namespace ShopFloorPlacementPlanner
 
                 if (rdr.Read())
                 {
-                    _weldTeamStaffID = new int[2] {Convert.ToInt16(rdr["user_id_1"]), Convert.ToInt16(rdr["user_id_2"]) };
+                    _weldTeamStaffID = new int[2] {Convert.ToInt32(rdr["user_id_1"]), Convert.ToInt32(rdr["user_id_2"]) };
                 }
 
                 conn.Close();
@@ -144,7 +144,7 @@ namespace ShopFloorPlacementPlanner
 
                 if (rdr.Read())
                 {
-                    _notPresentType =  Convert.ToInt16(rdr["absent_type"]);
+                    _notPresentType =  Convert.ToInt32(rdr["absent_type"]);
                 }
                 else
                 {

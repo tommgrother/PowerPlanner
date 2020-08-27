@@ -26,7 +26,7 @@ namespace ShopFloorPlacementPlanner
             SqlCommand cmd = new SqlCommand("SELECT id from dbo.view_full_name where fullname = @fullname", conn);
             cmd.Parameters.AddWithValue("@fullname", _fullname);
 
-            _staffID = Convert.ToInt16(cmd.ExecuteScalar().ToString());
+            _staffID = Convert.ToInt32(cmd.ExecuteScalar().ToString());
 
         }
 

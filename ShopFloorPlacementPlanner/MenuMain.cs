@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Drawing.Printing;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Reflection;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -29,7 +28,9 @@ namespace ShopFloorPlacementPlanner
             frmSelectStaff frmSS = new frmSelectStaff("Punching", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
 
-            fillgrid();
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            // fillgrid();
+            refreshSelectedDepartments();
             updateDailyGoals();
         }
 
@@ -38,8 +39,9 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Bending", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-
-            fillgrid();
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            // fillgrid();
+            refreshSelectedDepartments();
             updateDailyGoals();
         }
 
@@ -48,8 +50,9 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Welding", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-
-            fillgrid();
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+           // fillgrid();
+            refreshSelectedDepartments();
             updateDailyGoals();
         }
 
@@ -58,8 +61,9 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Dressing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-
-            fillgrid();
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            // fillgrid();
+            refreshSelectedDepartments();
             updateDailyGoals();
         }
 
@@ -68,8 +72,9 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Painting", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-
-            fillgrid();
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            // fillgrid();
+            refreshSelectedDepartments();
             updateDailyGoals();
         }
 
@@ -78,8 +83,9 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Packing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-
-            fillgrid();
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            // fillgrid();
+            refreshSelectedDepartments();
             updateDailyGoals();
         }
 
@@ -393,7 +399,7 @@ namespace ShopFloorPlacementPlanner
 
             foreach (DataGridViewRow row in dgSlimline.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -423,7 +429,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgPunch.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -453,7 +459,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgLaser.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -484,7 +490,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgBend.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -516,7 +522,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgWeld.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -558,7 +564,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgBuff.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -599,7 +605,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgPaint.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -629,7 +635,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgPack.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -668,7 +674,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgStores.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -697,7 +703,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgDispatch.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -726,7 +732,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgToolRoom.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -756,7 +762,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgCleaning.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -786,7 +792,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgManagement.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -816,7 +822,7 @@ namespace ShopFloorPlacementPlanner
                 }
             foreach (DataGridViewRow row in dgHS.Rows)
             {
-                placementID = Convert.ToInt16(row.Cells[2].Value.ToString());
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
@@ -916,7 +922,7 @@ namespace ShopFloorPlacementPlanner
 
             DataGridViewColumn columnSlimlineID = dgSlimline.Columns[2];
             columnSlimlineID.Visible = false;
-            DataGridViewColumn columnSlimline = dgSlimline.Columns[1];
+             DataGridViewColumn columnSlimline = dgSlimline.Columns[1];
             columnSlimline.Width = 40;
             dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgSlimline.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
@@ -1156,7 +1162,7 @@ namespace ShopFloorPlacementPlanner
             cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
             var dataReader = cmdryucxd.ExecuteReader();
-           // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            //SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable workedHours = new DataTable();
             workedHours.Load(dataReader);
             //da2.Fill(workedHours);
@@ -1187,7 +1193,7 @@ namespace ShopFloorPlacementPlanner
 
             //dgWeld.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             //dgWeld.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dgWeld.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dgWeld.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgWeld.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgWeld.Columns["hours"].Visible = false;
             dgWeld.Columns["worked"].Visible = false;
@@ -1252,7 +1258,7 @@ namespace ShopFloorPlacementPlanner
 
             //dgBuff.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             //dgBuff.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dgBuff.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dgBuff.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgBuff.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgBuff.Columns["hours"].Visible = false;
             dgBuff.Columns["worked"].Visible = false;
@@ -1352,7 +1358,7 @@ namespace ShopFloorPlacementPlanner
 
             //dgPack.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             //dgPack.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dgPack.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dgPack.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgPack.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgPack.Columns["hours"].Visible = false;
             dgPack.Columns["worked"].Visible = false;
@@ -1487,7 +1493,8 @@ namespace ShopFloorPlacementPlanner
 
         private void dteDateSelection_ValueChanged(object sender, EventArgs e)
         {
-            fillgrid();
+            //taking this out because its annoying when looking forward months.
+           // fillgrid();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -1496,7 +1503,9 @@ namespace ShopFloorPlacementPlanner
             frmSelectStaff frmSS = new frmSelectStaff("Laser", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
 
-            fillgrid();
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            // fillgrid();
+            refreshSelectedDepartments();
             updateDailyGoals();
         }
 
@@ -1511,10 +1520,15 @@ namespace ShopFloorPlacementPlanner
         private void btnAddSlimline_Click(object sender, EventArgs e)
         {
             skipMessageBox = 2;
+
+            department_changed department_Changed = new department_changed();
+
             frmSelectStaff frmSS = new frmSelectStaff("Slimline", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
 
-            fillgrid();
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            // fillgrid();
+            refreshSelectedDepartments();
             updateDailyGoals();
         }
 
@@ -1747,15 +1761,18 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Stores", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            fillgrid();
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            // fillgrid();
+            refreshSelectedDepartments();
             updateDailyGoals();
         }
 
         private void btnAddDispatch_Click(object sender, EventArgs e)
         {
             skipMessageBox = 2;
-            frmSelectStaff frmSS = new frmSelectStaff("Dispatch", Convert.ToDateTime(dteDateSelection.Text));
-            frmSS.ShowDialog();
+            frmSelectStaff frmSS = new frmSelectStaff("Dispatch", Convert.ToDateTime(dteDateSelection.Text)); //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+           // fillgrid();
+            refreshSelectedDepartments();
             fillgrid();
         }
 
@@ -1764,8 +1781,9 @@ namespace ShopFloorPlacementPlanner
         {
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("toolroom", Convert.ToDateTime(dteDateSelection.Text));
-            frmSS.ShowDialog();
-            fillgrid();
+            frmSS.ShowDialog(); //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+           // fillgrid();
+            refreshSelectedDepartments();
         }
 
 
@@ -1774,7 +1792,9 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Cleaning", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
-            fillgrid();
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            // fillgrid();
+            refreshSelectedDepartments();
         }
 
         private void dgWeld_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -1786,8 +1806,9 @@ namespace ShopFloorPlacementPlanner
         {
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Management", Convert.ToDateTime(dteDateSelection.Text));
-            frmSS.ShowDialog();
-            fillgrid();
+            frmSS.ShowDialog(); //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+             // fillgrid();
+            refreshSelectedDepartments();
         }
 
         private void BtnAddHS_Click(object sender, EventArgs e)
@@ -1988,6 +2009,47 @@ namespace ShopFloorPlacementPlanner
             //excel.print();
             //excel.closeExcel();
             MessageBox.Show("Printout has been sent to your default printer!");
+        }
+
+        private void dteDateSelection_CloseUp(object sender, EventArgs e)
+        {
+            //this event on fires when a date is selected  rather than everytime a month is switched about solving the slow swapping on months without selecting a date
+            fillgrid();
+        }
+
+
+        private void refreshSelectedDepartments()
+        {
+            //this needs to go through each of the departments that are selected from the prior screen :)
+            if (department_changed.slimlineSelected == -1)
+                fillSlimline();
+            if (department_changed.punchSelected == -1)
+                fillPunch();
+            if (department_changed.laserSelected == -1)
+                fillLaser();
+            if (department_changed.bendSelected == -1)
+                fillBend();
+            if (department_changed.weldSelected == -1)
+                fillWeld();
+            if (department_changed.buffSelected == -1)
+                fillBuff();
+            if (department_changed.paintSelected == -1)
+                fillPaint();
+            if (department_changed.packSelected == -1)
+                fillPack();
+            if (department_changed.storesSelected == -1)
+                fillStores();
+            if (department_changed.dispatchSelected == -1)
+                fillDispatch();
+            if (department_changed.toolSelected == -1)
+                fillToolroom();
+            if (department_changed.cleaningSelected == -1)
+                fillCleaning();
+            if (department_changed.managementSelected == -1)
+                fillManagement();
+            paintGrid();
+            department_changed dc = new department_changed();
+            dc.resetData();
         }
     }
 }
