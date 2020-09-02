@@ -396,6 +396,18 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
+            //corey added this 02/09/2020
+            foreach (DataGridViewRow row in dgSlimline.Rows)
+            {           //hours is less than worked
+                if (Convert.ToDouble(row.Cells["hours"].Value) > Convert.ToDouble(row.Cells["worked"].Value))
+                {
+                    row.Cells[4].Style.BackColor = Color.PaleVioletRed;
+                }
+                if (Convert.ToDouble(row.Cells["hours"].Value) < Convert.ToDouble(row.Cells["worked"].Value))
+                {
+                    row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
+                }
+            }
 
             foreach (DataGridViewRow row in dgSlimline.Rows)
             {
@@ -475,10 +487,22 @@ namespace ShopFloorPlacementPlanner
                     row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
             }
+            //corey added this 02/09/2020
+            foreach (DataGridViewRow row in dgLaser.Rows)
+            {           //hours is less than worked
+                if (Convert.ToDouble(row.Cells["hours"].Value) > Convert.ToDouble(row.Cells["worked"].Value))
+                {
+                    row.Cells[4].Style.BackColor = Color.PaleVioletRed;
+                }
+                if (Convert.ToDouble(row.Cells["hours"].Value) < Convert.ToDouble(row.Cells["worked"].Value))
+                {
+                    row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
+                }
+            }
 
 
-            //Bend
-            foreach (DataGridViewRow row in dgBend.Rows)
+                //Bend
+                foreach (DataGridViewRow row in dgBend.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
                 {
                     row.DefaultCellStyle.BackColor = Color.Red;
@@ -1045,6 +1069,17 @@ namespace ShopFloorPlacementPlanner
 
         private void fillSlimline()
         {
+
+            if (dgSlimline.Columns.Contains("worked") == true)
+            {
+                dgSlimline.Columns.Remove("worked");
+            }
+            if (dgSlimline.Columns.Contains("set/worked") == true)
+            {
+                dgSlimline.Columns.Remove("set/worked");
+            }
+
+
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
@@ -1056,6 +1091,42 @@ namespace ShopFloorPlacementPlanner
             da.Fill(dt);
 
             dgSlimline.DataSource = dt;
+
+
+
+            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            cmdryucxd.CommandType = CommandType.StoredProcedure;
+            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Slimline";
+            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+
+            var dataReader = cmdryucxd.ExecuteReader();
+            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable workedHours = new DataTable();
+            workedHours.Load(dataReader);
+            //da2.Fill(workedHours);
+
+            dgSlimline.Columns.Add("worked", "worked");
+            dgSlimline.Columns.Add("set/worked", "set/worked");
+            for (int i = 0; i < dgSlimline.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
+            {
+                //MessageBox.Show(workedHours.Rows[0][i].ToString());
+                dgSlimline[3, i].Value = workedHours.Rows[0][i].ToString();
+            }
+            //put the columns together into one column! :D
+            string hours = "";
+            string worked = "";
+            for (int i = 0; i < dgSlimline.Rows.Count; i++)
+            {
+                hours = dgSlimline.Rows[i].Cells[1].Value.ToString();
+                worked = dgSlimline.Rows[i].Cells[3].Value.ToString();
+                dgSlimline[4, i].Value = hours + " / " + worked;
+            }
+
+            dgSlimline.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgSlimline.Columns["hours"].Visible = false;
+            dgSlimline.Columns["worked"].Visible = false;
+
 
             conn.Close();
 
@@ -1081,6 +1152,17 @@ namespace ShopFloorPlacementPlanner
 
         private void fillLaser()
         {
+
+            if (dgLaser.Columns.Contains("worked") == true)
+            {
+                dgLaser.Columns.Remove("worked");
+            }
+            if (dgLaser.Columns.Contains("set/worked") == true)
+            {
+                dgLaser.Columns.Remove("set/worked");
+            }
+
+
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
@@ -1092,6 +1174,43 @@ namespace ShopFloorPlacementPlanner
             da.Fill(dt);
 
             dgLaser.DataSource = dt;
+
+
+
+ 
+
+            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            cmdryucxd.CommandType = CommandType.StoredProcedure;
+            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Laser";
+            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+
+            var dataReader = cmdryucxd.ExecuteReader();
+            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable workedHours = new DataTable();
+            workedHours.Load(dataReader);
+            //da2.Fill(workedHours);
+
+            dgLaser.Columns.Add("worked", "worked");
+            dgLaser.Columns.Add("set/worked", "set/worked");
+            for (int i = 0; i < dgLaser.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
+            {
+                //MessageBox.Show(workedHours.Rows[0][i].ToString());
+                dgLaser[3, i].Value = workedHours.Rows[0][i].ToString();
+            }
+            //put the columns together into one column! :D
+            string hours = "";
+            string worked = "";
+            for (int i = 0; i < dgLaser.Rows.Count; i++)
+            {
+                hours = dgLaser.Rows[i].Cells[1].Value.ToString();
+                worked = dgLaser.Rows[i].Cells[3].Value.ToString();
+                dgLaser[4, i].Value = hours + " / " + worked;
+            }
+
+            dgLaser.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgLaser.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgLaser.Columns["hours"].Visible = false;
+            dgLaser.Columns["worked"].Visible = false;
 
             conn.Close();
 
@@ -2048,6 +2167,7 @@ namespace ShopFloorPlacementPlanner
                 fillCleaning();
             if (department_changed.managementSelected == -1)
                 fillManagement();
+            fillNotPlaced();
             paintGrid();
             department_changed dc = new department_changed();
             dc.resetData();

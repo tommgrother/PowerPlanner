@@ -81,6 +81,9 @@ namespace ShopFloorPlacementPlanner
                 case "Dispatch":
                     dispatchSelected = -1;
                     break;
+                case "ToolRoom":
+                    toolSelected = -1;
+                    break;
                 case "toolroom":
                     toolSelected = -1;
                     break;
