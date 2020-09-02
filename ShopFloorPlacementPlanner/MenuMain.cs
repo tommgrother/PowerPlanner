@@ -31,7 +31,7 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-            updateDailyGoals();
+            
         }
 
         private void btnAddBend_Click(object sender, EventArgs e)
@@ -42,7 +42,6 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-            updateDailyGoals();
         }
 
         private void btnAddWeld_Click(object sender, EventArgs e)
@@ -53,7 +52,6 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
            // fillgrid();
             refreshSelectedDepartments();
-            updateDailyGoals();
         }
 
         private void btnAddBuff_Click(object sender, EventArgs e)
@@ -64,7 +62,6 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-            updateDailyGoals();
         }
 
         private void btnAddPaint_Click(object sender, EventArgs e)
@@ -75,7 +72,6 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-            updateDailyGoals();
         }
 
         private void btnAddPack_Click(object sender, EventArgs e)
@@ -86,7 +82,6 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-            updateDailyGoals();
         }
 
 
@@ -1625,7 +1620,6 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-            updateDailyGoals();
         }
 
         private void copyPlacementsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1648,7 +1642,6 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-            updateDailyGoals();
         }
 
         private void sendToDailyGoalsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1883,7 +1876,7 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-            updateDailyGoals();
+            
         }
 
         private void btnAddDispatch_Click(object sender, EventArgs e)
@@ -2169,6 +2162,9 @@ namespace ShopFloorPlacementPlanner
                 fillManagement();
             fillNotPlaced();
             paintGrid();
+            countGrid();
+            updateDailyGoals();
+           
             department_changed dc = new department_changed();
             dc.resetData();
         }
