@@ -404,7 +404,47 @@ namespace ShopFloorPlacementPlanner
                     conn2.Close();
                 }
             }
-
+            // C O L O U R S
+            //slimline
+            if (Convert.ToDecimal(txtSLActualHours.Text) > Convert.ToDecimal(txtSlimlineTotal.Text))
+                lblSLActualHours.BackColor = Color.DarkSeaGreen;
+            else
+                lblSLActualHours.BackColor = Color.PaleVioletRed;
+            //punch
+            if (Convert.ToDecimal(txtPunchActualHours.Text) > Convert.ToDecimal(txtPunchingTotal.Text))
+                lblPunchActualHours.BackColor = Color.DarkSeaGreen;
+            else
+                lblPunchActualHours.BackColor = Color.PaleVioletRed;
+            //laser
+            if (Convert.ToDecimal(txtlaserActualHours.Text) > Convert.ToDecimal(txtLaserTotal.Text))
+                lblLaserActualHours.BackColor = Color.DarkSeaGreen;
+            else
+                lblLaserActualHours.BackColor = Color.PaleVioletRed;
+            //bending
+            if (Convert.ToDecimal(txtBendActualHours.Text) > Convert.ToDecimal(txtBendingTotal.Text))
+                lblBendingActualHours.BackColor = Color.DarkSeaGreen;
+            else
+                lblBendingActualHours.BackColor = Color.PaleVioletRed;
+            //welding
+            if (Convert.ToDecimal(txtWeldActualHours.Text) > Convert.ToDecimal(txtWeldingTotal.Text))
+                lblWeldingHours.BackColor = Color.DarkSeaGreen;
+            else
+                lblWeldingHours.BackColor = Color.PaleVioletRed;
+            //buffing
+            if (Convert.ToDecimal(txtBuffActualHours.Text) > Convert.ToDecimal(txtBuffingTotal.Text))
+                lblBuffingActualHours.BackColor = Color.DarkSeaGreen;
+            else
+                lblBuffingActualHours.BackColor = Color.PaleVioletRed;
+            //painting
+            if (Convert.ToDecimal(txtPaintActualHours.Text) > Convert.ToDecimal(txtPaintingTotal.Text))
+                lblPaintingActualHours.BackColor = Color.DarkSeaGreen;
+            else
+                lblPaintingActualHours.BackColor = Color.PaleVioletRed;
+            //packing
+            if (Convert.ToDecimal(txtPackActualHours.Text) > Convert.ToDecimal(txtPackingTotal.Text))
+                lblPackingActualHours.BackColor = Color.DarkSeaGreen;
+            else
+                lblPackingActualHours.BackColor = Color.PaleVioletRed;
 
         }
 

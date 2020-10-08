@@ -205,21 +205,21 @@
             this.txtStoresMen = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.label68 = new System.Windows.Forms.Label();
-            this.label69 = new System.Windows.Forms.Label();
+            this.lblSLActualHours = new System.Windows.Forms.Label();
             this.txtSLActualHours = new System.Windows.Forms.TextBox();
-            this.label70 = new System.Windows.Forms.Label();
+            this.lblPunchActualHours = new System.Windows.Forms.Label();
             this.txtPunchActualHours = new System.Windows.Forms.TextBox();
-            this.label71 = new System.Windows.Forms.Label();
+            this.lblLaserActualHours = new System.Windows.Forms.Label();
             this.txtlaserActualHours = new System.Windows.Forms.TextBox();
-            this.label72 = new System.Windows.Forms.Label();
+            this.lblBendingActualHours = new System.Windows.Forms.Label();
             this.txtBendActualHours = new System.Windows.Forms.TextBox();
-            this.label73 = new System.Windows.Forms.Label();
+            this.lblWeldingHours = new System.Windows.Forms.Label();
             this.txtWeldActualHours = new System.Windows.Forms.TextBox();
-            this.label74 = new System.Windows.Forms.Label();
+            this.lblBuffingActualHours = new System.Windows.Forms.Label();
             this.txtBuffActualHours = new System.Windows.Forms.TextBox();
-            this.label75 = new System.Windows.Forms.Label();
+            this.lblPaintingActualHours = new System.Windows.Forms.Label();
             this.txtPaintActualHours = new System.Windows.Forms.TextBox();
-            this.label76 = new System.Windows.Forms.Label();
+            this.lblPackingActualHours = new System.Windows.Forms.Label();
             this.txtPackActualHours = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
@@ -1837,14 +1837,14 @@
             this.label68.TabIndex = 148;
             this.label68.Text = "Men";
             // 
-            // label69
+            // lblSLActualHours
             // 
-            this.label69.AutoSize = true;
-            this.label69.Location = new System.Drawing.Point(73, 199);
-            this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(71, 13);
-            this.label69.TabIndex = 150;
-            this.label69.Text = "Actual Hours:";
+            this.lblSLActualHours.AutoSize = true;
+            this.lblSLActualHours.Location = new System.Drawing.Point(73, 199);
+            this.lblSLActualHours.Name = "lblSLActualHours";
+            this.lblSLActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblSLActualHours.TabIndex = 150;
+            this.lblSLActualHours.Text = "Actual Hours:";
             // 
             // txtSLActualHours
             // 
@@ -1855,14 +1855,14 @@
             this.txtSLActualHours.TabIndex = 149;
             this.txtSLActualHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label70
+            // lblPunchActualHours
             // 
-            this.label70.AutoSize = true;
-            this.label70.Location = new System.Drawing.Point(284, 199);
-            this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(71, 13);
-            this.label70.TabIndex = 152;
-            this.label70.Text = "Actual Hours:";
+            this.lblPunchActualHours.AutoSize = true;
+            this.lblPunchActualHours.Location = new System.Drawing.Point(284, 199);
+            this.lblPunchActualHours.Name = "lblPunchActualHours";
+            this.lblPunchActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblPunchActualHours.TabIndex = 152;
+            this.lblPunchActualHours.Text = "Actual Hours:";
             // 
             // txtPunchActualHours
             // 
@@ -1873,14 +1873,14 @@
             this.txtPunchActualHours.TabIndex = 151;
             this.txtPunchActualHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label71
+            // lblLaserActualHours
             // 
-            this.label71.AutoSize = true;
-            this.label71.Location = new System.Drawing.Point(493, 199);
-            this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(71, 13);
-            this.label71.TabIndex = 154;
-            this.label71.Text = "Actual Hours:";
+            this.lblLaserActualHours.AutoSize = true;
+            this.lblLaserActualHours.Location = new System.Drawing.Point(493, 199);
+            this.lblLaserActualHours.Name = "lblLaserActualHours";
+            this.lblLaserActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblLaserActualHours.TabIndex = 154;
+            this.lblLaserActualHours.Text = "Actual Hours:";
             // 
             // txtlaserActualHours
             // 
@@ -1891,14 +1891,14 @@
             this.txtlaserActualHours.TabIndex = 153;
             this.txtlaserActualHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label72
+            // lblBendingActualHours
             // 
-            this.label72.AutoSize = true;
-            this.label72.Location = new System.Drawing.Point(697, 199);
-            this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(71, 13);
-            this.label72.TabIndex = 156;
-            this.label72.Text = "Actual Hours:";
+            this.lblBendingActualHours.AutoSize = true;
+            this.lblBendingActualHours.Location = new System.Drawing.Point(697, 199);
+            this.lblBendingActualHours.Name = "lblBendingActualHours";
+            this.lblBendingActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblBendingActualHours.TabIndex = 156;
+            this.lblBendingActualHours.Text = "Actual Hours:";
             // 
             // txtBendActualHours
             // 
@@ -1909,14 +1909,14 @@
             this.txtBendActualHours.TabIndex = 155;
             this.txtBendActualHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label73
+            // lblWeldingHours
             // 
-            this.label73.AutoSize = true;
-            this.label73.Location = new System.Drawing.Point(904, 199);
-            this.label73.Name = "label73";
-            this.label73.Size = new System.Drawing.Size(71, 13);
-            this.label73.TabIndex = 158;
-            this.label73.Text = "Actual Hours:";
+            this.lblWeldingHours.AutoSize = true;
+            this.lblWeldingHours.Location = new System.Drawing.Point(904, 199);
+            this.lblWeldingHours.Name = "lblWeldingHours";
+            this.lblWeldingHours.Size = new System.Drawing.Size(71, 13);
+            this.lblWeldingHours.TabIndex = 158;
+            this.lblWeldingHours.Text = "Actual Hours:";
             // 
             // txtWeldActualHours
             // 
@@ -1927,14 +1927,14 @@
             this.txtWeldActualHours.TabIndex = 157;
             this.txtWeldActualHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label74
+            // lblBuffingActualHours
             // 
-            this.label74.AutoSize = true;
-            this.label74.Location = new System.Drawing.Point(1109, 199);
-            this.label74.Name = "label74";
-            this.label74.Size = new System.Drawing.Size(71, 13);
-            this.label74.TabIndex = 160;
-            this.label74.Text = "Actual Hours:";
+            this.lblBuffingActualHours.AutoSize = true;
+            this.lblBuffingActualHours.Location = new System.Drawing.Point(1109, 199);
+            this.lblBuffingActualHours.Name = "lblBuffingActualHours";
+            this.lblBuffingActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblBuffingActualHours.TabIndex = 160;
+            this.lblBuffingActualHours.Text = "Actual Hours:";
             // 
             // txtBuffActualHours
             // 
@@ -1945,14 +1945,14 @@
             this.txtBuffActualHours.TabIndex = 159;
             this.txtBuffActualHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label75
+            // lblPaintingActualHours
             // 
-            this.label75.AutoSize = true;
-            this.label75.Location = new System.Drawing.Point(1337, 199);
-            this.label75.Name = "label75";
-            this.label75.Size = new System.Drawing.Size(71, 13);
-            this.label75.TabIndex = 162;
-            this.label75.Text = "Actual Hours:";
+            this.lblPaintingActualHours.AutoSize = true;
+            this.lblPaintingActualHours.Location = new System.Drawing.Point(1337, 199);
+            this.lblPaintingActualHours.Name = "lblPaintingActualHours";
+            this.lblPaintingActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblPaintingActualHours.TabIndex = 162;
+            this.lblPaintingActualHours.Text = "Actual Hours:";
             // 
             // txtPaintActualHours
             // 
@@ -1963,14 +1963,14 @@
             this.txtPaintActualHours.TabIndex = 161;
             this.txtPaintActualHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label76
+            // lblPackingActualHours
             // 
-            this.label76.AutoSize = true;
-            this.label76.Location = new System.Drawing.Point(1553, 199);
-            this.label76.Name = "label76";
-            this.label76.Size = new System.Drawing.Size(71, 13);
-            this.label76.TabIndex = 164;
-            this.label76.Text = "Actual Hours:";
+            this.lblPackingActualHours.AutoSize = true;
+            this.lblPackingActualHours.Location = new System.Drawing.Point(1553, 199);
+            this.lblPackingActualHours.Name = "lblPackingActualHours";
+            this.lblPackingActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblPackingActualHours.TabIndex = 164;
+            this.lblPackingActualHours.Text = "Actual Hours:";
             // 
             // txtPackActualHours
             // 
@@ -1987,21 +1987,21 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1932, 563);
-            this.Controls.Add(this.label76);
+            this.Controls.Add(this.lblPackingActualHours);
             this.Controls.Add(this.txtPackActualHours);
-            this.Controls.Add(this.label75);
+            this.Controls.Add(this.lblPaintingActualHours);
             this.Controls.Add(this.txtPaintActualHours);
-            this.Controls.Add(this.label74);
+            this.Controls.Add(this.lblBuffingActualHours);
             this.Controls.Add(this.txtBuffActualHours);
-            this.Controls.Add(this.label73);
+            this.Controls.Add(this.lblWeldingHours);
             this.Controls.Add(this.txtWeldActualHours);
-            this.Controls.Add(this.label72);
+            this.Controls.Add(this.lblBendingActualHours);
             this.Controls.Add(this.txtBendActualHours);
-            this.Controls.Add(this.label71);
+            this.Controls.Add(this.lblLaserActualHours);
             this.Controls.Add(this.txtlaserActualHours);
-            this.Controls.Add(this.label70);
+            this.Controls.Add(this.lblPunchActualHours);
             this.Controls.Add(this.txtPunchActualHours);
-            this.Controls.Add(this.label69);
+            this.Controls.Add(this.lblSLActualHours);
             this.Controls.Add(this.txtSLActualHours);
             this.Controls.Add(this.label68);
             this.Controls.Add(this.txtStoresMen);
@@ -2328,21 +2328,21 @@
         private System.Windows.Forms.Label label68;
         private System.Windows.Forms.ToolStripMenuItem clearPlanToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ryucxdToolStripMenuItem;
-        private System.Windows.Forms.Label label69;
+        private System.Windows.Forms.Label lblSLActualHours;
         private System.Windows.Forms.TextBox txtSLActualHours;
-        private System.Windows.Forms.Label label70;
+        private System.Windows.Forms.Label lblPunchActualHours;
         private System.Windows.Forms.TextBox txtPunchActualHours;
-        private System.Windows.Forms.Label label71;
+        private System.Windows.Forms.Label lblLaserActualHours;
         private System.Windows.Forms.TextBox txtlaserActualHours;
-        private System.Windows.Forms.Label label72;
+        private System.Windows.Forms.Label lblBendingActualHours;
         private System.Windows.Forms.TextBox txtBendActualHours;
-        private System.Windows.Forms.Label label73;
+        private System.Windows.Forms.Label lblWeldingHours;
         private System.Windows.Forms.TextBox txtWeldActualHours;
-        private System.Windows.Forms.Label label74;
+        private System.Windows.Forms.Label lblBuffingActualHours;
         private System.Windows.Forms.TextBox txtBuffActualHours;
-        private System.Windows.Forms.Label label75;
+        private System.Windows.Forms.Label lblPaintingActualHours;
         private System.Windows.Forms.TextBox txtPaintActualHours;
-        private System.Windows.Forms.Label label76;
+        private System.Windows.Forms.Label lblPackingActualHours;
         private System.Windows.Forms.TextBox txtPackActualHours;
     }
 }
