@@ -31,7 +31,7 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-            
+
         }
 
         private void btnAddBend_Click(object sender, EventArgs e)
@@ -50,7 +50,7 @@ namespace ShopFloorPlacementPlanner
             frmSelectStaff frmSS = new frmSelectStaff("Welding", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
-           // fillgrid();
+            // fillgrid();
             refreshSelectedDepartments();
         }
 
@@ -211,8 +211,8 @@ namespace ShopFloorPlacementPlanner
             columnIndex = dgWeld.Columns["Staff Placement"].Index;
             foreach (DataGridViewRow row in dgWeld.Rows)
             {
-               // MessageBox.Show(row.Cells[columnIndex].Value.ToString());
-               
+                // MessageBox.Show(row.Cells[columnIndex].Value.ToString());
+
                 if (row.Cells[columnIndex].Value.ToString().Contains("Half"))
                 {
                     weldMen = weldMen + 0.5;
@@ -374,6 +374,38 @@ namespace ShopFloorPlacementPlanner
             txtPackingTotal.Text = (Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(packOT) + Convert.ToDouble(packAD)).ToString();
 
 
+            //add the actual hours 
+
+            string sql = "SELECT ROUND(COALESCE(actual_hours_slimline,0),2) as slimline, ROUND(COALESCE(actual_hours_punch,0),2) as punch, ROUND(COALESCE(actual_hours_laser,0),2) as laser, ROUND(COALESCE(actual_hours_bend,0),2) as bend, ROUND(COALESCE(actual_hours_weld,0),2) as weld, ROUND(COALESCE(actual_hours_buff,0),2) as buff,ROUND(COALESCE(actual_hours,0),2) as paint , ROUND(COALESCE(actual_hours_pack,0),2) as boxes FROM dbo.daily_department_goal WHERE date_goal ='" + dteDateSelection.Text + "'";
+            //actual_hours paint is tbc
+            using (SqlConnection conn2 = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                using (SqlCommand cmd2 = new SqlCommand(sql, conn2))
+                {
+                    conn2.Open();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd2);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    //now we go through each column and grab the data
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        txtSLActualHours.Text = row[0].ToString();
+                        txtPunchActualHours.Text = row[1].ToString();
+                        txtlaserActualHours.Text = row[2].ToString();
+                        txtBendActualHours.Text = row[3].ToString();
+                        txtWeldActualHours.Text = row[4].ToString();
+                        txtBuffActualHours.Text = row[5].ToString();
+                        txtPaintActualHours.Text = row[6].ToString();
+                        txtPackActualHours.Text = row[7].ToString();
+                    }
+
+
+
+                    conn2.Close();
+                }
+            }
+
+
         }
 
 
@@ -496,8 +528,8 @@ namespace ShopFloorPlacementPlanner
             }
 
 
-                //Bend
-                foreach (DataGridViewRow row in dgBend.Rows)
+            //Bend
+            foreach (DataGridViewRow row in dgBend.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
                 {
                     row.DefaultCellStyle.BackColor = Color.Red;
@@ -598,16 +630,16 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
-                       //hours is less than worked
-                    if (Convert.ToDouble(row.Cells["hours"].Value) > Convert.ToDouble(row.Cells["worked"].Value))
-                    {
-                        row.Cells[4].Style.BackColor = Color.PaleVioletRed;
-                    }
-                    if (Convert.ToDouble(row.Cells["hours"].Value) < Convert.ToDouble(row.Cells["worked"].Value))
-                    {
-                        row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
-                    }
-                
+                //hours is less than worked
+                if (Convert.ToDouble(row.Cells["hours"].Value) > Convert.ToDouble(row.Cells["worked"].Value))
+                {
+                    row.Cells[4].Style.BackColor = Color.PaleVioletRed;
+                }
+                if (Convert.ToDouble(row.Cells["hours"].Value) < Convert.ToDouble(row.Cells["worked"].Value))
+                {
+                    row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
+                }
+
 
             }
             //ryucxd PAINT IS COMMENTED OUT BECAUSE THERE IS A FUCK LOAD OF ERRORS RN
@@ -941,7 +973,7 @@ namespace ShopFloorPlacementPlanner
 
             DataGridViewColumn columnSlimlineID = dgSlimline.Columns[2];
             columnSlimlineID.Visible = false;
-             DataGridViewColumn columnSlimline = dgSlimline.Columns[1];
+            DataGridViewColumn columnSlimline = dgSlimline.Columns[1];
             columnSlimline.Width = 40;
             dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgSlimline.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
@@ -1172,7 +1204,7 @@ namespace ShopFloorPlacementPlanner
 
 
 
- 
+
 
             SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
             cmdryucxd.CommandType = CommandType.StoredProcedure;
@@ -1257,7 +1289,7 @@ namespace ShopFloorPlacementPlanner
             //SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             //var dataReader = cmd.ExecuteReader();
-           // conn.Close();
+            // conn.Close();
             DataTable dt = new DataTable();
             //dt.Load(dataReader);
             da.Fill(dt);
@@ -1285,19 +1317,19 @@ namespace ShopFloorPlacementPlanner
             dgWeld.Columns.Add("set/worked", "set/worked");
 
             //need to check the datatable for content
-            
+
 
 
 
             for (int i = 0; i < dgWeld.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
-               // MessageBox.Show(workedHours.Rows[0][i].ToString());
+                // MessageBox.Show(workedHours.Rows[0][i].ToString());
                 dgWeld[3, i].Value = workedHours.Rows[0][i].ToString();
             }
             //put the columns together into one column! :D
             string hours = "";
             string worked = "";
-            for (int i = 0; i < dgWeld.Rows.Count;i++)
+            for (int i = 0; i < dgWeld.Rows.Count; i++)
             {
                 hours = dgWeld.Rows[i].Cells[1].Value.ToString();
                 worked = dgWeld.Rows[i].Cells[3].Value.ToString();
@@ -1608,7 +1640,7 @@ namespace ShopFloorPlacementPlanner
         private void dteDateSelection_ValueChanged(object sender, EventArgs e)
         {
             //taking this out because its annoying when looking forward months.
-           // fillgrid();
+            // fillgrid();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -1876,7 +1908,7 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-            
+
         }
 
         private void btnAddDispatch_Click(object sender, EventArgs e)
@@ -1885,7 +1917,7 @@ namespace ShopFloorPlacementPlanner
             frmSelectStaff frmSS = new frmSelectStaff("Dispatch", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
-           // fillgrid();
+            // fillgrid();
             refreshSelectedDepartments();
         }
 
@@ -1895,7 +1927,7 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("toolroom", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog(); //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
-           // fillgrid();
+                                // fillgrid();
             refreshSelectedDepartments();
         }
 
@@ -1920,7 +1952,7 @@ namespace ShopFloorPlacementPlanner
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Management", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog(); //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
-             // fillgrid();
+                                // fillgrid();
             refreshSelectedDepartments();
         }
 
@@ -2047,7 +2079,7 @@ namespace ShopFloorPlacementPlanner
                     }
                     //get normal hours here i think?
                     //variables for houys
-                    double punching_hours = 0, laser_hours = 0, bending_hours = 0, welding_hours =0,buffing_hours = 0,painting_hours = 0,packing_hours = 0;
+                    double punching_hours = 0, laser_hours = 0, bending_hours = 0, welding_hours = 0, buffing_hours = 0, painting_hours = 0, packing_hours = 0;
                     //loop through each section and paste them into a variable thats declared anoive
                     string dept = "";
                     for (int z = 0; z <= 7; z++)
@@ -2067,7 +2099,7 @@ namespace ShopFloorPlacementPlanner
                         if (z == 6)
                             dept = "Packing";
 
-                        sql = "select distinct sum([hours]) as [hours] from  dbo.power_plan_staff where department = '" + dept + "'  AND date_id = " + dt.Rows[row][0]  + " group by department";
+                        sql = "select distinct sum([hours]) as [hours] from  dbo.power_plan_staff where department = '" + dept + "'  AND date_id = " + dt.Rows[row][0] + " group by department";
                         using (SqlCommand cmd = new SqlCommand(sql, conn))
                         {
                             conn.Open();
@@ -2091,7 +2123,7 @@ namespace ShopFloorPlacementPlanner
                     int print = 0;
                     if (i == 20)
                         print = 1;
-                    excel.openExcel(print,i,fileName, mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR,Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
+                    excel.openExcel(print, i, fileName, mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR, Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
                                                Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
                                                Convert.ToDouble(bending_hours), Convert.ToDouble(bending_OT), Convert.ToDouble(bending_AD),
                                                Convert.ToDouble(welding_hours), Convert.ToDouble(welding_OT), Convert.ToDouble(welding_AD),
@@ -2107,14 +2139,14 @@ namespace ShopFloorPlacementPlanner
                     //                           Convert.ToDouble(buffing_hours), Convert.ToDouble(buffing_OT), Convert.ToDouble(buffing_AD),
                     //                           Convert.ToDouble(painting_hours), Convert.ToDouble(painting_OT), Convert.ToDouble(painting_AD),
                     //                           Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD)
-        //);
+                    //);
 
 
 
                     //excel.addDAtes(mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR);
-                   // excel.closeExcel();
+                    // excel.closeExcel();
 
-                    
+
                     row++;
                 }
             }
@@ -2164,7 +2196,7 @@ namespace ShopFloorPlacementPlanner
             paintGrid();
             countGrid();
             updateDailyGoals();
-           
+
             department_changed dc = new department_changed();
             dc.resetData();
         }
