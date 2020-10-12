@@ -242,6 +242,9 @@
             // dgPunch
             // 
             this.dgPunch.AllowUserToAddRows = false;
+            this.dgPunch.AllowUserToDeleteRows = false;
+            this.dgPunch.AllowUserToResizeColumns = false;
+            this.dgPunch.AllowUserToResizeRows = false;
             this.dgPunch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgPunch.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -254,27 +257,30 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgPunch.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgPunch.Enabled = false;
             this.dgPunch.Location = new System.Drawing.Point(221, 220);
             this.dgPunch.Name = "dgPunch";
+            this.dgPunch.ReadOnly = true;
             this.dgPunch.RowHeadersVisible = false;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPunch.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgPunch.RowTemplate.Height = 50;
             this.dgPunch.Size = new System.Drawing.Size(200, 109);
             this.dgPunch.TabIndex = 0;
+            this.dgPunch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgPunch_CellDoubleClick);
             // 
             // dgBend
             // 
             this.dgBend.AllowUserToAddRows = false;
             this.dgBend.AllowUserToDeleteRows = false;
+            this.dgBend.AllowUserToResizeColumns = false;
+            this.dgBend.AllowUserToResizeRows = false;
             this.dgBend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgBend.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgBend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgBend.Enabled = false;
             this.dgBend.Location = new System.Drawing.Point(634, 220);
             this.dgBend.Name = "dgBend";
+            this.dgBend.ReadOnly = true;
             this.dgBend.RowHeadersVisible = false;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBend.RowsDefaultCellStyle = dataGridViewCellStyle3;
@@ -286,50 +292,57 @@
             // 
             this.dgWeld.AllowUserToAddRows = false;
             this.dgWeld.AllowUserToDeleteRows = false;
+            this.dgWeld.AllowUserToResizeColumns = false;
+            this.dgWeld.AllowUserToResizeRows = false;
             this.dgWeld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgWeld.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgWeld.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgWeld.Enabled = false;
             this.dgWeld.Location = new System.Drawing.Point(841, 220);
             this.dgWeld.Name = "dgWeld";
+            this.dgWeld.ReadOnly = true;
             this.dgWeld.RowHeadersVisible = false;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgWeld.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgWeld.RowTemplate.Height = 50;
             this.dgWeld.Size = new System.Drawing.Size(200, 315);
             this.dgWeld.TabIndex = 2;
-            this.dgWeld.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeld_CellClick);
+            this.dgWeld.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeld_CellDoubleClick);
             // 
             // dgBuff
             // 
             this.dgBuff.AllowUserToAddRows = false;
             this.dgBuff.AllowUserToDeleteRows = false;
+            this.dgBuff.AllowUserToResizeColumns = false;
+            this.dgBuff.AllowUserToResizeRows = false;
             this.dgBuff.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgBuff.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgBuff.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgBuff.Enabled = false;
             this.dgBuff.Location = new System.Drawing.Point(1047, 220);
             this.dgBuff.Name = "dgBuff";
+            this.dgBuff.ReadOnly = true;
             this.dgBuff.RowHeadersVisible = false;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBuff.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgBuff.RowTemplate.Height = 50;
             this.dgBuff.Size = new System.Drawing.Size(200, 109);
             this.dgBuff.TabIndex = 3;
+            this.dgBuff.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBuff_CellDoubleClick);
             // 
             // dgPaint
             // 
             this.dgPaint.AllowUserToAddRows = false;
             this.dgPaint.AllowUserToDeleteRows = false;
+            this.dgPaint.AllowUserToResizeColumns = false;
+            this.dgPaint.AllowUserToResizeRows = false;
             this.dgPaint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgPaint.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgPaint.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgPaint.Enabled = false;
             this.dgPaint.Location = new System.Drawing.Point(1253, 220);
             this.dgPaint.Name = "dgPaint";
+            this.dgPaint.ReadOnly = true;
             this.dgPaint.RowHeadersVisible = false;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPaint.RowsDefaultCellStyle = dataGridViewCellStyle6;
@@ -341,19 +354,22 @@
             // 
             this.dgPack.AllowUserToAddRows = false;
             this.dgPack.AllowUserToDeleteRows = false;
+            this.dgPack.AllowUserToResizeColumns = false;
+            this.dgPack.AllowUserToResizeRows = false;
             this.dgPack.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgPack.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgPack.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgPack.Enabled = false;
             this.dgPack.Location = new System.Drawing.Point(1490, 220);
             this.dgPack.Name = "dgPack";
+            this.dgPack.ReadOnly = true;
             this.dgPack.RowHeadersVisible = false;
             dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPack.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgPack.RowTemplate.Height = 50;
             this.dgPack.Size = new System.Drawing.Size(200, 315);
             this.dgPack.TabIndex = 5;
+            this.dgPack.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgPack_CellDoubleClick);
             // 
             // dteDateSelection
             // 
@@ -539,6 +555,9 @@
             // dgLaser
             // 
             this.dgLaser.AllowUserToAddRows = false;
+            this.dgLaser.AllowUserToDeleteRows = false;
+            this.dgLaser.AllowUserToResizeColumns = false;
+            this.dgLaser.AllowUserToResizeRows = false;
             this.dgLaser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgLaser.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -551,9 +570,9 @@
             dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgLaser.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dgLaser.Enabled = false;
             this.dgLaser.Location = new System.Drawing.Point(427, 220);
             this.dgLaser.Name = "dgLaser";
+            this.dgLaser.ReadOnly = true;
             this.dgLaser.RowHeadersVisible = false;
             dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgLaser.RowsDefaultCellStyle = dataGridViewCellStyle9;
@@ -960,6 +979,9 @@
             // dgSlimline
             // 
             this.dgSlimline.AllowUserToAddRows = false;
+            this.dgSlimline.AllowUserToDeleteRows = false;
+            this.dgSlimline.AllowUserToResizeColumns = false;
+            this.dgSlimline.AllowUserToResizeRows = false;
             this.dgSlimline.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgSlimline.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -980,9 +1002,9 @@
             dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgSlimline.DefaultCellStyle = dataGridViewCellStyle11;
-            this.dgSlimline.Enabled = false;
             this.dgSlimline.Location = new System.Drawing.Point(9, 220);
             this.dgSlimline.Name = "dgSlimline";
+            this.dgSlimline.ReadOnly = true;
             this.dgSlimline.RowHeadersVisible = false;
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgSlimline.RowsDefaultCellStyle = dataGridViewCellStyle12;

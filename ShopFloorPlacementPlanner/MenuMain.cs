@@ -1982,10 +1982,7 @@ namespace ShopFloorPlacementPlanner
             refreshSelectedDepartments();
         }
 
-        private void dgWeld_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
 
-        }
 
         private void BtnAddManagement_Click(object sender, EventArgs e)
         {
@@ -2240,6 +2237,37 @@ namespace ShopFloorPlacementPlanner
             department_changed dc = new department_changed();
             dc.resetData();
         }
+
+        private void dgPunch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+
+
+        private void dgWeld_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgWeld.ClearSelection();
+            frmChronological frm = new frmChronological(Convert.ToString(dgWeld.Rows[e.RowIndex].Cells[0].Value), "Welding", dteDateSelection.Value);
+            frm.ShowDialog();
+        }
+
+
+        private void dgPack_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgPack.ClearSelection();
+            frmChronological frm = new frmChronological(Convert.ToString(dgPack.Rows[e.RowIndex].Cells[0].Value), "Packing", dteDateSelection.Value);
+            frm.ShowDialog();
+        }
+
+        private void dgBuff_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgPack.ClearSelection();
+            frmChronological frm = new frmChronological(Convert.ToString(dgPack.Rows[e.RowIndex].Cells[0].Value), "Buffing", dteDateSelection.Value);
+            frm.ShowDialog();
+        }
+
+
     }
 }
 

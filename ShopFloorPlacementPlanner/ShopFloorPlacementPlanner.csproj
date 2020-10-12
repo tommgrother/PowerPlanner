@@ -92,6 +92,12 @@
     <Compile Include="AdditionsDeductions.cs" />
     <Compile Include="department_changed.cs" />
     <Compile Include="ExcelClass.cs" />
+    <Compile Include="frmChronological.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChronological.Designer.cs">
+      <DependentUpon>frmChronological.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSubDeptMultiple.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +202,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBatchPlacement.resx">
       <DependentUpon>frmBatchPlacement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmChronological.resx">
+      <DependentUpon>frmChronological.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCopyPlacements.resx">
       <DependentUpon>frmCopyPlacements.cs</DependentUpon>
