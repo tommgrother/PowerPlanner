@@ -14,6 +14,7 @@ namespace ShopFloorPlacementPlanner
     public partial class frmChronological : Form
     {
 
+        public int actionIndex { get; set; }
         public frmChronological(string staff, string dept, DateTime plannerDate)
         {
             InitializeComponent();
@@ -73,6 +74,7 @@ namespace ShopFloorPlacementPlanner
             int status, action, part, part_time, action_time, action_date, fullname, door_id, sort_order, department, department_time, predicted_end, note, door_type, time;
             status = dataGridView1.Columns["status"].Index;
             action = dataGridView1.Columns["action"].Index;
+            actionIndex = action;
             part = dataGridView1.Columns["part"].Index;
             part_time = dataGridView1.Columns["part_time"].Index;
             action_time = dataGridView1.Columns["action_time"].Index;
@@ -146,9 +148,18 @@ namespace ShopFloorPlacementPlanner
             dataGridView1.Columns[part].HeaderText = "Part";
             dataGridView1.Columns[part_time].HeaderText = "Time For Part";
             dataGridView1.Columns[time].HeaderText = "Time";
+
+            //messing with the colours
         }
 
-
-
+        private void frmChronological_Shown(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Finish"))
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+            }
+            dataGridView1.ClearSelection();
+        }
     }
 }

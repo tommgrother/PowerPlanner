@@ -1468,11 +1468,11 @@ namespace ShopFloorPlacementPlanner
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(d.sub_department,'')  AS [Staff Placement], a.hours, a.id " +
-        "FROM dbo.power_plan_staff AS a " +
-        "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
-        "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
-        "LEFT JOIN dbo.power_plan_paint_sub_dept_test_temp_2 as d ON a.id = d.placement_id " +
-        "WHERE c.date_plan = '" + dteDateSelection.Text + "' and a.department = 'Painting'  order by a.id";
+                                "FROM dbo.power_plan_staff AS a " +
+                                "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
+                                "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
+                                "LEFT JOIN dbo.power_plan_paint_sub_dept_test_temp_2 as d ON a.id = d.placement_id " +
+                                "WHERE c.date_plan = '" + dteDateSelection.Text + "' and a.department = 'Painting'  order by a.id";
 
             SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -1498,6 +1498,10 @@ namespace ShopFloorPlacementPlanner
             if (dgPack.Columns.Contains("set/worked") == true)
             {
                 dgPack.Columns.Remove("set/worked");
+            }
+            if (dgPack.Columns.Contains("packValue"))
+            {
+                dgPack.Columns.Remove("packValue");
             }
 
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -1526,11 +1530,26 @@ namespace ShopFloorPlacementPlanner
 
             dgPack.Columns.Add("worked", "worked");
             dgPack.Columns.Add("set/worked", "set/worked");
+            dgPack.Columns.Add("packValue","packValue");
             for (int i = 0; i < dgPack.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
                 dgPack[3, i].Value = workedHours.Rows[0][i].ToString();
             }
+
+            //get pack value
+            SqlCommand cmdryucxd2 = new SqlCommand("usp_power_planner_packed_value", conn);
+            cmdryucxd2.CommandType = CommandType.StoredProcedure;
+            cmdryucxd2.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            var dataReader2 = cmdryucxd2.ExecuteReader();
+            DataTable packValue = new DataTable();
+            packValue.Load(dataReader2);
+            for (int i = 0; i < dgPack.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
+            {
+                dgPack[5, i].Value = packValue.Rows[0][i].ToString();
+            }
+
+
             //put the columns together into one column! :D
             string hours = "";
             string worked = "";
@@ -1538,7 +1557,7 @@ namespace ShopFloorPlacementPlanner
             {
                 hours = dgPack.Rows[i].Cells[1].Value.ToString();
                 worked = dgPack.Rows[i].Cells[3].Value.ToString();
-                dgPack[4, i].Value = hours + " / " + worked;
+                dgPack[4, i].Value = hours + " / " + worked + Environment.NewLine + "£" + packValue.Rows[0][i].ToString(); 
             }
 
 
@@ -1546,8 +1565,11 @@ namespace ShopFloorPlacementPlanner
             //dgPack.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgPack.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgPack.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgPack.Columns["set/worked"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgPack.Columns["hours"].Visible = false;
             dgPack.Columns["worked"].Visible = false;
+            dgPack.Columns["packValue"].Visible = false;
+
 
 
 
@@ -2262,12 +2284,36 @@ namespace ShopFloorPlacementPlanner
 
         private void dgBuff_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            dgPack.ClearSelection();
-            frmChronological frm = new frmChronological(Convert.ToString(dgPack.Rows[e.RowIndex].Cells[0].Value), "Buffing", dteDateSelection.Value);
+            dgBuff.ClearSelection();
+            frmChronological frm = new frmChronological(Convert.ToString(dgBuff.Rows[e.RowIndex].Cells[0].Value), "Buffing", dteDateSelection.Value);
             frm.ShowDialog();
         }
 
+        private void dgNotPlaced_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgNotPlaced.Rows[e.RowIndex].Cells[1].Value.ToString().Contains("HOLIDAY"))
+            {
 
+                //if its a holiday show the form that displays when it was created 
+                //grab user ud
+                int id = 0;
+                string sql = "SELECT id FROM dbo.[user] WHERE forename + ' ' + surname = '" + dgNotPlaced.Rows[e.RowIndex].Cells[0].Value + "'"; 
+                using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionStringUser))
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        conn.Open();
+                        id = Convert.ToInt32(cmd.ExecuteScalar());
+                        conn.Close();
+                    }
+                }
+
+
+                frmHolidayCreated frm = new frmHolidayCreated(id, Convert.ToDateTime(dteDateSelection.Text), dgNotPlaced.Rows[e.RowIndex].Cells[0].Value.ToString());
+                frm.ShowDialog();
+            }
+
+        }
     }
 }
 

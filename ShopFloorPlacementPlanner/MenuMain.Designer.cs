@@ -512,6 +512,7 @@
             this.dgNotPlaced.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgNotPlaced.Size = new System.Drawing.Size(200, 330);
             this.dgNotPlaced.TabIndex = 19;
+            this.dgNotPlaced.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgNotPlaced_CellDoubleClick);
             // 
             // label7
             // 
