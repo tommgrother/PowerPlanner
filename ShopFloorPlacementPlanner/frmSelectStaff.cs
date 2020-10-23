@@ -910,11 +910,6 @@ namespace ShopFloorPlacementPlanner
         private void frmSelectStaff_Leave(object sender, EventArgs e)
         {
 
-
-
-
-
-
         }
 
         private void frmSelectStaff_FormClosed(object sender, FormClosedEventArgs e)
@@ -929,6 +924,15 @@ namespace ShopFloorPlacementPlanner
             //run procedure to populate all the dates for this week --
             dateInsert di = new dateInsert();
             di.check_date(_selectedDate);
+
+            ////test start
+            //frmWeeklyOverTime frm = new frmWeeklyOverTime(_selectedDate, _department);
+            //frm.ShowDialog();
+            //txtOvertime.Text = frm.totalOvertime.ToString();
+            ////test end
+
+
+
             frmWeeklyOT OT = new frmWeeklyOT(_selectedDate, _department);
             OT.ShowDialog();
             //need to pass the NEW overtime value into the upper right textbox to stop the value over-writing it
@@ -947,6 +951,12 @@ namespace ShopFloorPlacementPlanner
             //need to pass the NEW overtime value into the upper right textbox to stop the value over-writing it
             txtAD.Text = AD.additionForSD.ToString();
             this.Close();
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frmWeeklyOverTime frm = new frmWeeklyOverTime(_selectedDate, _department);
+            frm.ShowDialog();
+            txtOvertime.Text = frm.totalOvertime.ToString();
         }
     }
 }

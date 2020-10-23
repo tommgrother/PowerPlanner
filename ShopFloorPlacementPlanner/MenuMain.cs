@@ -1145,6 +1145,10 @@ namespace ShopFloorPlacementPlanner
             {
                 dgSlimline.Columns.Remove("set/worked");
             }
+            if (dgSlimline.Columns.Contains("overtime") == true)
+            {
+                dgSlimline.Columns.Remove("overtime");
+            }
 
 
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -1172,8 +1176,28 @@ namespace ShopFloorPlacementPlanner
             workedHours.Load(dataReader);
             //da2.Fill(workedHours);
 
+            //overtime -- usp_power_planner_overtime_hours
+            SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
+            cmdOT.CommandType = CommandType.StoredProcedure;
+            cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Slimline";
+            cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+
+            var OTreader = cmdOT.ExecuteReader();
+            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable overtimeHours = new DataTable();
+            overtimeHours.Load(OTreader);
+
             dgSlimline.Columns.Add("worked", "worked");
             dgSlimline.Columns.Add("set/worked", "set/worked");
+            dgSlimline.Columns.Add("overtime", "overtime");
+
+            for (int i = 0; i < dgSlimline.Rows.Count; i++)
+            {
+                dgSlimline[5, i].Value = overtimeHours.Rows[0][i].ToString();
+            }
+
+
+
             for (int i = 0; i < dgSlimline.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
@@ -1184,7 +1208,7 @@ namespace ShopFloorPlacementPlanner
             string worked = "";
             for (int i = 0; i < dgSlimline.Rows.Count; i++)
             {
-                hours = dgSlimline.Rows[i].Cells[1].Value.ToString();
+                hours = Convert.ToString(Convert.ToDecimal(dgSlimline.Rows[i].Cells[1].Value) + Convert.ToDecimal(dgSlimline.Rows[i].Cells[5].Value));       //dgSlimline.Rows[i].Cells[1].Value.ToString();
                 worked = dgSlimline.Rows[i].Cells[3].Value.ToString();
                 dgSlimline[4, i].Value = hours + " / " + worked;
             }
@@ -1193,10 +1217,10 @@ namespace ShopFloorPlacementPlanner
             dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgSlimline.Columns["hours"].Visible = false;
             dgSlimline.Columns["worked"].Visible = false;
+            dgSlimline.Columns["overtime"].Visible = false;
 
 
             conn.Close();
-
         }
 
         private void fillPunch()
@@ -1228,6 +1252,10 @@ namespace ShopFloorPlacementPlanner
             {
                 dgLaser.Columns.Remove("set/worked");
             }
+            if (dgLaser.Columns.Contains("overtime") == true)
+            {
+                dgLaser.Columns.Remove("overtime");
+            }
 
 
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -1257,8 +1285,28 @@ namespace ShopFloorPlacementPlanner
             workedHours.Load(dataReader);
             //da2.Fill(workedHours);
 
+
+            //overtime -- usp_power_planner_overtime_hours
+            SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
+            cmdOT.CommandType = CommandType.StoredProcedure;
+            cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Laser";
+            cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+
+            var OTreader = cmdOT.ExecuteReader();
+            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable overtimeHours = new DataTable();
+            overtimeHours.Load(OTreader);
+
             dgLaser.Columns.Add("worked", "worked");
             dgLaser.Columns.Add("set/worked", "set/worked");
+            dgLaser.Columns.Add("overtime", "overtime");
+
+            for (int i = 0; i < dgLaser.Rows.Count; i++)
+            {
+                dgLaser[5, i].Value = overtimeHours.Rows[0][i].ToString();
+            }
+
+           
             for (int i = 0; i < dgLaser.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
@@ -1269,7 +1317,7 @@ namespace ShopFloorPlacementPlanner
             string worked = "";
             for (int i = 0; i < dgLaser.Rows.Count; i++)
             {
-                hours = dgLaser.Rows[i].Cells[1].Value.ToString();
+                hours = Convert.ToString(Convert.ToDecimal(dgLaser.Rows[i].Cells[1].Value) + Convert.ToDecimal(dgLaser.Rows[i].Cells[5].Value));        //dgLaser.Rows[i].Cells[1].Value.ToString();
                 worked = dgLaser.Rows[i].Cells[3].Value.ToString();
                 dgLaser[4, i].Value = hours + " / " + worked;
             }
@@ -1278,6 +1326,7 @@ namespace ShopFloorPlacementPlanner
             dgLaser.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgLaser.Columns["hours"].Visible = false;
             dgLaser.Columns["worked"].Visible = false;
+            dgLaser.Columns["overtime"].Visible = false;
 
             conn.Close();
 
@@ -1310,6 +1359,10 @@ namespace ShopFloorPlacementPlanner
             if (dgWeld.Columns.Contains("set/worked") == true)
             {
                 dgWeld.Columns.Remove("set/worked");
+            }
+            if (dgWeld.Columns.Contains("overtime") == true)
+            {
+                dgWeld.Columns.Remove("overtime");
             }
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
@@ -1353,9 +1406,26 @@ namespace ShopFloorPlacementPlanner
             workedHours.Load(dataReader);
             //da2.Fill(workedHours);
 
+            //overtime -- usp_power_planner_overtime_hours
+            SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
+            cmdOT.CommandType = CommandType.StoredProcedure;
+            cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Welding";
+            cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+
+            var OTreader = cmdOT.ExecuteReader();
+            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable overtimeHours = new DataTable();
+            overtimeHours.Load(OTreader);
+
+
             dgWeld.Columns.Add("worked", "worked");
             dgWeld.Columns.Add("set/worked", "set/worked");
+            dgWeld.Columns.Add("overtime", "overtime");
 
+            for (int i = 0; i < dgWeld.Rows.Count; i++)
+            {
+                dgWeld[5, i].Value = overtimeHours.Rows[0][i].ToString();
+            }
             //need to check the datatable for content
 
 
@@ -1371,7 +1441,7 @@ namespace ShopFloorPlacementPlanner
             string worked = "";
             for (int i = 0; i < dgWeld.Rows.Count; i++)
             {
-                hours = dgWeld.Rows[i].Cells[1].Value.ToString();
+                hours = Convert.ToString(Convert.ToDecimal(dgWeld.Rows[i].Cells[1].Value) + Convert.ToDecimal(dgWeld.Rows[i].Cells[5].Value));   //dgWeld.Rows[i].Cells[1].Value.ToString();
                 worked = dgWeld.Rows[i].Cells[3].Value.ToString();
                 dgWeld[4, i].Value = hours + " / " + worked;
             }
@@ -1383,6 +1453,7 @@ namespace ShopFloorPlacementPlanner
             dgWeld.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgWeld.Columns["hours"].Visible = false;
             dgWeld.Columns["worked"].Visible = false;
+            dgWeld.Columns["overtime"].Visible = false;
 
             // conn.Close();
 
@@ -1397,6 +1468,10 @@ namespace ShopFloorPlacementPlanner
             if (dgBuff.Columns.Contains("set/worked") == true)
             {
                 dgBuff.Columns.Remove("set/worked");
+            }
+            if (dgBuff.Columns.Contains("overtime") == true)
+            {
+                dgBuff.Columns.Remove("overtime");
             }
 
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -1424,8 +1499,34 @@ namespace ShopFloorPlacementPlanner
             workedHours.Load(dataReader);
             //da2.Fill(workedHours);
 
+           
+
+            //overtime -- usp_power_planner_overtime_hours
+            SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
+            cmdOT.CommandType = CommandType.StoredProcedure;
+            cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Dressing";
+            cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            var OTreader = cmdOT.ExecuteReader();
+
+
+            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable overtimeHours = new DataTable();
+            overtimeHours.Load(OTreader);
+
             dgBuff.Columns.Add("worked", "worked");
             dgBuff.Columns.Add("set/worked", "set/worked");
+            dgBuff.Columns.Add("overtime", "overtime");
+
+
+            for (int i = 0; i < dgBuff.Rows.Count; i++)
+            {
+                dgBuff[5, i].Value = overtimeHours.Rows[0][i].ToString();
+            }
+
+
+
+
+
             for (int i = 0; i < dgBuff.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
@@ -1436,7 +1537,7 @@ namespace ShopFloorPlacementPlanner
             string worked = "";
             for (int i = 0; i < dgBuff.Rows.Count; i++)
             {
-                hours = dgBuff.Rows[i].Cells[1].Value.ToString();
+                hours = Convert.ToString(Convert.ToDecimal(dgBuff.Rows[i].Cells[1].Value) + Convert.ToDecimal(dgBuff.Rows[i].Cells[5].Value));    //dgBuff.Rows[i].Cells[1].Value.ToString();
                 worked = dgBuff.Rows[i].Cells[3].Value.ToString();
                 dgBuff[4, i].Value = hours + " / " + worked;
             }
@@ -1448,9 +1549,7 @@ namespace ShopFloorPlacementPlanner
             dgBuff.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgBuff.Columns["hours"].Visible = false;
             dgBuff.Columns["worked"].Visible = false;
-
-
-
+            dgBuff.Columns["overtime"].Visible = false;
 
 
 
@@ -1503,6 +1602,10 @@ namespace ShopFloorPlacementPlanner
             {
                 dgPack.Columns.Remove("packValue");
             }
+            if (dgPack.Columns.Contains("overtime"))
+            {
+                dgPack.Columns.Remove("overtime");
+            }
 
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
@@ -1528,9 +1631,36 @@ namespace ShopFloorPlacementPlanner
             workedHours.Load(dataReader);
             //da2.Fill(workedHours);
 
+          
+
+            //overtime -- usp_power_planner_overtime_hours
+            SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
+            cmdOT.CommandType = CommandType.StoredProcedure;
+            cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Packing";
+            cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            var OTreader = cmdOT.ExecuteReader();
+
+
+            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable overtimeHours = new DataTable();
+            overtimeHours.Load(OTreader);
+
             dgPack.Columns.Add("worked", "worked");
             dgPack.Columns.Add("set/worked", "set/worked");
-            dgPack.Columns.Add("packValue","packValue");
+            dgPack.Columns.Add("packValue", "packValue");
+            dgPack.Columns.Add("overtime", "overtime");
+
+
+
+            for (int i = 0; i < dgPack.Rows.Count; i++)
+            {
+                dgPack[6, i].Value = overtimeHours.Rows[0][i].ToString();
+            }
+
+
+
+
+
             for (int i = 0; i < dgPack.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
@@ -1555,7 +1685,7 @@ namespace ShopFloorPlacementPlanner
             string worked = "";
             for (int i = 0; i < dgPack.Rows.Count; i++)
             {
-                hours = dgPack.Rows[i].Cells[1].Value.ToString();
+                hours =  Convert.ToString(Convert.ToDecimal(dgPack.Rows[i].Cells[1].Value) + Convert.ToDecimal(dgPack.Rows[i].Cells[6].Value));   // dgPack.Rows[i].Cells[1].Value.ToString();
                 worked = dgPack.Rows[i].Cells[3].Value.ToString();
                 dgPack[4, i].Value = hours + " / " + worked + Environment.NewLine + "£" + packValue.Rows[0][i].ToString(); 
             }
@@ -1568,6 +1698,7 @@ namespace ShopFloorPlacementPlanner
             dgPack.Columns["set/worked"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgPack.Columns["hours"].Visible = false;
             dgPack.Columns["worked"].Visible = false;
+            dgPack.Columns["overtime"].Visible = false;
             dgPack.Columns["packValue"].Visible = false;
 
 

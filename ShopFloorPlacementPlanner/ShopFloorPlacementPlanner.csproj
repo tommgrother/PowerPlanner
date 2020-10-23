@@ -14,7 +14,7 @@
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>S:\Design and Supply CSharp\MiniApps\PowerPlanner\</PublishUrl>
+    <PublishUrl>S:\Design and Supply CSharp\MiniApps\New folder\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -24,8 +24,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
-    <ApplicationRevision>67</ApplicationRevision>
+    <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\New folder\</InstallUrl>
+    <ApplicationRevision>73</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -109,6 +109,12 @@
     </Compile>
     <Compile Include="frmSubDeptMultiple.Designer.cs">
       <DependentUpon>frmSubDeptMultiple.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmWeeklyOverTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWeeklyOverTime.Designer.cs">
+      <DependentUpon>frmWeeklyOverTime.cs</DependentUpon>
     </Compile>
     <Compile Include="SubDeptClass.cs" />
     <Compile Include="connectionStrings.cs" />
@@ -244,6 +250,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmWeeklyOT.resx">
       <DependentUpon>frmWeeklyOT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWeeklyOverTime.resx">
+      <DependentUpon>frmWeeklyOverTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuMain.resx">
       <DependentUpon>MenuMain.cs</DependentUpon>

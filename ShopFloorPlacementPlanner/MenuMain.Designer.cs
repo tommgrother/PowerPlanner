@@ -502,6 +502,10 @@
             // 
             // dgNotPlaced
             // 
+            this.dgNotPlaced.AllowUserToAddRows = false;
+            this.dgNotPlaced.AllowUserToDeleteRows = false;
+            this.dgNotPlaced.AllowUserToResizeColumns = false;
+            this.dgNotPlaced.AllowUserToResizeRows = false;
             this.dgNotPlaced.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgNotPlaced.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
