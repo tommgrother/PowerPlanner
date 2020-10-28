@@ -21,14 +21,17 @@ namespace ShopFloorPlacementPlanner
         public int validation { get; set; }
         public int dateID { get; set; }
         public string department { get; set; }
+        public DateTime startDate { get; set; }
         public DateTime tempDate { get; set; }
         public DateTime monday { get; set; } //should only need monday (we can date add based on what tab is selected and this should always be correct providing MONDAY is the correct date
+
 
         public decimal totalOvertime { get; set; }
         public frmWeeklyOverTime(DateTime _tempDate, string _department)
         {
             InitializeComponent();
             validation = 0;
+            startDate = _tempDate;
             department = _department;
             lblTitle.Text = "Over Time for " + department;
             while (_tempDate.DayOfWeek != System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
@@ -36,10 +39,9 @@ namespace ShopFloorPlacementPlanner
             monday = _tempDate;
 
             // MessageBox.Show(monday.ToString());
-
             whichTab();
-        }
 
+        }
 
         private void whichTab()
         {
@@ -169,7 +171,7 @@ namespace ShopFloorPlacementPlanner
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@date_id", SqlDbType.Int).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[dateIDIndex].Value);
                         cmd.Parameters.Add("@staff_id", SqlDbType.Int).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[staffIDIndex].Value);
-                        cmd.Parameters.Add("@overtime", SqlDbType.Float).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[overtimeIndex].Value);
+                        cmd.Parameters.Add("@overtime", SqlDbType.Float).Value = Convert.ToDouble(dataGridView1.Rows[i].Cells[overtimeIndex].Value);
                         cmd.Parameters.Add("@department", SqlDbType.NVarChar).Value = department;
                         conn.Open();
                         cmd.ExecuteNonQuery();
@@ -192,10 +194,23 @@ namespace ShopFloorPlacementPlanner
         private void frmWeeklyOverTime_FormClosing(object sender, FormClosingEventArgs e)
         {
             //close the form on todays date!!!
-            dataGridView1.CurrentCell = dataGridView1.Rows[0].Cells[0];
-            whichTab();
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                totalOvertime = totalOvertime + Convert.ToDecimal(dataGridView1.Rows[i].Cells[overtimeIndex].Value);
+            //count the days between monday and startdate 
+            double countDays = (monday - startDate).Days;
+            if (countDays < 0)
+                countDays = countDays * -1;
+            tabControl1.SelectedIndex = Convert.ToInt32(countDays);
+            //MessageBox.Show(tabControl1.TabPages[Convert.ToInt32(countDays)].Text.ToString());
+
+            //if they close the overtime on a day where there is no one in it crashes
+            if (dataGridView1.Rows.Count > 0)
+            {
+                dataGridView1.CurrentCell = dataGridView1.Rows[0].Cells[0];
+                whichTab();
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    totalOvertime = totalOvertime + Convert.ToDecimal(dataGridView1.Rows[i].Cells[overtimeIndex].Value);
+            }
+            department_changed dc = new department_changed();
+            dc.setDepartment(department);
         }
 
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -225,7 +240,15 @@ namespace ShopFloorPlacementPlanner
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            MessageBox.Show(dataGridView1.Columns[e.ColumnIndex].Index.ToString());
+            
+        }
+
+        private void frmWeeklyOverTime_Shown(object sender, EventArgs e)
+        {
+            double countDays = (monday - startDate).Days;
+            if (countDays < 0)
+                countDays = countDays * -1;
+            tabControl1.SelectedIndex = Convert.ToInt32(countDays);
         }
     }
 }

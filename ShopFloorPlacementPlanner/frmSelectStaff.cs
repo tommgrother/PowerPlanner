@@ -713,7 +713,7 @@ namespace ShopFloorPlacementPlanner
             if (p._notPresentType == 5 || p._notPresentType == 2)
             {
                 MessageBox.Show("This staff member is either absent today or has a full day holiday!", "Cannot Place", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            } 
             else if (p._notPresentType == 3)
             {
                 MessageBox.Show("This staff member has half day holiday so can only be placed for half day", "Half Day Placement", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -932,11 +932,13 @@ namespace ShopFloorPlacementPlanner
             ////test end
 
 
-
-            frmWeeklyOT OT = new frmWeeklyOT(_selectedDate, _department);
-            OT.ShowDialog();
+            frmWeeklyOverTime frm = new frmWeeklyOverTime(_selectedDate, _department);
+            frm.ShowDialog();
+            txtOvertime.Text = frm.totalOvertime.ToString();
+            //frmWeeklyOT OT = new frmWeeklyOT(_selectedDate, _department);
+            //OT.ShowDialog();
             //need to pass the NEW overtime value into the upper right textbox to stop the value over-writing it
-            txtOvertime.Text = OT.overtimeForSD.ToString();
+            //txtOvertime.Text = OT.overtimeForSD.ToString();
             this.Close();
         }
 
