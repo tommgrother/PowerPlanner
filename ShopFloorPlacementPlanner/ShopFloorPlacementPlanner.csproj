@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
-    <ApplicationRevision>77</ApplicationRevision>
+    <ApplicationRevision>80</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -97,6 +97,12 @@
     </Compile>
     <Compile Include="frmChronological.Designer.cs">
       <DependentUpon>frmChronological.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCovidInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCovidInput.Designer.cs">
+      <DependentUpon>frmCovidInput.cs</DependentUpon>
     </Compile>
     <Compile Include="frmHolidayCreated.cs">
       <SubType>Form</SubType>
@@ -220,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCopyPlacements.resx">
       <DependentUpon>frmCopyPlacements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCovidInput.resx">
+      <DependentUpon>frmCovidInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmEmailPrint.resx">
       <DependentUpon>frmEmailPrint.cs</DependentUpon>

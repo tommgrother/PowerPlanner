@@ -107,7 +107,7 @@ namespace ShopFloorPlacementPlanner
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    
+
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -116,7 +116,7 @@ namespace ShopFloorPlacementPlanner
                     dataGridView1.Columns[2].Visible = false;
                     dataGridView1.Columns[3].Visible = false;
 
-                } 
+                }
                 //dataGridView1.Columns.Add("Over Time", "Over Time");
                 if (dataGridView1.Columns.Contains("Over Time") == true)
                     overtimeIndex = dataGridView1.Columns["Over Time"].Index;
@@ -124,7 +124,7 @@ namespace ShopFloorPlacementPlanner
                     dateIDIndex = dataGridView1.Columns["date_id"].Index;
                 if (dataGridView1.Columns.Contains("staff_id") == true)
                     staffIDIndex = dataGridView1.Columns["staff_id"].Index;
-              
+
                 //now get the overtime for these dudes
 
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -161,8 +161,10 @@ namespace ShopFloorPlacementPlanner
         private void commitData()
         {
             string sql = "";
+            double totalHours = 0;
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
+                conn.Open();
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     using (SqlCommand cmd = new SqlCommand("usp_power_plan_add_overtime_remake", conn))
@@ -173,11 +175,14 @@ namespace ShopFloorPlacementPlanner
                         cmd.Parameters.Add("@staff_id", SqlDbType.Int).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[staffIDIndex].Value);
                         cmd.Parameters.Add("@overtime", SqlDbType.Float).Value = Convert.ToDouble(dataGridView1.Rows[i].Cells[overtimeIndex].Value);
                         cmd.Parameters.Add("@department", SqlDbType.NVarChar).Value = department;
-                        conn.Open();
                         cmd.ExecuteNonQuery();
-                        conn.Close();
+                        totalHours = totalHours + Convert.ToDouble(dataGridView1.Rows[i].Cells[overtimeIndex].Value);
                     }
                 }
+                //update it here because it needs the full TOTAL of the 
+                Overtime overtime = new Overtime();
+                overtime.updateOT(tempDate, department, totalHours);
+                conn.Close();
             }
         }
 
@@ -240,7 +245,7 @@ namespace ShopFloorPlacementPlanner
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void frmWeeklyOverTime_Shown(object sender, EventArgs e)

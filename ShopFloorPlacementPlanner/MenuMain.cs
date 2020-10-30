@@ -2604,6 +2604,20 @@ namespace ShopFloorPlacementPlanner
             }
 
         }
+
+        private void shopFloorInputToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //opens a form to allow the end user to add temps
+            frmCovidInput frm = new frmCovidInput(Convert.ToDateTime(dteDateSelection.Value.ToString()),-1);
+            frm.ShowDialog();
+        }
+
+        private void officeInputToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //opens a form to allow the end user to add temps
+            frmCovidInput frm = new frmCovidInput(Convert.ToDateTime(dteDateSelection.Value.ToString()), 0);
+            frm.ShowDialog();
+        }
     }
 }
 

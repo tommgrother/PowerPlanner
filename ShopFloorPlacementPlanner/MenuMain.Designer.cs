@@ -221,6 +221,9 @@
             this.txtPaintActualHours = new System.Windows.Forms.TextBox();
             this.lblPackingActualHours = new System.Windows.Forms.Label();
             this.txtPackActualHours = new System.Windows.Forms.TextBox();
+            this.cOVIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shopFloorInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.officeInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -849,7 +852,8 @@
             this.floorListingsToolStripMenuItem,
             this.batchOperationsToolStripMenuItem,
             this.clearPlanToolStripMenuItem,
-            this.ryucxdToolStripMenuItem});
+            this.ryucxdToolStripMenuItem,
+            this.cOVIDToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1932, 24);
@@ -2008,6 +2012,29 @@
             this.txtPackActualHours.TabIndex = 163;
             this.txtPackActualHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // cOVIDToolStripMenuItem
+            // 
+            this.cOVIDToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.shopFloorInputToolStripMenuItem,
+            this.officeInputToolStripMenuItem});
+            this.cOVIDToolStripMenuItem.Name = "cOVIDToolStripMenuItem";
+            this.cOVIDToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.cOVIDToolStripMenuItem.Text = "COVID";
+            // 
+            // shopFloorInputToolStripMenuItem
+            // 
+            this.shopFloorInputToolStripMenuItem.Name = "shopFloorInputToolStripMenuItem";
+            this.shopFloorInputToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.shopFloorInputToolStripMenuItem.Text = "Shop floor Input";
+            this.shopFloorInputToolStripMenuItem.Click += new System.EventHandler(this.shopFloorInputToolStripMenuItem_Click);
+            // 
+            // officeInputToolStripMenuItem
+            // 
+            this.officeInputToolStripMenuItem.Name = "officeInputToolStripMenuItem";
+            this.officeInputToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.officeInputToolStripMenuItem.Text = "Office Input";
+            this.officeInputToolStripMenuItem.Click += new System.EventHandler(this.officeInputToolStripMenuItem_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2371,6 +2398,9 @@
         private System.Windows.Forms.TextBox txtPaintActualHours;
         private System.Windows.Forms.Label lblPackingActualHours;
         private System.Windows.Forms.TextBox txtPackActualHours;
+        private System.Windows.Forms.ToolStripMenuItem cOVIDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem shopFloorInputToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem officeInputToolStripMenuItem;
     }
 }
 
