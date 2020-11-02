@@ -80,9 +80,12 @@
             this.Controls.Add(this.btnGo);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.dataGridView1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmCovidInput";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmCovidInput";
+            this.Text = "Covid Temp";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCovidInput_FormClosing);
             this.Shown += new System.EventHandler(this.frmCovidInput_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

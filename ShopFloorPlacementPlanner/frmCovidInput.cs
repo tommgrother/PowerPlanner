@@ -11,8 +11,10 @@ using System.Data.SqlClient;
 
 namespace ShopFloorPlacementPlanner
 {
+   
     public partial class frmCovidInput : Form
     {
+        public int allowClose { get; set; }
         public int dateid { get; set; }
         public frmCovidInput(DateTime placementDate, int Shopfloor)
         {
@@ -27,9 +29,9 @@ namespace ShopFloorPlacementPlanner
                 SqlCommand cmdDate = new SqlCommand("usp_power_planner_covid_load_staff", conn);
                 cmdDate.CommandType = CommandType.StoredProcedure;
                 cmdDate.Parameters.AddWithValue("@date", SqlDbType.Date).Value = placementDate;
-                cmdDate.Parameters.AddWithValue("@shopfloor", SqlDbType.Date).Value = Shopfloor;
+                cmdDate.Parameters.AddWithValue("@shopfloor", SqlDbType.Date).Value = Shopfloor; //identifies if its shopfloor or office 
 
-                SqlDataAdapter da = new SqlDataAdapter(cmdDate);
+                SqlDataAdapter da = new SqlDataAdapter(cmdDate); //shopfloor is filtered by sortOrder which is the extra column in #covidtemps or whatever its called 
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dataGridView1.DataSource = dt;
@@ -76,6 +78,9 @@ namespace ShopFloorPlacementPlanner
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[3].Visible = false;
+            dataGridView1.Columns[4].Visible = false;
+            dataGridView1.Columns[0].ReadOnly = true;
+            dataGridView1.Columns[1].ReadOnly = true;
         }
 
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -135,6 +140,15 @@ namespace ShopFloorPlacementPlanner
             {
                 if (row.Cells[2].Value.ToString().Length > 0)
                     row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+            }
+        }
+
+        private void frmCovidInput_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (allowClose == 0)
+            {
+                allowClose = -1;
+                btnGo.PerformClick();
             }
         }
     }
