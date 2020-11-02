@@ -36,7 +36,7 @@ namespace ShopFloorPlacementPlanner
                 da.Fill(dt);
                 dataGridView1.DataSource = dt;
             }
-            else
+            else 
             {
                 // if we're here then its because its the office 
                 label25.Text = "Office";
@@ -60,14 +60,20 @@ namespace ShopFloorPlacementPlanner
             //after getting each person we  need to loop through them and see if any of them already have temps stored
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                sql = "SELECT temp FROM dbo.power_plan_covid_temps WHERE staff_id = " + row.Cells[3].Value.ToString() + " AND date_id = " + dateid + "";
+                sql = "SELECT temp_morning FROM dbo.power_plan_covid_temps WHERE staff_id = " + row.Cells[3].Value.ToString() + " AND date_id = " + dateid + "";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
 
                     row.Cells[2].Value = Convert.ToString(cmd.ExecuteScalar());
 
                 }
+                sql = "SELECT temp_afternoon FROM dbo.power_plan_covid_temps WHERE staff_id = " + row.Cells[3].Value.ToString() + " AND date_id = " + dateid + "";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
 
+                    row.Cells[5].Value = Convert.ToString(cmd.ExecuteScalar());
+
+                }
             }
 
 
@@ -77,6 +83,7 @@ namespace ShopFloorPlacementPlanner
             dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[3].Visible = false;
             dataGridView1.Columns[4].Visible = false;
             dataGridView1.Columns[0].ReadOnly = true;
@@ -93,9 +100,9 @@ namespace ShopFloorPlacementPlanner
                 {
                     tb.KeyPress += new KeyPressEventHandler(Column_KeyPress);
                 }
-
             }
         }
+        //also need this void to prevent letters etc
         private void Column_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
@@ -120,12 +127,27 @@ namespace ShopFloorPlacementPlanner
                     {
                         string sql = "";
                         if (row.DefaultCellStyle.BackColor == Color.DarkSeaGreen)
-                            sql = "UPDATE dbo.power_plan_covid_temps SET temp = " + row.Cells[2].Value.ToString() + " WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
+                            sql = "UPDATE dbo.power_plan_covid_temps SET temp_morning = " + row.Cells[2].Value.ToString() + " WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
                         else
-                            sql = "INSERT INTO dbo.power_plan_covid_temps (staff_id,date_id,temp) VALUES(" + row.Cells[3].Value.ToString() + "," + dateid + ", " + row.Cells[2].Value.ToString() + ")";
+                            sql = "INSERT INTO dbo.power_plan_covid_temps (staff_id,date_id,temp_morning) VALUES(" + row.Cells[3].Value.ToString() + "," + dateid + ", " + row.Cells[2].Value.ToString() + ")";
                         using (SqlCommand cmd = new SqlCommand(sql, conn))
                         {
                             cmd.ExecuteNonQuery();
+                            row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+                        }
+                    }
+                    //same again but for afternoon temp
+                    if (row.Cells[5].Value.ToString() != "")
+                    {
+                        string sql = "";
+                        if (row.DefaultCellStyle.BackColor == Color.DarkSeaGreen)
+                            sql = "UPDATE dbo.power_plan_covid_temps SET temp_afternoon = " + row.Cells[5].Value.ToString() + " WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
+                        else
+                            sql = "INSERT INTO dbo.power_plan_covid_temps (staff_id,date_id,temp_afternoon) VALUES(" + row.Cells[3].Value.ToString() + "," + dateid + ", " + row.Cells[5].Value.ToString() + ")";
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+                            cmd.ExecuteNonQuery();
+                            row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                         }
                     }
                 }
@@ -140,7 +162,10 @@ namespace ShopFloorPlacementPlanner
             {
                 if (row.Cells[2].Value.ToString().Length > 0)
                     row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+                if (row.Cells[5].Value.ToString().Length > 0)
+                    row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
             }
+            dataGridView1.ClearSelection();
         }
 
         private void frmCovidInput_FormClosing(object sender, FormClosingEventArgs e)
