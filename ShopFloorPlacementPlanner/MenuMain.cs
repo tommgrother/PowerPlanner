@@ -172,7 +172,7 @@ namespace ShopFloorPlacementPlanner
                 }
 
 
-                punchHours = punchHours + Convert.ToDouble(row.Cells[1].Value);
+                punchHours = punchHours + Convert.ToDouble(row.Cells[1].Value); //123456
 
             }
 
@@ -1280,7 +1280,7 @@ namespace ShopFloorPlacementPlanner
             {
                 double overtimeTemp = Convert.ToDouble(dgPunch.Rows[i].Cells[3].Value) * 0.8;
                 overtimeTemp = overtimeTemp + Convert.ToDouble(dgPunch.Rows[i].Cells[1].Value.ToString());
-                dgPunch[1, i].Value = overtimeTemp;
+                dgPunch[2, i].Value = overtimeTemp;
             }
 
 
@@ -1693,7 +1693,7 @@ namespace ShopFloorPlacementPlanner
             //ryucxd paint
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(d.sub_department,'')  AS [Staff Placement], a.hours, a.id " +
+            string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(d.sub_department,'') + CHAR(13) + a.placement_type  AS [Staff Placement], a.hours, a.id " +
                                 "FROM dbo.power_plan_staff AS a " +
                                 "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
                                 "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
@@ -1732,7 +1732,7 @@ namespace ShopFloorPlacementPlanner
             {
                 double overtimeTemp = Convert.ToDouble(dgPaint.Rows[i].Cells[3].Value) * 0.8;
                 overtimeTemp = overtimeTemp + Convert.ToDouble(dgPaint.Rows[i].Cells[1].Value.ToString());
-                dgPaint[1, i].Value = overtimeTemp;
+                dgPaint[2, i].Value = overtimeTemp;
             }
 
 
@@ -2541,7 +2541,7 @@ namespace ShopFloorPlacementPlanner
                 fillCleaning();
             if (department_changed.managementSelected == -1)
                 fillManagement();
-            fillNotPlaced();
+            fillNotPlaced(); //123456
             paintGrid();
             countGrid();
             updateDailyGoals();
@@ -2552,7 +2552,7 @@ namespace ShopFloorPlacementPlanner
 
         private void dgPunch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
+           // MessageBox.Show(e.ColumnIndex.ToString());
         }
 
 

@@ -1,6 +1,6 @@
 ﻿namespace ShopFloorPlacementPlanner
 {
-    partial class frmManualHours
+    partial class frmShiftHours
     {
         /// <summary>
         /// Required designer variable.
@@ -28,55 +28,50 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmManualHours));
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtManual = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
+            this.txtManual = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Enter manual hour value:";
-            // 
-            // txtManual
-            // 
-            this.txtManual.Location = new System.Drawing.Point(144, 10);
-            this.txtManual.Name = "txtManual";
-            this.txtManual.Size = new System.Drawing.Size(74, 20);
-            this.txtManual.TabIndex = 1;
-            this.txtManual.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtManual_KeyPress);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(83, 36);
+            this.btnSave.Location = new System.Drawing.Point(72, 33);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 2;
+            this.btnSave.TabIndex = 5;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // frmManualHours
+            // txtManual
+            // 
+            this.txtManual.Location = new System.Drawing.Point(126, 6);
+            this.txtManual.Name = "txtManual";
+            this.txtManual.Size = new System.Drawing.Size(74, 20);
+            this.txtManual.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(112, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Enter Shift hour value:";
+            // 
+            // frmShiftHours
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(240, 69);
+            this.ClientSize = new System.Drawing.Size(219, 68);
             this.ControlBox = false;
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtManual);
             this.Controls.Add(this.label1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "frmManualHours";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Name = "frmShiftHours";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Manual Hours:";
-            this.Load += new System.EventHandler(this.frmManualHours_Load);
+            this.Text = "frmShiftHours";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -84,8 +79,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtManual;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.TextBox txtManual;
+        private System.Windows.Forms.Label label1;
     }
 }

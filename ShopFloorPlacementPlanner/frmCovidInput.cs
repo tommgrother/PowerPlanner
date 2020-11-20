@@ -165,6 +165,11 @@ namespace ShopFloorPlacementPlanner
                 if (row.Cells[5].Value.ToString().Length > 0)
                     row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
             }
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
             dataGridView1.ClearSelection();
         }
 

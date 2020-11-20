@@ -194,7 +194,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "frmWeeklyOverTime";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "The True Weekly OverTime";
+            this.Text = "Weekly OverTime";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmWeeklyOverTime_FormClosing);
             this.Shown += new System.EventHandler(this.frmWeeklyOverTime_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

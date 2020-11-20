@@ -393,10 +393,14 @@ namespace ShopFloorPlacementPlanner
             {
                 SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
+                frmShiftHours sh = new frmShiftHours();
+                sh.ShowDialog();
+                
+
                 using (SqlCommand cmd = new SqlCommand("UPDATE dbo.power_plan_staff set placement_type = 'Shift' , hours = @hours where ID = @placementID", conn))
                 {
                     cmd.Parameters.AddWithValue("placementID", placementID);
-                    cmd.Parameters.AddWithValue("@hours", _standardHours);
+                    cmd.Parameters.AddWithValue("@hours", sh._shiftHours);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     conn.Close();
