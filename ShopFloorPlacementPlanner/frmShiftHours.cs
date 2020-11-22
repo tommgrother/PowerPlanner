@@ -21,7 +21,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(btnSave.Text))
+            if (String.IsNullOrWhiteSpace(txtManual.Text))
             {
                 MessageBox.Show("Please enter the number of hours for this shift");
                 return;
@@ -31,6 +31,11 @@ namespace ShopFloorPlacementPlanner
         }
 
         private void txtManual_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //this one is broke for whatever reason
+        }
+
+        private void txtManual_KeyPress_1(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
             {
@@ -43,8 +48,5 @@ namespace ShopFloorPlacementPlanner
                 e.Handled = true;
             }
         }
-
-
-
     }
 }

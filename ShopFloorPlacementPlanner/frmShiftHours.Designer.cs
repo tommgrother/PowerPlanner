@@ -49,6 +49,7 @@
             this.txtManual.Name = "txtManual";
             this.txtManual.Size = new System.Drawing.Size(74, 20);
             this.txtManual.TabIndex = 4;
+            this.txtManual.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtManual_KeyPress_1);
             // 
             // label1
             // 
