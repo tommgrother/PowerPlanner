@@ -116,6 +116,9 @@
             this.batchOperationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearPlanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ryucxdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cOVIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shopFloorInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.officeInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -221,9 +224,7 @@
             this.txtPaintActualHours = new System.Windows.Forms.TextBox();
             this.lblPackingActualHours = new System.Windows.Forms.Label();
             this.txtPackActualHours = new System.Windows.Forms.TextBox();
-            this.cOVIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.shopFloorInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.officeInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cOPYWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -853,7 +854,8 @@
             this.batchOperationsToolStripMenuItem,
             this.clearPlanToolStripMenuItem,
             this.ryucxdToolStripMenuItem,
-            this.cOVIDToolStripMenuItem});
+            this.cOVIDToolStripMenuItem,
+            this.cOPYWEEKToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1932, 24);
@@ -928,6 +930,29 @@
             this.ryucxdToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
             this.ryucxdToolStripMenuItem.Text = "Print Weekly Data";
             this.ryucxdToolStripMenuItem.Click += new System.EventHandler(this.ryucxdToolStripMenuItem_Click);
+            // 
+            // cOVIDToolStripMenuItem
+            // 
+            this.cOVIDToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.shopFloorInputToolStripMenuItem,
+            this.officeInputToolStripMenuItem});
+            this.cOVIDToolStripMenuItem.Name = "cOVIDToolStripMenuItem";
+            this.cOVIDToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.cOVIDToolStripMenuItem.Text = "COVID";
+            // 
+            // shopFloorInputToolStripMenuItem
+            // 
+            this.shopFloorInputToolStripMenuItem.Name = "shopFloorInputToolStripMenuItem";
+            this.shopFloorInputToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.shopFloorInputToolStripMenuItem.Text = "Shop floor Input";
+            this.shopFloorInputToolStripMenuItem.Click += new System.EventHandler(this.shopFloorInputToolStripMenuItem_Click);
+            // 
+            // officeInputToolStripMenuItem
+            // 
+            this.officeInputToolStripMenuItem.Name = "officeInputToolStripMenuItem";
+            this.officeInputToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.officeInputToolStripMenuItem.Text = "Office Input";
+            this.officeInputToolStripMenuItem.Click += new System.EventHandler(this.officeInputToolStripMenuItem_Click);
             // 
             // label23
             // 
@@ -2012,28 +2037,12 @@
             this.txtPackActualHours.TabIndex = 163;
             this.txtPackActualHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // cOVIDToolStripMenuItem
+            // cOPYWEEKToolStripMenuItem
             // 
-            this.cOVIDToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.shopFloorInputToolStripMenuItem,
-            this.officeInputToolStripMenuItem});
-            this.cOVIDToolStripMenuItem.Name = "cOVIDToolStripMenuItem";
-            this.cOVIDToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.cOVIDToolStripMenuItem.Text = "COVID";
-            // 
-            // shopFloorInputToolStripMenuItem
-            // 
-            this.shopFloorInputToolStripMenuItem.Name = "shopFloorInputToolStripMenuItem";
-            this.shopFloorInputToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.shopFloorInputToolStripMenuItem.Text = "Shop floor Input";
-            this.shopFloorInputToolStripMenuItem.Click += new System.EventHandler(this.shopFloorInputToolStripMenuItem_Click);
-            // 
-            // officeInputToolStripMenuItem
-            // 
-            this.officeInputToolStripMenuItem.Name = "officeInputToolStripMenuItem";
-            this.officeInputToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.officeInputToolStripMenuItem.Text = "Office Input";
-            this.officeInputToolStripMenuItem.Click += new System.EventHandler(this.officeInputToolStripMenuItem_Click);
+            this.cOPYWEEKToolStripMenuItem.Name = "cOPYWEEKToolStripMenuItem";
+            this.cOPYWEEKToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.cOPYWEEKToolStripMenuItem.Text = "COPY WEEK";
+            this.cOPYWEEKToolStripMenuItem.Click += new System.EventHandler(this.cOPYWEEKToolStripMenuItem_Click);
             // 
             // MenuMain
             // 
@@ -2401,6 +2410,7 @@
         private System.Windows.Forms.ToolStripMenuItem cOVIDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shopFloorInputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem officeInputToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cOPYWEEKToolStripMenuItem;
     }
 }
 

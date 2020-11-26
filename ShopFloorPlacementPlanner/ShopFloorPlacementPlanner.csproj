@@ -98,6 +98,12 @@
     <Compile Include="frmChronological.Designer.cs">
       <DependentUpon>frmChronological.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCopyWeek.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCopyWeek.Designer.cs">
+      <DependentUpon>frmCopyWeek.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCovidInput.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -232,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCopyPlacements.resx">
       <DependentUpon>frmCopyPlacements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCopyWeek.resx">
+      <DependentUpon>frmCopyWeek.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCovidInput.resx">
       <DependentUpon>frmCovidInput.cs</DependentUpon>

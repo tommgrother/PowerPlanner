@@ -2618,6 +2618,13 @@ namespace ShopFloorPlacementPlanner
             frmCovidInput frm = new frmCovidInput(Convert.ToDateTime(dteDateSelection.Value.ToString()), 0);
             frm.ShowDialog();
         }
+
+        private void cOPYWEEKToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCopyWeek frm = new frmCopyWeek(dteDateSelection.Value);
+            frm.ShowDialog();
+            //maybe if copy is successful we should jump to that date ---
+        }
     }
 }
 
