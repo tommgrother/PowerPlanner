@@ -119,6 +119,7 @@
             this.cOVIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shopFloorInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.officeInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cOPYWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -224,7 +225,8 @@
             this.txtPaintActualHours = new System.Windows.Forms.TextBox();
             this.lblPackingActualHours = new System.Windows.Forms.Label();
             this.txtPackActualHours = new System.Windows.Forms.TextBox();
-            this.cOPYWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lbl_time = new System.Windows.Forms.Label();
+            this.btnRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -953,6 +955,13 @@
             this.officeInputToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.officeInputToolStripMenuItem.Text = "Office Input";
             this.officeInputToolStripMenuItem.Click += new System.EventHandler(this.officeInputToolStripMenuItem_Click);
+            // 
+            // cOPYWEEKToolStripMenuItem
+            // 
+            this.cOPYWEEKToolStripMenuItem.Name = "cOPYWEEKToolStripMenuItem";
+            this.cOPYWEEKToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.cOPYWEEKToolStripMenuItem.Text = "COPY WEEK";
+            this.cOPYWEEKToolStripMenuItem.Click += new System.EventHandler(this.cOPYWEEKToolStripMenuItem_Click);
             // 
             // label23
             // 
@@ -2037,12 +2046,25 @@
             this.txtPackActualHours.TabIndex = 163;
             this.txtPackActualHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // cOPYWEEKToolStripMenuItem
+            // lbl_time
             // 
-            this.cOPYWEEKToolStripMenuItem.Name = "cOPYWEEKToolStripMenuItem";
-            this.cOPYWEEKToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
-            this.cOPYWEEKToolStripMenuItem.Text = "COPY WEEK";
-            this.cOPYWEEKToolStripMenuItem.Click += new System.EventHandler(this.cOPYWEEKToolStripMenuItem_Click);
+            this.lbl_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_time.Location = new System.Drawing.Point(1248, 0);
+            this.lbl_time.Name = "lbl_time";
+            this.lbl_time.Size = new System.Drawing.Size(498, 30);
+            this.lbl_time.TabIndex = 165;
+            this.lbl_time.Text = " ";
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefresh.Location = new System.Drawing.Point(1752, 121);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(101, 36);
+            this.btnRefresh.TabIndex = 166;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // MenuMain
             // 
@@ -2050,6 +2072,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1932, 563);
+            this.Controls.Add(this.btnRefresh);
+            this.Controls.Add(this.lbl_time);
             this.Controls.Add(this.lblPackingActualHours);
             this.Controls.Add(this.txtPackActualHours);
             this.Controls.Add(this.lblPaintingActualHours);
@@ -2411,6 +2435,8 @@
         private System.Windows.Forms.ToolStripMenuItem shopFloorInputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem officeInputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cOPYWEEKToolStripMenuItem;
+        private System.Windows.Forms.Label lbl_time;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }
 

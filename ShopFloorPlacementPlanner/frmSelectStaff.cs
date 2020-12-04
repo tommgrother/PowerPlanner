@@ -393,7 +393,7 @@ namespace ShopFloorPlacementPlanner
             {
                 SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-                frmShiftHours sh = new frmShiftHours();
+                frmShiftHours sh = new frmShiftHours(staffID,_selectedDate,_department);
                 sh.ShowDialog();
                 
 

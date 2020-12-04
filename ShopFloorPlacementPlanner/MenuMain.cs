@@ -2168,9 +2168,12 @@ namespace ShopFloorPlacementPlanner
 
         private void printScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+                lbl_time.Text = DateTime.Now.ToString();
+            lbl_time.Refresh();
+             //  lbl_time.Visible = true;
             try
             {
+
                 Image bit = new Bitmap(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
 
                 Graphics gs = Graphics.FromImage(bit);
@@ -2185,7 +2188,7 @@ namespace ShopFloorPlacementPlanner
             {
 
             }
-
+            lbl_time.Text = "";
 
         }
 
@@ -2541,7 +2544,7 @@ namespace ShopFloorPlacementPlanner
                 fillCleaning();
             if (department_changed.managementSelected == -1)
                 fillManagement();
-            fillNotPlaced(); //123456
+            fillNotPlaced();
             paintGrid();
             countGrid();
             updateDailyGoals();
@@ -2624,6 +2627,25 @@ namespace ShopFloorPlacementPlanner
             frmCopyWeek frm = new frmCopyWeek(dteDateSelection.Value);
             frm.ShowDialog();
             //maybe if copy is successful we should jump to that date ---
+        } //
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            department_changed.slimlineSelected = -1;
+            department_changed.punchSelected = -1;
+            department_changed.laserSelected = -1;
+            department_changed.bendSelected = -1;
+            department_changed.weldSelected = -1;
+            department_changed.buffSelected = -1;
+            department_changed.paintSelected = -1;
+            department_changed.packSelected = -1;
+            department_changed.storesSelected = -1;
+            department_changed.dispatchSelected = -1;
+            department_changed.toolSelected = -1;
+            department_changed.cleaningSelected = -1;
+            department_changed.managementSelected = -1;
+            skipMessageBox = 2;
+            refreshSelectedDepartments();
         }
     }
 }
