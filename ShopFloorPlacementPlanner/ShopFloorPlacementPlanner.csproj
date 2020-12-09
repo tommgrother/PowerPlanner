@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
-    <ApplicationRevision>91</ApplicationRevision>
+    <ApplicationRevision>93</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -134,6 +134,13 @@
     <Compile Include="frmWeeklyOverTime.Designer.cs">
       <DependentUpon>frmWeeklyOverTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmWeeklyShift.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWeeklyShift.Designer.cs">
+      <DependentUpon>frmWeeklyShift.cs</DependentUpon>
+    </Compile>
+    <Compile Include="shiftHours.cs" />
     <Compile Include="SubDeptClass.cs" />
     <Compile Include="connectionStrings.cs" />
     <Compile Include="dateInsert.cs" />
@@ -281,6 +288,9 @@
     <EmbeddedResource Include="frmWeeklyOverTime.resx">
       <DependentUpon>frmWeeklyOverTime.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmWeeklyShift.resx">
+      <DependentUpon>frmWeeklyShift.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MenuMain.resx">
       <DependentUpon>MenuMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -337,6 +347,26 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

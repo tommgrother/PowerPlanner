@@ -31,6 +31,10 @@ namespace ShopFloorPlacementPlanner
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+
+            double getData;
+            getData = 0;
+
             if (String.IsNullOrWhiteSpace(txtManual.Text))
             {
                 MessageBox.Show("Please enter the number of hours for this shift");
@@ -43,7 +47,17 @@ namespace ShopFloorPlacementPlanner
                 string sql = "select sum(hours) as temp from dbo.power_plan_staff WHERE staff_id = " + _staffID.ToString() + " AND date_id = " + _date.ToString() + " AND department <> '" + _dept + "'";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    double getData = Convert.ToDouble(cmd.ExecuteScalar());
+
+                    try
+                    {
+                             getData = Convert.ToDouble(cmd.ExecuteScalar());
+                    }
+                    catch
+                    {
+                             getData = 0;
+                    }
+
+                
                     if (getData  + Convert.ToDouble(txtManual.Text) > 6.4)
                     {
                         MessageBox.Show("Staff is already in for " + getData.ToString() + " hours, the total cannot exceed 6.4");

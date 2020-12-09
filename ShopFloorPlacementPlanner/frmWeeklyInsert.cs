@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using Microsoft.VisualBasic;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -23,11 +24,11 @@ namespace ShopFloorPlacementPlanner
         public double _standardHours { get; set; }
         public bool alreadyPlaced { get; set; }
         public string _subDept { get; set; }
-        public frmWeeklyInsert(int staff_id, string staff_fullname, DateTime searchDate, string department,string subDept)
+        public frmWeeklyInsert(int staff_id, string staff_fullname, DateTime searchDate, string department, string subDept)
         {
             InitializeComponent();
             // add all the variables into new props
-            
+
             _staff_id = staff_id;
             _staff_fullname = staff_fullname;
             _selectedDate = searchDate;
@@ -140,7 +141,7 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.DefaultCellStyle.Font = new Font("Calibri", 13F, FontStyle.Regular, GraphicsUnit.Pixel);
                 //------------
 
-                dataGridView1.Columns[1].HeaderText = "Date";
+                dataGridView1.Columns[1].HeaderText = "Date ";
 
                 //set the CURRENT dates checkbox to true
                 DateTime dgv; //date in the DGV
@@ -305,7 +306,7 @@ namespace ShopFloorPlacementPlanner
                                 //if its above the max hous then reset it to max hours otherwise carry on as normal
                                 remainingHours = _standardHours / 2; // max hours
                                 double ManualHours = Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value.ToString());
-                                if ( ManualHours > remainingHours)
+                                if (ManualHours > remainingHours)
                                 {
                                     //reduce it back to half and add note 
                                     Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Manual", remainingHours);
@@ -342,7 +343,7 @@ namespace ShopFloorPlacementPlanner
                                 remainingHours = _standardHours / 2;
                                 Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Half Day", remainingHours); // adds them in but its for /half/ the time 
                                 p3.addPlacment(); // a new instance of adding placement
-                                note = note + "\nHalf day placement on " + dgvDate + ""; 
+                                note = note + "\nHalf day placement on " + dgvDate + "";
                                 note = note.Substring(0, note.Length - 8);
 
                                 //another iteration for painting to be added
@@ -484,8 +485,21 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MediumPurple;
             }
             if (e.ColumnIndex == dataGridView1.Columns["Shift"].Index)
-            {//6.4
-                dataGridView1.Rows[e.RowIndex].Cells[7].Value = _standardHours;
+            {//this needs to be manual input now 
+
+                int index =5;
+                if (dataGridView1.Columns.Contains("Date ") == true)
+                    index = dataGridView1.Columns["Date "].Index;
+                frmWeeklyShift frm = new frmWeeklyShift(Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells[index].Value.ToString()),_staff_id,_dept);
+                frm.ShowDialog();
+
+                if (shiftHours.validation == 0)
+                {
+                    MessageBox.Show("Shift Cancelled");
+                    return;
+                }
+                
+                dataGridView1.Rows[e.RowIndex].Cells[7].Value = shiftHours._hours;
                 dataGridView1.Rows[e.RowIndex].Cells[6].Value = "Shift";
                 dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
             }
