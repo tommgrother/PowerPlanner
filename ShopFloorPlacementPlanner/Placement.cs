@@ -157,11 +157,11 @@ namespace ShopFloorPlacementPlanner
 
 
 
-        public void checkPlacement() 
+        public void checkPlacement()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-            using (SqlCommand cmd = new SqlCommand("SELECT MAX(placement_type) as PT,sum(hours) as sumHours from dbo.power_plan_staff where date_id = @dateID and staff_id = @staffID",conn))
+            using (SqlCommand cmd = new SqlCommand("SELECT MAX(placement_type) as PT,sum(hours) as sumHours from dbo.power_plan_staff where date_id = @dateID and staff_id = @staffID", conn))
             {
                 conn.Open();
                 cmd.Parameters.AddWithValue("@dateID", _dateID);
@@ -169,31 +169,27 @@ namespace ShopFloorPlacementPlanner
 
                 SqlDataReader rdr = cmd.ExecuteReader();
 
-                    if (rdr.Read())
+                if (rdr.Read())
+                {
+                    _alreadyPlaced = true;
+                    _existingPlacementType = rdr["PT"].ToString();
+                    try
                     {
-                        _alreadyPlaced = true;
-                        _existingPlacementType = rdr["PT"].ToString();
-                        try
-                        {
-                            _existingPlacementHours = Convert.ToDouble(rdr["sumHours"]);
-                        
-                        }
-                        catch
-                        {
-                            _existingPlacementHours = 0;
-                        }
+                        _existingPlacementHours = Convert.ToDouble(rdr["sumHours"]);
 
                     }
-                    else
+                    catch
                     {
-                        _alreadyPlaced = false;
+                        _existingPlacementHours = 0;
                     }
+
+                }
+                else
+                {
+                    _alreadyPlaced = false;
+                }
 
             }
-
-
         }
-
-
     }
 }

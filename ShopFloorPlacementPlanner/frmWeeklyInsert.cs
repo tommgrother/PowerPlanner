@@ -229,7 +229,11 @@ namespace ShopFloorPlacementPlanner
                         //now we have the DATE id we can get into the validation
                         if (validationID != 0)
                         {
-                            sql = "SELECT id from dbo.power_plan_staff WHERE date_id = " + validationID.ToString() + " AND staff_id = " + _staff_id;
+                            //if the row is shift then allow for the user to be placed in TWO places (i check for maximum hours in shift anyway so they **probably** wont go over
+                            if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.Red)
+                                sql = "SELECT id from dbo.power_plan_staff WHERE date_id = " + validationID.ToString() + " AND staff_id = " + _staff_id + " AND department = '" + _dept + "'";
+                            else // t
+                                sql = "SELECT id from dbo.power_plan_staff WHERE date_id = " + validationID.ToString() + " AND staff_id = " + _staff_id;
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                             {
                                 conn.Open();
@@ -244,15 +248,17 @@ namespace ShopFloorPlacementPlanner
                         //get the current DATEID
 
                         // if they are already placed that day then move them
-                        //possibly add a branch here "user is already placed, move them?
                         if (alreadyPlaced == true)
                         {
                             //get the placement id using date_id and staff_id
-                            sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
+                            //this is the same as the above -- if the user is going into shift it needs to look at CURRENT dept and not every dept :}
+                            if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.Red)
+                                sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID + " AND department = '" + _dept + "'";
+                            else
+                                sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID ;
                             //MessageBox.Show(sql);
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                             {
-
                                 conn.Open();
                                 cmd.ExecuteNonQuery();
                                 object isItNull = cmd.ExecuteScalar();

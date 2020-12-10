@@ -11,16 +11,25 @@ namespace ShopFloorPlacementPlanner
     {
         public static int validation;
         public static double _hours;
+        public static double _alreadyAssignedHours;
+        public static double _maxHours;
 
         public shiftHours(double hours, DateTime tempDate, int staffID, string dept)
         {
 
             double getData;
+            
             getData = 0;
-            //check if they go over 6.4 here
+            //check if they go over 6.4 here  -- also needs to be reduced to 6.6 if its a friday 
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
                 conn.Open();
+                //check if that date is a friday and adjust hours around it
+                if (tempDate.DayOfWeek == DayOfWeek.Friday)
+                    _maxHours = 5.6;
+                else
+                    _maxHours = 6.4; 
+
                 //grab date_id
                 int _date = 0;
                 string sql = "SELECT id FROM dbo.power_plan_date WHERE date_plan = '" + tempDate.ToString("yyyy-MM-dd") + "'";
@@ -42,8 +51,9 @@ namespace ShopFloorPlacementPlanner
                     }
 
 
-                    if ((getData + hours) > 6.4)
+                    if ((getData + hours) > _maxHours)
                     {
+                        _alreadyAssignedHours = getData;
                         validation = 0; // cant allow it
                         return;
                     }
