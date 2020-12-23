@@ -246,7 +246,6 @@ namespace ShopFloorPlacementPlanner
                             }
                         }
                         //get the current DATEID
-
                         // if they are already placed that day then move them
                         if (alreadyPlaced == true)
                         {

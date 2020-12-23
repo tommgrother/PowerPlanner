@@ -1732,7 +1732,7 @@ namespace ShopFloorPlacementPlanner
             {
                 double overtimeTemp = Convert.ToDouble(dgPaint.Rows[i].Cells[3].Value) * 0.8;
                 overtimeTemp = overtimeTemp + Convert.ToDouble(dgPaint.Rows[i].Cells[1].Value.ToString());
-                dgPaint[2, i].Value = overtimeTemp;
+                dgPaint[3, i].Value = overtimeTemp;
             }
 
 
