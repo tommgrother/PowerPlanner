@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing.Printing;
+using System.Drawing.Imaging;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -15,10 +17,21 @@ namespace ShopFloorPlacementPlanner
     {
 
         public int actionIndex { get; set; }
+        public string _staff { get; set; }
+        public string _dept { get; set; }
         public frmChronological(string staff, string dept, DateTime plannerDate)
         {
             InitializeComponent();
+            dteAction.Value = plannerDate;
+            dteActionEnd.Value = plannerDate;
+            _staff = staff;
+            _dept = dept;
+           
+            getData(staff, dept);
+        }
 
+        private void getData(string staff,string dept)
+        {
             int staff_id = 0;
             //MessageBox.Show(staff);
             staff_id = staff.IndexOf(" ", staff.IndexOf(" ") + 1); //staff id is a temp int var here
@@ -43,7 +56,8 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand("usp_power_planner_chronological_shop_actions", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@action_time", SqlDbType.Date).Value = plannerDate;
+                    cmd.Parameters.AddWithValue("@action_time", SqlDbType.Date).Value = dteAction.Value;
+                    cmd.Parameters.AddWithValue("@action_time_end", SqlDbType.Date).Value = dteActionEnd.Value;
                     cmd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = dept;
                     cmd.Parameters.AddWithValue("@user_id", SqlDbType.Date).Value = staff_id;
 
@@ -133,13 +147,13 @@ namespace ShopFloorPlacementPlanner
             dataGridView1.Columns[part_time].DisplayIndex = status + 5;
 
             //sizeeeees
-            dataGridView1.Columns[status].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[status].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[door_type].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[door_id].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[action].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[part].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[part_time].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView1.Columns[time].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[time].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //headertext
             dataGridView1.Columns[status].HeaderText = "Status";
             dataGridView1.Columns[door_type].HeaderText = "Door Type";
@@ -150,16 +164,68 @@ namespace ShopFloorPlacementPlanner
             dataGridView1.Columns[time].HeaderText = "Time";
 
             //messing with the colours
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Finish")) //mark complete jobs as green
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+            }
+            dataGridView1.ClearSelection();
         }
 
         private void frmChronological_Shown(object sender, EventArgs e)
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Finish"))
+                if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Finish")) //mark complete jobs as green
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
             }
             dataGridView1.ClearSelection();
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            Rectangle bounds = this.Bounds;
+            using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
+            {
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    g.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
+                }
+                bitmap.Save(@"C:\Temp\temp.jpg", ImageFormat.Jpeg);
+                printImage();
+            }
+        }
+        private void printImage()
+        {
+            try
+            {
+                PrintDocument pd = new PrintDocument();
+                pd.PrintPage += (sender, args) =>
+                {
+                    Image i = Image.FromFile(@"C:\temp\temp.jpg");
+                    Point p = new Point(100, 100);
+                    args.Graphics.DrawImage(i, args.MarginBounds);
+
+                };
+
+                pd.DefaultPageSettings.Landscape = true;
+                Margins margins = new Margins(50, 50, 50, 50);
+                pd.DefaultPageSettings.Margins = margins;
+                pd.Print();
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void dteAction_CloseUp(object sender, EventArgs e)
+        {
+            getData(_staff, _dept);
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
         }
     }
 }

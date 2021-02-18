@@ -36,7 +36,7 @@ namespace ShopFloorPlacementPlanner
             getOvertime();
             getAD();
 
-            
+
 
 
             this.Text = "Select Staff: " + _department;
@@ -235,7 +235,7 @@ namespace ShopFloorPlacementPlanner
 
         private void frmSelectStaff_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void paintGrid()
@@ -258,6 +258,7 @@ namespace ShopFloorPlacementPlanner
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
             }
+
 
             foreach (DataGridViewRow row in dgSelected.Rows)
             {
@@ -393,20 +394,68 @@ namespace ShopFloorPlacementPlanner
             {
                 SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-                frmShiftHours sh = new frmShiftHours(staffID,_selectedDate,_department);
-                sh.ShowDialog();
-                
+                int index = dgSelected.Columns["Full Name"].Index;
 
-                using (SqlCommand cmd = new SqlCommand("UPDATE dbo.power_plan_staff set placement_type = 'Shift' , hours = @hours where ID = @placementID", conn))
+                Staff s = new Staff(dgSelected.Rows[e.RowIndex].Cells[index].Value.ToString());
+
+                //prompt for more days
+
+                DialogResult weekly = MessageBox.Show("Would you like to assign '" + s._fullname + "' more days in " + _department + " this week?", "Weekly Placement", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (weekly == DialogResult.Yes)
                 {
-                    cmd.Parameters.AddWithValue("placementID", placementID);
-                    cmd.Parameters.AddWithValue("@hours", sh._shiftHours);
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    checkExistingSelections();
+                    string subDept = "";
+                    //im pretty sure at this point the entry has been made so from here we should start adding placements for the sub-dept IF it is painting
+                    if (_department == "Painting")
+                    {
+                        //quickly grab the max placement type
+                        int MAXplacementID = 0;
+                        using (SqlConnection conn2 = new SqlConnection(connectionStrings.ConnectionString))
+                        {
+                            using (SqlCommand cmd = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", conn))
+                            {
+                                conn2.Open();
+                                MAXplacementID = Convert.ToInt32(cmd.ExecuteScalar());
+                                conn2.Close();
+                            }
+                        }
+                        //now prompt the user to select which area they want the user in
+                        frmSubDeptMultiple frmSDM = new frmSubDeptMultiple();
+                        frmSDM.ShowDialog();
+                        subDept = frmSDM.location;
+                        //SubDeptClass add = new SubDeptClass();
+                        //add.checkPlacement(MAXplacementID);
+                        //add.add_placement(MAXplacementID, subDept);
+                    }
+                    //run procedure to populate all the dates for this week --
+                    dateInsert di = new dateInsert();
+                    di.check_date(_selectedDate);
+                    if (subDept.Length < 1)
+                        subDept = "ERROR";
+                    //open form
+                    frmWeeklyInsert frm = new frmWeeklyInsert(s._staffID, s._fullname, _selectedDate, _department, subDept);
+                    frm.ShowDialog();
                     department_changed dc = new department_changed();
                     dc.setDepartment(_department);
+
+                }
+                else
+                {
+
+                    frmShiftHours sh = new frmShiftHours(staffID, _selectedDate, _department);
+                    sh.ShowDialog();
+
+
+                    using (SqlCommand cmd = new SqlCommand("UPDATE dbo.power_plan_staff set placement_type = 'Shift' , hours = @hours where ID = @placementID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("placementID", placementID);
+                        cmd.Parameters.AddWithValue("@hours", sh._shiftHours);
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        checkExistingSelections();
+                        department_changed dc = new department_changed();
+                        dc.setDepartment(_department);
+                    }
                 }
             }
 
@@ -455,9 +504,6 @@ namespace ShopFloorPlacementPlanner
                     dc.setDepartment(_department);
                 }
             }
-
-
-
 
 
         }
@@ -560,7 +606,6 @@ namespace ShopFloorPlacementPlanner
                 }
 
 
-                paintGrid();
 
 
 
@@ -717,7 +762,7 @@ namespace ShopFloorPlacementPlanner
             if (p._notPresentType == 5 || p._notPresentType == 2)
             {
                 MessageBox.Show("This staff member is either absent today or has a full day holiday!", "Cannot Place", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } 
+            }
             else if (p._notPresentType == 3)
             {
                 MessageBox.Show("This staff member has half day holiday so can only be placed for half day", "Half Day Placement", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -781,14 +826,14 @@ namespace ShopFloorPlacementPlanner
                                 if (subDept.Length < 1)
                                     subDept = "ERROR";
                                 //open form
-                                frmWeeklyInsert frm = new frmWeeklyInsert(s._staffID, s._fullname, _selectedDate, _department,subDept);
+                                frmWeeklyInsert frm = new frmWeeklyInsert(s._staffID, s._fullname, _selectedDate, _department, subDept);
                                 frm.ShowDialog();
                             }
                             else
                             {
 
                                 p.addPlacment(); // add placement is here so there is no way it should be the reason for changing the placements  on the next form close
-                                 //im pretty sure at this point the entry has been made so from here we should start adding placements for the sub-dept IF it is painting
+                                                 //im pretty sure at this point the entry has been made so from here we should start adding placements for the sub-dept IF it is painting
                                 if (_department == "Painting")
                                 {
                                     //quickly grab the max placement type
@@ -963,6 +1008,49 @@ namespace ShopFloorPlacementPlanner
             frmWeeklyOverTime frm = new frmWeeklyOverTime(_selectedDate, _department);
             frm.ShowDialog();
             txtOvertime.Text = frm.totalOvertime.ToString();
+        }
+
+        private void frmSelectStaff_Shown(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgSelected_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            int placementID = 0;
+            int temp = dgSelected.Columns["Placement Type"].Index;
+            int tempID = dgSelected.Columns["PlacementID"].Index;
+            for (int i = 0; i < dgSelected.Rows.Count; i++)
+            {
+                if (dgSelected.Rows[i].Cells[temp].Value.ToString() == "Shift")
+                {
+                    dgSelected.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                }
+
+
+                if (dgSelected.Rows[i].Cells[temp].Value.ToString() == "Half Day")
+                {
+                    dgSelected.Rows[i].DefaultCellStyle.BackColor = Color.MediumPurple;
+                }
+
+                placementID = Convert.ToInt32(dgSelected.Rows[i].Cells[tempID].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    dgSelected.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
+                }
+
+                //if (i == 2)
+                //{
+                //    dgSelected.Rows[i].DefaultCellStyle.BackColor = Color.MediumPurple;
+                //}
+            }
+            dgSelected.ClearSelection();
+            dgSelected.DefaultCellStyle.SelectionBackColor = dgSelected.DefaultCellStyle.BackColor;
+            dgSelected.DefaultCellStyle.SelectionForeColor = dgSelected.DefaultCellStyle.ForeColor;
+
         }
     }
 }

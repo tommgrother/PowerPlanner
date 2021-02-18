@@ -72,7 +72,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmShiftHours";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmShiftHours";
+            this.Text = "Shift Hours";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -34,7 +34,6 @@ namespace ShopFloorPlacementPlanner
                 if (rdr.Read())
                 {
                     dateExists = true;
-
                 }
                 else
                 {
@@ -70,7 +69,7 @@ namespace ShopFloorPlacementPlanner
             getDateID(selectedDate);
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-            using (SqlCommand cmd = new SqlCommand("usp_update_power_plan_OT", conn))
+            using (SqlCommand cmd = new SqlCommand("usp_update_power_plan_OT", conn))  
             {
 
                 conn.Open();
@@ -78,7 +77,6 @@ namespace ShopFloorPlacementPlanner
                 cmd.Parameters.AddWithValue("@dateId", _dateID);
                 cmd.Parameters.AddWithValue("@dept", department);
                 cmd.Parameters.AddWithValue("@amount", amount);
-
                 cmd.ExecuteNonQuery();
 
             }
@@ -95,7 +93,6 @@ namespace ShopFloorPlacementPlanner
 
             using (SqlCommand cmd = new SqlCommand("usp_update_power_plan_AD", conn))
             {
-
                 conn.Open();
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@dateId", _dateID);
@@ -103,7 +100,6 @@ namespace ShopFloorPlacementPlanner
                 cmd.Parameters.AddWithValue("@amount", amount);
 
                 cmd.ExecuteNonQuery();
-
             }
 
             conn.Close();

@@ -88,6 +88,7 @@
             this.dgSelected.Size = new System.Drawing.Size(777, 394);
             this.dgSelected.TabIndex = 2;
             this.dgSelected.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgSelected_CellContentClick);
+            this.dgSelected.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgSelected_DataBindingComplete);
             // 
             // StaffID
             // 
@@ -232,6 +233,7 @@
             this.Text = "Select Staff";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmSelectStaff_FormClosed);
             this.Load += new System.EventHandler(this.frmSelectStaff_Load);
+            this.Shown += new System.EventHandler(this.frmSelectStaff_Shown);
             this.Leave += new System.EventHandler(this.frmSelectStaff_Leave);
             ((System.ComponentModel.ISupportInitialize)(this.dgSelected)).EndInit();
             this.ResumeLayout(false);

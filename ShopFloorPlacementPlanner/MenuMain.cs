@@ -1129,6 +1129,8 @@ namespace ShopFloorPlacementPlanner
             columnHS.Width = 40;
             dgHS.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgHS.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+
+
         }
 
         private void countMen()
@@ -1268,7 +1270,7 @@ namespace ShopFloorPlacementPlanner
             // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable overtimeHours = new DataTable();
             OTreader.Fill(overtimeHours);
-            
+
 
             for (int i = 0; i < dgPunch.Rows.Count; i++)
             {
@@ -1764,7 +1766,6 @@ namespace ShopFloorPlacementPlanner
             {
                 dgPack.Columns.Remove("overtime");
             }
-
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
@@ -1860,8 +1861,21 @@ namespace ShopFloorPlacementPlanner
             dgPack.Columns["overtime"].Visible = false;
             dgPack.Columns["packValue"].Visible = false;
 
+            //also add the label that shows how much has been packed
 
+            string sql = "select round(convert(float,sum(line_total)),2)  from dbo.door as a  inner join dbo.view_door_value as b on a.id = b.id    inner join dbo.door_type as c on a.door_type_id = c.id " +
+                                "where(date_pack_complete >= '" + Convert.ToDateTime(dteDateSelection.Text).ToString("yyyy-MM-dd") + "' and date_pack_complete <= dateadd(D, 1, '" + Convert.ToDateTime(dteDateSelection.Text).ToString("yyyy-MM-dd") + "')) and(c.slimline_y_n = 0 or c.slimline_y_n is null)";
+            using (SqlCommand cmd2 = new SqlCommand(sql, conn))
+            {
+                string temp = "";
 
+                temp = Convert.ToString(cmd2.ExecuteScalar());
+                if (temp == "")
+                    temp = "0";
+
+                    lblTotalPacked.Text = "Total Packed: £" + temp;
+
+            }
 
             conn.Close();
         }
@@ -2168,9 +2182,9 @@ namespace ShopFloorPlacementPlanner
 
         private void printScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-                lbl_time.Text = DateTime.Now.ToString();
+            lbl_time.Text = DateTime.Now.ToString();
             lbl_time.Refresh();
-             //  lbl_time.Visible = true;
+            //  lbl_time.Visible = true;
             try
             {
 
@@ -2326,9 +2340,7 @@ namespace ShopFloorPlacementPlanner
 
         private void ClearPlanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             //CLEARS ALL EXISTING SELECTION
-
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
             using (SqlCommand cmd = new SqlCommand("usp_power_planner_clear_day", conn))
@@ -2342,6 +2354,9 @@ namespace ShopFloorPlacementPlanner
             }
 
             fillgrid();
+
+
+
         }
 
         private void ryucxdToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2432,7 +2447,7 @@ namespace ShopFloorPlacementPlanner
                     //get normal hours here i think?
                     //variables for houys
                     double punching_hours = 0, laser_hours = 0, bending_hours = 0, welding_hours = 0, buffing_hours = 0, painting_hours = 0, packing_hours = 0;
-                    //loop through each section and paste them into a variable thats declared anoive
+                    //loop through each section and paste them into a variable thats declared above
                     string dept = "";
                     for (int z = 0; z <= 7; z++)
                     { //first get the department
@@ -2555,7 +2570,7 @@ namespace ShopFloorPlacementPlanner
 
         private void dgPunch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-           // MessageBox.Show(e.ColumnIndex.ToString());
+            // MessageBox.Show(e.ColumnIndex.ToString());
         }
 
 
@@ -2611,7 +2626,7 @@ namespace ShopFloorPlacementPlanner
         private void shopFloorInputToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //opens a form to allow the end user to add temps
-            frmCovidInput frm = new frmCovidInput(Convert.ToDateTime(dteDateSelection.Value.ToString()),-1);
+            frmCovidInput frm = new frmCovidInput(Convert.ToDateTime(dteDateSelection.Value.ToString()), -1);
             frm.ShowDialog();
         }
 
@@ -2646,6 +2661,14 @@ namespace ShopFloorPlacementPlanner
             department_changed.managementSelected = -1;
             skipMessageBox = 2;
             refreshSelectedDepartments();
+        }
+
+        private void productivityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //mimic the productivity reports from access
+            frmProductivity frm = new frmProductivity();
+            frm.ShowDialog();
+
         }
     }
 }
