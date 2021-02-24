@@ -77,6 +77,7 @@ namespace ShopFloorPlacementPlanner
                 sql = "SELECT max(b.date_plan) as [Date],MAX(DATENAME(dw,b.date_plan)) as [day],max(department) as [department], MAX(a.[hours]) as [set_hours],'0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours],max(a.id) as [placement] " +
                     "FROM dbo.power_plan_staff a LEFT JOIN dbo.power_plan_date b on a.date_id = b.id " +
                     "WHERE a.staff_id = " + staff_id.ToString() + " AND CAST(b.date_plan as DATE)>= '" + Convert.ToDateTime(dteStart.Value).ToString("yyyy-MM-dd") + "' AND CAST(b.date_plan as DATE)<= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + "' " +
+                    "AND department <> 'Punching' AND department<> 'Stores' AND department<> 'Dispatch' AND department<> 'HS' AND department<> 'Cleaning' AND department<> 'ToolRoom' AND department<> 'Management'" +
                     "GROUP BY department,b.date_plan,a.staff_id";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
@@ -92,7 +93,7 @@ namespace ShopFloorPlacementPlanner
 
                 //Am currently having issues where time_for_part / 60 is not giving me the correct number, going to manually add it here instead~
                 //need to do the same for overtime
-
+                
 
 
                 int actualHoursIndex = dataGridView1.Columns["actual_hours"].Index;
@@ -242,9 +243,8 @@ namespace ShopFloorPlacementPlanner
             }
             catch
             {
-
             }
-        }
+        } 
 
         private void printImage()
         {
