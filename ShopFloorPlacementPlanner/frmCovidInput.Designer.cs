@@ -47,7 +47,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 47);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(461, 741);
+            this.dataGridView1.Size = new System.Drawing.Size(563, 741);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
             // 
@@ -56,7 +56,7 @@
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label25.Location = new System.Drawing.Point(12, 18);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(461, 26);
+            this.label25.Size = new System.Drawing.Size(563, 26);
             this.label25.TabIndex = 57;
             this.label25.Text = "Shop Floor ";
             this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -64,7 +64,7 @@
             // btnGo
             // 
             this.btnGo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGo.Location = new System.Drawing.Point(398, 794);
+            this.btnGo.Location = new System.Drawing.Point(500, 794);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(75, 23);
             this.btnGo.TabIndex = 58;
@@ -76,7 +76,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(485, 829);
+            this.ClientSize = new System.Drawing.Size(587, 829);
             this.Controls.Add(this.btnGo);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.dataGridView1);

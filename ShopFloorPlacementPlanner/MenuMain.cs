@@ -2670,6 +2670,11 @@ namespace ShopFloorPlacementPlanner
             frm.ShowDialog();
 
         }
+
+        private void cOVIDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
