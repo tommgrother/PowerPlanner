@@ -689,7 +689,10 @@ namespace ShopFloorPlacementPlanner
             {
                 switch (staffID)
                 {
-                    case 63:
+                    case 63: 
+                        _standardHours = 3.6;
+                        break;
+                    case 68:
                         _standardHours = 3.6;
                         break;
                     case 165:
@@ -711,6 +714,9 @@ namespace ShopFloorPlacementPlanner
                 switch (staffID)
                 {
                     case 63:
+                        _standardHours = 4.4;
+                        break;
+                    case 68:
                         _standardHours = 4.4;
                         break;
                     case 165:
@@ -759,7 +765,7 @@ namespace ShopFloorPlacementPlanner
             }
 
 
-            if (p._notPresentType == 5 || p._notPresentType == 2)
+            if (p._notPresentType == 5 || p._notPresentType == 2) 
             {
                 MessageBox.Show("This staff member is either absent today or has a full day holiday!", "Cannot Place", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -776,9 +782,12 @@ namespace ShopFloorPlacementPlanner
                 {
                     if (p._existingPlacementHours == _standardHours)
                     {
-
-                        MessageBox.Show("Staff member already has a full day placement for this day!", "Already Placed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                        DialogResult noHourPlacement = MessageBox.Show("Staff member already has a full day placement for this day, would you like to place them for 0 hours?", "Already Placed", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (noHourPlacement == DialogResult.Yes)
+                        {
+                            Placement p69 = new Placement(_selectedDate, s._staffID, _department, "Manual", 0);
+                            p69.addPlacment();
+                        }
                     }
                     else
                     {
@@ -1022,13 +1031,13 @@ namespace ShopFloorPlacementPlanner
             int tempID = dgSelected.Columns["PlacementID"].Index;
             for (int i = 0; i < dgSelected.Rows.Count; i++)
             {
-                if (dgSelected.Rows[i].Cells[temp].Value.ToString() == "Shift")
+                if (dgSelected.Rows[i].Cells[temp].Value.ToString() == "Shift") //same as below but this is with shift instead
                 {
                     dgSelected.Rows[i].DefaultCellStyle.BackColor = Color.Red;
                 }
 
 
-                if (dgSelected.Rows[i].Cells[temp].Value.ToString() == "Half Day")
+                if (dgSelected.Rows[i].Cells[temp].Value.ToString() == "Half Day") //because it looks for [half day] it should only pick up actual half days and not 3.2
                 {
                     dgSelected.Rows[i].DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
@@ -1044,7 +1053,7 @@ namespace ShopFloorPlacementPlanner
 
                 //if (i == 2)
                 //{
-                //    dgSelected.Rows[i].DefaultCellStyle.BackColor = Color.MediumPurple;
+                //    dgSelected.Rows[i].DefaultCellStyle.BackColor = Color.MediumPurple; // testing if ithis actually applies a colour to the correct location
                 //}
             }
             dgSelected.ClearSelection();

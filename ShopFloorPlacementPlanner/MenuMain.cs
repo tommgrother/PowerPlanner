@@ -1130,6 +1130,7 @@ namespace ShopFloorPlacementPlanner
             dgHS.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgHS.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
+            fillShopGoals();
 
         }
 
@@ -1612,7 +1613,6 @@ namespace ShopFloorPlacementPlanner
             dgBuff.DataSource = dt;
 
 
-
             SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
             cmdryucxd.CommandType = CommandType.StoredProcedure;
             cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Dressing";
@@ -1873,7 +1873,7 @@ namespace ShopFloorPlacementPlanner
                 if (temp == "")
                     temp = "0";
 
-                    lblTotalPacked.Text = "Total Packed: £" + temp;
+                lblTotalPacked.Text = "Total Packed: £" + temp;
 
             }
 
@@ -2675,6 +2675,479 @@ namespace ShopFloorPlacementPlanner
         {
 
         }
+
+        private void fillShopGoals()
+        {
+            //read allt he data from the selected dte and put them into thje 100 textbnoxes
+            string sql = "SELECT COALESCE(round([9_30_slimline] * 100,2),'9999') as [9_30_slimline],COALESCE(round([11_30_slimline] * 100, 2),'9999') as [11_30_slimline],COALESCE(round([2_30_slimline] * 100, 2),'9999') as [2_30_slimline]," +
+                "COALESCE(round([4_00_slimline] * 100, 2),'9999') as [4_00_slimline],COALESCE(round([9_30_punch] * 100, 2),'9999') as [9_30_punch] ,COALESCE(round([11_30_punch] * 100, 2),'9999') as [11_30_punch],COALESCE(round([2_30_punch] * 100, 2),'9999') as [2_30_punch]," +
+                "COALESCE(round([4_00_punch] * 100, 2),'9999') as [4_00_punch],COALESCE(round([9_30_laser] * 100, 2),'9999') as [9_30_laser],COALESCE(round([11_30_laser] * 100, 2),'9999') as [11_30_laser],COALESCE(round([2_30_laser] * 100, 2),'9999') as [2_30_laser] ," +
+                "COALESCE(round([4_00_laser] * 100, 2),'9999') as [4_00_laser] ,COALESCE(round([9_30_bend] * 100, 2),'9999') as [9_30_bend],COALESCE(round([11_30_bend] * 100, 2),'9999') as [11_30_bend],COALESCE(round([2_30_bend] * 100, 2),'9999') as [2_30_bend]," +
+                "COALESCE(round([4_00_bend] * 100, 2),'9999') as [4_00_bend],COALESCE(round([9_30_weld] * 100, 2),'9999') as [9_30_weld],COALESCE(round([11_30_weld] * 100, 2),'9999') as [11_30_weld],COALESCE(round([2_30_weld] * 100, 2),'9999') as[2_30_weld] ," +
+                "COALESCE(round([4_00_weld] * 100, 2),'9999') as [4_00_weld],COALESCE(round([9_30_buff] * 100, 2),'9999') as[9_30_buff] ,COALESCE(round([11_30_buff] * 100, 2),'9999') as [11_30_buff],COALESCE(round([2_30_buff] * 100, 2),'9999') as [2_30_buff]," +
+                "COALESCE(round([4_00_buff] * 100, 2),'9999') as[4_00_buff] ,COALESCE(round([9_30_paint] * 100, 2),'9999') as[9_30_paint] ,COALESCE(round([11_30_paint] * 100, 2),'9999') as[11_30_paint],COALESCE(round([2_30_paint] * 100, 2),'9999') as [2_30_paint]," +
+                "COALESCE(round([4_00_paint] * 100, 2),'9999') as [4_00_paint],COALESCE(round([9_30_pack] * 100, 2),'9999') as [9_30_pack],COALESCE(round([11_30_pack] * 100, 2),'9999') as [11_30_pack],COALESCE(round([2_30_pack] * 100, 2),'9999') as [2_30_pack]," +
+                "COALESCE(round([4_00_pack] * 100, 2),'9999') as[4_00_pack] FROM dbo.power_plan_shop_goals WHERE CAST(date_goal as date) = '" + dteDateSelection.Value.ToString("yyyy-MM-dd") + "'";
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    conn.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+
+                    if (rdr.Read())
+                    {
+                        slimline_9_30.Text = Convert.ToString((rdr["9_30_slimline"]));
+                        slimline_11_30.Text = Convert.ToString((rdr["11_30_slimline"]));
+                        slimline_2_30.Text = Convert.ToString((rdr["2_30_slimline"]));
+                        slimline_4_00.Text = Convert.ToString((rdr["4_00_slimline"]));
+                        laser_9_30.Text = Convert.ToString((rdr["9_30_laser"]));
+                        laser_11_30.Text = Convert.ToString((rdr["11_30_laser"]));
+                        laser_2_30.Text = Convert.ToString((rdr["2_30_laser"]));
+                        laser_4_00.Text = Convert.ToString((rdr["4_00_laser"]));
+                        punching_9_30.Text = Convert.ToString((rdr["9_30_punch"]));
+                        punching_11_30.Text = Convert.ToString((rdr["11_30_punch"]));
+                        punching_2_30.Text = Convert.ToString((rdr["2_30_punch"]));
+                        punching_4_00.Text = Convert.ToString((rdr["4_00_punch"]));
+                        bending_9_30.Text = Convert.ToString((rdr["9_30_bend"]));
+                        bending_11_30.Text = Convert.ToString((rdr["11_30_bend"]));
+                        bending_2_30.Text = Convert.ToString((rdr["2_30_bend"]));
+                        bending_4_00.Text = Convert.ToString((rdr["4_00_bend"]));
+                        welding_9_30.Text = Convert.ToString((rdr["9_30_weld"]));
+                        welding_11_30.Text = Convert.ToString((rdr["11_30_weld"]));
+                        welding_2_30.Text = Convert.ToString((rdr["2_30_weld"]));
+                        welding_4_00.Text = Convert.ToString((rdr["4_00_weld"]));
+                        buffing_9_30.Text = Convert.ToString((rdr["9_30_buff"]));
+                        buffing_11_30.Text = Convert.ToString((rdr["11_30_buff"]));
+                        buffing_2_30.Text = Convert.ToString((rdr["2_30_buff"]));
+                        buffing_4_00.Text = Convert.ToString((rdr["4_00_buff"]));
+                        painting_9_30.Text = Convert.ToString((rdr["9_30_paint"]));
+                        painting_11_30.Text = Convert.ToString((rdr["11_30_paint"]));
+                        painting_2_30.Text = Convert.ToString((rdr["2_30_paint"]));
+                        painting_4_00.Text = Convert.ToString((rdr["4_00_paint"]));
+                        packing_9_30.Text = Convert.ToString((rdr["9_30_pack"]));
+                        packing_11_30.Text = Convert.ToString((rdr["11_30_pack"]));
+                        packing_2_30.Text = Convert.ToString((rdr["2_30_pack"]));
+                        packing_4_00.Text = Convert.ToString((rdr["4_00_pack"]));
+                    }
+                    rdr.Close();
+
+                    //quickly fill the current %%%%%
+                    sql = "SELECT ROUND(percentage_complete_slimline * 100, 2) as percentage_complete_slimline,ROUND(percentage_complete_laser * 100, 2) as percentage_complete_laser ," +
+                        "ROUND(percentage_complete_punch * 100, 2) as percentage_complete_punch,ROUND(percentage_complete_bend * 100, 2) as percentage_complete_bend," +
+                        "ROUND(percentage_complete_weld * 100, 2) as percentage_complete_weld,ROUND(percentage_complete_buff * 100, 2) as percentage_complete_buff," +
+                        "ROUND(percentage_complete_paint * 100, 2) as percentage_complete_paint,ROUND(percentage_complete_pack * 100, 2) as percentage_complete_pack" +
+                        " FROM dbo.view_daily_shop_goals WHERE CAST(date_goal as date) = '" + dteDateSelection.Value.ToString("yyyy-MM-dd") + "'";
+                    using (SqlCommand cmd2 = new SqlCommand(sql, conn))
+                    {
+                        SqlDataReader rdr2 = cmd2.ExecuteReader();
+                        if (rdr2.Read())
+                        {
+                            txtSlimlinePercent.Text = Convert.ToString((rdr2["percentage_complete_slimline"]));
+                            txtLaserPercent.Text = Convert.ToString((rdr2["percentage_complete_laser"]));
+                            txtPunchPercent.Text = Convert.ToString((rdr2["percentage_complete_punch"]));
+                            txtBendingPercent.Text = Convert.ToString((rdr2["percentage_complete_bend"]));
+                            txtWeldPercent.Text = Convert.ToString((rdr2["percentage_complete_weld"]));
+                            txtBuffPercent.Text = Convert.ToString((rdr2["percentage_complete_buff"]));
+                            txtPaintPercent.Text = Convert.ToString((rdr2["percentage_complete_paint"]));
+                            txtPackPercent.Text = Convert.ToString((rdr2["percentage_complete_pack"]));
+                        }
+                    }
+                    conn.Close();
+                }
+
+
+                //if its 9999 then make the textbox null
+
+                //slimline
+                if (slimline_9_30.Text == "9999")
+                    slimline_9_30.Text = "";
+                if (slimline_11_30.Text == "9999")
+                    slimline_11_30.Text = "";
+                if (slimline_2_30.Text == "9999")
+                    slimline_2_30.Text = "";
+                if (slimline_4_00.Text == "9999")
+                    slimline_4_00.Text = "";
+
+                //punching
+                if (punching_9_30.Text == "9999")
+                    punching_9_30.Text = "";
+                if (punching_11_30.Text == "9999")
+                    punching_11_30.Text = "";
+                if (punching_2_30.Text == "9999")
+                    punching_2_30.Text = "";
+                if (punching_4_00.Text == "9999")
+                    punching_4_00.Text = "";
+
+                //laser
+                if (laser_9_30.Text == "9999")
+                    laser_9_30.Text = "";
+                if (laser_11_30.Text == "9999")
+                    laser_11_30.Text = "";
+                if (laser_2_30.Text == "9999")
+                    laser_2_30.Text = "";
+                if (laser_4_00.Text == "9999")
+                    laser_4_00.Text = "";
+
+                //bending
+                if (bending_9_30.Text == "9999")
+                    bending_9_30.Text = "";
+                if (bending_11_30.Text == "9999")
+                    bending_11_30.Text = "";
+                if (bending_2_30.Text == "9999")
+                    bending_2_30.Text = "";
+                if (bending_4_00.Text == "9999")
+                    bending_4_00.Text = "";
+
+                //weld
+                if (welding_9_30.Text == "9999")
+                    welding_9_30.Text = "";
+                if (welding_11_30.Text == "9999")
+                    welding_11_30.Text = "";
+                if (welding_2_30.Text == "9999")
+                    welding_2_30.Text = "";
+                if (welding_4_00.Text == "9999")
+                    welding_4_00.Text = "";
+
+                //buff
+                if (buffing_9_30.Text == "9999")
+                    buffing_9_30.Text = "";
+                if (buffing_11_30.Text == "9999")
+                    buffing_11_30.Text = "";
+                if (buffing_2_30.Text == "9999")
+                    buffing_2_30.Text = "";
+                if (buffing_4_00.Text == "9999")
+                    buffing_4_00.Text = "";
+
+                //paint
+                if (painting_9_30.Text == "9999")
+                    painting_9_30.Text = "";
+                if (painting_11_30.Text == "9999")
+                    painting_11_30.Text = "";
+                if (painting_2_30.Text == "9999")
+                    painting_2_30.Text = "";
+                if (painting_4_00.Text == "9999")
+                    painting_4_00.Text = "";
+
+                //pack
+                if (packing_9_30.Text == "9999")
+                    packing_9_30.Text = "";
+                if (packing_11_30.Text == "9999")
+                    packing_11_30.Text = "";
+                if (packing_2_30.Text == "9999")
+                    packing_2_30.Text = "";
+                if (packing_4_00.Text == "9999")
+                    packing_4_00.Text = "";
+
+
+
+                //now we add colourssss
+
+                //slimline
+                if (slimline_9_30.Text == "")
+                    slimline_9_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(slimline_9_30.Text) > 25)
+                    slimline_9_30.BackColor = Color.DarkSeaGreen;
+                else
+                    slimline_9_30.BackColor = Color.PaleVioletRed;
+
+                if (slimline_11_30.Text == "")
+                    slimline_11_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(slimline_11_30.Text) > 50)
+                    slimline_11_30.BackColor = Color.DarkSeaGreen;
+                else
+                    slimline_11_30.BackColor = Color.PaleVioletRed;
+
+                if (slimline_2_30.Text == "")
+                    slimline_2_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(slimline_2_30.Text) > 75)
+                    slimline_2_30.BackColor = Color.DarkSeaGreen;
+                else
+                    slimline_2_30.BackColor = Color.PaleVioletRed;
+
+                if (slimline_4_00.Text == "")
+                    slimline_4_00.BackColor = Color.Empty;
+                else if (Convert.ToDouble(slimline_4_00.Text) > 100)
+                    slimline_4_00.BackColor = Color.DarkSeaGreen;
+                else
+                    slimline_4_00.BackColor = Color.PaleVioletRed;
+
+                //laser
+                if (laser_9_30.Text == "")
+                    laser_9_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(laser_9_30.Text) > 25)
+                    laser_9_30.BackColor = Color.DarkSeaGreen;
+                else
+                    laser_9_30.BackColor = Color.PaleVioletRed;
+
+                if (laser_11_30.Text == "")
+                    laser_11_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(laser_11_30.Text) > 50)
+                    laser_11_30.BackColor = Color.DarkSeaGreen;
+                else
+                    laser_11_30.BackColor = Color.PaleVioletRed;
+
+                if (laser_2_30.Text == "")
+                    laser_2_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(laser_2_30.Text) > 75)
+                    laser_2_30.BackColor = Color.DarkSeaGreen;
+                else
+                    laser_2_30.BackColor = Color.PaleVioletRed;
+
+
+                if (laser_4_00.Text == "")
+                    laser_4_00.BackColor = Color.Empty;
+                else if (Convert.ToDouble(laser_4_00.Text) > 100)
+                    laser_4_00.BackColor = Color.DarkSeaGreen;
+                else
+                    laser_4_00.BackColor = Color.PaleVioletRed;
+
+                //punch
+                if (punching_9_30.Text == "")
+                    punching_9_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(punching_9_30.Text) > 25)
+                    punching_9_30.BackColor = Color.DarkSeaGreen;
+                else
+                    punching_9_30.BackColor = Color.PaleVioletRed;
+
+                if (punching_11_30.Text == "")
+                    punching_11_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(punching_11_30.Text) > 50)
+                    punching_11_30.BackColor = Color.DarkSeaGreen;
+                else
+                    punching_11_30.BackColor = Color.PaleVioletRed;
+
+                if (punching_2_30.Text == "")
+                    punching_2_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(punching_2_30.Text) > 75)
+                    punching_2_30.BackColor = Color.DarkSeaGreen;
+                else
+                    punching_2_30.BackColor = Color.PaleVioletRed;
+
+                if (punching_4_00.Text == "")
+                    punching_4_00.BackColor = Color.Empty;
+                else if (Convert.ToDouble(punching_4_00.Text) > 100)
+                    punching_4_00.BackColor = Color.DarkSeaGreen;
+                else
+                    punching_4_00.BackColor = Color.PaleVioletRed;
+
+                //bend
+
+                if (bending_9_30.Text == "")
+                    bending_9_30.BackColor = Color.Empty;
+                else if (bending_9_30.Text == "")
+                    bending_9_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(bending_9_30.Text) > 25)
+                    bending_9_30.BackColor = Color.DarkSeaGreen;
+                else
+                    bending_9_30.BackColor = Color.PaleVioletRed;
+
+                if (bending_11_30.Text == "")
+                    bending_11_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(bending_11_30.Text) > 50)
+                    bending_11_30.BackColor = Color.DarkSeaGreen;
+                else
+                    bending_11_30.BackColor = Color.PaleVioletRed;
+
+                if (bending_2_30.Text == "")
+                    bending_2_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(bending_2_30.Text) > 75)
+                    bending_2_30.BackColor = Color.DarkSeaGreen;
+                else
+                    bending_2_30.BackColor = Color.PaleVioletRed;
+
+                if (bending_4_00.Text == "")
+                    bending_4_00.BackColor = Color.Empty;
+                else if (Convert.ToDouble(bending_4_00.Text) > 100)
+                    bending_4_00.BackColor = Color.DarkSeaGreen;
+                else
+                    bending_4_00.BackColor = Color.PaleVioletRed;
+
+                //weld
+                if (welding_9_30.Text == "")
+                    welding_9_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(welding_9_30.Text) > 25)
+                    welding_9_30.BackColor = Color.DarkSeaGreen;
+                else
+                    welding_9_30.BackColor = Color.PaleVioletRed;
+
+                if (welding_11_30.Text == "")
+                    welding_11_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(welding_11_30.Text) > 50)
+                    welding_11_30.BackColor = Color.DarkSeaGreen;
+                else
+                    welding_11_30.BackColor = Color.PaleVioletRed;
+
+                if (welding_2_30.Text == "")
+                    welding_2_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(welding_2_30.Text) > 75)
+                    welding_2_30.BackColor = Color.DarkSeaGreen;
+                else
+                    welding_2_30.BackColor = Color.PaleVioletRed;
+
+                if (welding_4_00.Text == "")
+                    welding_4_00.BackColor = Color.Empty;
+                else if (Convert.ToDouble(welding_4_00.Text) > 100)
+                    welding_4_00.BackColor = Color.DarkSeaGreen;
+                else
+                    welding_4_00.BackColor = Color.PaleVioletRed;
+
+                //buff
+                if (buffing_9_30.Text == "")
+                    buffing_9_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(buffing_9_30.Text) > 25)
+                    buffing_9_30.BackColor = Color.DarkSeaGreen;
+                else
+                    buffing_9_30.BackColor = Color.PaleVioletRed;
+
+                if (buffing_11_30.Text == "")
+                    buffing_11_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(buffing_11_30.Text) > 50)
+                    buffing_11_30.BackColor = Color.DarkSeaGreen;
+                else
+                    buffing_11_30.BackColor = Color.PaleVioletRed;
+
+                if (buffing_2_30.Text == "")
+                    buffing_2_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(buffing_2_30.Text) > 75)
+                    buffing_2_30.BackColor = Color.DarkSeaGreen;
+                else
+                    buffing_2_30.BackColor = Color.PaleVioletRed;
+
+                if (buffing_4_00.Text == "")
+                    buffing_4_00.BackColor = Color.Empty;
+                else if (Convert.ToDouble(buffing_4_00.Text) > 100)
+                    buffing_4_00.BackColor = Color.DarkSeaGreen;
+                else
+                    buffing_4_00.BackColor = Color.PaleVioletRed;
+
+                //paint
+                if (painting_9_30.Text == "")
+                    painting_9_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(painting_9_30.Text) > 25)
+                    painting_9_30.BackColor = Color.DarkSeaGreen;
+                else
+                    painting_9_30.BackColor = Color.PaleVioletRed;
+
+                if (painting_11_30.Text == "")
+                    painting_11_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(painting_11_30.Text) > 50)
+                    painting_11_30.BackColor = Color.DarkSeaGreen;
+                else
+                    painting_11_30.BackColor = Color.PaleVioletRed;
+
+                if (painting_2_30.Text == "")
+                    painting_2_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(painting_2_30.Text) > 75)
+                    painting_2_30.BackColor = Color.DarkSeaGreen;
+                else
+                    painting_2_30.BackColor = Color.PaleVioletRed;
+
+                if (painting_4_00.Text == "")
+                    painting_4_00.BackColor = Color.Empty;
+                else if (Convert.ToDouble(painting_4_00.Text) > 100)
+                    painting_4_00.BackColor = Color.DarkSeaGreen;
+                else
+                    painting_4_00.BackColor = Color.PaleVioletRed;
+
+                //pack
+                if (packing_9_30.Text == "")
+                    packing_9_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(packing_9_30.Text) > 25)
+                    packing_9_30.BackColor = Color.DarkSeaGreen;
+                else
+                    packing_9_30.BackColor = Color.PaleVioletRed;
+
+                if (packing_11_30.Text == "")
+                    packing_11_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(packing_11_30.Text) > 50)
+                    packing_11_30.BackColor = Color.DarkSeaGreen;
+                else
+                    packing_11_30.BackColor = Color.PaleVioletRed;
+
+                if (packing_2_30.Text == "")
+                    packing_2_30.BackColor = Color.Empty;
+                else if (Convert.ToDouble(packing_2_30.Text) > 75)
+                    packing_2_30.BackColor = Color.DarkSeaGreen;
+                else
+                    packing_2_30.BackColor = Color.PaleVioletRed;
+
+                if (packing_4_00.Text == "")
+                    packing_4_00.BackColor = Color.Empty;
+                else if (Convert.ToDouble(packing_4_00.Text) > 100)
+                    packing_4_00.BackColor = Color.DarkSeaGreen;
+                else
+                    packing_4_00.BackColor = Color.PaleVioletRed;
+
+
+                //colours for the current boxesm
+                int temp = 0;
+                if (slimline_9_30.Text.Length > 0)
+                {
+
+                    if (slimline_11_30.Text.Length > 0)
+                    {
+                        if (slimline_2_30.Text.Length > 0)
+                        {
+                            if (slimline_4_00.Text.Length > 0)
+                                temp = 100;
+                            else
+                                temp = 75;
+                        }
+                        else
+                            temp = 50;
+                    }
+                    else
+                        temp = 25;
+                }
+
+
+                if (Convert.ToDouble(txtSlimlinePercent.Text) > temp)
+                    txtSlimlinePercent.BackColor = Color.DarkSeaGreen;
+                else
+                    txtSlimlinePercent.BackColor = Color.PaleVioletRed;
+
+                if (Convert.ToDouble(txtPunchPercent.Text) > temp)
+                    txtPunchPercent.BackColor = Color.DarkSeaGreen;
+                else
+                    txtPunchPercent.BackColor = Color.PaleVioletRed;
+
+                if (Convert.ToDouble(txtLaserPercent.Text) > temp)
+                    txtLaserPercent.BackColor = Color.DarkSeaGreen;
+                else
+                    txtLaserPercent.BackColor = Color.PaleVioletRed;
+
+                if (Convert.ToDouble(txtBendingPercent.Text) > temp)
+                    txtBendingPercent.BackColor = Color.DarkSeaGreen;
+                else
+                    txtBendingPercent.BackColor = Color.PaleVioletRed;
+
+                if (Convert.ToDouble(txtWeldPercent.Text) > temp)
+                    txtWeldPercent.BackColor = Color.DarkSeaGreen;
+                else
+                    txtWeldPercent.BackColor = Color.PaleVioletRed;
+
+                if (Convert.ToDouble(txtBuffPercent.Text) > temp)
+                    txtBuffPercent.BackColor = Color.DarkSeaGreen;
+                else
+                    txtBuffPercent.BackColor = Color.PaleVioletRed;
+
+                if (Convert.ToDouble(txtPaintPercent.Text) > temp)
+                    txtPaintPercent.BackColor = Color.DarkSeaGreen;
+                else
+                    txtPaintPercent.BackColor = Color.PaleVioletRed;
+
+                if (Convert.ToDouble(txtPackPercent.Text) > temp)
+                    txtPackPercent.BackColor = Color.DarkSeaGreen;
+                else
+                    txtPackPercent.BackColor = Color.PaleVioletRed;
+
+
+            }
+
+        }
+
+
     }
 }
 

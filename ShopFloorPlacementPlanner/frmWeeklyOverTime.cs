@@ -129,7 +129,7 @@ namespace ShopFloorPlacementPlanner
 
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    sql = "SELECT COALESCE(overtime,0) as [Over Time] FROM dbo.power_plan_overtime_remake WHERE staff_id = " + dataGridView1.Rows[i].Cells[staffIDIndex].Value.ToString() + " AND date_id = " + dateID;
+                    sql = "SELECT COALESCE(overtime,0) as [Over Time] FROM dbo.power_plan_overtime_remake WHERE staff_id = " + dataGridView1.Rows[i].Cells[staffIDIndex].Value.ToString() + " AND date_id = " + dateID + " AND department = '" + department + "'";
                     //sql = "SELECT CASE WHEN exists (SELECT COALESCE(overtime,0) as [Over Time] FROM dbo.power_plan_overtime_remake WHERE staff_id = " + dataGridView1.Rows[i].Cells[staffIDIndex].Value.ToString() + " AND date_id = " + dateID + ") then COALESCE(overtime,0) else 0 end FROM dbo.power_plan_overtime_remake";
                     using (SqlCommand insertOT = new SqlCommand(sql, conn))
                     {

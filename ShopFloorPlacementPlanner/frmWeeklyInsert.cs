@@ -438,6 +438,9 @@ namespace ShopFloorPlacementPlanner
                     case 63:
                         _standardHours = 3.6;
                         break;
+                    case 68:
+                        _standardHours = 3.6;
+                        break;
                     case 165:
                         _standardHours = 11.2;
                         break;
@@ -457,6 +460,9 @@ namespace ShopFloorPlacementPlanner
                 switch (staffID)
                 {
                     case 63:
+                        _standardHours = 4.4;
+                        break;
+                    case 68:
                         _standardHours = 4.4;
                         break;
                     case 165:
