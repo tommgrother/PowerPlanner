@@ -33,7 +33,7 @@ namespace ShopFloorPlacementPlanner
             shiftHours shiftHours = new shiftHours(Convert.ToDouble(txtManual.Text), _tempDate, _staffID, _dept);
             if (shiftHours.validation == 0)
             {
-                MessageBox.Show("User cannot be assigned for more than " + shiftHours._maxHours.ToString() + " hours, they are already assigned for " + shiftHours._alreadyAssignedHours.ToString() + " hours");
+                MessageBox.Show("User cannot be assigned for more than " + shiftHours._maxHours.ToString()); //+ " hours, they are already assigned for " + shiftHours._alreadyAssignedHours.ToString() + " hours");
                 return;
             }
             else if (shiftHours.validation == -1)

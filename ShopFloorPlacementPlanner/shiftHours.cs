@@ -30,36 +30,36 @@ namespace ShopFloorPlacementPlanner
                 else
                     _maxHours = 6.4; 
 
-                //grab date_id
-                int _date = 0;
-                string sql = "SELECT id FROM dbo.power_plan_date WHERE date_plan = '" + tempDate.ToString("yyyy-MM-dd") + "'";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    _date = Convert.ToInt32(cmd.ExecuteScalar());
-                }
-                sql = "select sum(hours) as temp from dbo.power_plan_staff WHERE staff_id = " + staffID.ToString() + " AND date_id = " + _date.ToString() + " AND department <> '" + dept + "'";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
+                ////grab date_id
+                //int _date = 0;
+                //string sql = "SELECT id FROM dbo.power_plan_date WHERE date_plan = '" + tempDate.ToString("yyyy-MM-dd") + "'";
+                //using (SqlCommand cmd = new SqlCommand(sql, conn))
+                //{
+                //    _date = Convert.ToInt32(cmd.ExecuteScalar());
+                //}
+                //sql = "select sum(hours) as temp from dbo.power_plan_staff WHERE staff_id = " + staffID.ToString() + " AND date_id = " + _date.ToString() + " AND department <> '" + dept + "'";
+                //using (SqlCommand cmd = new SqlCommand(sql, conn))
+                //{
 
-                    try
-                    {
-                        getData = Convert.ToDouble(cmd.ExecuteScalar());
-                    }
-                    catch
-                    {
-                        getData = 0;
-                    }
+                //    try
+                //    {
+                //        getData = Convert.ToDouble(cmd.ExecuteScalar());
+                //    }
+                //    catch
+                //    {
+                //        getData = 0;
+                //    }
 
 
-                    if ((getData + hours) > _maxHours)
+                    if (/*(getData +*/ hours/*)*/ > _maxHours)
                     {
                         _alreadyAssignedHours = getData;
                         validation = 0; // cant allow it
                         return;
                     }
                 }
-                conn.Close();
-            }
+                //conn.Close();
+            //}
             _hours = hours;
             validation = -1;
         }

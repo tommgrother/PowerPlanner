@@ -92,7 +92,6 @@ namespace ShopFloorPlacementPlanner
 
         private void countGrid()
         {
-
             double slimlineHours = 0;
             double punchHours = 0;
             double laserHours = 0;
@@ -172,7 +171,7 @@ namespace ShopFloorPlacementPlanner
                 }
 
 
-                punchHours = punchHours + Convert.ToDouble(row.Cells[1].Value); //123456
+                punchHours = punchHours + Convert.ToDouble(row.Cells[1].Value); 
 
             }
 
@@ -300,7 +299,13 @@ namespace ShopFloorPlacementPlanner
             o.getDateID(Convert.ToDateTime(dteDateSelection.Text));
 
 
-            using (SqlCommand cmd = new SqlCommand("SELECT * from dbo.power_plan_overtime where date_id = @dateID", conn))
+            using (SqlCommand cmd = new SqlCommand("SELECT TOP (1000) [id] , COALESCE([date_id], 0) as [date_id], COALESCE([slimline_OT],0) as [slimline_OT],COALESCE([laser_OT],0) as [laser_OT],COALESCE([punching_OT],0) as [punching_OT]" +
+                ",COALESCE([bending_OT],0) as [bending_OT],COALESCE([welding_OT],0) as [welding_OT],COALESCE([buffing_OT],0) as [buffing_OT],COALESCE([painting_OT],0) as [painting_OT],COALESCE([packing_OT],0) as [packing_OT]" +
+                ",COALESCE([slimline_AD],0) as [slimline_AD],COALESCE([laser_AD],0) as [laser_AD],COALESCE([punching_AD],0) as [punching_AD],COALESCE([bending_AD],0) as [bending_AD],COALESCE([welding_AD],0) as [welding_AD]" +
+                ",COALESCE([buffing_AD],0) as [buffing_AD],COALESCE([painting_AD],0) as [painting_AD],COALESCE([packing_AD],0) as [packing_AD],COALESCE([stores_OT],0) as [stores_OT],COALESCE([dispatch_OT],0) as [dispatch_OT]" +
+                ",COALESCE([toolroom_OT],0) as [toolroom_OT],COALESCE([cleaning_OT],0) as [cleaning_OT],COALESCE([stores_AD],0) as [stores_AD],COALESCE([dispatch_AD],0) as [dispatch_AD],COALESCE([toolroom_AD],0) as [toolroom_AD]" +
+                ",COALESCE([cleaning_AD],0) as [cleaning_AD],COALESCE([management_OT],0) as [management_OT],COALESCE([management_AD],0) as [management_AD],COALESCE([hs_OT],0) as [hs_OT],COALESCE([hs_AD],0) as [hs_AD]" +
+                "FROM[order_database].[dbo].[power_plan_overtime]where date_id = @dateID", conn))
             {
                 conn.Open();
                 cmd.Parameters.AddWithValue("@dateID", o._dateID);
@@ -1217,7 +1222,7 @@ namespace ShopFloorPlacementPlanner
 
             for (int i = 0; i < dgSlimline.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
-                //MessageBox.Show(workedHours.Rows[0][i].ToString());
+                //MessageBox.Show(workedHours.Rows[0][i].ToString()); //
                 dgSlimline[3, i].Value = workedHours.Rows[0][i].ToString();
             }
             //put the columns together into one column! :D
@@ -2526,6 +2531,17 @@ namespace ShopFloorPlacementPlanner
         private void dteDateSelection_CloseUp(object sender, EventArgs e)
         {
             //this event on fires when a date is selected  rather than everytime a month is switched about solving the slow swapping on months without selecting a date
+            txtSlimlineHours.Text = "";
+            txtSlimlineAD.Text = "";
+            txtSlimlineMen.Text = "";
+            txtSlimlineTotal.Text = "";
+            txtSLActualHours.Text = "";
+            txtPunchActualHours.Text = "";
+            txtPunchAD.Text = "";
+            txtPunchHours.Text = "";
+            txtPunchingTotal.Text = "";
+            txtPunchMen.Text = "";
+            txtPunchOT.Text = "";
             fillgrid();
         }
 
@@ -2678,6 +2694,67 @@ namespace ShopFloorPlacementPlanner
 
         private void fillShopGoals()
         {
+            //first we null everything
+            slimline_9_30.Text = "";
+            slimline_11_30.Text = "";
+            slimline_2_30.Text = "";
+            slimline_4_00.Text = "";
+            laser_9_30.Text = "";
+            laser_11_30.Text = "";
+            laser_2_30.Text = "";
+            laser_4_00.Text = "";
+            punching_9_30.Text = "";
+            punching_11_30.Text = "";
+            punching_2_30.Text = "";
+            punching_4_00.Text = "";
+            bending_9_30.Text = "";
+            bending_11_30.Text = "";
+            bending_2_30.Text = "";
+            bending_4_00.Text = "";
+            welding_9_30.Text = "";
+            welding_11_30.Text = "";
+            welding_2_30.Text = "";
+            welding_4_00.Text = "";
+            buffing_9_30.Text = "";
+            buffing_11_30.Text = "";
+            buffing_2_30.Text = "";
+            buffing_4_00.Text = "";
+            painting_9_30.Text = "";
+            painting_11_30.Text = "";
+            painting_2_30.Text = "";
+            painting_4_00.Text = "";
+            packing_9_30.Text = "";
+            packing_11_30.Text = "";
+            packing_2_30.Text = "";
+            packing_4_00.Text = "";
+
+            txtSlimlinePercent.Text = "";
+            txtSlimlinePercent.BackColor = Color.Empty;
+
+            txtPunchPercent.Text = "";
+
+            txtPunchPercent.BackColor = Color.Empty;
+
+            txtLaserPercent.Text = "";
+            txtLaserPercent.BackColor = Color.Empty;
+
+            txtBendingPercent.Text = "";
+            txtBendingPercent.BackColor = Color.Empty;
+
+            txtWeldPercent.Text = "";
+            txtWeldPercent.BackColor = Color.Empty;
+
+            txtBuffPercent.Text = "";
+            txtBuffPercent.BackColor = Color.Empty;
+
+            txtPaintPercent.Text = "";
+            txtPaintPercent.BackColor = Color.Empty;
+
+            txtPackPercent.Text = "";
+            txtPackPercent.BackColor = Color.Empty;
+
+           
+
             //read allt he data from the selected dte and put them into thje 100 textbnoxes
             string sql = "SELECT COALESCE(round([9_30_slimline] * 100,2),'9999') as [9_30_slimline],COALESCE(round([11_30_slimline] * 100, 2),'9999') as [11_30_slimline],COALESCE(round([2_30_slimline] * 100, 2),'9999') as [2_30_slimline]," +
                 "COALESCE(round([4_00_slimline] * 100, 2),'9999') as [4_00_slimline],COALESCE(round([9_30_punch] * 100, 2),'9999') as [9_30_punch] ,COALESCE(round([11_30_punch] * 100, 2),'9999') as [11_30_punch],COALESCE(round([2_30_punch] * 100, 2),'9999') as [2_30_punch]," +

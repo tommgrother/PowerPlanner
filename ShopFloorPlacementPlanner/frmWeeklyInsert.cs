@@ -126,6 +126,33 @@ namespace ShopFloorPlacementPlanner
                     dt.Columns.Add("Placement Type", typeof(System.String));
                     dt.Columns.Add("Time", typeof(System.Double));
                     dataGridView1.DataSource = dt;
+                    //here we are going to check if there are any placements for that day(s)
+
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        sql = "SELECT placement_type,[hours] from dbo.power_plan_staff LEFT JOIN dbo.power_plan_date on power_plan_staff.date_id = power_plan_date.id " +
+                                 " WHERE date_plan = '" + Convert.ToDateTime(row.Cells[1].Value).ToString("yyyyMMdd") + "'  AND staff_id = " + _staff_id + " AND department = '" + _dept + "' ORDER BY date_plan ASC ";
+
+                        using (SqlCommand cmd = new SqlCommand(sql, CONNECT))
+                        {
+                            SqlDataReader reader = cmd.ExecuteReader();
+
+                            if (reader.Read())
+                            {
+                                row.Cells[2].Value = reader["placement_type"].ToString();
+                                row.Cells[3].Value = reader["hours"].ToString();
+                            }
+                            reader.Close();
+                        }
+                        //quickly alter colours too 
+                        if (row.Cells[2].Value.ToString() == "Full Day")
+                            row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
+                        if (row.Cells[2].Value.ToString() == "Half Day")
+                            row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                        if (row.Cells[2].Value.ToString() == "Shift")
+                            row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
+
+                    }
                     CONNECT.Close();
                 }
 
@@ -168,6 +195,21 @@ namespace ShopFloorPlacementPlanner
         private void frmWeeklyInsert_Load(object sender, EventArgs e)
         {
             lbl_title.Text = "Select Which days you want " + _staff_fullname + " in " + _dept;
+            int columnIndex = 0;
+            columnIndex = dataGridView1.Columns["Placement Type"].Index;
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+
+                //quickly alter colours too 
+                if (row.Cells[columnIndex].Value.ToString() == "Full Day")
+                    row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
+                if (row.Cells[columnIndex].Value.ToString() == "Half Day")
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                if (row.Cells[columnIndex].Value.ToString() == "Shift")
+                    row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
+
+            }
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -209,9 +251,12 @@ namespace ShopFloorPlacementPlanner
                     { //the correct colour
                       //get variables
 
+
+
                         dgvDate = Convert.ToDateTime(dataGridView1.Rows[i].Cells[5].Value);
                         getStandardHours(_staff_id, dgvDate);
                         Placement p = new Placement(dgvDate, _staff_id, _dept, "Full Day", _standardHours); //initate the class
+
                         p._alreadyPlaced = false;
                         //p.checkPlacement();
                         //time to make my own  checkplacement()
@@ -230,10 +275,10 @@ namespace ShopFloorPlacementPlanner
                         if (validationID != 0)
                         {
                             //if the row is shift then allow for the user to be placed in TWO places (i check for maximum hours in shift anyway so they **probably** wont go over
-                            if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.Red)
-                                sql = "SELECT id from dbo.power_plan_staff WHERE date_id = " + validationID.ToString() + " AND staff_id = " + _staff_id + " AND department = '" + _dept + "'";
-                            else // t
-                                sql = "SELECT id from dbo.power_plan_staff WHERE date_id = " + validationID.ToString() + " AND staff_id = " + _staff_id;
+                            //if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.PaleVioletRed)
+                            //    sql = "SELECT id from dbo.power_plan_staff WHERE date_id = " + validationID.ToString() + " AND staff_id = " + _staff_id + " AND department = '" + _dept + "'";
+                            //else // t
+                            sql = "SELECT id from dbo.power_plan_staff WHERE date_id = " + validationID.ToString() + " AND staff_id = " + _staff_id;
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                             {
                                 conn.Open();
@@ -251,10 +296,10 @@ namespace ShopFloorPlacementPlanner
                         {
                             //get the placement id using date_id and staff_id
                             //this is the same as the above -- if the user is going into shift it needs to look at CURRENT dept and not every dept :}
-                            if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.Red)
-                                sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID + " AND department = '" + _dept + "'";
-                            else
-                                sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID ;
+                            //if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.Red)
+                            //    sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID + " AND department = '" + _dept + "'";
+                            //else
+                            sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
                             //MessageBox.Show(sql);
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                             {
@@ -272,9 +317,10 @@ namespace ShopFloorPlacementPlanner
                                 //  MessageBox.Show(test.ToString());
                             }
                             //they are already placed so just remove them  so they can be added down the line
-                            using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where ID = @placementID", conn))
+                            using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where date_id = @date_id AND staff_id = @staff_id", conn))
                             {
-                                cmd.Parameters.AddWithValue("@placementID", placement_id);
+                                cmd.Parameters.AddWithValue("@date_id", p._dateID);
+                                cmd.Parameters.AddWithValue("@staff_id", _staff_id);
                                 conn.Open();
                                 cmd.ExecuteNonQuery();
                                 conn.Close();
@@ -291,6 +337,7 @@ namespace ShopFloorPlacementPlanner
                             }
                         }
 
+             
 
                         p.notPresent(); //check for attendance
                         string placement_type = dataGridView1.Rows[i].Cells[6].Value.ToString();
@@ -343,7 +390,7 @@ namespace ShopFloorPlacementPlanner
                                     place.add_placement(placement_id, _subDept);
                                 }
                             }
-                            else
+                            else //
                             {//should be the same as normal
                                 remainingHours = _standardHours / 2;
                                 Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Half Day", remainingHours); // adds them in but its for /half/ the time 
@@ -373,8 +420,8 @@ namespace ShopFloorPlacementPlanner
                         }
                         else
                         {//  they are present and they dont have time off == they also aren't placed in another dept
-                            //p.addPlacment();
-                            //no obscure data to consider, just plaster it in
+                         //p.addPlacment();
+                         //no obscure data to consider, just plaster it in
                             using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
                             {
                                 //placement type and hours assign
@@ -498,21 +545,21 @@ namespace ShopFloorPlacementPlanner
             if (e.ColumnIndex == dataGridView1.Columns["Shift"].Index)
             {//this needs to be manual input now 
 
-                int index =5;
+                int index = 5;
                 if (dataGridView1.Columns.Contains("Date ") == true)
                     index = dataGridView1.Columns["Date "].Index;
-                frmWeeklyShift frm = new frmWeeklyShift(Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells[index].Value.ToString()),_staff_id,_dept);
+                frmWeeklyShift frm = new frmWeeklyShift(Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells[index].Value.ToString()), _staff_id, _dept);
                 frm.ShowDialog();
 
-                if (shiftHours.validation == 0)
-                {
-                    MessageBox.Show("Shift Cancelled");
-                    return;
-                }
-                
+                //if (shiftHours.validation == 0)
+                //{
+                //    MessageBox.Show("Shift Cancelled");
+                //    return;
+                //}
+
                 dataGridView1.Rows[e.RowIndex].Cells[7].Value = shiftHours._hours;
                 dataGridView1.Rows[e.RowIndex].Cells[6].Value = "Shift";
-                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.PaleVioletRed;
             }
             if (e.ColumnIndex == dataGridView1.Columns["Manual"].Index)
             {

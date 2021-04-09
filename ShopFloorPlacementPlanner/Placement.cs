@@ -39,16 +39,37 @@ namespace ShopFloorPlacementPlanner
             getDateID();
         }
 
-        private void getDateID() 
+        private void getDateID()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-            using(SqlCommand cmd = new SqlCommand("SELECT id from dbo.power_plan_date where date_plan = @datePlan", conn))
+            using (SqlCommand cmd = new SqlCommand("SELECT id from dbo.power_plan_date where date_plan = @datePlan", conn))
             {
                 cmd.Parameters.AddWithValue("@datePlan", _selectedDate);
                 conn.Open();
                 _dateID = (Int32)cmd.ExecuteScalar();
                 conn.Close();
+            }
+        }
+
+        private void removePlacement()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            //if its in here then it has a colour so we can remove it 
+            string sql = "SELECT id FROM dbo.power_plan_staff WHERE staff_id = " + _staffID + " AND date_id = " + _dateID + " AND department = '" + _department + "'"; //grab the placement id?
+            int placementID = 0;
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                conn.Open();
+                placementID = Convert.ToInt32(cmd.ExecuteScalar());
+                conn.Close();
+            }
+
+            using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where ID = @placementID", conn))
+            {
+                cmd.Parameters.AddWithValue("@placementID", placementID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -65,11 +86,11 @@ namespace ShopFloorPlacementPlanner
 
                 if (rdr.Read())
                 {
-                    _weldTeamStaffID = new int[2] {Convert.ToInt32(rdr["user_id_1"]), Convert.ToInt32(rdr["user_id_2"]) };
+                    _weldTeamStaffID = new int[2] { Convert.ToInt32(rdr["user_id_1"]), Convert.ToInt32(rdr["user_id_2"]) };
                 }
 
                 conn.Close();
-               
+
 
             }
         }
@@ -126,15 +147,15 @@ namespace ShopFloorPlacementPlanner
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
-    
-                
-         }
+
+
+        }
 
 
         public void notPresent()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
-            using (SqlCommand cmd = new SqlCommand("select absent_type from dbo.absent_holidays where staff_id=@staffID and date_absent = @dateAbsent",conn))
+            using (SqlCommand cmd = new SqlCommand("select absent_type from dbo.absent_holidays where staff_id=@staffID and date_absent = @dateAbsent", conn))
             {
                 conn.Open();
                 cmd.Parameters.AddWithValue("@staffID", _staffID);
@@ -144,7 +165,7 @@ namespace ShopFloorPlacementPlanner
 
                 if (rdr.Read())
                 {
-                    _notPresentType =  Convert.ToInt32(rdr["absent_type"]);
+                    _notPresentType = Convert.ToInt32(rdr["absent_type"]);
                 }
                 else
                 {
@@ -152,7 +173,7 @@ namespace ShopFloorPlacementPlanner
                 }
 
             }
-           
+
         }
 
 
