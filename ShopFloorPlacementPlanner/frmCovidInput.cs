@@ -23,6 +23,7 @@ namespace ShopFloorPlacementPlanner
         {
             InitializeComponent();
             string sql = "test";
+            allowClose = -1;
             Shopfloor = _Shopfloor;
             dateTimePicker1.Value = _placementDate;
             lastDate = _placementDate; //incase they swap then we still need to save the data
@@ -157,6 +158,7 @@ namespace ShopFloorPlacementPlanner
 
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
+            allowClose = 0;
             e.Control.KeyPress -= new KeyPressEventHandler(Column_KeyPress);
             if (dataGridView1.CurrentCell.ColumnIndex == 2) //Desired Column
             {
@@ -188,13 +190,25 @@ namespace ShopFloorPlacementPlanner
                 conn.Open();
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
+                    int hasRecord = 0;  // check if there is an entry to update or insert
+                    using (SqlCommand cmdRecord = new SqlCommand("SELECT id FROM dbo.power_plan_covid_temps WHERE staff_id = " + row.Cells[3].Value.ToString() + " AND date_id = " + dateid, conn))
+                    {
+                        var getData = cmdRecord.ExecuteScalar();
+                        if (getData != null)
+                            hasRecord = -1;
+                        else
+                            hasRecord = 0;
+                    }
                     if (row.Cells[2].Value.ToString() != "")
                     {
                         string sql = "";
-                        if (row.DefaultCellStyle.BackColor == Color.DarkSeaGreen)
+                        if (hasRecord == -1)
                             sql = "UPDATE dbo.power_plan_covid_temps SET temp_morning = " + row.Cells[2].Value.ToString() + " WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
                         else
+                        {
                             sql = "INSERT INTO dbo.power_plan_covid_temps (staff_id,date_id,temp_morning) VALUES(" + row.Cells[3].Value.ToString() + "," + dateid + ", " + row.Cells[2].Value.ToString() + ")";
+                            hasRecord = -1;
+                        }
                         using (SqlCommand cmd = new SqlCommand(sql, conn))
                         {
                             cmd.ExecuteNonQuery();
@@ -220,10 +234,13 @@ namespace ShopFloorPlacementPlanner
                     if (row.Cells[6].Value.ToString() != "")
                     {
                         string sql = "";
-                        if (row.DefaultCellStyle.BackColor == Color.DarkSeaGreen)
+                        if (hasRecord == -1)
                             sql = "UPDATE dbo.power_plan_covid_temps SET mask = '" + row.Cells[6].Value.ToString() + "' WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
                         else
+                        {
                             sql = "INSERT INTO dbo.power_plan_covid_temps (staff_id,date_id,mask) VALUES(" + row.Cells[3].Value.ToString() + "," + dateid + ", '" + row.Cells[6].Value.ToString() + "')";
+                            hasRecord = -1;
+                        }
                         using (SqlCommand cmd = new SqlCommand(sql, conn))
                         {
                             cmd.ExecuteNonQuery();
@@ -233,10 +250,13 @@ namespace ShopFloorPlacementPlanner
                     if (row.Cells[7].Value.ToString() != "")
                     {
                         string sql = "";
-                        if (row.DefaultCellStyle.BackColor == Color.DarkSeaGreen)
+                        if (hasRecord == -1)
                             sql = "UPDATE dbo.power_plan_covid_temps SET ear_protection = '" + row.Cells[7].Value.ToString() + "' WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
                         else
+                        {
                             sql = "INSERT INTO dbo.power_plan_covid_temps (staff_id,date_id,ear_protection) VALUES(" + row.Cells[3].Value.ToString() + "," + dateid + ", '" + row.Cells[7].Value.ToString() + "')";
+                            hasRecord = -1;
+                        }
                         using (SqlCommand cmd = new SqlCommand(sql, conn))
                         {
                             cmd.ExecuteNonQuery();
@@ -282,10 +302,13 @@ namespace ShopFloorPlacementPlanner
                     if (row.Cells[10].Value.ToString() != "")
                     {
                         string sql = "";
-                        if (row.DefaultCellStyle.BackColor == Color.DarkSeaGreen)
+                        if (hasRecord == -1)
                             sql = "UPDATE dbo.power_plan_covid_temps SET note = '" + row.Cells[10].Value.ToString() + "' WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
                         else
+                        {
                             sql = "INSERT INTO dbo.power_plan_covid_temps (staff_id,date_id,note) VALUES(" + row.Cells[3].Value.ToString() + "," + dateid + ", '" + row.Cells[10].Value.ToString() + "')";
+                            hasRecord = -1;
+                        }
                         using (SqlCommand cmd = new SqlCommand(sql, conn))
                         {
                             cmd.ExecuteNonQuery();
@@ -296,6 +319,7 @@ namespace ShopFloorPlacementPlanner
                 }
                 conn.Close();
             }
+            allowClose = -1;
             this.Close();
         }
 
@@ -365,9 +389,18 @@ namespace ShopFloorPlacementPlanner
         {
             if (allowClose == 0)
             {
-                allowClose = -1;
-                btnGo.PerformClick();
+                DialogResult result = MessageBox.Show("You have not uploaded your changes, are you sure you want to exit?", "Unsaved Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    allowClose = -1;
+                }
+                else
+                {
+                    e.Cancel = true;
+                    return;
+                }
             }
+            
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -501,6 +534,26 @@ namespace ShopFloorPlacementPlanner
             }
             lastDate = dateTimePicker1.Value;
             loadData();
+        }
+
+        private void btnY_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                row.Cells[6].Value = "y";
+                row.Cells[7].Value = "y";
+                allowClose = 0;
+            }
+        }
+
+        private void btnN_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                row.Cells[6].Value = "n";
+                row.Cells[7].Value = "n";
+                allowClose = 0;
+            }
         }
     }
 }

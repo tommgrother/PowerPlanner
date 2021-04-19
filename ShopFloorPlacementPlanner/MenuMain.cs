@@ -2530,18 +2530,62 @@ namespace ShopFloorPlacementPlanner
 
         private void dteDateSelection_CloseUp(object sender, EventArgs e)
         {
-            //this event on fires when a date is selected  rather than everytime a month is switched about solving the slow swapping on months without selecting a date
-            txtSlimlineHours.Text = "";
-            txtSlimlineAD.Text = "";
-            txtSlimlineMen.Text = "";
-            txtSlimlineTotal.Text = "";
-            txtSLActualHours.Text = "";
-            txtPunchActualHours.Text = "";
-            txtPunchAD.Text = "";
-            txtPunchHours.Text = "";
-            txtPunchingTotal.Text = "";
-            txtPunchMen.Text = "";
-            txtPunchOT.Text = "";
+            txtSlimlineHours.Text = "0";
+            txtSlimlineAD.Text = "0";
+            txtSlimlineMen.Text = "0";
+            txtSlimlineTotal.Text = "0";
+            txtSLActualHours.Text = "0";
+
+            txtPaintActualHours.Text = "0";
+            txtPaintAD.Text = "0";
+            txtPaintHours.Text = "0";
+            txtPaintingTotal.Text = "0";
+            txtPaintMen.Text = "0";
+            txtPaintOT.Text = "0";
+
+            txtlaserActualHours.Text = "0";
+            txtLaserAD.Text = "0";
+            txtLaserHours.Text = "0";
+            txtLaserTotal.Text = "0";
+            txtLaserMen.Text = "0";
+            txtLaserOT.Text = "0";
+
+            txtBendActualHours.Text = "0";
+            txtBendAD.Text = "0";
+            txtBendHours.Text = "0";
+            txtBendingTotal.Text = "0";
+            txtBendMen.Text = "0";
+            txtBendOT.Text = "0";
+
+            txtWeldActualHours.Text = "0";
+            txtWeldAD.Text = "0";
+            txtWeldHours.Text = "0";
+            txtWeldingTotal.Text = "0";
+            txtWeldMen.Text = "0";
+            txtWeldOT.Text = "0";
+
+            txtBuffActualHours.Text = "0";
+            txtBuffAD.Text = "0";
+            txtBuffHours.Text = "0";
+            txtBuffingTotal.Text = "0";
+            txtBuffMen.Text = "0";
+            txtBuffOT.Text = "0";
+
+            txtPaintActualHours.Text = "0";
+            txtPaintAD.Text = "0";
+            txtPaintHours.Text = "0";
+            txtPaintingTotal.Text = "0";
+            txtPaintMen.Text = "0";
+            txtPaintOT.Text = "0";
+
+            txtPackActualHours.Text = "0";
+            txtPackAD.Text = "0";
+            txtPackHours.Text = "0";
+            txtPackingTotal.Text = "0";
+            txtPackMen.Text = "0";
+            txtPackOT.Text = "0";
+
+
             fillgrid();
         }
 
@@ -2728,29 +2772,29 @@ namespace ShopFloorPlacementPlanner
             packing_2_30.Text = "";
             packing_4_00.Text = "";
 
-            txtSlimlinePercent.Text = "";
+            //txtSlimlinePercent.Text = "";
             txtSlimlinePercent.BackColor = Color.Empty;
 
-            txtPunchPercent.Text = "";
+            //txtPunchPercent.Text = "";
 
             txtPunchPercent.BackColor = Color.Empty;
 
-            txtLaserPercent.Text = "";
+            //txtLaserPercent.Text = "";
             txtLaserPercent.BackColor = Color.Empty;
 
-            txtBendingPercent.Text = "";
+            //txtBendingPercent.Text = "";
             txtBendingPercent.BackColor = Color.Empty;
 
-            txtWeldPercent.Text = "";
+            //txtWeldPercent.Text = "";
             txtWeldPercent.BackColor = Color.Empty;
 
-            txtBuffPercent.Text = "";
+            //txtBuffPercent.Text = "";
             txtBuffPercent.BackColor = Color.Empty;
 
-            txtPaintPercent.Text = "";
+            //txtPaintPercent.Text = "";
             txtPaintPercent.BackColor = Color.Empty;
 
-            txtPackPercent.Text = "";
+            //txtPackPercent.Text = "";
             txtPackPercent.BackColor = Color.Empty;
 
            
@@ -2828,6 +2872,17 @@ namespace ShopFloorPlacementPlanner
                             txtBuffPercent.Text = Convert.ToString((rdr2["percentage_complete_buff"]));
                             txtPaintPercent.Text = Convert.ToString((rdr2["percentage_complete_paint"]));
                             txtPackPercent.Text = Convert.ToString((rdr2["percentage_complete_pack"]));
+                        }
+                        else
+                        {
+                            txtSlimlinePercent.Text = "0";
+                            txtLaserPercent.Text = "0";
+                            txtPunchPercent.Text = "0";
+                            txtBendingPercent.Text = "0";
+                            txtWeldPercent.Text = "0";
+                            txtBuffPercent.Text = "0";
+                            txtPaintPercent.Text = "0";
+                            txtPackPercent.Text = "0";
                         }
                     }
                     conn.Close();

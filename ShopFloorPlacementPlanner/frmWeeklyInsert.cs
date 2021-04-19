@@ -21,6 +21,7 @@ namespace ShopFloorPlacementPlanner
         public DateTime sunday { get; set; }
         public DateTime passed_date { get; set; }
         public string _dept { get; set; }
+        public int skipPassword { get; set; }
         public double _standardHours { get; set; }
         public bool alreadyPlaced { get; set; }
         public string _subDept { get; set; }
@@ -30,6 +31,7 @@ namespace ShopFloorPlacementPlanner
             // add all the variables into new props
 
             _staff_id = staff_id;
+            skipPassword = 0;
             _staff_fullname = staff_fullname;
             _selectedDate = searchDate;
             _dept = department;
@@ -544,7 +546,25 @@ namespace ShopFloorPlacementPlanner
             }
             if (e.ColumnIndex == dataGridView1.Columns["Shift"].Index)
             {//this needs to be manual input now 
+                if (_dept == "Slimline")
+                {
+                    if (skipPassword != -1)
+                    {
+                        string passcode = "design";
 
+                        string input = Interaction.InputBox("ENTER THE PASSWORD", "PASSWORD");
+                        if (input == passcode)
+                        {
+                            skipPassword = -1;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wrong password!", "!!", MessageBoxButtons.OK);
+                            return;
+                        }
+                    }
+                }
+                
                 int index = 5;
                 if (dataGridView1.Columns.Contains("Date ") == true)
                     index = dataGridView1.Columns["Date "].Index;
@@ -563,6 +583,24 @@ namespace ShopFloorPlacementPlanner
             }
             if (e.ColumnIndex == dataGridView1.Columns["Manual"].Index)
             {
+                if (_dept == "Slimline")
+                {
+                    if (skipPassword != -1)
+                    {
+                        string passcode = "design";
+
+                        string input = Interaction.InputBox("ENTER THE PASSWORD", "PASSWORD");
+                        if (input == passcode)
+                        {
+                            skipPassword = -1;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wrong password!", "!!", MessageBoxButtons.OK);
+                            return;
+                        }
+                    }
+                }
                 //grab time from user input
                 //open form
                 frmManualHours mh = new frmManualHours();

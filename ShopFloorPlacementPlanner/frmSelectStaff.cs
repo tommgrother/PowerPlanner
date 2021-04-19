@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using Microsoft.VisualBasic;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -16,13 +17,14 @@ namespace ShopFloorPlacementPlanner
     {
         public string _department { get; set; }
         public DateTime _selectedDate { get; set; }
+        public int skipPassword { get; set; }
         public double _standardHours { get; set; }
 
         public frmSelectStaff(string department, DateTime selectedDate)
         {
 
             InitializeComponent();
-
+            skipPassword = 0;
             dgSelected.CellClick += dataGridViewSoftware_CellClick;
             _department = department;
             _selectedDate = selectedDate;
@@ -253,6 +255,14 @@ namespace ShopFloorPlacementPlanner
 
             foreach (DataGridViewRow row in dgSelected.Rows)
             {
+                if (row.Cells[3].Value.ToString() == "Manual")
+                {
+                    row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
+                }
+            }
+
+            foreach (DataGridViewRow row in dgSelected.Rows)
+            {
                 if (row.Cells[3].Value.ToString() == "Half Day")
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
@@ -345,9 +355,31 @@ namespace ShopFloorPlacementPlanner
             //MANUAL BUTTON
             if (e.ColumnIndex == dgSelected.Columns["Manual"].Index)
             {
+               
+                if (_department == "Slimline")
+                {
+                    if (skipPassword != -1)
+                    {
+                        string passcode = "design";
 
+                        string input = Interaction.InputBox("ENTER THE PASSWORD", "PASSWORD");
+                        if (input == passcode)
+                        {
+                            skipPassword = -1;
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wrong password!", "!!", MessageBoxButtons.OK);
+                            return;
+                        }
+                    }
+                }
                 frmManualHours mh = new frmManualHours();
                 mh.ShowDialog();
+                
+
+               
 
 
                 SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -389,10 +421,31 @@ namespace ShopFloorPlacementPlanner
                 }
             }
 
-            //FULL BUTTON
+            //shift BUTTON
             if (e.ColumnIndex == dgSelected.Columns["Shift"].Index)
             {
                 SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+
+               
+                if (_department == "Slimline")
+                {
+                    if (skipPassword != -1)
+                    {
+                        string passcode = "design";
+
+                        string input = Interaction.InputBox("ENTER THE PASSWORD", "PASSWORD");
+                        if (input == passcode)
+                        {
+                            skipPassword = -1;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wrong password!", "!!", MessageBoxButtons.OK);
+                            return;
+                        }
+                    }
+                }
+                
 
                 int index = dgSelected.Columns["Full Name"].Index;
 

@@ -33,6 +33,9 @@
             this.btnGo = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnY = new System.Windows.Forms.Button();
+            this.btnN = new System.Windows.Forms.Button();
+            this.lblButon = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -98,11 +101,43 @@
             this.label1.Text = "DATE";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnY
+            // 
+            this.btnY.Location = new System.Drawing.Point(320, 22);
+            this.btnY.Name = "btnY";
+            this.btnY.Size = new System.Drawing.Size(45, 23);
+            this.btnY.TabIndex = 61;
+            this.btnY.Text = "Y";
+            this.btnY.UseVisualStyleBackColor = true;
+            this.btnY.Click += new System.EventHandler(this.btnY_Click);
+            // 
+            // btnN
+            // 
+            this.btnN.Location = new System.Drawing.Point(371, 22);
+            this.btnN.Name = "btnN";
+            this.btnN.Size = new System.Drawing.Size(50, 23);
+            this.btnN.TabIndex = 62;
+            this.btnN.Text = "N";
+            this.btnN.UseVisualStyleBackColor = true;
+            this.btnN.Click += new System.EventHandler(this.btnN_Click);
+            // 
+            // lblButon
+            // 
+            this.lblButon.AutoSize = true;
+            this.lblButon.Location = new System.Drawing.Point(292, 8);
+            this.lblButon.Name = "lblButon";
+            this.lblButon.Size = new System.Drawing.Size(159, 13);
+            this.lblButon.TabIndex = 63;
+            this.lblButon.Text = "Mark all Mask/Ear Protection as";
+            // 
             // frmCovidInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1247, 829);
+            this.Controls.Add(this.lblButon);
+            this.Controls.Add(this.btnN);
+            this.Controls.Add(this.btnY);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.btnGo);
@@ -117,6 +152,7 @@
             this.Shown += new System.EventHandler(this.frmCovidInput_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -127,5 +163,8 @@
         private System.Windows.Forms.Button btnGo;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnY;
+        private System.Windows.Forms.Button btnN;
+        private System.Windows.Forms.Label lblButon;
     }
 }
