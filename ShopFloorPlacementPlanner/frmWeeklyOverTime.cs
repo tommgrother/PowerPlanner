@@ -19,6 +19,8 @@ namespace ShopFloorPlacementPlanner
         public int staffIDIndex { get; set; }
         public int dateIDIndex { get; set; }
         public int validation { get; set; }
+        public int requestedIndex { get; set; }
+        public int requestedValueIndex { get; set; }
         public int dateID { get; set; }
         public string department { get; set; }
         public DateTime startDate { get; set; }
@@ -76,8 +78,11 @@ namespace ShopFloorPlacementPlanner
         }
         private void fillDGV()
         {
+            dataGridView1.Columns.Clear();
             if (dataGridView1.Columns.Contains("Over Time") == true)
                 dataGridView1.Columns.Remove("Over Time");
+            if (dataGridView1.Columns.Contains("Requested Value") == true)
+                dataGridView1.Columns.Remove("Requested Value");
 
 
             //if dgv has content then null it
@@ -112,22 +117,26 @@ namespace ShopFloorPlacementPlanner
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     dt.Columns.Add("Over Time");
+                    dt.Columns.Add("Requested Value");
                     dataGridView1.DataSource = dt;
-                    dataGridView1.Columns[2].Visible = false;
-                    dataGridView1.Columns[3].Visible = false;
+                    //dataGridView1.Columns[2].Visible = false;
+                    //dataGridView1.Columns[3].Visible = false;
+                    //i think this works
+                    DataGridViewButtonColumn shiftButton = new DataGridViewButtonColumn();
+                    shiftButton.Name = "Requested";
+                    shiftButton.Text = "Requested";
+                    shiftButton.UseColumnTextForButtonValue = true;
+                    if (dataGridView1.Columns["requested_column"] == null)
+                    {
+                        dataGridView1.Columns.Insert(dataGridView1.ColumnCount, shiftButton);
+                    }
 
                 }
-                //dataGridView1.Columns.Add("Over Time", "Over Time");
-                if (dataGridView1.Columns.Contains("Over Time") == true)
-                    overtimeIndex = dataGridView1.Columns["Over Time"].Index;
-                if (dataGridView1.Columns.Contains("date_id") == true)
-                    dateIDIndex = dataGridView1.Columns["date_id"].Index;
-                if (dataGridView1.Columns.Contains("staff_id") == true)
-                    staffIDIndex = dataGridView1.Columns["staff_id"].Index;
+                getColumnIndex();
 
                 //now get the overtime for these dudes
 
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++) //requested
                 {
                     sql = "SELECT COALESCE(overtime,0) as [Over Time] FROM dbo.power_plan_overtime_remake WHERE staff_id = " + dataGridView1.Rows[i].Cells[staffIDIndex].Value.ToString() + " AND date_id = " + dateID + " AND department = '" + department + "'";
                     //sql = "SELECT CASE WHEN exists (SELECT COALESCE(overtime,0) as [Over Time] FROM dbo.power_plan_overtime_remake WHERE staff_id = " + dataGridView1.Rows[i].Cells[staffIDIndex].Value.ToString() + " AND date_id = " + dateID + ") then COALESCE(overtime,0) else 0 end FROM dbo.power_plan_overtime_remake";
@@ -139,7 +148,23 @@ namespace ShopFloorPlacementPlanner
                         else
                             dataGridView1.Rows[i].Cells[overtimeIndex].Value = "0";
                     }
+                    sql = "SELECT COALESCE(requested,0) as [requested] FROM dbo.power_plan_overtime_remake WHERE staff_id = " + dataGridView1.Rows[i].Cells[staffIDIndex].Value.ToString() + " AND date_id = " + dateID + " AND department = '" + department + "'";
+                    //sql = "SELECT CASE WHEN exists (SELECT COALESCE(overtime,0) as [Over Time] FROM dbo.power_plan_overtime_remake WHERE staff_id = " + dataGridView1.Rows[i].Cells[staffIDIndex].Value.ToString() + " AND date_id = " + dateID + ") then COALESCE(overtime,0) else 0 end FROM dbo.power_plan_overtime_remake";
+                    using (SqlCommand insertRequested = new SqlCommand(sql, conn))
+                    {
+                        var getData = insertRequested.ExecuteScalar();
+                        if (getData != null)
+                        {
+                            dataGridView1.Rows[i].Cells[requestedValueIndex].Value = Convert.ToString(getData);
+                            if (dataGridView1.Rows[i].Cells[requestedValueIndex].Value.ToString() == "-1")
+                                dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+                        }
+                        else
+                            dataGridView1.Rows[i].Cells[requestedValueIndex].Value = "0";
+
+                    }
                 }
+
                 conn.Close();
                 dataGridView1.Refresh();
             }
@@ -153,13 +178,31 @@ namespace ShopFloorPlacementPlanner
             dataGridView1.Columns[2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.Columns[2].Visible = false;
             dataGridView1.Columns[3].Visible = false;
+            dataGridView1.Columns[requestedValueIndex].Visible = false;
 
 
 
         }
 
+        private void getColumnIndex()
+        {
+
+            //dataGridView1.Columns.Add("Over Time", "Over Time");
+            if (dataGridView1.Columns.Contains("Over Time") == true)
+                overtimeIndex = dataGridView1.Columns["Over Time"].Index;
+            if (dataGridView1.Columns.Contains("date_id") == true)
+                dateIDIndex = dataGridView1.Columns["date_id"].Index;
+            if (dataGridView1.Columns.Contains("staff_id") == true)
+                staffIDIndex = dataGridView1.Columns["staff_id"].Index;
+            if (dataGridView1.Columns.Contains("Requested") == true)
+                requestedIndex = dataGridView1.Columns["Requested"].Index;
+            if (dataGridView1.Columns.Contains("Requested Value") == true)
+                requestedValueIndex = dataGridView1.Columns["Requested Value"].Index;
+        }
+
         private void commitData()
         {
+            getColumnIndex();
             string sql = "";
             double totalHours = 0;
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
@@ -175,6 +218,7 @@ namespace ShopFloorPlacementPlanner
                         cmd.Parameters.Add("@staff_id", SqlDbType.Int).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[staffIDIndex].Value);
                         cmd.Parameters.Add("@overtime", SqlDbType.Float).Value = Convert.ToDouble(dataGridView1.Rows[i].Cells[overtimeIndex].Value);
                         cmd.Parameters.Add("@department", SqlDbType.NVarChar).Value = department;
+                        cmd.Parameters.Add("@requested",SqlDbType.NVarChar).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[requestedValueIndex].Value);
                         cmd.ExecuteNonQuery();
                         totalHours = totalHours + Convert.ToDouble(dataGridView1.Rows[i].Cells[overtimeIndex].Value);
                     }
@@ -245,8 +289,20 @@ namespace ShopFloorPlacementPlanner
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
-        }
+            if (e.ColumnIndex == dataGridView1.Columns["Requested"].Index)
+            {
+                if (dataGridView1.Rows[e.RowIndex].Cells[requestedValueIndex].Value.ToString() == "0")
+                {
+                    dataGridView1.Rows[e.RowIndex].Cells[requestedValueIndex].Value = "-1";
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+                }
+                else
+                {
+                    dataGridView1.Rows[e.RowIndex].Cells[requestedValueIndex].Value = "0";
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
+                }
+            }
+            }
 
         private void frmWeeklyOverTime_Shown(object sender, EventArgs e)
         {
@@ -254,6 +310,16 @@ namespace ShopFloorPlacementPlanner
             if (countDays < 0)
                 countDays = countDays * -1;
             tabControl1.SelectedIndex = Convert.ToInt32(countDays);
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void frmWeeklyOverTime_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
