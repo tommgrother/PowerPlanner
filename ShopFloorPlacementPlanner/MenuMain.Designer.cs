@@ -1905,7 +1905,7 @@
             this.label60.Name = "label60";
             this.label60.Size = new System.Drawing.Size(63, 13);
             this.label60.TabIndex = 138;
-            this.label60.Text = "Men Req: 4";
+            this.label60.Text = "Men Req: 6";
             // 
             // label61
             // 
@@ -1950,7 +1950,7 @@
             this.label65.Name = "label65";
             this.label65.Size = new System.Drawing.Size(63, 13);
             this.label65.TabIndex = 143;
-            this.label65.Text = "Men Req: 6";
+            this.label65.Text = "Men Req: 5";
             // 
             // label66
             // 
@@ -1959,7 +1959,7 @@
             this.label66.Name = "label66";
             this.label66.Size = new System.Drawing.Size(63, 13);
             this.label66.TabIndex = 144;
-            this.label66.Text = "Men Req: 8";
+            this.label66.Text = "Men Req: 7";
             // 
             // label67
             // 
