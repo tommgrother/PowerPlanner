@@ -26,11 +26,11 @@ namespace ShopFloorPlacementPlanner
             dteActionEnd.Value = plannerDate;
             _staff = staff;
             _dept = dept;
-           
+
             getData(staff, dept);
         }
 
-        private void getData(string staff,string dept)
+        private void getData(string staff, string dept)
         {
             int staff_id = 0;
             //MessageBox.Show(staff);
@@ -53,26 +53,52 @@ namespace ShopFloorPlacementPlanner
             //usp_power_planner_chronological_shop_actions
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("usp_power_planner_chronological_shop_actions", conn))
+                if (dept != "Slimline")
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@action_time", SqlDbType.Date).Value = dteAction.Value;
-                    cmd.Parameters.AddWithValue("@action_time_end", SqlDbType.Date).Value = dteActionEnd.Value;
-                    cmd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = dept;
-                    cmd.Parameters.AddWithValue("@user_id", SqlDbType.Date).Value = staff_id;
+                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_chronological_shop_actions", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@action_time", SqlDbType.Date).Value = dteAction.Value;
+                        cmd.Parameters.AddWithValue("@action_time_end", SqlDbType.Date).Value = dteActionEnd.Value;
+                        cmd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = dept;
+                        cmd.Parameters.AddWithValue("@user_id", SqlDbType.Date).Value = staff_id;
 
-                    conn.Open();
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("Status");// dataGridView1.Columns.Add("Status", "Status");
-                    dt.Columns.Add("Time");
-                    da.Fill(dt);
-                    conn.Close();
-                    dataGridView1.DataSource = dt;
+                        conn.Open();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        dt.Columns.Add("Status");// dataGridView1.Columns.Add("Status", "Status");
+                        dt.Columns.Add("Time");
+                        da.Fill(dt);
+                        conn.Close();
+                        dataGridView1.DataSource = dt;
 
-                    //format
-                    REarrange();
-                    dataGridView1.Refresh();
+                        //format
+                        REarrange();
+                        dataGridView1.Refresh();
+                    }
+                }
+                else //usp_power_planner_chronological_shop_actions_slimline
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_chronological_shop_actions_slimline", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@action_time", SqlDbType.Date).Value = dteAction.Value;
+                        cmd.Parameters.AddWithValue("@action_time_end", SqlDbType.Date).Value = dteActionEnd.Value;
+                        cmd.Parameters.AddWithValue("@user_id", SqlDbType.Date).Value = staff_id;
+
+                        conn.Open();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        dt.Columns.Add("Status");// dataGridView1.Columns.Add("Status", "Status");
+                        dt.Columns.Add("Time");
+                        da.Fill(dt);
+                        conn.Close();
+                        dataGridView1.DataSource = dt;
+
+                        //format
+                        REarrange();
+                        dataGridView1.Refresh();
+                    }
                 }
             }
         }

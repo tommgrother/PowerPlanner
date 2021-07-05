@@ -1145,6 +1145,7 @@
             this.dgSlimline.RowTemplate.Height = 50;
             this.dgSlimline.Size = new System.Drawing.Size(200, 58);
             this.dgSlimline.TabIndex = 54;
+            this.dgSlimline.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgSlimline_CellDoubleClick);
             // 
             // label26
             // 

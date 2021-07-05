@@ -3279,7 +3279,12 @@ namespace ShopFloorPlacementPlanner
 
         }
 
-
+        private void dgSlimline_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgSlimline.ClearSelection();
+            frmChronological frm = new frmChronological(Convert.ToString(dgSlimline.Rows[e.RowIndex].Cells[0].Value), "Slimline", dteDateSelection.Value);
+            frm.ShowDialog();
+        }
     }
 }
 
