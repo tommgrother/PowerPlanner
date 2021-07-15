@@ -302,11 +302,13 @@ namespace ShopFloorPlacementPlanner
                     if (row.Cells[10].Value.ToString() != "")
                     {
                         string sql = "";
+                        string note = row.Cells[10].Value.ToString();
+                        note = note.Replace("'", "");
                         if (hasRecord == -1)
-                            sql = "UPDATE dbo.power_plan_covid_temps SET note = '" + row.Cells[10].Value.ToString() + "' WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
+                            sql = "UPDATE dbo.power_plan_covid_temps SET note = '" + note + "' WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
                         else
                         {
-                            sql = "INSERT INTO dbo.power_plan_covid_temps (staff_id,date_id,note) VALUES(" + row.Cells[3].Value.ToString() + "," + dateid + ", '" + row.Cells[10].Value.ToString() + "')";
+                            sql = "INSERT INTO dbo.power_plan_covid_temps (staff_id,date_id,note) VALUES(" + row.Cells[3].Value.ToString() + "," + dateid + ", '" + note + "')";
                             hasRecord = -1;
                         }
                         using (SqlCommand cmd = new SqlCommand(sql, conn))
