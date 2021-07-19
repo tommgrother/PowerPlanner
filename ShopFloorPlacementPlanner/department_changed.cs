@@ -27,6 +27,8 @@ namespace ShopFloorPlacementPlanner
         public static int cleaningSelected { get; set; }
         public static int managementSelected { get; set; }
         public static int hsSelected { get; set; }
+        public static int slimlineStoresSelected{ get; set; }
+        public static int slimlineDispatchSelected{ get; set; }
 
 
         public void resetData()
@@ -53,6 +55,12 @@ namespace ShopFloorPlacementPlanner
             {
                 case "Slimline":
                     slimlineSelected = -1;
+                    break;
+                case "SlimlineDispatch":
+                    slimlineDispatchSelected = -1;
+                    break;
+                case "SlimlineStores":
+                    slimlineStoresSelected = -1;
                     break;
                 case "Laser":
                     laserSelected = -1;

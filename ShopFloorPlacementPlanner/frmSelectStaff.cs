@@ -71,6 +71,12 @@ namespace ShopFloorPlacementPlanner
                 case "Slimline":
                     sql = "SELECT slimline_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+                case "SlimlineDispatch":
+                    sql = "SELECT slimlineDispatch_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "SlimlineStores":
+                    sql = "SELECT slimlineStores_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
                 case "Laser":
                     sql = "SELECT laser_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
@@ -153,6 +159,12 @@ namespace ShopFloorPlacementPlanner
             {
                 case "Slimline":
                     sql = "SELECT slimline_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "SlimlineDispatch":
+                    sql = "SELECT slimlineDispatch_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
+                    break;
+                case "SlimlineStores":
+                    sql = "SELECT slimlineDispatch_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
                 case "Laser":
                     sql = "SELECT laser_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
@@ -346,7 +358,10 @@ namespace ShopFloorPlacementPlanner
                 {
                     //find out where they are heading
                     //form with combobox maybe?
-                    frmMoveDept md = new frmMoveDept(staffID, _selectedDate, PT, hour);
+                    int isSlimline = 0;
+                    if (_department.Contains("Slimline") == true)
+                        isSlimline = -1;
+                    frmMoveDept md = new frmMoveDept(staffID, _selectedDate, PT, hour,isSlimline);
                     md.ShowDialog();
                 }
             }
@@ -355,7 +370,7 @@ namespace ShopFloorPlacementPlanner
             //MANUAL BUTTON
             if (e.ColumnIndex == dgSelected.Columns["Manual"].Index)
             {
-               
+
                 if (_department == "Slimline")
                 {
                     if (skipPassword != -1)
@@ -377,9 +392,9 @@ namespace ShopFloorPlacementPlanner
                 }
                 frmManualHours mh = new frmManualHours();
                 mh.ShowDialog();
-                
 
-               
+
+
 
 
                 SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -426,7 +441,7 @@ namespace ShopFloorPlacementPlanner
             {
                 SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-               
+
                 if (_department == "Slimline")
                 {
                     if (skipPassword != -1)
@@ -445,7 +460,7 @@ namespace ShopFloorPlacementPlanner
                         }
                     }
                 }
-                
+
 
                 int index = dgSelected.Columns["Full Name"].Index;
 
@@ -636,7 +651,6 @@ namespace ShopFloorPlacementPlanner
                 {
                     dgSelected.Columns.Insert(columnIndex, deleteButton);
                 }
-
                 DataGridViewButtonColumn noteButton = new DataGridViewButtonColumn();
                 noteButton.Name = "Note";
                 noteButton.Text = "Note";
@@ -678,8 +692,8 @@ namespace ShopFloorPlacementPlanner
 
             using (SqlCommand cmd = new SqlCommand("SELECT PlacementID,staff_id as 'Staff ID',[Staff Name] as 'Full Name',Placement as 'Placement Type',hours as 'Hours' from dbo.view_planner_punch_staff where date_plan = @selectedDate and department = @dept order by placementID ", conn))
             {
-                cmd.Parameters.AddWithValue("@selectedDate", _selectedDate);
-                cmd.Parameters.AddWithValue("@dept", _department);
+                cmd.Parameters.AddWithValue("@selectedDate", _selectedDate); 
+                    cmd.Parameters.AddWithValue("@dept", _department);
 
                 conn.Open();
 
@@ -697,9 +711,10 @@ namespace ShopFloorPlacementPlanner
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionStringUser);
             string sqlDepartment;
 
-
+            
+          
             //STAFF DEPARTMENTS WORK DIFFERENTLY IF SLIMLINE
-            if (_department == "Slimline")
+            if (_department == "Slimline" || _department == "SlimlineStores" || _department == "SlimlineDispatch")
             {
                 sqlDepartment = "select id, forename + ' ' + surname as fullname from dbo.[user] where slimline_staff = -1 and ShopFloor = -1 and [current] = 1 order by fullname";
             }
@@ -742,7 +757,7 @@ namespace ShopFloorPlacementPlanner
             {
                 switch (staffID)
                 {
-                    case 63: 
+                    case 63:
                         _standardHours = 3.6;
                         break;
                     case 68:
@@ -818,7 +833,7 @@ namespace ShopFloorPlacementPlanner
             }
 
 
-            if (p._notPresentType == 5 || p._notPresentType == 2) 
+            if (p._notPresentType == 5 || p._notPresentType == 2)
             {
                 MessageBox.Show("This staff member is either absent today or has a full day holiday!", "Cannot Place", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

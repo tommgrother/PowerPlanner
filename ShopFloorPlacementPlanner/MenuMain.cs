@@ -85,9 +85,11 @@ namespace ShopFloorPlacementPlanner
         }
 
 
+
         private void MenuMain_Load(object sender, EventArgs e)
         {
             fillgrid();
+            currentAvailable();
         }
 
         private void countGrid()
@@ -171,7 +173,7 @@ namespace ShopFloorPlacementPlanner
                 }
 
 
-                punchHours = punchHours + Convert.ToDouble(row.Cells[1].Value); 
+                punchHours = punchHours + Convert.ToDouble(row.Cells[1].Value);
 
             }
 
@@ -489,6 +491,15 @@ namespace ShopFloorPlacementPlanner
                 PlacementNoteClass pnc = new PlacementNoteClass(placementID);
                 pnc.getNote();
 
+                if (row.Cells[0].Value.ToString().Contains("Shift"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                }
+
                 if (pnc._hasNote == true)
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
@@ -499,6 +510,58 @@ namespace ShopFloorPlacementPlanner
                 if (pnc._nonStandardPlacment == true)
                 {
                     row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
+            }
+            foreach (DataGridViewRow row in dgSlDispatch.Rows)
+            {
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
+                if (row.Cells[0].Value.ToString().Contains("Shift"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                }
+            }
+            foreach (DataGridViewRow row in dgSlStores.Rows)
+            {
+                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
+                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+                pnc.getNote();
+
+                if (pnc._hasNote == true)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+
+                pnc.checkNonStandard();
+
+                if (pnc._nonStandardPlacment == true)
+                {
+                    row.DefaultCellStyle.ForeColor = Color.Blue;
+                }
+                if (row.Cells[0].Value.ToString().Contains("Shift"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+                if (row.Cells[0].Value.ToString().Contains("Half"))
+                {
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
             }
 
@@ -1005,6 +1068,9 @@ namespace ShopFloorPlacementPlanner
             dgManagement.ClearSelection();
             dgHS.ClearSelection();
             dgNotPlaced.ClearSelection();
+            dgvHSManagement.ClearSelection();
+            dgSlDispatch.ClearSelection();
+            dgSlStores.ClearSelection();
 
         }
 
@@ -1012,6 +1078,8 @@ namespace ShopFloorPlacementPlanner
         private void fillgrid()
         {
             fillSlimline();
+            fillSlimlineStores();
+            fillSlimlineDispatch();
             fillPunch();
             fillLaser();
             fillBend();
@@ -1028,6 +1096,7 @@ namespace ShopFloorPlacementPlanner
             fillNotPlaced();
             paintGrid();
             countGrid();
+            fillHSManagement();
             countMen();
 
             DataGridViewColumn columnSlimlineID = dgSlimline.Columns[2];
@@ -1036,6 +1105,20 @@ namespace ShopFloorPlacementPlanner
             columnSlimline.Width = 40;
             dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgSlimline.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+
+            DataGridViewColumn columnSlimlineDispatchID = dgSlDispatch.Columns[2];
+            columnSlimlineDispatchID.Visible = false;
+            DataGridViewColumn columnSlimlineDispatch = dgSlDispatch.Columns[1];
+            columnSlimlineDispatch.Width = 40;
+            dgSlDispatch.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgSlDispatch.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+
+            DataGridViewColumn columnSlimlineStoresID = dgSlStores.Columns[2];
+            columnSlimlineStoresID.Visible = false;
+            DataGridViewColumn columnSlimlineStores = dgSlStores.Columns[1];
+            columnSlimlineStores.Width = 40;
+            dgSlStores.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgSlStores.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
 
             DataGridViewColumn columnLaserID = dgLaser.Columns[2];
@@ -1134,6 +1217,15 @@ namespace ShopFloorPlacementPlanner
             columnHS.Width = 40;
             dgHS.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgHS.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+
+            DataGridViewColumn columnHSManagementID = dgvHSManagement.Columns[2];
+            columnHSManagementID.Visible = false;
+            DataGridViewColumn columnHSManagement = dgvHSManagement.Columns[1];
+            columnHSManagement.Width = 40;
+            dgvHSManagement.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgvHSManagement.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+
+
 
             fillShopGoals();
 
@@ -1244,6 +1336,36 @@ namespace ShopFloorPlacementPlanner
 
 
             conn.Close();
+        }
+
+        private void fillSlimlineDispatch()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            cmd.Parameters.AddWithValue("@dept", "SlimlineDispatch");
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            dgSlDispatch.DataSource = dt;
+        }
+
+        private void fillSlimlineStores()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            cmd.Parameters.AddWithValue("@dept", "SlimlineStores");
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            dgSlStores.DataSource = dt;
         }
 
         private void fillPunch()
@@ -1986,6 +2108,21 @@ namespace ShopFloorPlacementPlanner
 
             conn.Close();
         }
+        private void fillHSManagement()
+        {
+            string sql = "SELECT [full placement] + ' - ' + department as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = '" + dteDateSelection.Text + "' and (department = 'HS' OR department = 'Management') ORDER BY department,[Staff Name]";
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            dgvHSManagement.DataSource = dt;
+            dgvHSManagement.ClearSelection();
+            conn.Close();
+        }
 
         private void fillNotPlaced()
         {
@@ -2168,7 +2305,6 @@ namespace ShopFloorPlacementPlanner
                 {
                     //UPDATES AUTOPLACEMENTS IN AUTOMATIC ALLOCATION
                     updateAutomaticAllocation();
-
                 }
                 catch
                 {
@@ -2397,7 +2533,6 @@ namespace ShopFloorPlacementPlanner
 
             //check if the file already exsits and if it does then skip everything below maybe? or delete whats there
 
-
             //now we have monday - friday, get the DATEID of each of these
             //store these in a DT
             DataTable dt = new DataTable();// declare this outside so it can be called outside
@@ -2593,6 +2728,10 @@ namespace ShopFloorPlacementPlanner
         private void refreshSelectedDepartments()
         {
             //this needs to go through each of the departments that are selected from the prior screen :)
+            if (department_changed.slimlineDispatchSelected == -1)
+                fillSlimlineDispatch();
+            if (department_changed.slimlineStoresSelected == -1)
+                fillSlimlineStores();
             if (department_changed.slimlineSelected == -1)
                 fillSlimline();
             if (department_changed.punchSelected == -1)
@@ -2618,7 +2757,15 @@ namespace ShopFloorPlacementPlanner
             if (department_changed.cleaningSelected == -1)
                 fillCleaning();
             if (department_changed.managementSelected == -1)
+            {
                 fillManagement();
+                fillHSManagement();
+            }
+            if (department_changed.hsSelected == -1)
+            {
+                fillHS();
+                fillHSManagement();
+            }
             fillNotPlaced();
             paintGrid();
             countGrid();
@@ -2632,8 +2779,6 @@ namespace ShopFloorPlacementPlanner
         {
             // MessageBox.Show(e.ColumnIndex.ToString());
         }
-
-
 
         private void dgWeld_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -2797,7 +2942,7 @@ namespace ShopFloorPlacementPlanner
             //txtPackPercent.Text = "";
             txtPackPercent.BackColor = Color.Empty;
 
-           
+
 
             //read allt he data from the selected dte and put them into thje 100 textbnoxes
             string sql = "SELECT COALESCE(round([9_30_slimline] * 100,2),'9999') as [9_30_slimline],COALESCE(round([11_30_slimline] * 100, 2),'9999') as [11_30_slimline],COALESCE(round([2_30_slimline] * 100, 2),'9999') as [2_30_slimline]," +
@@ -2915,13 +3060,13 @@ namespace ShopFloorPlacementPlanner
                 if (laser_9_30.Text == "9999")
                     laser_9_30.Text = "";
                 if (laser_11_30.Text == "9999")
-                    laser_11_30.Text = "";
+                    laser_11_30.Text = ""; //
                 if (laser_2_30.Text == "9999")
                     laser_2_30.Text = "";
                 if (laser_4_00.Text == "9999")
                     laser_4_00.Text = "";
 
-                //bending
+                //bending 
                 if (bending_9_30.Text == "9999")
                     bending_9_30.Text = "";
                 if (bending_11_30.Text == "9999")
@@ -3285,7 +3430,70 @@ namespace ShopFloorPlacementPlanner
             frmChronological frm = new frmChronological(Convert.ToString(dgSlimline.Rows[e.RowIndex].Cells[0].Value), "Slimline", dteDateSelection.Value);
             frm.ShowDialog();
         }
+
+        private void btnSlimlineDispatch_Click(object sender, EventArgs e)
+        {
+            skipMessageBox = 2;
+
+            department_changed department_Changed = new department_changed();
+
+            frmSelectStaff frmSS = new frmSelectStaff("SlimlineDispatch", Convert.ToDateTime(dteDateSelection.Text));
+            frmSS.ShowDialog();
+
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            // fillgrid();
+            refreshSelectedDepartments();
+        }
+
+        private void btnSlimlineStores_Click(object sender, EventArgs e)
+        {
+            skipMessageBox = 2;
+
+            department_changed department_Changed = new department_changed();
+            frmSelectStaff frmSS = new frmSelectStaff("SlimlineStores", Convert.ToDateTime(dteDateSelection.Text));
+            frmSS.ShowDialog();
+
+            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            // fillgrid();
+            refreshSelectedDepartments();
+        }
+
+        private void currentAvailable()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                string sql = "select round(punching,2),round(bending,2),round(welding,2),round(buffing,2),round(painting,2),round(packing,2) from dbo.power_planner_7_30_available WHERE date_plan = '" + dteDateSelection.Text + "'";
+                using (SqlCommand cmd = new SqlCommand("usp_power_planner_available_work", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@insert", SqlDbType.Int).Value = 0;
+
+                    SqlDataAdapter reader = new SqlDataAdapter(cmd);
+                    DataTable availableWork = new DataTable();
+                    reader.Fill(availableWork);
+                    txtAvailPunching.Text = availableWork.Rows[0][0].ToString();
+                    txtAvailBending.Text = availableWork.Rows[0][1].ToString();
+                    txtAvailWelding.Text = availableWork.Rows[0][2].ToString();
+                    txtAvailBuffing.Text = availableWork.Rows[0][3].ToString();
+                    txtAvailPainting.Text = availableWork.Rows[0][4].ToString();
+                    txtAvailPacking.Text = availableWork.Rows[0][5].ToString();
+                }
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    SqlDataAdapter reader = new SqlDataAdapter(cmd);
+                    DataTable availableWork = new DataTable();
+                    reader.Fill(availableWork);
+                    txt730punching.Text = availableWork.Rows[0][0].ToString();
+                    txt730Bending.Text = availableWork.Rows[0][1].ToString();
+                    txt730Welding.Text = availableWork.Rows[0][2].ToString();
+                    txt730Buffing.Text = availableWork.Rows[0][3].ToString();
+                    txt730Painting.Text = availableWork.Rows[0][4].ToString();
+                    txt730Packing.Text = availableWork.Rows[0][5].ToString();
+                }
+            }
+            }
+        }
     }
-}
+
 
 

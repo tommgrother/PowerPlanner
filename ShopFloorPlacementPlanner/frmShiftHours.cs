@@ -27,7 +27,7 @@ namespace ShopFloorPlacementPlanner
             Placement placement = new Placement(tempDate, 0, "", "", 0);
         _date = placement._dateID;
         }
-
+ 
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -55,7 +55,7 @@ namespace ShopFloorPlacementPlanner
                     catch
                     {
                              getData = 0;
-                    }
+                    } 
 
                 
                     if (getData  + Convert.ToDouble(txtManual.Text) > 6.4)
@@ -72,7 +72,7 @@ namespace ShopFloorPlacementPlanner
 
         private void txtManual_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //this one is broke for whatever reason
+            //this one is broke for whatever reason -- 
         }
 
         private void txtManual_KeyPress_1(object sender, KeyPressEventArgs e)

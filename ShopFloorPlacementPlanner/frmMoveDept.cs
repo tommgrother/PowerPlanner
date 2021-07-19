@@ -19,7 +19,7 @@ namespace ShopFloorPlacementPlanner
         public string dept { get; set; }
         public string PT { get; set; }
         public double hours { get; set; }
-        public frmMoveDept(int userID, DateTime _date,string placementType,double _hours)
+        public frmMoveDept(int userID, DateTime _date,string placementType,double _hours,int isSlimline)
         {
             InitializeComponent();
             PT = placementType;
@@ -32,32 +32,41 @@ namespace ShopFloorPlacementPlanner
 
 
             //fill combobox based on what the userID(allocationDept) allows him
-            using (SqlConnection CONNECT = new SqlConnection(connectionStrings.ConnectionStringUser))
+            if (isSlimline == -1)
             {
-                string sql = "SELECT actual_department, allocation_dept_2, allocation_dept_3, allocation_dept_4, allocation_dept_5, allocation_dept_6 , * FROM dbo.[user] WHERE id = " + userID.ToString();
-                //MessageBox.Show(sql);
-                using (SqlCommand cmd = new SqlCommand(sql, CONNECT))
+                cmbDept.Items.Add("Slimline");
+                cmbDept.Items.Add("SlimlineDispatch");
+                cmbDept.Items.Add("SlimlineStores");
+            }
+            else
+            {
+                using (SqlConnection CONNECT = new SqlConnection(connectionStrings.ConnectionStringUser))
                 {
-                    CONNECT.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    string sql = "SELECT actual_department, allocation_dept_2, allocation_dept_3, allocation_dept_4, allocation_dept_5, allocation_dept_6 , * FROM dbo.[user] WHERE id = " + userID.ToString();
+                    //MessageBox.Show(sql);
+                    using (SqlCommand cmd = new SqlCommand(sql, CONNECT))
                     {
-                        Regex regularExpression = new Regex(@"^[a-zA-Z]+$");
-                        if (regularExpression.IsMatch((reader["actual_department"].ToString())))
-                            cmbDept.Items.Add(reader["actual_department"].ToString());
-                        if (regularExpression.IsMatch((reader["allocation_dept_2"].ToString())))
-                            cmbDept.Items.Add(reader["allocation_dept_2"].ToString());
-                        if (regularExpression.IsMatch((reader["allocation_dept_3"].ToString())))
-                            cmbDept.Items.Add(reader["allocation_dept_3"].ToString());
-                        if (regularExpression.IsMatch((reader["allocation_dept_4"].ToString())))
-                            cmbDept.Items.Add(reader["allocation_dept_4"].ToString());
-                        if (regularExpression.IsMatch((reader["allocation_dept_5"].ToString())))
-                            cmbDept.Items.Add(reader["allocation_dept_5"].ToString());
-                        if (regularExpression.IsMatch((reader["allocation_dept_6"].ToString())))
-                            cmbDept.Items.Add(reader["allocation_dept_6"].ToString());
-                       
+                        CONNECT.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Regex regularExpression = new Regex(@"^[a-zA-Z]+$");
+                            if (regularExpression.IsMatch((reader["actual_department"].ToString())))
+                                cmbDept.Items.Add(reader["actual_department"].ToString());
+                            if (regularExpression.IsMatch((reader["allocation_dept_2"].ToString())))
+                                cmbDept.Items.Add(reader["allocation_dept_2"].ToString());
+                            if (regularExpression.IsMatch((reader["allocation_dept_3"].ToString())))
+                                cmbDept.Items.Add(reader["allocation_dept_3"].ToString());
+                            if (regularExpression.IsMatch((reader["allocation_dept_4"].ToString())))
+                                cmbDept.Items.Add(reader["allocation_dept_4"].ToString());
+                            if (regularExpression.IsMatch((reader["allocation_dept_5"].ToString())))
+                                cmbDept.Items.Add(reader["allocation_dept_5"].ToString());
+                            if (regularExpression.IsMatch((reader["allocation_dept_6"].ToString())))
+                                cmbDept.Items.Add(reader["allocation_dept_6"].ToString());
+
+                        }
+                        CONNECT.Close();
                     }
-                    CONNECT.Close();
                 }
             }
 

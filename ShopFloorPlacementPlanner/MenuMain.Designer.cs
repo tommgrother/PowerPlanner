@@ -51,6 +51,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuMain));
             this.dgPunch = new System.Windows.Forms.DataGridView();
             this.dgBend = new System.Windows.Forms.DataGridView();
@@ -309,6 +316,37 @@
             this.txtPaintPercent = new System.Windows.Forms.TextBox();
             this.label108 = new System.Windows.Forms.Label();
             this.txtPackPercent = new System.Windows.Forms.TextBox();
+            this.dgvHSManagement = new System.Windows.Forms.DataGridView();
+            this.dgSlDispatch = new System.Windows.Forms.DataGridView();
+            this.label109 = new System.Windows.Forms.Label();
+            this.btnSlimlineDispatch = new System.Windows.Forms.Button();
+            this.dgSlStores = new System.Windows.Forms.DataGridView();
+            this.label110 = new System.Windows.Forms.Label();
+            this.btnSlimlineStores = new System.Windows.Forms.Button();
+            this.label111 = new System.Windows.Forms.Label();
+            this.txt730punching = new System.Windows.Forms.TextBox();
+            this.label112 = new System.Windows.Forms.Label();
+            this.txtAvailPunching = new System.Windows.Forms.TextBox();
+            this.label115 = new System.Windows.Forms.Label();
+            this.txtAvailBending = new System.Windows.Forms.TextBox();
+            this.label116 = new System.Windows.Forms.Label();
+            this.txt730Bending = new System.Windows.Forms.TextBox();
+            this.label117 = new System.Windows.Forms.Label();
+            this.txtAvailWelding = new System.Windows.Forms.TextBox();
+            this.label118 = new System.Windows.Forms.Label();
+            this.txt730Welding = new System.Windows.Forms.TextBox();
+            this.label119 = new System.Windows.Forms.Label();
+            this.txtAvailBuffing = new System.Windows.Forms.TextBox();
+            this.label120 = new System.Windows.Forms.Label();
+            this.txt730Buffing = new System.Windows.Forms.TextBox();
+            this.label121 = new System.Windows.Forms.Label();
+            this.txtAvailPainting = new System.Windows.Forms.TextBox();
+            this.label122 = new System.Windows.Forms.Label();
+            this.txt730Painting = new System.Windows.Forms.TextBox();
+            this.label123 = new System.Windows.Forms.Label();
+            this.txtAvailPacking = new System.Windows.Forms.TextBox();
+            this.label124 = new System.Windows.Forms.Label();
+            this.txt730Packing = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -325,6 +363,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgDispatch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgManagement)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgHS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHSManagement)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSlDispatch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSlStores)).BeginInit();
             this.SuspendLayout();
             // 
             // dgPunch
@@ -352,7 +393,7 @@
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPunch.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgPunch.RowTemplate.Height = 50;
-            this.dgPunch.Size = new System.Drawing.Size(200, 58);
+            this.dgPunch.Size = new System.Drawing.Size(200, 416);
             this.dgPunch.TabIndex = 0;
             this.dgPunch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgPunch_CellDoubleClick);
             // 
@@ -373,7 +414,7 @@
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBend.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgBend.RowTemplate.Height = 50;
-            this.dgBend.Size = new System.Drawing.Size(200, 58);
+            this.dgBend.Size = new System.Drawing.Size(200, 416);
             this.dgBend.TabIndex = 1;
             // 
             // dgWeld
@@ -393,7 +434,7 @@
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgWeld.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgWeld.RowTemplate.Height = 50;
-            this.dgWeld.Size = new System.Drawing.Size(200, 264);
+            this.dgWeld.Size = new System.Drawing.Size(200, 622);
             this.dgWeld.TabIndex = 2;
             this.dgWeld.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeld_CellDoubleClick);
             // 
@@ -414,7 +455,7 @@
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBuff.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgBuff.RowTemplate.Height = 50;
-            this.dgBuff.Size = new System.Drawing.Size(200, 58);
+            this.dgBuff.Size = new System.Drawing.Size(200, 416);
             this.dgBuff.TabIndex = 3;
             this.dgBuff.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBuff_CellDoubleClick);
             // 
@@ -435,7 +476,7 @@
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPaint.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgPaint.RowTemplate.Height = 50;
-            this.dgPaint.Size = new System.Drawing.Size(225, 58);
+            this.dgPaint.Size = new System.Drawing.Size(225, 416);
             this.dgPaint.TabIndex = 4;
             // 
             // dgPack
@@ -455,7 +496,7 @@
             dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPack.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgPack.RowTemplate.Height = 50;
-            this.dgPack.Size = new System.Drawing.Size(200, 264);
+            this.dgPack.Size = new System.Drawing.Size(200, 622);
             this.dgPack.TabIndex = 5;
             this.dgPack.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgPack_CellDoubleClick);
             // 
@@ -602,7 +643,7 @@
             this.dgNotPlaced.Name = "dgNotPlaced";
             this.dgNotPlaced.RowHeadersVisible = false;
             this.dgNotPlaced.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgNotPlaced.Size = new System.Drawing.Size(200, 279);
+            this.dgNotPlaced.Size = new System.Drawing.Size(200, 637);
             this.dgNotPlaced.TabIndex = 19;
             this.dgNotPlaced.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgNotPlaced_CellDoubleClick);
             // 
@@ -621,7 +662,7 @@
             // 
             this.splitter1.Location = new System.Drawing.Point(0, 24);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 539);
+            this.splitter1.Size = new System.Drawing.Size(3, 897);
             this.splitter1.TabIndex = 21;
             this.splitter1.TabStop = false;
             // 
@@ -651,8 +692,6 @@
             this.dgLaser.AllowUserToDeleteRows = false;
             this.dgLaser.AllowUserToResizeColumns = false;
             this.dgLaser.AllowUserToResizeRows = false;
-            this.dgLaser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgLaser.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgLaser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -670,7 +709,7 @@
             dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgLaser.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dgLaser.RowTemplate.Height = 50;
-            this.dgLaser.Size = new System.Drawing.Size(200, 58);
+            this.dgLaser.Size = new System.Drawing.Size(200, 355);
             this.dgLaser.TabIndex = 22;
             // 
             // txtPunchMen
@@ -1116,8 +1155,6 @@
             this.dgSlimline.AllowUserToDeleteRows = false;
             this.dgSlimline.AllowUserToResizeColumns = false;
             this.dgSlimline.AllowUserToResizeRows = false;
-            this.dgSlimline.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgSlimline.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
@@ -1143,7 +1180,7 @@
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgSlimline.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgSlimline.RowTemplate.Height = 50;
-            this.dgSlimline.Size = new System.Drawing.Size(200, 58);
+            this.dgSlimline.Size = new System.Drawing.Size(200, 385);
             this.dgSlimline.TabIndex = 54;
             this.dgSlimline.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgSlimline_CellDoubleClick);
             // 
@@ -1460,11 +1497,11 @@
             // label50
             // 
             this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(32, 150);
+            this.label50.Location = new System.Drawing.Point(119, 150);
             this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(112, 13);
+            this.label50.Size = new System.Drawing.Size(25, 13);
             this.label50.TabIndex = 102;
-            this.label50.Text = "Additions/Deductions:";
+            this.label50.Text = "AD:";
             // 
             // txtPaintAD
             // 
@@ -1532,65 +1569,65 @@
             // label51
             // 
             this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(247, 150);
+            this.label51.Location = new System.Drawing.Point(334, 150);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(112, 13);
+            this.label51.Size = new System.Drawing.Size(25, 13);
             this.label51.TabIndex = 109;
-            this.label51.Text = "Additions/Deductions:";
+            this.label51.Text = "AD:";
             // 
             // label45
             // 
             this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(659, 150);
+            this.label45.Location = new System.Drawing.Point(746, 150);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(112, 13);
+            this.label45.Size = new System.Drawing.Size(25, 13);
             this.label45.TabIndex = 110;
-            this.label45.Text = "Additions/Deductions:";
+            this.label45.Text = "AD:";
             // 
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(452, 150);
+            this.label46.Location = new System.Drawing.Point(539, 150);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(112, 13);
+            this.label46.Size = new System.Drawing.Size(25, 13);
             this.label46.TabIndex = 111;
-            this.label46.Text = "Additions/Deductions:";
+            this.label46.Text = "AD:";
             // 
             // label47
             // 
             this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(865, 150);
+            this.label47.Location = new System.Drawing.Point(952, 150);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(112, 13);
+            this.label47.Size = new System.Drawing.Size(25, 13);
             this.label47.TabIndex = 112;
-            this.label47.Text = "Additions/Deductions:";
+            this.label47.Text = "AD:";
             // 
             // label48
             // 
             this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(1068, 150);
+            this.label48.Location = new System.Drawing.Point(1155, 150);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(112, 13);
+            this.label48.Size = new System.Drawing.Size(25, 13);
             this.label48.TabIndex = 113;
-            this.label48.Text = "Additions/Deductions:";
+            this.label48.Text = "AD:";
             // 
             // label44
             // 
             this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(1296, 150);
+            this.label44.Location = new System.Drawing.Point(1383, 150);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(112, 13);
+            this.label44.Size = new System.Drawing.Size(25, 13);
             this.label44.TabIndex = 114;
-            this.label44.Text = "Additions/Deductions:";
+            this.label44.Text = "AD:";
             // 
             // label49
             // 
             this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(1515, 150);
+            this.label49.Location = new System.Drawing.Point(1599, 150);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(112, 13);
+            this.label49.Size = new System.Drawing.Size(25, 13);
             this.label49.TabIndex = 116;
-            this.label49.Text = "Additions/Deductions:";
+            this.label49.Text = "AD:";
             // 
             // txtPackAD
             // 
@@ -1606,7 +1643,7 @@
             this.label52.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label52.AutoSize = true;
             this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.Location = new System.Drawing.Point(51, 365);
+            this.label52.Location = new System.Drawing.Point(263, 723);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(75, 26);
             this.label52.TabIndex = 124;
@@ -1615,7 +1652,7 @@
             // btnAddStores
             // 
             this.btnAddStores.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAddStores.Location = new System.Drawing.Point(145, 368);
+            this.btnAddStores.Location = new System.Drawing.Point(357, 726);
             this.btnAddStores.Name = "btnAddStores";
             this.btnAddStores.Size = new System.Drawing.Size(57, 23);
             this.btnAddStores.TabIndex = 123;
@@ -1628,7 +1665,7 @@
             this.label53.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label53.AutoSize = true;
             this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label53.Location = new System.Drawing.Point(436, 365);
+            this.label53.Location = new System.Drawing.Point(1063, 722);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(118, 26);
             this.label53.TabIndex = 122;
@@ -1637,7 +1674,7 @@
             // btnAddToolRoom
             // 
             this.btnAddToolRoom.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAddToolRoom.Location = new System.Drawing.Point(563, 368);
+            this.btnAddToolRoom.Location = new System.Drawing.Point(1186, 725);
             this.btnAddToolRoom.Name = "btnAddToolRoom";
             this.btnAddToolRoom.Size = new System.Drawing.Size(57, 23);
             this.btnAddToolRoom.TabIndex = 121;
@@ -1650,7 +1687,7 @@
             this.label54.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label54.AutoSize = true;
             this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label54.Location = new System.Drawing.Point(650, 364);
+            this.label54.Location = new System.Drawing.Point(1298, 721);
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(98, 26);
             this.label54.TabIndex = 120;
@@ -1661,7 +1698,7 @@
             this.label55.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label55.AutoSize = true;
             this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label55.Location = new System.Drawing.Point(248, 365);
+            this.label55.Location = new System.Drawing.Point(660, 723);
             this.label55.Name = "label55";
             this.label55.Size = new System.Drawing.Size(97, 26);
             this.label55.TabIndex = 119;
@@ -1670,7 +1707,7 @@
             // btnAddCleaning
             // 
             this.btnAddCleaning.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAddCleaning.Location = new System.Drawing.Point(770, 368);
+            this.btnAddCleaning.Location = new System.Drawing.Point(1411, 725);
             this.btnAddCleaning.Name = "btnAddCleaning";
             this.btnAddCleaning.Size = new System.Drawing.Size(57, 23);
             this.btnAddCleaning.TabIndex = 118;
@@ -1681,7 +1718,7 @@
             // btnAddDispatch
             // 
             this.btnAddDispatch.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAddDispatch.Location = new System.Drawing.Point(357, 368);
+            this.btnAddDispatch.Location = new System.Drawing.Point(769, 726);
             this.btnAddDispatch.Name = "btnAddDispatch";
             this.btnAddDispatch.Size = new System.Drawing.Size(57, 23);
             this.btnAddDispatch.TabIndex = 117;
@@ -1712,13 +1749,13 @@
             dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgStores.DefaultCellStyle = dataGridViewCellStyle14;
             this.dgStores.Enabled = false;
-            this.dgStores.Location = new System.Drawing.Point(5, 397);
+            this.dgStores.Location = new System.Drawing.Point(217, 755);
             this.dgStores.Name = "dgStores";
             this.dgStores.RowHeadersVisible = false;
             dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgStores.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.dgStores.RowTemplate.Height = 50;
-            this.dgStores.Size = new System.Drawing.Size(200, 155);
+            this.dgStores.Size = new System.Drawing.Size(197, 155);
             this.dgStores.TabIndex = 128;
             // 
             // dgToolRoom
@@ -1736,7 +1773,7 @@
             dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgToolRoom.DefaultCellStyle = dataGridViewCellStyle16;
             this.dgToolRoom.Enabled = false;
-            this.dgToolRoom.Location = new System.Drawing.Point(423, 397);
+            this.dgToolRoom.Location = new System.Drawing.Point(1043, 754);
             this.dgToolRoom.Name = "dgToolRoom";
             this.dgToolRoom.RowHeadersVisible = false;
             dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1753,13 +1790,13 @@
             this.dgCleaning.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgCleaning.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgCleaning.Enabled = false;
-            this.dgCleaning.Location = new System.Drawing.Point(630, 397);
+            this.dgCleaning.Location = new System.Drawing.Point(1250, 754);
             this.dgCleaning.Name = "dgCleaning";
             this.dgCleaning.RowHeadersVisible = false;
             dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgCleaning.RowsDefaultCellStyle = dataGridViewCellStyle18;
             this.dgCleaning.RowTemplate.Height = 50;
-            this.dgCleaning.Size = new System.Drawing.Size(200, 155);
+            this.dgCleaning.Size = new System.Drawing.Size(225, 155);
             this.dgCleaning.TabIndex = 126;
             // 
             // dgDispatch
@@ -1777,7 +1814,7 @@
             dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgDispatch.DefaultCellStyle = dataGridViewCellStyle19;
             this.dgDispatch.Enabled = false;
-            this.dgDispatch.Location = new System.Drawing.Point(217, 397);
+            this.dgDispatch.Location = new System.Drawing.Point(629, 755);
             this.dgDispatch.Name = "dgDispatch";
             this.dgDispatch.RowHeadersVisible = false;
             dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1806,7 +1843,7 @@
             this.dgManagement.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgManagement.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgManagement.Enabled = false;
-            this.dgManagement.Location = new System.Drawing.Point(1045, 397);
+            this.dgManagement.Location = new System.Drawing.Point(1145, 332);
             this.dgManagement.Name = "dgManagement";
             this.dgManagement.RowHeadersVisible = false;
             dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1814,13 +1851,13 @@
             this.dgManagement.RowTemplate.Height = 50;
             this.dgManagement.Size = new System.Drawing.Size(200, 155);
             this.dgManagement.TabIndex = 130;
+            this.dgManagement.Visible = false;
             // 
             // label57
             // 
-            this.label57.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label57.AutoSize = true;
             this.label57.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label57.Location = new System.Drawing.Point(1049, 364);
+            this.label57.Location = new System.Drawing.Point(429, 646);
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(139, 26);
             this.label57.TabIndex = 131;
@@ -1828,8 +1865,7 @@
             // 
             // btnAddManagement
             // 
-            this.btnAddManagement.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAddManagement.Location = new System.Drawing.Point(1189, 368);
+            this.btnAddManagement.Location = new System.Drawing.Point(569, 650);
             this.btnAddManagement.Name = "btnAddManagement";
             this.btnAddManagement.Size = new System.Drawing.Size(57, 23);
             this.btnAddManagement.TabIndex = 132;
@@ -1845,7 +1881,7 @@
             this.dgHS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgHS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgHS.Enabled = false;
-            this.dgHS.Location = new System.Drawing.Point(1252, 397);
+            this.dgHS.Location = new System.Drawing.Point(1145, 332);
             this.dgHS.Name = "dgHS";
             this.dgHS.RowHeadersVisible = false;
             dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1853,13 +1889,13 @@
             this.dgHS.RowTemplate.Height = 50;
             this.dgHS.Size = new System.Drawing.Size(225, 155);
             this.dgHS.TabIndex = 133;
+            this.dgHS.Visible = false;
             // 
             // label58
             // 
-            this.label58.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label58.AutoSize = true;
             this.label58.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label58.Location = new System.Drawing.Point(1326, 364);
+            this.label58.Location = new System.Drawing.Point(476, 675);
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(58, 26);
             this.label58.TabIndex = 134;
@@ -1867,8 +1903,7 @@
             // 
             // btnAddHS
             // 
-            this.btnAddHS.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAddHS.Location = new System.Drawing.Point(1419, 369);
+            this.btnAddHS.Location = new System.Drawing.Point(569, 680);
             this.btnAddHS.Name = "btnAddHS";
             this.btnAddHS.Size = new System.Drawing.Size(57, 23);
             this.btnAddHS.TabIndex = 135;
@@ -1974,7 +2009,8 @@
             // txtStoresMen
             // 
             this.txtStoresMen.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.txtStoresMen.Location = new System.Drawing.Point(12, 372);
+            this.txtStoresMen.Enabled = false;
+            this.txtStoresMen.Location = new System.Drawing.Point(224, 730);
             this.txtStoresMen.Name = "txtStoresMen";
             this.txtStoresMen.Size = new System.Drawing.Size(33, 20);
             this.txtStoresMen.TabIndex = 146;
@@ -1988,7 +2024,7 @@
             // 
             this.label68.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(15, 355);
+            this.label68.Location = new System.Drawing.Point(227, 713);
             this.label68.Name = "label68";
             this.label68.Size = new System.Drawing.Size(28, 13);
             this.label68.TabIndex = 148;
@@ -2921,12 +2957,392 @@
             this.txtPackPercent.TabIndex = 246;
             this.txtPackPercent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // dgvHSManagement
+            // 
+            this.dgvHSManagement.AllowUserToAddRows = false;
+            this.dgvHSManagement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.dgvHSManagement.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHSManagement.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle23;
+            this.dgvHSManagement.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHSManagement.DefaultCellStyle = dataGridViewCellStyle24;
+            this.dgvHSManagement.Enabled = false;
+            this.dgvHSManagement.Location = new System.Drawing.Point(427, 712);
+            this.dgvHSManagement.Name = "dgvHSManagement";
+            this.dgvHSManagement.RowHeadersVisible = false;
+            dataGridViewCellStyle25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgvHSManagement.RowsDefaultCellStyle = dataGridViewCellStyle25;
+            this.dgvHSManagement.RowTemplate.Height = 50;
+            this.dgvHSManagement.Size = new System.Drawing.Size(200, 198);
+            this.dgvHSManagement.TabIndex = 248;
+            // 
+            // dgSlDispatch
+            // 
+            this.dgSlDispatch.AllowUserToAddRows = false;
+            this.dgSlDispatch.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgSlDispatch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle26.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgSlDispatch.DefaultCellStyle = dataGridViewCellStyle26;
+            this.dgSlDispatch.Enabled = false;
+            this.dgSlDispatch.Location = new System.Drawing.Point(9, 713);
+            this.dgSlDispatch.Name = "dgSlDispatch";
+            this.dgSlDispatch.RowHeadersVisible = false;
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgSlDispatch.RowsDefaultCellStyle = dataGridViewCellStyle27;
+            this.dgSlDispatch.RowTemplate.Height = 50;
+            this.dgSlDispatch.Size = new System.Drawing.Size(200, 126);
+            this.dgSlDispatch.TabIndex = 251;
+            // 
+            // label109
+            // 
+            this.label109.AutoSize = true;
+            this.label109.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label109.Location = new System.Drawing.Point(16, 679);
+            this.label109.Name = "label109";
+            this.label109.Size = new System.Drawing.Size(130, 26);
+            this.label109.TabIndex = 250;
+            this.label109.Text = "SL Dispatch";
+            // 
+            // btnSlimlineDispatch
+            // 
+            this.btnSlimlineDispatch.Location = new System.Drawing.Point(149, 682);
+            this.btnSlimlineDispatch.Name = "btnSlimlineDispatch";
+            this.btnSlimlineDispatch.Size = new System.Drawing.Size(57, 23);
+            this.btnSlimlineDispatch.TabIndex = 249;
+            this.btnSlimlineDispatch.Text = "Update";
+            this.btnSlimlineDispatch.UseVisualStyleBackColor = true;
+            this.btnSlimlineDispatch.Click += new System.EventHandler(this.btnSlimlineDispatch_Click);
+            // 
+            // dgSlStores
+            // 
+            this.dgSlStores.AllowUserToAddRows = false;
+            this.dgSlStores.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.dgSlStores.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgSlStores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle28.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle28.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgSlStores.DefaultCellStyle = dataGridViewCellStyle28;
+            this.dgSlStores.Enabled = false;
+            this.dgSlStores.Location = new System.Drawing.Point(9, 875);
+            this.dgSlStores.Name = "dgSlStores";
+            this.dgSlStores.RowHeadersVisible = false;
+            dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgSlStores.RowsDefaultCellStyle = dataGridViewCellStyle29;
+            this.dgSlStores.RowTemplate.Height = 50;
+            this.dgSlStores.Size = new System.Drawing.Size(200, 32);
+            this.dgSlStores.TabIndex = 254;
+            // 
+            // label110
+            // 
+            this.label110.AutoSize = true;
+            this.label110.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label110.Location = new System.Drawing.Point(14, 846);
+            this.label110.Name = "label110";
+            this.label110.Size = new System.Drawing.Size(108, 26);
+            this.label110.TabIndex = 253;
+            this.label110.Text = "SL Stores";
+            // 
+            // btnSlimlineStores
+            // 
+            this.btnSlimlineStores.Location = new System.Drawing.Point(135, 848);
+            this.btnSlimlineStores.Name = "btnSlimlineStores";
+            this.btnSlimlineStores.Size = new System.Drawing.Size(57, 23);
+            this.btnSlimlineStores.TabIndex = 252;
+            this.btnSlimlineStores.Text = "Update";
+            this.btnSlimlineStores.UseVisualStyleBackColor = true;
+            this.btnSlimlineStores.Click += new System.EventHandler(this.btnSlimlineStores_Click);
+            // 
+            // label111
+            // 
+            this.label111.AutoSize = true;
+            this.label111.Enabled = false;
+            this.label111.Location = new System.Drawing.Point(218, 124);
+            this.label111.Name = "label111";
+            this.label111.Size = new System.Drawing.Size(28, 13);
+            this.label111.TabIndex = 256;
+            this.label111.Text = "7:30";
+            // 
+            // txt730punching
+            // 
+            this.txt730punching.Enabled = false;
+            this.txt730punching.Location = new System.Drawing.Point(255, 121);
+            this.txt730punching.Name = "txt730punching";
+            this.txt730punching.Size = new System.Drawing.Size(40, 20);
+            this.txt730punching.TabIndex = 255;
+            this.txt730punching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label112
+            // 
+            this.label112.AutoSize = true;
+            this.label112.Enabled = false;
+            this.label112.Location = new System.Drawing.Point(218, 149);
+            this.label112.Name = "label112";
+            this.label112.Size = new System.Drawing.Size(30, 13);
+            this.label112.TabIndex = 258;
+            this.label112.Text = "Avail";
+            // 
+            // txtAvailPunching
+            // 
+            this.txtAvailPunching.Enabled = false;
+            this.txtAvailPunching.Location = new System.Drawing.Point(255, 146);
+            this.txtAvailPunching.Name = "txtAvailPunching";
+            this.txtAvailPunching.Size = new System.Drawing.Size(40, 20);
+            this.txtAvailPunching.TabIndex = 257;
+            this.txtAvailPunching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label115
+            // 
+            this.label115.AutoSize = true;
+            this.label115.Enabled = false;
+            this.label115.Location = new System.Drawing.Point(633, 149);
+            this.label115.Name = "label115";
+            this.label115.Size = new System.Drawing.Size(30, 13);
+            this.label115.TabIndex = 266;
+            this.label115.Text = "Avail";
+            // 
+            // txtAvailBending
+            // 
+            this.txtAvailBending.Enabled = false;
+            this.txtAvailBending.Location = new System.Drawing.Point(670, 146);
+            this.txtAvailBending.Name = "txtAvailBending";
+            this.txtAvailBending.Size = new System.Drawing.Size(40, 20);
+            this.txtAvailBending.TabIndex = 265;
+            this.txtAvailBending.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label116
+            // 
+            this.label116.AutoSize = true;
+            this.label116.Enabled = false;
+            this.label116.Location = new System.Drawing.Point(633, 124);
+            this.label116.Name = "label116";
+            this.label116.Size = new System.Drawing.Size(28, 13);
+            this.label116.TabIndex = 264;
+            this.label116.Text = "7:30";
+            // 
+            // txt730Bending
+            // 
+            this.txt730Bending.Enabled = false;
+            this.txt730Bending.Location = new System.Drawing.Point(670, 121);
+            this.txt730Bending.Name = "txt730Bending";
+            this.txt730Bending.Size = new System.Drawing.Size(40, 20);
+            this.txt730Bending.TabIndex = 263;
+            this.txt730Bending.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label117
+            // 
+            this.label117.AutoSize = true;
+            this.label117.Enabled = false;
+            this.label117.Location = new System.Drawing.Point(840, 149);
+            this.label117.Name = "label117";
+            this.label117.Size = new System.Drawing.Size(30, 13);
+            this.label117.TabIndex = 270;
+            this.label117.Text = "Avail";
+            // 
+            // txtAvailWelding
+            // 
+            this.txtAvailWelding.Enabled = false;
+            this.txtAvailWelding.Location = new System.Drawing.Point(877, 146);
+            this.txtAvailWelding.Name = "txtAvailWelding";
+            this.txtAvailWelding.Size = new System.Drawing.Size(40, 20);
+            this.txtAvailWelding.TabIndex = 269;
+            this.txtAvailWelding.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label118
+            // 
+            this.label118.AutoSize = true;
+            this.label118.Enabled = false;
+            this.label118.Location = new System.Drawing.Point(840, 124);
+            this.label118.Name = "label118";
+            this.label118.Size = new System.Drawing.Size(28, 13);
+            this.label118.TabIndex = 268;
+            this.label118.Text = "7:30";
+            // 
+            // txt730Welding
+            // 
+            this.txt730Welding.Enabled = false;
+            this.txt730Welding.Location = new System.Drawing.Point(877, 121);
+            this.txt730Welding.Name = "txt730Welding";
+            this.txt730Welding.Size = new System.Drawing.Size(40, 20);
+            this.txt730Welding.TabIndex = 267;
+            this.txt730Welding.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label119
+            // 
+            this.label119.AutoSize = true;
+            this.label119.Enabled = false;
+            this.label119.Location = new System.Drawing.Point(1047, 149);
+            this.label119.Name = "label119";
+            this.label119.Size = new System.Drawing.Size(30, 13);
+            this.label119.TabIndex = 274;
+            this.label119.Text = "Avail";
+            // 
+            // txtAvailBuffing
+            // 
+            this.txtAvailBuffing.Enabled = false;
+            this.txtAvailBuffing.Location = new System.Drawing.Point(1084, 146);
+            this.txtAvailBuffing.Name = "txtAvailBuffing";
+            this.txtAvailBuffing.Size = new System.Drawing.Size(40, 20);
+            this.txtAvailBuffing.TabIndex = 273;
+            this.txtAvailBuffing.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label120
+            // 
+            this.label120.AutoSize = true;
+            this.label120.Enabled = false;
+            this.label120.Location = new System.Drawing.Point(1047, 124);
+            this.label120.Name = "label120";
+            this.label120.Size = new System.Drawing.Size(28, 13);
+            this.label120.TabIndex = 272;
+            this.label120.Text = "7:30";
+            // 
+            // txt730Buffing
+            // 
+            this.txt730Buffing.Enabled = false;
+            this.txt730Buffing.Location = new System.Drawing.Point(1084, 121);
+            this.txt730Buffing.Name = "txt730Buffing";
+            this.txt730Buffing.Size = new System.Drawing.Size(40, 20);
+            this.txt730Buffing.TabIndex = 271;
+            this.txt730Buffing.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label121
+            // 
+            this.label121.AutoSize = true;
+            this.label121.Enabled = false;
+            this.label121.Location = new System.Drawing.Point(1274, 149);
+            this.label121.Name = "label121";
+            this.label121.Size = new System.Drawing.Size(30, 13);
+            this.label121.TabIndex = 278;
+            this.label121.Text = "Avail";
+            // 
+            // txtAvailPainting
+            // 
+            this.txtAvailPainting.Enabled = false;
+            this.txtAvailPainting.Location = new System.Drawing.Point(1311, 146);
+            this.txtAvailPainting.Name = "txtAvailPainting";
+            this.txtAvailPainting.Size = new System.Drawing.Size(40, 20);
+            this.txtAvailPainting.TabIndex = 277;
+            this.txtAvailPainting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label122
+            // 
+            this.label122.AutoSize = true;
+            this.label122.Enabled = false;
+            this.label122.Location = new System.Drawing.Point(1274, 124);
+            this.label122.Name = "label122";
+            this.label122.Size = new System.Drawing.Size(28, 13);
+            this.label122.TabIndex = 276;
+            this.label122.Text = "7:30";
+            // 
+            // txt730Painting
+            // 
+            this.txt730Painting.Enabled = false;
+            this.txt730Painting.Location = new System.Drawing.Point(1311, 121);
+            this.txt730Painting.Name = "txt730Painting";
+            this.txt730Painting.Size = new System.Drawing.Size(40, 20);
+            this.txt730Painting.TabIndex = 275;
+            this.txt730Painting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label123
+            // 
+            this.label123.AutoSize = true;
+            this.label123.Enabled = false;
+            this.label123.Location = new System.Drawing.Point(1490, 149);
+            this.label123.Name = "label123";
+            this.label123.Size = new System.Drawing.Size(30, 13);
+            this.label123.TabIndex = 282;
+            this.label123.Text = "Avail";
+            // 
+            // txtAvailPacking
+            // 
+            this.txtAvailPacking.Enabled = false;
+            this.txtAvailPacking.Location = new System.Drawing.Point(1527, 146);
+            this.txtAvailPacking.Name = "txtAvailPacking";
+            this.txtAvailPacking.Size = new System.Drawing.Size(40, 20);
+            this.txtAvailPacking.TabIndex = 281;
+            this.txtAvailPacking.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label124
+            // 
+            this.label124.AutoSize = true;
+            this.label124.Enabled = false;
+            this.label124.Location = new System.Drawing.Point(1490, 124);
+            this.label124.Name = "label124";
+            this.label124.Size = new System.Drawing.Size(28, 13);
+            this.label124.TabIndex = 280;
+            this.label124.Text = "7:30";
+            // 
+            // txt730Packing
+            // 
+            this.txt730Packing.Enabled = false;
+            this.txt730Packing.Location = new System.Drawing.Point(1527, 121);
+            this.txt730Packing.Name = "txt730Packing";
+            this.txt730Packing.Size = new System.Drawing.Size(40, 20);
+            this.txt730Packing.TabIndex = 279;
+            this.txt730Packing.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1911, 563);
+            this.ClientSize = new System.Drawing.Size(1911, 921);
+            this.Controls.Add(this.label123);
+            this.Controls.Add(this.txtAvailPacking);
+            this.Controls.Add(this.label124);
+            this.Controls.Add(this.txt730Packing);
+            this.Controls.Add(this.label121);
+            this.Controls.Add(this.txtAvailPainting);
+            this.Controls.Add(this.label122);
+            this.Controls.Add(this.txt730Painting);
+            this.Controls.Add(this.label119);
+            this.Controls.Add(this.txtAvailBuffing);
+            this.Controls.Add(this.label120);
+            this.Controls.Add(this.txt730Buffing);
+            this.Controls.Add(this.label117);
+            this.Controls.Add(this.txtAvailWelding);
+            this.Controls.Add(this.label118);
+            this.Controls.Add(this.txt730Welding);
+            this.Controls.Add(this.label115);
+            this.Controls.Add(this.txtAvailBending);
+            this.Controls.Add(this.label116);
+            this.Controls.Add(this.txt730Bending);
+            this.Controls.Add(this.label112);
+            this.Controls.Add(this.txtAvailPunching);
+            this.Controls.Add(this.label111);
+            this.Controls.Add(this.txt730punching);
+            this.Controls.Add(this.dgSlStores);
+            this.Controls.Add(this.label110);
+            this.Controls.Add(this.btnSlimlineStores);
+            this.Controls.Add(this.dgSlDispatch);
+            this.Controls.Add(this.label109);
+            this.Controls.Add(this.btnSlimlineDispatch);
+            this.Controls.Add(this.dgvHSManagement);
             this.Controls.Add(this.label108);
             this.Controls.Add(this.txtPackPercent);
             this.Controls.Add(this.label107);
@@ -3191,6 +3607,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgDispatch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgManagement)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgHS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHSManagement)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSlDispatch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSlStores)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3455,6 +3874,37 @@
         private System.Windows.Forms.TextBox txtPaintPercent;
         private System.Windows.Forms.Label label108;
         private System.Windows.Forms.TextBox txtPackPercent;
+        private System.Windows.Forms.DataGridView dgvHSManagement;
+        private System.Windows.Forms.DataGridView dgSlDispatch;
+        private System.Windows.Forms.Label label109;
+        private System.Windows.Forms.Button btnSlimlineDispatch;
+        private System.Windows.Forms.DataGridView dgSlStores;
+        private System.Windows.Forms.Label label110;
+        private System.Windows.Forms.Button btnSlimlineStores;
+        private System.Windows.Forms.TextBox txt730punching;
+        private System.Windows.Forms.Label label111;
+        private System.Windows.Forms.Label label112;
+        private System.Windows.Forms.TextBox txtAvailPunching;
+        private System.Windows.Forms.Label label115;
+        private System.Windows.Forms.TextBox txtAvailBending;
+        private System.Windows.Forms.Label label116;
+        private System.Windows.Forms.TextBox txt730Bending;
+        private System.Windows.Forms.Label label117;
+        private System.Windows.Forms.TextBox txtAvailWelding;
+        private System.Windows.Forms.Label label118;
+        private System.Windows.Forms.TextBox txt730Welding;
+        private System.Windows.Forms.Label label119;
+        private System.Windows.Forms.TextBox txtAvailBuffing;
+        private System.Windows.Forms.Label label120;
+        private System.Windows.Forms.TextBox txt730Buffing;
+        private System.Windows.Forms.Label label121;
+        private System.Windows.Forms.TextBox txtAvailPainting;
+        private System.Windows.Forms.Label label122;
+        private System.Windows.Forms.TextBox txt730Painting;
+        private System.Windows.Forms.Label label123;
+        private System.Windows.Forms.TextBox txtAvailPacking;
+        private System.Windows.Forms.Label label124;
+        private System.Windows.Forms.TextBox txt730Packing;
     }
 }
 
