@@ -760,6 +760,9 @@ namespace ShopFloorPlacementPlanner
                     case 63:
                         _standardHours = 3.6;
                         break;
+                    case 206:
+                        _standardHours = 2.8;
+                        break;
                     case 68:
                         _standardHours = 3.6;
                         break;
@@ -783,6 +786,9 @@ namespace ShopFloorPlacementPlanner
                 {
                     case 63:
                         _standardHours = 4.4;
+                        break;
+                    case 206:
+                        _standardHours = 3.2;
                         break;
                     case 68:
                         _standardHours = 4.4;
@@ -809,7 +815,7 @@ namespace ShopFloorPlacementPlanner
 
             Placement p = new Placement(_selectedDate, s._staffID, _department, "Full Day", _standardHours);
 
-            p.notPresent();
+             p.notPresent();
             p.checkPlacement();
 
             p.getWeldTeamUserID();

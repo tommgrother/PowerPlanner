@@ -764,7 +764,7 @@ namespace ShopFloorPlacementPlanner
 
 
             }
-            //ryucxd PAINT IS COMMENTED OUT BECAUSE THERE IS A FUCK LOAD OF ERRORS RN
+         
             //Paint
             foreach (DataGridViewRow row in dgPaint.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
@@ -772,7 +772,7 @@ namespace ShopFloorPlacementPlanner
                     row.DefaultCellStyle.BackColor = Color.Red;
                 }
             foreach (DataGridViewRow row in dgPaint.Rows)
-                if (row.Cells[1].Value.ToString().Contains("3.20") || row.Cells[1].Value.ToString().Contains("2.80"))
+                if (row.Cells[0].Value.ToString().Contains("Half"))   //12321
                 {
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 }
