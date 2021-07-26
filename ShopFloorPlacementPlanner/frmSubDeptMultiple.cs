@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
@@ -13,6 +6,7 @@ namespace ShopFloorPlacementPlanner
     public partial class frmSubDeptMultiple : Form
     {
         public string location { get; set; }
+
         public frmSubDeptMultiple()
         {
             InitializeComponent();
@@ -45,4 +39,3 @@ namespace ShopFloorPlacementPlanner
         }
     }
 }
-

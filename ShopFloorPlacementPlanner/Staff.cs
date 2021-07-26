@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 
 namespace ShopFloorPlacementPlanner
@@ -27,12 +23,6 @@ namespace ShopFloorPlacementPlanner
             cmd.Parameters.AddWithValue("@fullname", _fullname);
 
             _staffID = Convert.ToInt32(cmd.ExecuteScalar().ToString());
-
         }
-
-
-     
-
-
     }
 }

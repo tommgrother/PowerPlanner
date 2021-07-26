@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using Microsoft.VisualBasic;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -25,6 +20,7 @@ namespace ShopFloorPlacementPlanner
         public double _standardHours { get; set; }
         public bool alreadyPlaced { get; set; }
         public string _subDept { get; set; }
+
         public frmWeeklyInsert(int staff_id, string staff_fullname, DateTime searchDate, string department, string subDept)
         {
             InitializeComponent();
@@ -88,6 +84,7 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns.Insert(columnIndex, manualButton);
             }
         }
+
         private void getDates()
         {
             passed_date = _selectedDate;
@@ -99,6 +96,7 @@ namespace ShopFloorPlacementPlanner
             sunday = _selectedDate.AddDays(4);
             // MessageBox.Show("sunday = " + sunday.ToString());
         }
+
         private void DGV()
         {
             string sql = "";
@@ -146,18 +144,16 @@ namespace ShopFloorPlacementPlanner
                             }
                             reader.Close();
                         }
-                        //quickly alter colours too 
+                        //quickly alter colours too
                         if (row.Cells[2].Value.ToString() == "Full Day")
                             row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
                         if (row.Cells[2].Value.ToString() == "Half Day")
                             row.DefaultCellStyle.BackColor = Color.MediumPurple;
                         if (row.Cells[2].Value.ToString() == "Shift")
                             row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
-
                     }
                     CONNECT.Close();
                 }
-
 
                 //format
                 dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -180,7 +176,6 @@ namespace ShopFloorPlacementPlanner
                 //    dgv = Convert.ToDateTime(dataGridView1.Rows[row.Index].Cells[1].Value);
                 //    if (dgv == passed_date)
                 //    {                                                 //TOM WANTED THIS REMOVED 23/01/2020
-
                 //        //row.Cells[2].Value = CheckState.Checked;
                 //        dataGridView1.Rows.RemoveAt(row.Index);
                 //    }
@@ -191,9 +186,6 @@ namespace ShopFloorPlacementPlanner
             }
         }
 
-
-
-
         private void frmWeeklyInsert_Load(object sender, EventArgs e)
         {
             lbl_title.Text = "Select Which days you want " + _staff_fullname + " in " + _dept;
@@ -202,15 +194,13 @@ namespace ShopFloorPlacementPlanner
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-
-                //quickly alter colours too 
+                //quickly alter colours too
                 if (row.Cells[columnIndex].Value.ToString() == "Full Day")
                     row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
                 if (row.Cells[columnIndex].Value.ToString() == "Half Day")
                     row.DefaultCellStyle.BackColor = Color.MediumPurple;
                 if (row.Cells[columnIndex].Value.ToString() == "Shift")
                     row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
-
             }
         }
 
@@ -229,7 +219,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btn_update_Click(object sender, EventArgs e)
         {
-            //loop through every single colour 
+            //loop through every single colour
             //if its green THEN run through absent-already placed-placement to make sure there are no doubles in this code.
             //declare variables
             DateTime dgvDate;
@@ -252,8 +242,6 @@ namespace ShopFloorPlacementPlanner
                     if (dataGridView1.Rows[i].DefaultCellStyle.BackColor != Color.Empty)
                     { //the correct colour
                       //get variables
-
-
 
                         dgvDate = Convert.ToDateTime(dataGridView1.Rows[i].Cells[5].Value);
                         getStandardHours(_staff_id, dgvDate);
@@ -339,20 +327,18 @@ namespace ShopFloorPlacementPlanner
                             }
                         }
 
-             
-
                         p.notPresent(); //check for attendance
                         string placement_type = dataGridView1.Rows[i].Cells[6].Value.ToString();
                         double h_o_u_r_s = Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value.ToString());
-                        if (p._notPresentType == 5 || p._notPresentType == 2) // find out what 5 and 2 
+                        if (p._notPresentType == 5 || p._notPresentType == 2) // find out what 5 and 2
                         {
-                            //add the messagebox note here 
+                            //add the messagebox note here
                             note = "\nUnable to place on " + dgvDate + ".";
                             note = note.Substring(0, note.Length - 8);
                             continue; // they have full holiday so they cannot be placed   maybe have a running msgbox  - monday 11th cant be placed because of holiday etc
                         }
                         else if (p._notPresentType == 3) // has half a day booked
-                        {  //max placement on friday through half day is 5.6 / 2 
+                        {  //max placement on friday through half day is 5.6 / 2
                            //max placement on a normal day with half day is 6.4 / 2
                             if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "Manual")
                             {
@@ -362,7 +348,7 @@ namespace ShopFloorPlacementPlanner
                                 double ManualHours = Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value.ToString());
                                 if (ManualHours > remainingHours)
                                 {
-                                    //reduce it back to half and add note 
+                                    //reduce it back to half and add note
                                     Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Manual", remainingHours);
                                     p3.addPlacment();
                                     note = note + "\n Manual Hours reduced because placement has half day on " + dgvDate + "";
@@ -395,7 +381,7 @@ namespace ShopFloorPlacementPlanner
                             else //
                             {//should be the same as normal
                                 remainingHours = _standardHours / 2;
-                                Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Half Day", remainingHours); // adds them in but its for /half/ the time 
+                                Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Half Day", remainingHours); // adds them in but its for /half/ the time
                                 p3.addPlacment(); // a new instance of adding placement
                                 note = note + "\nHalf day placement on " + dgvDate + "";
                                 note = note.Substring(0, note.Length - 8);
@@ -458,10 +444,7 @@ namespace ShopFloorPlacementPlanner
                                 place.add_placement(MAXplacementID, _subDept);
                             }
                         }
-
                     }
-
-
                 }//end of if back colour = green
             } //end of for loop
             MessageBox.Show("Placements updated!");
@@ -469,7 +452,6 @@ namespace ShopFloorPlacementPlanner
                 MessageBox.Show(note);
             this.Close();
         }
-
 
         private void getStandardHours(int staffID, DateTime dgvDate) //call this to get the time for each day of the week
         {
@@ -479,7 +461,6 @@ namespace ShopFloorPlacementPlanner
 
             //Differing standard hours for certain users
 
-
             if (dayOfWeek == "Friday")
             {
                 switch (staffID)
@@ -487,18 +468,19 @@ namespace ShopFloorPlacementPlanner
                     case 63:
                         _standardHours = 3.6;
                         break;
+
                     case 68:
                         _standardHours = 3.6;
                         break;
+
                     case 165:
                         _standardHours = 11.2;
                         break;
+
                     default:
                         _standardHours = 5.6;
                         break;
-
                 }
-
             }
             else if (dayOfWeek == "Saturday" || dayOfWeek == "Sunday")
             {
@@ -511,21 +493,21 @@ namespace ShopFloorPlacementPlanner
                     case 63:
                         _standardHours = 4.4;
                         break;
+
                     case 68:
                         _standardHours = 4.4;
                         break;
+
                     case 165:
                         _standardHours = 12.8;
                         break;
+
                     default:
                         _standardHours = 6.4;
                         break;
-
                 }
             }
         }
-
-
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -545,7 +527,7 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MediumPurple;
             }
             if (e.ColumnIndex == dataGridView1.Columns["Shift"].Index)
-            {//this needs to be manual input now 
+            {//this needs to be manual input now
                 if (_dept == "Slimline")
                 {
                     if (skipPassword != -1)
@@ -564,7 +546,7 @@ namespace ShopFloorPlacementPlanner
                         }
                     }
                 }
-                
+
                 int index = 5;
                 if (dataGridView1.Columns.Contains("Date ") == true)
                     index = dataGridView1.Columns["Date "].Index;
@@ -612,4 +594,3 @@ namespace ShopFloorPlacementPlanner
         }
     }
 }
-

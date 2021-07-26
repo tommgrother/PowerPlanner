@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
     public partial class PlacementNote : Form
     {
-
         public int _pn { get; set; }
 
         public PlacementNote(int pn)
@@ -21,7 +13,6 @@ namespace ShopFloorPlacementPlanner
             InitializeComponent();
             _pn = pn;
             getNote();
-
         }
 
         private void getNote()
@@ -37,14 +28,12 @@ namespace ShopFloorPlacementPlanner
             {
                 txtNote.Text = rdr["placement_note"].ToString();
             }
-                
 
             conn.Close();
         }
 
         private void PlacementNote_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btnSaveNote_Click(object sender, EventArgs e)
@@ -58,7 +47,6 @@ namespace ShopFloorPlacementPlanner
             cmd.ExecuteNonQuery();
             conn.Close();
             this.Close();
-
         }
     }
 }

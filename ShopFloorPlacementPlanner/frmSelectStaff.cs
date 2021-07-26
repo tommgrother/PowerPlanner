@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using Microsoft.VisualBasic;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -22,7 +17,6 @@ namespace ShopFloorPlacementPlanner
 
         public frmSelectStaff(string department, DateTime selectedDate)
         {
-
             InitializeComponent();
             skipPassword = 0;
             dgSelected.CellClick += dataGridViewSoftware_CellClick;
@@ -33,23 +27,17 @@ namespace ShopFloorPlacementPlanner
             //getStandardHours();
             fillGrid();
 
-
             checkExistingSelections();
             getOvertime();
             getAD();
 
-
-
-
             this.Text = "Select Staff: " + _department;
             this.lblMessage.Text = "Staff selection for " + _department + " Department ";
             this.lblMessage2.Text = _selectedDate.ToShortDateString();
-
         }
 
         private void ensureDateTableEntry()
         {
-
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmdDate = new SqlCommand("usp_update_planner_clear", conn);
@@ -65,71 +53,78 @@ namespace ShopFloorPlacementPlanner
 
             string sql = "";
 
-
             switch (_department)
             {
                 case "Slimline":
                     sql = "SELECT slimline_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "SlimlineDispatch":
                     sql = "SELECT slimlineDispatch_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "SlimlineStores":
                     sql = "SELECT slimlineStores_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Laser":
                     sql = "SELECT laser_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Punching":
                     sql = "SELECT punching_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Bending":
                     sql = "SELECT bending_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Welding":
                     sql = "SELECT welding_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Dressing":
                     sql = "SELECT buffing_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Painting":
                     sql = "SELECT painting_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Packing":
                     sql = "SELECT packing_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Stores":
                     sql = "SELECT stores_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Dispatch":
                     sql = "SELECT dispatch_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "toolroom":
                     sql = "SELECT toolroom_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Cleaning":
                     sql = "SELECT cleaning_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Management":
                     sql = "SELECT management_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "HS":
                     sql = "SELECT hs_OT as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
-
             }
-
-
-
-
 
             using (SqlCommand cmd = new SqlCommand(sql, conn))
             {
-
                 conn.Open();
                 Overtime o = new Overtime();
                 o.getDateID(_selectedDate);
-
 
                 cmd.Parameters.AddWithValue("@dateID", o._dateID);
 
@@ -144,8 +139,6 @@ namespace ShopFloorPlacementPlanner
                     txtOvertime.Text = 0.ToString();
                 }
             }
-
-
         }
 
         private void getAD()
@@ -154,51 +147,64 @@ namespace ShopFloorPlacementPlanner
 
             string sql = "";
 
-
             switch (_department)
             {
                 case "Slimline":
                     sql = "SELECT slimline_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "SlimlineDispatch":
                     sql = "SELECT slimlineDispatch_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "SlimlineStores":
                     sql = "SELECT slimlineDispatch_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Laser":
                     sql = "SELECT laser_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Punching":
                     sql = "SELECT punching_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Bending":
                     sql = "SELECT bending_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Welding":
                     sql = "SELECT welding_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Dressing":
                     sql = "SELECT buffing_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Painting":
                     sql = "SELECT painting_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Packing":
                     sql = "SELECT packing_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Stores":
                     sql = "SELECT stores_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Dispatch":
                     sql = "SELECT dispatch_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "toolroom":
                     sql = "SELECT toolroom_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Cleaning":
                     sql = "SELECT cleaning_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
+
                 case "Management":
                     sql = "SELECT management_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
@@ -206,21 +212,13 @@ namespace ShopFloorPlacementPlanner
                 case "HS":
                     sql = "SELECT hs_AD as 'FieldName' from dbo.power_plan_overtime where date_id=@dateID";
                     break;
-
-
             }
-
-
-
-
 
             using (SqlCommand cmd = new SqlCommand(sql, conn))
             {
-
                 conn.Open();
                 AdditionsDeductions ad = new AdditionsDeductions();
                 ad.getDateID(_selectedDate);
-
 
                 cmd.Parameters.AddWithValue("@dateID", ad._dateID);
 
@@ -235,27 +233,15 @@ namespace ShopFloorPlacementPlanner
                     txtAD.Text = 0.ToString();
                 }
             }
-
-
-
-
-
-
-
-
-
-
         }
 
         private void frmSelectStaff_Load(object sender, EventArgs e)
         {
-
         }
 
         private void paintGrid()
         {
             int placementID = 0;
-
 
             foreach (DataGridViewRow row in dgSelected.Rows)
             {
@@ -281,7 +267,6 @@ namespace ShopFloorPlacementPlanner
                 }
             }
 
-
             foreach (DataGridViewRow row in dgSelected.Rows)
             {
                 placementID = Convert.ToInt32(row.Cells[0].Value.ToString());
@@ -294,18 +279,13 @@ namespace ShopFloorPlacementPlanner
                 }
             }
 
-
-
-
             dgSelected.ClearSelection();
             dgSelected.DefaultCellStyle.SelectionBackColor = dgSelected.DefaultCellStyle.BackColor;
             dgSelected.DefaultCellStyle.SelectionForeColor = dgSelected.DefaultCellStyle.ForeColor;
-
         }
 
         private void dataGridViewSoftware_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
             int selectedrowindex = dgSelected.SelectedCells[0].RowIndex;
 
             DataGridViewRow selectedRow = dgSelected.Rows[selectedrowindex];
@@ -318,7 +298,6 @@ namespace ShopFloorPlacementPlanner
 
             //MessageBox.Show(_selectedDate.ToString());
             getStandardHours(staffID);
-
 
             //REMOVE BUTTON
             if (e.ColumnIndex == dgSelected.Columns["Remove"].Index)
@@ -351,7 +330,6 @@ namespace ShopFloorPlacementPlanner
                     }
                 }
 
-
                 //ask if the user wants to move this person to another location ---
                 DialogResult result = MessageBox.Show("Would you like to move this user to another department?", "Move user?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (result == DialogResult.Yes)
@@ -361,16 +339,14 @@ namespace ShopFloorPlacementPlanner
                     int isSlimline = 0;
                     if (_department.Contains("Slimline") == true)
                         isSlimline = -1;
-                    frmMoveDept md = new frmMoveDept(staffID, _selectedDate, PT, hour,isSlimline);
+                    frmMoveDept md = new frmMoveDept(staffID, _selectedDate, PT, hour, isSlimline);
                     md.ShowDialog();
                 }
             }
 
-
             //MANUAL BUTTON
             if (e.ColumnIndex == dgSelected.Columns["Manual"].Index)
             {
-
                 if (_department == "Slimline")
                 {
                     if (skipPassword != -1)
@@ -381,7 +357,6 @@ namespace ShopFloorPlacementPlanner
                         if (input == passcode)
                         {
                             skipPassword = -1;
-
                         }
                         else
                         {
@@ -392,10 +367,6 @@ namespace ShopFloorPlacementPlanner
                 }
                 frmManualHours mh = new frmManualHours();
                 mh.ShowDialog();
-
-
-
-
 
                 SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
@@ -411,12 +382,8 @@ namespace ShopFloorPlacementPlanner
                     //dept change
                     department_changed dc = new department_changed();
                     dc.setDepartment(_department);
-
                 }
             }
-
-
-
 
             //FULL BUTTON
             if (e.ColumnIndex == dgSelected.Columns["Full"].Index)
@@ -441,7 +408,6 @@ namespace ShopFloorPlacementPlanner
             {
                 SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-
                 if (_department == "Slimline")
                 {
                     if (skipPassword != -1)
@@ -460,7 +426,6 @@ namespace ShopFloorPlacementPlanner
                         }
                     }
                 }
-
 
                 int index = dgSelected.Columns["Full Name"].Index;
 
@@ -504,14 +469,11 @@ namespace ShopFloorPlacementPlanner
                     frm.ShowDialog();
                     department_changed dc = new department_changed();
                     dc.setDepartment(_department);
-
                 }
                 else
                 {
-
                     frmShiftHours sh = new frmShiftHours(staffID, _selectedDate, _department);
                     sh.ShowDialog();
-
 
                     using (SqlCommand cmd = new SqlCommand("UPDATE dbo.power_plan_staff set placement_type = 'Shift' , hours = @hours where ID = @placementID", conn))
                     {
@@ -526,7 +488,6 @@ namespace ShopFloorPlacementPlanner
                     }
                 }
             }
-
 
             //Half BUTTON
             if (e.ColumnIndex == dgSelected.Columns["Half"].Index)
@@ -561,7 +522,6 @@ namespace ShopFloorPlacementPlanner
             {
                 if (e.ColumnIndex == dgSelected.Columns["Sub Dept"].Index)
                 {
-
                     //MessageBox.Show("Sub Dept");
                     frmSubDept sd = new frmSubDept(placementID);
                     sd.ShowDialog();
@@ -572,8 +532,6 @@ namespace ShopFloorPlacementPlanner
                     dc.setDepartment(_department);
                 }
             }
-
-
         }
 
         private void checkExistingSelections()
@@ -584,20 +542,16 @@ namespace ShopFloorPlacementPlanner
 
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.view_planner_punch_staff where date_plan = @selectedDate and department = @dept", conn))
             {
-
                 cmd.Parameters.AddWithValue("@selectedDate", _selectedDate);
                 cmd.Parameters.AddWithValue("@dept", _department);
 
                 conn.Open();
 
-
                 SqlDataReader rdr = cmd.ExecuteReader();
-
 
                 // dgSelected.DataSource = null;
                 dgSelected.Columns.Clear();
                 populateExisting();
-
 
                 DataGridViewButtonColumn fullDayButton = new DataGridViewButtonColumn();
                 fullDayButton.Name = "Full";
@@ -608,7 +562,6 @@ namespace ShopFloorPlacementPlanner
                 {
                     dgSelected.Columns.Insert(columnIndex, fullDayButton);
                 }
-
 
                 DataGridViewButtonColumn halfDayButton = new DataGridViewButtonColumn();
                 halfDayButton.Name = "Half";
@@ -630,7 +583,6 @@ namespace ShopFloorPlacementPlanner
                     dgSelected.Columns.Insert(columnIndex, shiftButton);
                 }
 
-
                 DataGridViewButtonColumn manualButton = new DataGridViewButtonColumn();
                 manualButton.Name = "Manual";
                 manualButton.Text = "Manual";
@@ -640,7 +592,6 @@ namespace ShopFloorPlacementPlanner
                 {
                     dgSelected.Columns.Insert(columnIndex, manualButton);
                 }
-
 
                 DataGridViewButtonColumn deleteButton = new DataGridViewButtonColumn();
                 deleteButton.Name = "Remove";
@@ -672,28 +623,19 @@ namespace ShopFloorPlacementPlanner
                     dgSelected.Columns.Insert(columnIndex, subDeptButton);
                 }
 
-
-
-
-
                 conn.Close();
-
-
-
             }
         }
+
         private void populateExisting()
         {
-
-
             //Adds the existing selections back into the selection window
-            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString); //this is where the DGV is selected 
-
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString); //this is where the DGV is selected
 
             using (SqlCommand cmd = new SqlCommand("SELECT PlacementID,staff_id as 'Staff ID',[Staff Name] as 'Full Name',Placement as 'Placement Type',hours as 'Hours' from dbo.view_planner_punch_staff where date_plan = @selectedDate and department = @dept order by placementID ", conn))
             {
-                cmd.Parameters.AddWithValue("@selectedDate", _selectedDate); 
-                    cmd.Parameters.AddWithValue("@dept", _department);
+                cmd.Parameters.AddWithValue("@selectedDate", _selectedDate);
+                cmd.Parameters.AddWithValue("@dept", _department);
 
                 conn.Open();
 
@@ -702,7 +644,6 @@ namespace ShopFloorPlacementPlanner
                 ad.Fill(dt);
                 dgSelected.DataSource = dt;
                 conn.Close();
-
             }
         }
 
@@ -711,8 +652,6 @@ namespace ShopFloorPlacementPlanner
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionStringUser);
             string sqlDepartment;
 
-            
-          
             //STAFF DEPARTMENTS WORK DIFFERENTLY IF SLIMLINE
             if (_department == "Slimline" || _department == "SlimlineStores" || _department == "SlimlineDispatch")
             {
@@ -724,8 +663,6 @@ namespace ShopFloorPlacementPlanner
                 "([actual_department] = @department or [allocation_dept_2] = @department or [allocation_dept_3] = @department or " +
                 "[allocation_dept_4] = @department or [allocation_dept_5] = @department or [allocation_dept_6] = @department) and [current]=1 order by fullname";
             }
-
-
 
             using (SqlCommand cmd = new SqlCommand(sqlDepartment, conn))
             {
@@ -752,7 +689,6 @@ namespace ShopFloorPlacementPlanner
 
             //Differing standard hours for certain users
 
-
             if (dayOfWeek == "Friday")
             {
                 switch (staffID)
@@ -760,21 +696,23 @@ namespace ShopFloorPlacementPlanner
                     case 63:
                         _standardHours = 3.6;
                         break;
+
                     case 206:
                         _standardHours = 2.8;
                         break;
+
                     case 68:
                         _standardHours = 3.6;
                         break;
+
                     case 165:
                         _standardHours = 11.2;
                         break;
+
                     default:
                         _standardHours = 5.6;
                         break;
-
                 }
-
             }
             else if (dayOfWeek == "Saturday" || dayOfWeek == "Sunday")
             {
@@ -787,19 +725,22 @@ namespace ShopFloorPlacementPlanner
                     case 63:
                         _standardHours = 4.4;
                         break;
+
                     case 206:
                         _standardHours = 3.2;
                         break;
+
                     case 68:
                         _standardHours = 4.4;
                         break;
+
                     case 165:
                         _standardHours = 12.8;
                         break;
+
                     default:
                         _standardHours = 6.4;
                         break;
-
                 }
             }
         }
@@ -815,12 +756,11 @@ namespace ShopFloorPlacementPlanner
 
             Placement p = new Placement(_selectedDate, s._staffID, _department, "Full Day", _standardHours);
 
-             p.notPresent();
+            p.notPresent();
             p.checkPlacement();
 
             p.getWeldTeamUserID();
             p.checkWeldTeamAbsence();
-
 
             //CHECKS IF STAFF MEMBERS IN WELD TEAM 2 ARE CURRENTLY ON HOLIDAY OR ABSENT
             if (s._staffID == 165)
@@ -835,9 +775,7 @@ namespace ShopFloorPlacementPlanner
                     p._hours = _standardHours * 0;
                     MessageBox.Show("Both members of this team are either absent or on holiday", "Zero Placement", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
             }
-
 
             if (p._notPresentType == 5 || p._notPresentType == 2)
             {
@@ -870,13 +808,11 @@ namespace ShopFloorPlacementPlanner
                             remainingHours = _standardHours - p._existingPlacementHours;
                             MessageBox.Show("Staff member already placed for " + p._existingPlacementHours.ToString(), "Staff member part placed", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-
                             Placement p2 = new Placement(_selectedDate, s._staffID, _department, p._existingPlacementType, remainingHours);
                             p2.addPlacment();
                         }
                         else
                         {
-
                             DialogResult weekly = MessageBox.Show("Would you like to assign '" + s._fullname + "' more days in " + _department + " this week?", "Weekly Placement", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                             if (weekly == DialogResult.Yes)
                             {
@@ -914,7 +850,6 @@ namespace ShopFloorPlacementPlanner
                             }
                             else
                             {
-
                                 p.addPlacment(); // add placement is here so there is no way it should be the reason for changing the placements  on the next form close
                                                  //im pretty sure at this point the entry has been made so from here we should start adding placements for the sub-dept IF it is painting
                                 if (_department == "Painting")
@@ -939,38 +874,26 @@ namespace ShopFloorPlacementPlanner
                                     add.add_placement(MAXplacementID, subDept);
                                 }
                             }
-
-
-
-
                         }
                     }
                 }
             }
 
-
-
-
-
             department_changed dc = new department_changed();
             dc.setDepartment(_department);
             checkExistingSelections();
-
         }
 
         private void lstStaff_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void dgSelected_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-
             //CLEARS ALL EXISTING SELECTION FROM THE TABLE FOR THIS DEPARTMENT
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
@@ -982,7 +905,6 @@ namespace ShopFloorPlacementPlanner
 
             foreach (DataGridViewRow row in dgSelected.Rows)
             {
-
                 SqlCommand cmdStaff = new SqlCommand("usp_update_planner", conn);
                 cmdStaff.CommandType = CommandType.StoredProcedure;
                 cmdStaff.Parameters.AddWithValue("@plannerDate", SqlDbType.Date).Value = _selectedDate;
@@ -992,13 +914,10 @@ namespace ShopFloorPlacementPlanner
                 cmdStaff.Parameters.AddWithValue("@hours", SqlDbType.Decimal).Value = row.Cells[3].Value;
 
                 cmdStaff.ExecuteNonQuery();
-
             }
 
             this.Close();
-
         }
-
 
         private void submitAD()
         {
@@ -1013,11 +932,8 @@ namespace ShopFloorPlacementPlanner
                 ADAmount = 0;
             }
 
-
-
             AdditionsDeductions ad = new AdditionsDeductions();
             ad.updateAD(_selectedDate, _department, ADAmount);
-
         }
 
         private void submitOT()
@@ -1038,10 +954,8 @@ namespace ShopFloorPlacementPlanner
             o.updateOT(_selectedDate, _department, overtimeAmount);
         }
 
-
         private void frmSelectStaff_Leave(object sender, EventArgs e)
         {
-
         }
 
         private void frmSelectStaff_FormClosed(object sender, FormClosedEventArgs e)
@@ -1062,7 +976,6 @@ namespace ShopFloorPlacementPlanner
             //frm.ShowDialog();
             //txtOvertime.Text = frm.totalOvertime.ToString();
             ////test end
-
 
             frmWeeklyOverTime frm = new frmWeeklyOverTime(_selectedDate, _department);
             frm.ShowDialog();
@@ -1086,6 +999,7 @@ namespace ShopFloorPlacementPlanner
             txtAD.Text = AD.additionForSD.ToString();
             this.Close();
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             frmWeeklyOverTime frm = new frmWeeklyOverTime(_selectedDate, _department);
@@ -1095,7 +1009,6 @@ namespace ShopFloorPlacementPlanner
 
         private void frmSelectStaff_Shown(object sender, EventArgs e)
         {
-
         }
 
         private void dgSelected_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1109,7 +1022,6 @@ namespace ShopFloorPlacementPlanner
                 {
                     dgSelected.Rows[i].DefaultCellStyle.BackColor = Color.Red;
                 }
-
 
                 if (dgSelected.Rows[i].Cells[temp].Value.ToString() == "Half Day") //because it looks for [half day] it should only pick up actual half days and not 3.2
                 {
@@ -1133,7 +1045,6 @@ namespace ShopFloorPlacementPlanner
             dgSelected.ClearSelection();
             dgSelected.DefaultCellStyle.SelectionBackColor = dgSelected.DefaultCellStyle.BackColor;
             dgSelected.DefaultCellStyle.SelectionForeColor = dgSelected.DefaultCellStyle.ForeColor;
-
         }
     }
 }

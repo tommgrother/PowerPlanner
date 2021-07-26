@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -19,7 +12,8 @@ namespace ShopFloorPlacementPlanner
         public string dept { get; set; }
         public string PT { get; set; }
         public double hours { get; set; }
-        public frmMoveDept(int userID, DateTime _date,string placementType,double _hours,int isSlimline)
+
+        public frmMoveDept(int userID, DateTime _date, string placementType, double _hours, int isSlimline)
         {
             InitializeComponent();
             PT = placementType;
@@ -28,8 +22,7 @@ namespace ShopFloorPlacementPlanner
             staffID = userID;
 
             //MessageBox.Show(placementType);
-            //MessageBox.Show(hours.ToString()); 
-
+            //MessageBox.Show(hours.ToString());
 
             //fill combobox based on what the userID(allocationDept) allows him
             if (isSlimline == -1)
@@ -63,13 +56,11 @@ namespace ShopFloorPlacementPlanner
                                 cmbDept.Items.Add(reader["allocation_dept_5"].ToString());
                             if (regularExpression.IsMatch((reader["allocation_dept_6"].ToString())))
                                 cmbDept.Items.Add(reader["allocation_dept_6"].ToString());
-
                         }
                         CONNECT.Close();
                     }
                 }
             }
-
         }
 
         private void btn_commit_Click(object sender, EventArgs e)
@@ -83,21 +74,17 @@ namespace ShopFloorPlacementPlanner
                 return;
             }
 
-      
- 
             DialogResult result = MessageBox.Show("Would you like to perform this operation over multiple dates?", "Multiple Dates?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-
-                //grab the dept and just roll the function 
+                //grab the dept and just roll the function
                 department_changed dc = new department_changed();
                 dc.setDepartment(dept);
 
                 //INSERTS THE CURRENT DAY
                 Placement p = new Placement(date, staffID, dept, PT, hours);
                 p.addPlacment();
-
 
                 //INSERTS REST OF WEEK
                 string staffName;
@@ -137,14 +124,12 @@ namespace ShopFloorPlacementPlanner
                 if (subDept.Length < 1)
                     subDept = "ERROR";
 
-
                 frmWeeklyInsert wi = new frmWeeklyInsert(staffID, staffName, date, dept, subDept);
                 wi.ShowDialog();
             }
             else
             {
-
-                //grab the dept and just roll the function 
+                //grab the dept and just roll the function
                 department_changed dc = new department_changed();
                 dc.setDepartment(dept);
 
@@ -174,7 +159,6 @@ namespace ShopFloorPlacementPlanner
                     add.add_placement(MAXplacementID, subDept);
                 }
             }
-
 
             this.Close();
         }

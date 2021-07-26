@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Drawing.Printing;
-using Excel = Microsoft.Office.Interop.Excel;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
     public partial class MenuMain : Form
     {
         public int skipMessageBox { get; set; }
+
         public MenuMain()
         {
             InitializeComponent();
-
         }
 
         private void btnAddPunch_Click(object sender, EventArgs e)
@@ -31,7 +25,6 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-
         }
 
         private void btnAddBend_Click(object sender, EventArgs e)
@@ -84,8 +77,6 @@ namespace ShopFloorPlacementPlanner
             refreshSelectedDepartments();
         }
 
-
-
         private void MenuMain_Load(object sender, EventArgs e)
         {
             fillgrid();
@@ -122,7 +113,6 @@ namespace ShopFloorPlacementPlanner
             double paintOT = 0;
             double packOT = 0;
 
-
             double slimlineAD = 0;
             double punchAD = 0;
             double laserAD = 0;
@@ -131,7 +121,6 @@ namespace ShopFloorPlacementPlanner
             double buffAD = 0;
             double paintAD = 0;
             double packAD = 0;
-
 
             foreach (DataGridViewRow row in dgSlimline.Rows)
             {
@@ -144,9 +133,7 @@ namespace ShopFloorPlacementPlanner
                     slimlineMen = slimlineMen + 1;
                 }
 
-
                 slimlineHours = slimlineHours + Convert.ToDouble(row.Cells[1].Value);
-
             }
 
             foreach (DataGridViewRow row in dgStores.Rows)
@@ -172,9 +159,7 @@ namespace ShopFloorPlacementPlanner
                     punchMen = punchMen + 1;
                 }
 
-
                 punchHours = punchHours + Convert.ToDouble(row.Cells[1].Value);
-
             }
 
             foreach (DataGridViewRow row in dgLaser.Rows)
@@ -188,14 +173,11 @@ namespace ShopFloorPlacementPlanner
                     laserMen = laserMen + 1;
                 }
 
-
-
                 laserHours = laserHours + Convert.ToDouble(row.Cells[1].Value);
             }
 
             foreach (DataGridViewRow row in dgBend.Rows)
             {
-
                 if (row.Cells[0].Value.ToString().Contains("Half"))
                 {
                     bendMen = bendMen + 0.5;
@@ -204,7 +186,6 @@ namespace ShopFloorPlacementPlanner
                 {
                     bendMen = bendMen + 1;
                 }
-
 
                 bendHours = bendHours + Convert.ToDouble(row.Cells[1].Value);
             }
@@ -228,7 +209,6 @@ namespace ShopFloorPlacementPlanner
 
             foreach (DataGridViewRow row in dgBuff.Rows)
             {
-
                 if (row.Cells[0].Value.ToString().Contains("Half"))
                 {
                     buffMen = buffMen + 0.5;
@@ -237,8 +217,6 @@ namespace ShopFloorPlacementPlanner
                 {
                     buffMen = buffMen + 1;
                 }
-
-
 
                 buffHours = buffHours + Convert.ToDouble(row.Cells[1].Value);
             }
@@ -254,13 +232,11 @@ namespace ShopFloorPlacementPlanner
                     paintMen = paintMen + 1;
                 }
 
-
                 paintHours = paintHours + Convert.ToDouble(row.Cells[1].Value);
             }
 
             foreach (DataGridViewRow row in dgPack.Rows)
             {
-
                 if (row.Cells[0].Value.ToString().Contains("Half"))
                 {
                     packMen = packMen + 0.5;
@@ -272,7 +248,6 @@ namespace ShopFloorPlacementPlanner
 
                 packHours = packHours + Convert.ToDouble(row.Cells[1].Value);
             }
-
 
             txtSlimlineHours.Text = slimlineHours.ToString();
             txtPunchHours.Text = punchHours.ToString();
@@ -293,13 +268,11 @@ namespace ShopFloorPlacementPlanner
             txtPackMen.Text = packMen.ToString();
             txtStoresMen.Text = storesMen.ToString();
 
-
             //////////ADDS OVERTIME AND ADDITIONS TO THE MAIN SCREEN
 
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             Overtime o = new Overtime();
             o.getDateID(Convert.ToDateTime(dteDateSelection.Text));
-
 
             using (SqlCommand cmd = new SqlCommand("SELECT TOP (1000) [id] , COALESCE([date_id], 0) as [date_id], COALESCE([slimline_OT],0) as [slimline_OT],COALESCE([laser_OT],0) as [laser_OT],COALESCE([punching_OT],0) as [punching_OT]" +
                 ",COALESCE([bending_OT],0) as [bending_OT],COALESCE([welding_OT],0) as [welding_OT],COALESCE([buffing_OT],0) as [buffing_OT],COALESCE([painting_OT],0) as [painting_OT],COALESCE([packing_OT],0) as [packing_OT]" +
@@ -311,7 +284,6 @@ namespace ShopFloorPlacementPlanner
             {
                 conn.Open();
                 cmd.Parameters.AddWithValue("@dateID", o._dateID);
-
 
                 SqlDataReader rdr = cmd.ExecuteReader();
 
@@ -326,8 +298,6 @@ namespace ShopFloorPlacementPlanner
                     paintOT = Convert.ToDouble(rdr["painting_OT"]) * 0.8;
                     packOT = Convert.ToDouble(rdr["packing_OT"]) * 0.8;
 
-
-
                     slimlineAD = Convert.ToDouble(rdr["slimline_ad"]);
                     punchAD = Convert.ToDouble(rdr["punching_AD"]);
                     laserAD = Convert.ToDouble(rdr["laser_AD"]);
@@ -338,11 +308,8 @@ namespace ShopFloorPlacementPlanner
                     packAD = Convert.ToDouble(rdr["packing_AD"]);
                 }
 
-
                 conn.Close();
-
             }
-
 
             txtSlimlineOT.Text = slimlineOT.ToString();
             txtLaserOT.Text = laserOT.ToString();
@@ -353,8 +320,6 @@ namespace ShopFloorPlacementPlanner
             txtPaintOT.Text = paintOT.ToString();
             txtPackOT.Text = packOT.ToString();
 
-
-
             txtSlimlineAD.Text = slimlineAD.ToString();
             txtLaserAD.Text = laserAD.ToString();
             txtPunchAD.Text = punchAD.ToString();
@@ -364,10 +329,7 @@ namespace ShopFloorPlacementPlanner
             txtPaintAD.Text = paintAD.ToString();
             txtPackAD.Text = packAD.ToString();
 
-
-
             /////////////////////////////
-
 
             //TOTALS UP FINAL VALUES
 
@@ -380,8 +342,7 @@ namespace ShopFloorPlacementPlanner
             txtPaintingTotal.Text = (Convert.ToDouble(txtPaintHours.Text) + Convert.ToDouble(paintOT) + Convert.ToDouble(paintAD)).ToString();
             txtPackingTotal.Text = (Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(packOT) + Convert.ToDouble(packAD)).ToString();
 
-
-            //add the actual hours 
+            //add the actual hours
 
             string sql = "SELECT ROUND(COALESCE(actual_hours_slimline,0),2) as slimline, ROUND(COALESCE(actual_hours_punch,0),2) as punch, ROUND(COALESCE(actual_hours_laser,0),2) as laser, ROUND(COALESCE(actual_hours_bend,0),2) as bend, ROUND(COALESCE(actual_hours_weld,0),2) as weld, ROUND(COALESCE(actual_hours_buff,0),2) as buff,ROUND(COALESCE(actual_hours,0),2) as paint , ROUND(COALESCE(actual_hours_pack,0),2) as boxes FROM dbo.daily_department_goal WHERE date_goal ='" + dteDateSelection.Text + "'";
             //actual_hours paint is tbc
@@ -405,8 +366,6 @@ namespace ShopFloorPlacementPlanner
                         txtPaintActualHours.Text = row[6].ToString();
                         txtPackActualHours.Text = row[7].ToString();
                     }
-
-
 
                     conn2.Close();
                 }
@@ -452,9 +411,7 @@ namespace ShopFloorPlacementPlanner
                 lblPackingActualHours.BackColor = Color.DarkSeaGreen;
             else
                 lblPackingActualHours.BackColor = Color.PaleVioletRed;
-
         }
-
 
         private void paintGrid()
         {
@@ -482,8 +439,6 @@ namespace ShopFloorPlacementPlanner
                     row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
                 }
             }
-
-
 
             foreach (DataGridViewRow row in dgSlimline.Rows)
             {
@@ -593,7 +548,6 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.DefaultCellStyle.ForeColor = Color.Blue;
                 }
-
             }
             //LASER
             foreach (DataGridViewRow row in dgLaser.Rows)
@@ -637,7 +591,6 @@ namespace ShopFloorPlacementPlanner
                 }
             }
 
-
             //Bend
             foreach (DataGridViewRow row in dgBend.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
@@ -679,8 +632,6 @@ namespace ShopFloorPlacementPlanner
                     row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
                 }
             }
-
-
 
             //Weld
             foreach (DataGridViewRow row in dgWeld.Rows)
@@ -761,10 +712,8 @@ namespace ShopFloorPlacementPlanner
                 {
                     row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
                 }
-
-
             }
-         
+
             //Paint
             foreach (DataGridViewRow row in dgPaint.Rows)
                 if (row.Cells[0].Value.ToString().Contains("Shift"))
@@ -1031,13 +980,11 @@ namespace ShopFloorPlacementPlanner
                     {
                         row.DefaultCellStyle.BackColor = Color.Salmon;
                     }
-
                 }
                 catch
                 {
                     continue;
                 }
-
 
             foreach (DataGridViewRow row in dgNotPlaced.Rows)
                 try
@@ -1046,7 +993,6 @@ namespace ShopFloorPlacementPlanner
                     {
                         row.DefaultCellStyle.BackColor = Color.DeepPink;
                     }
-
                 }
                 catch
                 {
@@ -1071,9 +1017,7 @@ namespace ShopFloorPlacementPlanner
             dgvHSManagement.ClearSelection();
             dgSlDispatch.ClearSelection();
             dgSlStores.ClearSelection();
-
         }
-
 
         private void fillgrid()
         {
@@ -1120,7 +1064,6 @@ namespace ShopFloorPlacementPlanner
             dgSlStores.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgSlStores.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
-
             DataGridViewColumn columnLaserID = dgLaser.Columns[2];
             columnLaserID.Visible = false;
             DataGridViewColumn columnLaser = dgLaser.Columns[1];
@@ -1134,7 +1077,6 @@ namespace ShopFloorPlacementPlanner
             columnPunch.Width = 40;
             dgPunch.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgPunch.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-
 
             DataGridViewColumn columnBendID = dgBend.Columns[2];
             columnBendID.Visible = false;
@@ -1157,12 +1099,10 @@ namespace ShopFloorPlacementPlanner
             dgBuff.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             //dgBuff.RowTemplate.Height = 55;
 
-
             DataGridViewColumn columnPaintID = dgPaint.Columns[2];
             columnPaintID.Visible = false;
             DataGridViewColumn columnPaint = dgPaint.Columns[1];
             columnPaint.Width = 40;
-
 
             DataGridViewColumn columnPackID = dgPack.Columns[2];
             columnPackID.Visible = false;
@@ -1171,14 +1111,12 @@ namespace ShopFloorPlacementPlanner
             dgPack.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgPack.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
-
             DataGridViewColumn columnStoresID = dgStores.Columns[2];
             columnStoresID.Visible = false;
             DataGridViewColumn columnStores = dgStores.Columns[1];
             columnStores.Width = 40;
             dgStores.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgStores.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-
 
             DataGridViewColumn columnDispatchID = dgDispatch.Columns[2];
             columnDispatchID.Visible = false;
@@ -1187,14 +1125,12 @@ namespace ShopFloorPlacementPlanner
             dgDispatch.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgDispatch.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
-
             DataGridViewColumn columnToolRoomID = dgToolRoom.Columns[2];
             columnToolRoomID.Visible = false;
             DataGridViewColumn columnToolroom = dgToolRoom.Columns[1];
             columnToolroom.Width = 40;
             dgToolRoom.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgToolRoom.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-
 
             DataGridViewColumn columnCleaningID = dgCleaning.Columns[2];
             columnCleaningID.Visible = false;
@@ -1210,7 +1146,6 @@ namespace ShopFloorPlacementPlanner
             dgManagement.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgManagement.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
-
             DataGridViewColumn columnHSID = dgHS.Columns[2];
             columnHSID.Visible = false;
             DataGridViewColumn columnHS = dgHS.Columns[1];
@@ -1225,15 +1160,11 @@ namespace ShopFloorPlacementPlanner
             dgvHSManagement.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgvHSManagement.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
-
-
             fillShopGoals();
-
         }
 
         private void countMen()
         {
-
             double menCount = 0;
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
@@ -1245,12 +1176,10 @@ namespace ShopFloorPlacementPlanner
             conn.Close();
 
             lblMenCount.Text = "Total amount of men selected: " + menCount.ToString();
-
         }
 
         private void fillSlimline()
         {
-
             if (dgSlimline.Columns.Contains("worked") == true)
             {
                 dgSlimline.Columns.Remove("worked");
@@ -1264,7 +1193,6 @@ namespace ShopFloorPlacementPlanner
                 dgSlimline.Columns.Remove("overtime");
             }
 
-
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
@@ -1276,8 +1204,6 @@ namespace ShopFloorPlacementPlanner
             da.Fill(dt);
 
             dgSlimline.DataSource = dt;
-
-
 
             SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
             cmdryucxd.CommandType = CommandType.StoredProcedure;
@@ -1310,8 +1236,6 @@ namespace ShopFloorPlacementPlanner
                 dgSlimline[5, i].Value = overtimeHours.Rows[0][i].ToString();
             }
 
-
-
             for (int i = 0; i < dgSlimline.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString()); //
@@ -1333,7 +1257,6 @@ namespace ShopFloorPlacementPlanner
             dgSlimline.Columns["hours"].Visible = false;
             dgSlimline.Columns["worked"].Visible = false;
             dgSlimline.Columns["overtime"].Visible = false;
-
 
             conn.Close();
         }
@@ -1399,7 +1322,6 @@ namespace ShopFloorPlacementPlanner
             DataTable overtimeHours = new DataTable();
             OTreader.Fill(overtimeHours);
 
-
             for (int i = 0; i < dgPunch.Rows.Count; i++)
             {
                 //MessageBox.Show(overtimeHours.Rows[0][i].ToString());
@@ -1413,15 +1335,12 @@ namespace ShopFloorPlacementPlanner
                 dgPunch[2, i].Value = overtimeTemp;
             }
 
-
             conn.Close();
             dgPunch.Columns[3].Visible = false;
-
         }
 
         private void fillLaser()
         {
-
             if (dgLaser.Columns.Contains("worked") == true)
             {
                 dgLaser.Columns.Remove("worked");
@@ -1435,7 +1354,6 @@ namespace ShopFloorPlacementPlanner
                 dgLaser.Columns.Remove("overtime");
             }
 
-
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
@@ -1448,10 +1366,6 @@ namespace ShopFloorPlacementPlanner
 
             dgLaser.DataSource = dt;
 
-
-
-
-
             SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
             cmdryucxd.CommandType = CommandType.StoredProcedure;
             cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Laser";
@@ -1462,7 +1376,6 @@ namespace ShopFloorPlacementPlanner
             DataTable workedHours = new DataTable();
             workedHours.Load(dataReader);
             //da2.Fill(workedHours);
-
 
             //overtime -- usp_power_planner_overtime_hours
             SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
@@ -1483,7 +1396,6 @@ namespace ShopFloorPlacementPlanner
             {
                 dgLaser[5, i].Value = overtimeHours.Rows[0][i].ToString();
             }
-
 
             for (int i = 0; i < dgLaser.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
@@ -1508,12 +1420,10 @@ namespace ShopFloorPlacementPlanner
             dgLaser.Columns["overtime"].Visible = false;
 
             conn.Close();
-
         }
 
         private void fillBend()
         {
-
             if (dgBend.Columns.Contains("worked") == true)
             {
                 dgBend.Columns.Remove("worked");
@@ -1539,7 +1449,6 @@ namespace ShopFloorPlacementPlanner
             da.Fill(dt);
             dgBend.DataSource = dt;
             ////////////////////////////////////////////////////
-
 
             SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
             cmdryucxd.CommandType = CommandType.StoredProcedure;
@@ -1572,8 +1481,6 @@ namespace ShopFloorPlacementPlanner
                 dgBend[5, i].Value = overtimeHours.Rows[0][i].ToString();
             }
 
-
-
             for (int i = 0; i < dgBend.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
@@ -1598,7 +1505,6 @@ namespace ShopFloorPlacementPlanner
 
             // this seems to work fine i think afaik
 
-
             conn.Close();
         }
 
@@ -1618,7 +1524,6 @@ namespace ShopFloorPlacementPlanner
             }
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-
 
             SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
@@ -1644,7 +1549,6 @@ namespace ShopFloorPlacementPlanner
             //dgWeld.Columns["Set hours / worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             //dgWeld.Columns["workedHours"].Visible = false;
 
-
             //this procedure works everything out, so if we just staple on another column and insert whatever we grab from the procedure life should be good
             //usp_power_planner_worked_hours
             SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
@@ -1669,7 +1573,6 @@ namespace ShopFloorPlacementPlanner
             DataTable overtimeHours = new DataTable();
             overtimeHours.Load(OTreader);
 
-
             dgWeld.Columns.Add("worked", "worked");
             dgWeld.Columns.Add("set/worked", "set/worked");
             dgWeld.Columns.Add("overtime", "overtime");
@@ -1679,9 +1582,6 @@ namespace ShopFloorPlacementPlanner
                 dgWeld[5, i].Value = overtimeHours.Rows[0][i].ToString();
             }
             //need to check the datatable for content
-
-
-
 
             for (int i = 0; i < dgWeld.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
@@ -1699,7 +1599,6 @@ namespace ShopFloorPlacementPlanner
                 dgWeld[4, i].Value = hours + " / " + worked;
             }
 
-
             //dgWeld.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             //dgWeld.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgWeld.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -1709,7 +1608,6 @@ namespace ShopFloorPlacementPlanner
             dgWeld.Columns["overtime"].Visible = false;
 
             // conn.Close();
-
         }
 
         private void fillBuff()
@@ -1739,7 +1637,6 @@ namespace ShopFloorPlacementPlanner
 
             dgBuff.DataSource = dt;
 
-
             SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
             cmdryucxd.CommandType = CommandType.StoredProcedure;
             cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Dressing";
@@ -1751,15 +1648,12 @@ namespace ShopFloorPlacementPlanner
             workedHours.Load(dataReader);
             //da2.Fill(workedHours);
 
-
-
             //overtime -- usp_power_planner_overtime_hours
             SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
             cmdOT.CommandType = CommandType.StoredProcedure;
             cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Dressing";
             cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
             var OTreader = cmdOT.ExecuteReader();
-
 
             // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable overtimeHours = new DataTable();
@@ -1769,15 +1663,10 @@ namespace ShopFloorPlacementPlanner
             dgBuff.Columns.Add("set/worked", "set/worked");
             dgBuff.Columns.Add("overtime", "overtime");
 
-
             for (int i = 0; i < dgBuff.Rows.Count; i++)
             {
                 dgBuff[5, i].Value = overtimeHours.Rows[0][i].ToString();
             }
-
-
-
-
 
             for (int i = 0; i < dgBuff.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
@@ -1795,7 +1684,6 @@ namespace ShopFloorPlacementPlanner
                 dgBuff[4, i].Value = hours + " / " + worked;
             }
 
-
             //dgBuff.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             //dgBuff.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgBuff.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -1804,15 +1692,12 @@ namespace ShopFloorPlacementPlanner
             dgBuff.Columns["worked"].Visible = false;
             dgBuff.Columns["overtime"].Visible = false;
 
-
-
             conn.Close();
-
         }
 
         private void fillPaint()
         {
-            //adjust dgv here cause why not? 
+            //adjust dgv here cause why not?
 
             if (dgPaint.Columns.Contains("overtime") == true)
             {
@@ -1836,8 +1721,6 @@ namespace ShopFloorPlacementPlanner
 
             dgPaint.DataSource = dt;
 
-
-
             dgPaint.Columns.Add("overtime", "overtime");
             //overtime -- usp_power_planner_overtime_hours
             SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
@@ -1849,7 +1732,6 @@ namespace ShopFloorPlacementPlanner
             // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable overtimeHours = new DataTable();
             OTreader.Fill(overtimeHours);
-
 
             for (int i = 0; i < dgPaint.Rows.Count; i++)
             {
@@ -1864,15 +1746,12 @@ namespace ShopFloorPlacementPlanner
                 dgPaint[3, i].Value = overtimeTemp;
             }
 
-
-
             conn.Close();
             dgPaint.Columns[0].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgPaint.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgPaint.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgPaint.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgPaint.Columns[3].Visible = false;
-
         }
 
         private void fillPack()
@@ -1905,7 +1784,6 @@ namespace ShopFloorPlacementPlanner
 
             dgPack.DataSource = dt;
 
-
             SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
             cmdryucxd.CommandType = CommandType.StoredProcedure;
             cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Packing";
@@ -1917,15 +1795,12 @@ namespace ShopFloorPlacementPlanner
             workedHours.Load(dataReader);
             //da2.Fill(workedHours);
 
-
-
             //overtime -- usp_power_planner_overtime_hours
             SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
             cmdOT.CommandType = CommandType.StoredProcedure;
             cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Packing";
             cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
             var OTreader = cmdOT.ExecuteReader();
-
 
             // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable overtimeHours = new DataTable();
@@ -1936,16 +1811,10 @@ namespace ShopFloorPlacementPlanner
             dgPack.Columns.Add("packValue", "packValue");
             dgPack.Columns.Add("overtime", "overtime");
 
-
-
             for (int i = 0; i < dgPack.Rows.Count; i++)
             {
                 dgPack[6, i].Value = overtimeHours.Rows[0][i].ToString();
             }
-
-
-
-
 
             for (int i = 0; i < dgPack.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
@@ -1965,7 +1834,6 @@ namespace ShopFloorPlacementPlanner
                 dgPack[5, i].Value = packValue.Rows[0][i].ToString();
             }
 
-
             //put the columns together into one column! :D
             string hours = "";
             string worked = "";
@@ -1976,7 +1844,6 @@ namespace ShopFloorPlacementPlanner
                 worked = dgPack.Rows[i].Cells[3].Value.ToString();
                 dgPack[4, i].Value = hours + " / " + worked + Environment.NewLine + "£" + packValue.Rows[0][i].ToString();
             }
-
 
             //dgPack.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             //dgPack.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -2001,7 +1868,6 @@ namespace ShopFloorPlacementPlanner
                     temp = "0";
 
                 lblTotalPacked.Text = "Total Packed: £" + temp;
-
             }
 
             conn.Close();
@@ -2108,6 +1974,7 @@ namespace ShopFloorPlacementPlanner
 
             conn.Close();
         }
+
         private void fillHSManagement()
         {
             string sql = "SELECT [full placement] + ' - ' + department as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = '" + dteDateSelection.Text + "' and (department = 'HS' OR department = 'Management') ORDER BY department,[Staff Name]";
@@ -2133,8 +2000,6 @@ namespace ShopFloorPlacementPlanner
             cmdDate.CommandType = CommandType.StoredProcedure;
             cmdDate.Parameters.AddWithValue("@placementDate", SqlDbType.Date).Value = dteDateSelection.Text;
 
-
-
             SqlDataAdapter da = new SqlDataAdapter(cmdDate);
 
             DataTable dt = new DataTable();
@@ -2142,7 +2007,6 @@ namespace ShopFloorPlacementPlanner
             da.Fill(dt);
 
             dgNotPlaced.DataSource = dt;
-
         }
 
         private void dteDateSelection_ValueChanged(object sender, EventArgs e)
@@ -2164,7 +2028,6 @@ namespace ShopFloorPlacementPlanner
 
         private void copyPlacementsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             frmCopyPlacements cp = new frmCopyPlacements(Convert.ToDateTime(dteDateSelection.Text));
             cp.ShowDialog();
             fillgrid();
@@ -2187,7 +2050,6 @@ namespace ShopFloorPlacementPlanner
         private void sendToDailyGoalsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             updateDailyGoals();
-
         }
 
         private void updateDailyGoals()
@@ -2201,7 +2063,6 @@ namespace ShopFloorPlacementPlanner
             double goalHoursPaint;
             double goalHoursPack;
             double goalBoxes = 0;
-
 
             double manPowerSlimline;
             double manPowerLaser;
@@ -2221,7 +2082,6 @@ namespace ShopFloorPlacementPlanner
             goalHoursBuff = Convert.ToDouble(txtBuffHours.Text) + Convert.ToDouble(txtBuffOT.Text) + Convert.ToDouble(txtBuffAD.Text);
             goalHoursPaint = Convert.ToDouble(txtPaintHours.Text) + Convert.ToDouble(txtPaintOT.Text) + Convert.ToDouble(txtPaintAD.Text);
             goalHoursPack = Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(txtPackOT.Text) + Convert.ToDouble(txtPackAD.Text);
-
 
             manPowerSlimline = Convert.ToDouble(txtSlimlineMen.Text);
             manPowerLaser = Convert.ToDouble(txtLaserMen.Text);
@@ -2269,7 +2129,6 @@ namespace ShopFloorPlacementPlanner
                 "man_power_stores = @manPowerStores " +
                 " WHERE date_goal = @dateGoal", conn))
             {
-
                 cmd.Parameters.AddWithValue("@goalHoursSlimline", goalHoursSlimline);
                 cmd.Parameters.AddWithValue("@goalHoursLaser", goalHoursLaser);
                 cmd.Parameters.AddWithValue("@goalHoursPunch", goalHoursPunch);
@@ -2310,9 +2169,7 @@ namespace ShopFloorPlacementPlanner
                 {
                     MessageBox.Show("An error has occured with automatic allocation script, if this error persists please contact IT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
-
         }
 
         private void printDayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2328,7 +2185,6 @@ namespace ShopFloorPlacementPlanner
             //  lbl_time.Visible = true;
             try
             {
-
                 Image bit = new Bitmap(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
 
                 Graphics gs = Graphics.FromImage(bit);
@@ -2341,10 +2197,8 @@ namespace ShopFloorPlacementPlanner
             }
             catch
             {
-
             }
             lbl_time.Text = "";
-
         }
 
         private void printImage()
@@ -2357,7 +2211,6 @@ namespace ShopFloorPlacementPlanner
                     Image i = Image.FromFile(@"C:\temp\temp.jpg");
                     Point p = new Point(100, 100);
                     args.Graphics.DrawImage(i, args.MarginBounds);
-
                 };
 
                 pd.DefaultPageSettings.Landscape = true;
@@ -2367,14 +2220,12 @@ namespace ShopFloorPlacementPlanner
             }
             catch
             {
-
             }
         }
 
         private void updateAutomaticAllocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             updateAutomaticAllocation();
-
         }
 
         private void updateAutomaticAllocation()
@@ -2407,7 +2258,6 @@ namespace ShopFloorPlacementPlanner
             }
 
             fillgrid();
-
         }
 
         private void btnAddStores_Click(object sender, EventArgs e)
@@ -2418,7 +2268,6 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
-
         }
 
         private void btnAddDispatch_Click(object sender, EventArgs e)
@@ -2431,7 +2280,6 @@ namespace ShopFloorPlacementPlanner
             refreshSelectedDepartments();
         }
 
-
         private void btnAddToolRoom_Click(object sender, EventArgs e)
         {
             skipMessageBox = 2;
@@ -2440,7 +2288,6 @@ namespace ShopFloorPlacementPlanner
                                 // fillgrid();
             refreshSelectedDepartments();
         }
-
 
         private void btnAddCleaning_Click(object sender, EventArgs e)
         {
@@ -2451,8 +2298,6 @@ namespace ShopFloorPlacementPlanner
             // fillgrid();
             refreshSelectedDepartments();
         }
-
-
 
         private void BtnAddManagement_Click(object sender, EventArgs e)
         {
@@ -2495,9 +2340,6 @@ namespace ShopFloorPlacementPlanner
             }
 
             fillgrid();
-
-
-
         }
 
         private void ryucxdToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2558,7 +2400,6 @@ namespace ShopFloorPlacementPlanner
                 //MessageBox.Show(i.ToString());
                 using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {
-
                     //get the figures for OT + AD
                     sql = "select date_id,punching_OT,punching_AD,laser_OT,laser_AD,bending_OT,bending_AD,welding_OT,welding_AD,buffing_OT,buffing_AD,painting_OT,painting_AD,packing_AD,packing_OT from dbo.power_plan_overtime WHERE date_id = " + dt.Rows[row][0];
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -2638,7 +2479,6 @@ namespace ShopFloorPlacementPlanner
                                                Convert.ToDouble(painting_hours), Convert.ToDouble(painting_OT), Convert.ToDouble(painting_AD),
                                                Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD));
 
-
                     //excel.addData(Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
                     //                           Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
                     //                           Convert.ToDouble(bending_hours), Convert.ToDouble(bending_OT), Convert.ToDouble(bending_AD),
@@ -2648,16 +2488,13 @@ namespace ShopFloorPlacementPlanner
                     //                           Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD)
                     //);
 
-
-
                     //excel.addDAtes(mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR);
                     // excel.closeExcel();
-
 
                     row++;
                 }
             }
-            //get the right fields into this and 
+            //get the right fields into this and
             //excel.print();
             //excel.closeExcel();
             MessageBox.Show("Printout has been sent to your default printer!");
@@ -2720,10 +2557,8 @@ namespace ShopFloorPlacementPlanner
             txtPackMen.Text = "0";
             txtPackOT.Text = "0";
 
-
             fillgrid();
         }
-
 
         private void refreshSelectedDepartments()
         {
@@ -2787,7 +2622,6 @@ namespace ShopFloorPlacementPlanner
             frm.ShowDialog();
         }
 
-
         private void dgPack_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             dgPack.ClearSelection();
@@ -2806,8 +2640,7 @@ namespace ShopFloorPlacementPlanner
         {
             if (dgNotPlaced.Rows[e.RowIndex].Cells[1].Value.ToString().Contains("HOLIDAY"))
             {
-
-                //if its a holiday show the form that displays when it was created 
+                //if its a holiday show the form that displays when it was created
                 //grab user ud
                 int id = 0;
                 string sql = "SELECT id FROM dbo.[user] WHERE forename + ' ' + surname = '" + dgNotPlaced.Rows[e.RowIndex].Cells[0].Value + "'";
@@ -2821,11 +2654,9 @@ namespace ShopFloorPlacementPlanner
                     }
                 }
 
-
                 frmHolidayCreated frm = new frmHolidayCreated(id, Convert.ToDateTime(dteDateSelection.Text), dgNotPlaced.Rows[e.RowIndex].Cells[0].Value.ToString());
                 frm.ShowDialog();
             }
-
         }
 
         private void shopFloorInputToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2873,12 +2704,10 @@ namespace ShopFloorPlacementPlanner
             //mimic the productivity reports from access
             frmProductivity frm = new frmProductivity();
             frm.ShowDialog();
-
         }
 
         private void cOVIDToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void fillShopGoals()
@@ -2941,8 +2770,6 @@ namespace ShopFloorPlacementPlanner
 
             //txtPackPercent.Text = "";
             txtPackPercent.BackColor = Color.Empty;
-
-
 
             //read allt he data from the selected dte and put them into thje 100 textbnoxes
             string sql = "SELECT COALESCE(round([9_30_slimline] * 100,2),'9999') as [9_30_slimline],COALESCE(round([11_30_slimline] * 100, 2),'9999') as [11_30_slimline],COALESCE(round([2_30_slimline] * 100, 2),'9999') as [2_30_slimline]," +
@@ -3033,7 +2860,6 @@ namespace ShopFloorPlacementPlanner
                     conn.Close();
                 }
 
-
                 //if its 9999 then make the textbox null
 
                 //slimline
@@ -3066,7 +2892,7 @@ namespace ShopFloorPlacementPlanner
                 if (laser_4_00.Text == "9999")
                     laser_4_00.Text = "";
 
-                //bending 
+                //bending
                 if (bending_9_30.Text == "9999")
                     bending_9_30.Text = "";
                 if (bending_11_30.Text == "9999")
@@ -3115,8 +2941,6 @@ namespace ShopFloorPlacementPlanner
                     packing_2_30.Text = "";
                 if (packing_4_00.Text == "9999")
                     packing_4_00.Text = "";
-
-
 
                 //now we add colourssss
 
@@ -3170,7 +2994,6 @@ namespace ShopFloorPlacementPlanner
                     laser_2_30.BackColor = Color.DarkSeaGreen;
                 else
                     laser_2_30.BackColor = Color.PaleVioletRed;
-
 
                 if (laser_4_00.Text == "")
                     laser_4_00.BackColor = Color.Empty;
@@ -3356,12 +3179,10 @@ namespace ShopFloorPlacementPlanner
                 else
                     packing_4_00.BackColor = Color.PaleVioletRed;
 
-
                 //colours for the current boxesm
                 int temp = 0;
                 if (slimline_9_30.Text.Length > 0)
                 {
-
                     if (slimline_11_30.Text.Length > 0)
                     {
                         if (slimline_2_30.Text.Length > 0)
@@ -3377,7 +3198,6 @@ namespace ShopFloorPlacementPlanner
                     else
                         temp = 25;
                 }
-
 
                 if (Convert.ToDouble(txtSlimlinePercent.Text) > temp)
                     txtSlimlinePercent.BackColor = Color.DarkSeaGreen;
@@ -3418,10 +3238,7 @@ namespace ShopFloorPlacementPlanner
                     txtPackPercent.BackColor = Color.DarkSeaGreen;
                 else
                     txtPackPercent.BackColor = Color.PaleVioletRed;
-
-
             }
-
         }
 
         private void dgSlimline_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -3491,9 +3308,6 @@ namespace ShopFloorPlacementPlanner
                     txt730Packing.Text = availableWork.Rows[0][5].ToString();
                 }
             }
-            }
         }
     }
-
-
-
+}

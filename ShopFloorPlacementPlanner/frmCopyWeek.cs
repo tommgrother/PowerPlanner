@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
@@ -16,6 +10,7 @@ namespace ShopFloorPlacementPlanner
         public int dataCopied { get; set; }
         public DateTime dateCopyFrom { get; set; }
         public DateTime dateCopyTo { get; set; }
+
         public frmCopyWeek(DateTime dateOnOpen)
         {
             InitializeComponent();
@@ -49,18 +44,17 @@ namespace ShopFloorPlacementPlanner
                     dateCopyTo = dateCopyTo.AddDays(1);
                 }
                 conn.Close();
-        }
-        dataCopied = -1;
+            }
+            dataCopied = -1;
             this.Close();
-    }
+        }
+
         private void getMonday()
         {
-
             int diff = (7 + (dateCopyFrom.DayOfWeek - DayOfWeek.Monday)) % 7;
-            dateCopyFrom =  dateCopyFrom.AddDays(-1 * diff);
+            dateCopyFrom = dateCopyFrom.AddDays(-1 * diff);
             diff = (7 + (dateCopyTo.DayOfWeek - DayOfWeek.Monday)) % 7;
-            dateCopyTo=  dateCopyTo.AddDays(-1 * diff);
-
+            dateCopyTo = dateCopyTo.AddDays(-1 * diff);
         }
 
         private void dteWeekCopyFrom_ValueChanged(object sender, EventArgs e)

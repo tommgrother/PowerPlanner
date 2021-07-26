@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Globalization;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -16,6 +10,7 @@ namespace ShopFloorPlacementPlanner
     {
         //indexs
         public int overtimeIndex { get; set; }
+
         public int staffIDIndex { get; set; }
         public int dateIDIndex { get; set; }
         public int validation { get; set; }
@@ -27,8 +22,8 @@ namespace ShopFloorPlacementPlanner
         public DateTime tempDate { get; set; }
         public DateTime monday { get; set; } //should only need monday (we can date add based on what tab is selected and this should always be correct providing MONDAY is the correct date
 
-
         public decimal totalOvertime { get; set; }
+
         public frmWeeklyOverTime(DateTime _tempDate, string _department)
         {
             InitializeComponent();
@@ -42,18 +37,16 @@ namespace ShopFloorPlacementPlanner
 
             // MessageBox.Show(monday.ToString());
             whichTab();
-
         }
 
         private void whichTab()
         {
-            //if @validation = -1 thendata was changed so before we swap the dgv around we need to commit the data that was changed 
+            //if @validation = -1 thendata was changed so before we swap the dgv around we need to commit the data that was changed
             if (validation == -1)
             {
                 commitData();
                 validation = 0;
             }
-
 
             //based on what tab it is we will add days to @monday
             //get the currently selected Tab
@@ -76,6 +69,7 @@ namespace ShopFloorPlacementPlanner
             //i think here we need to check if someone has entered data into the day and has swapped to anther - if they have then we need to commit it but this is a problem for later
             fillDGV();
         }
+
         private void fillDGV()
         {
             dataGridView1.Columns.Clear();
@@ -83,7 +77,6 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns.Remove("Over Time");
             if (dataGridView1.Columns.Contains("Declined Value") == true)
                 dataGridView1.Columns.Remove("Declined Value");
-
 
             //if dgv has content then null it
             //dataGridView1.Rows.Clear();
@@ -112,7 +105,6 @@ namespace ShopFloorPlacementPlanner
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -130,7 +122,6 @@ namespace ShopFloorPlacementPlanner
                     {
                         dataGridView1.Columns.Insert(dataGridView1.ColumnCount, shiftButton);
                     }
-
                 }
                 getColumnIndex();
 
@@ -161,14 +152,12 @@ namespace ShopFloorPlacementPlanner
                         }
                         else
                             dataGridView1.Rows[i].Cells[declinedValueIndex].Value = "0";
-
                     }
                 }
 
                 conn.Close();
                 dataGridView1.Refresh();
             }
-
 
             dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -179,14 +168,10 @@ namespace ShopFloorPlacementPlanner
             dataGridView1.Columns[2].Visible = false;
             dataGridView1.Columns[3].Visible = false;
             dataGridView1.Columns[declinedValueIndex].Visible = false;
-
-
-
         }
 
         private void getColumnIndex()
         {
-
             //dataGridView1.Columns.Add("Over Time", "Over Time");
             if (dataGridView1.Columns.Contains("Over Time") == true)
                 overtimeIndex = dataGridView1.Columns["Over Time"].Index;
@@ -202,7 +187,6 @@ namespace ShopFloorPlacementPlanner
 
         private void commitData()
         {
-
             getColumnIndex();
             string sql = "";
             double totalHours = 0;
@@ -213,18 +197,17 @@ namespace ShopFloorPlacementPlanner
                 {
                     using (SqlCommand cmd = new SqlCommand("usp_power_plan_add_overtime_remake", conn))
                     {
-
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@date_id", SqlDbType.Int).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[dateIDIndex].Value);
                         cmd.Parameters.Add("@staff_id", SqlDbType.Int).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[staffIDIndex].Value);
                         cmd.Parameters.Add("@overtime", SqlDbType.Float).Value = Convert.ToDouble(dataGridView1.Rows[i].Cells[overtimeIndex].Value);
                         cmd.Parameters.Add("@department", SqlDbType.NVarChar).Value = department;
-                        cmd.Parameters.Add("@declined",SqlDbType.NVarChar).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[declinedValueIndex].Value);
+                        cmd.Parameters.Add("@declined", SqlDbType.NVarChar).Value = Convert.ToInt32(dataGridView1.Rows[i].Cells[declinedValueIndex].Value);
                         cmd.ExecuteNonQuery();
                         totalHours = totalHours + Convert.ToDouble(dataGridView1.Rows[i].Cells[overtimeIndex].Value);
                     }
                 }
-                //update it here because it needs the full TOTAL of the 
+                //update it here because it needs the full TOTAL of the
                 Overtime overtime = new Overtime();
                 overtime.updateOT(tempDate, department, totalHours);
                 conn.Close();
@@ -244,7 +227,7 @@ namespace ShopFloorPlacementPlanner
         private void frmWeeklyOverTime_FormClosing(object sender, FormClosingEventArgs e)
         {
             //close the form on todays date!!!
-            //count the days between monday and startdate 
+            //count the days between monday and startdate
             double countDays = (monday - startDate).Days;
             if (countDays < 0)
                 countDays = countDays * -1;
@@ -273,9 +256,9 @@ namespace ShopFloorPlacementPlanner
                 {
                     tb.KeyPress += new KeyPressEventHandler(Column_KeyPress);
                 }
-
             }
         }
+
         private void Column_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
@@ -303,7 +286,7 @@ namespace ShopFloorPlacementPlanner
                     dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
                 }
             }
-            }
+        }
 
         private void frmWeeklyOverTime_Shown(object sender, EventArgs e)
         {
@@ -315,12 +298,10 @@ namespace ShopFloorPlacementPlanner
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void frmWeeklyOverTime_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

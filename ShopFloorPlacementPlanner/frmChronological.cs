@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Drawing.Printing;
+using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
     public partial class frmChronological : Form
     {
-
         public int actionIndex { get; set; }
         public string _staff { get; set; }
         public string _dept { get; set; }
+
         public frmChronological(string staff, string dept, DateTime plannerDate)
         {
             InitializeComponent();
@@ -105,10 +100,8 @@ namespace ShopFloorPlacementPlanner
 
         private void REarrange()
         {
-
-
             //ok one of the harder things to do here is to get the columns to merge like they do in the report :{
-            //first step lets grab all of the indexes of each column we have 
+            //first step lets grab all of the indexes of each column we have
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             int status, action, part, part_time, action_time, action_date, fullname, door_id, sort_order, department, department_time, predicted_end, note, door_type, time;
@@ -133,7 +126,6 @@ namespace ShopFloorPlacementPlanner
 
             //start messing with the columns :}
 
-
             //first column :- =IIf([Action]="Door Start",[Action] & " - Duration: " & Round(([department_time]/60),2) & " >>",IIf([Action]<>"Finish Part",[Action] & " >>",""))
             //gonna need to loop through all the records for this one
 
@@ -152,7 +144,6 @@ namespace ShopFloorPlacementPlanner
                 DateTime tempDate = Convert.ToDateTime(dataGridView1.Rows[i].Cells[action_time].Value);
                 dataGridView1.Rows[i].Cells[time].Value = tempDate.ToString("HH:mm");
             }
-
 
             //formating
             //hide the columns we do not need
@@ -221,6 +212,7 @@ namespace ShopFloorPlacementPlanner
                 printImage();
             }
         }
+
         private void printImage()
         {
             try
@@ -231,7 +223,6 @@ namespace ShopFloorPlacementPlanner
                     Image i = Image.FromFile(@"C:\temp\temp.jpg");
                     Point p = new Point(100, 100);
                     args.Graphics.DrawImage(i, args.MarginBounds);
-
                 };
 
                 pd.DefaultPageSettings.Landscape = true;
@@ -241,7 +232,6 @@ namespace ShopFloorPlacementPlanner
             }
             catch
             {
-
             }
         }
 

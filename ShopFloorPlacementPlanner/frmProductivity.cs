@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Drawing.Printing;
+using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -43,16 +38,14 @@ namespace ShopFloorPlacementPlanner
 
         private void dteStart_ValueChanged(object sender, EventArgs e)
         {
-
         }
 
         private void dteEnd_ValueChanged(object sender, EventArgs e)
         {
-
         }
+
         private void fillDataGrid()
         {
-
             if (dataGridView1.DataSource != null)
             {
                 //dataGridView1.Rows.Clear();
@@ -73,7 +66,6 @@ namespace ShopFloorPlacementPlanner
                 //    "AND CAST(part_complete_date as DATE)<= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + "' AND part_status = 'Complete' " +
                 //    "GROUP BY op,CAST(part_complete_date as date),dbo.door_part_completion_log.staff_id";
 
-
                 sql = "SELECT max(b.date_plan) as [Date],MAX(DATENAME(dw,b.date_plan)) as [day],max(department) as [department], MAX(a.[hours]) as [set_hours],'0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours],max(a.id) as [placement] " +
                     "FROM dbo.power_plan_staff a LEFT JOIN dbo.power_plan_date b on a.date_id = b.id " +
                     "WHERE a.staff_id = " + staff_id.ToString() + " AND CAST(b.date_plan as DATE)>= '" + Convert.ToDateTime(dteStart.Value).ToString("yyyy-MM-dd") + "' AND CAST(b.date_plan as DATE)<= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + "' " +
@@ -93,8 +85,6 @@ namespace ShopFloorPlacementPlanner
 
                 //Am currently having issues where time_for_part / 60 is not giving me the correct number, going to manually add it here instead~
                 //need to do the same for overtime
-                
-
 
                 int actualHoursIndex = dataGridView1.Columns["actual_hours"].Index;
                 int dateIndex = dataGridView1.Columns["Date"].Index;
@@ -120,7 +110,7 @@ namespace ShopFloorPlacementPlanner
                             if (temp < 0)
                                 temp = temp * -1;
                             lblDifference.BackColor = Color.PaleVioletRed;
-                            lblDifference.Text = "Dropped " +Math.Round(temp,2).ToString() + " Hours";
+                            lblDifference.Text = "Dropped " + Math.Round(temp, 2).ToString() + " Hours";
                         }
                         else
                         {
@@ -128,10 +118,10 @@ namespace ShopFloorPlacementPlanner
                             if (temp < 0)
                                 temp = temp * -1;
 
-                            lblDifference.Text = "Gained " + Math.Round(temp,2).ToString() + " Hours";
+                            lblDifference.Text = "Gained " + Math.Round(temp, 2).ToString() + " Hours";
                             lblDifference.BackColor = Color.DarkSeaGreen;
                         }
-                       // lblDifference.Text = "Set Hours - Actual Hours = " + Convert.ToString(runningSetAndOvertime - runningActual);
+                        // lblDifference.Text = "Set Hours - Actual Hours = " + Convert.ToString(runningSetAndOvertime - runningActual);
                     }
                     else
                     {
@@ -188,7 +178,6 @@ namespace ShopFloorPlacementPlanner
                             row.Cells[0].Style.BackColor = Color.Yellow;
                         }
 
-
                         //add set hours + overtime together
                         double totalHours = Math.Round(Convert.ToDouble(row.Cells[setHoursIndex].Value) + Convert.ToDouble(row.Cells[overtimeIndex].Value), 2);
                         row.Cells[totalSetHoursIndex].Value = totalHours;
@@ -197,16 +186,9 @@ namespace ShopFloorPlacementPlanner
                         runningOvertime = runningOvertime + Convert.ToDouble(row.Cells[overtimeIndex].Value);
                         runningSet = runningSet + Convert.ToDouble(row.Cells[setHoursIndex].Value);
                         runningSetAndOvertime = runningSetAndOvertime + Convert.ToDouble(row.Cells[totalSetHoursIndex].Value);
-
-
-
-
                     }
                 }
                 conn.Close();
-
-
-
 
                 //format
                 dataGridView1.Columns[1].HeaderText = "Day";
@@ -221,9 +203,7 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.ClearSelection();
                 dataGridView1.DefaultCellStyle.SelectionBackColor = dataGridView1.DefaultCellStyle.BackColor;
                 dataGridView1.DefaultCellStyle.SelectionForeColor = dataGridView1.DefaultCellStyle.ForeColor;
-
             }
-
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
@@ -244,7 +224,7 @@ namespace ShopFloorPlacementPlanner
             catch
             {
             }
-        } 
+        }
 
         private void printImage()
         {
@@ -256,7 +236,6 @@ namespace ShopFloorPlacementPlanner
                     Image i = Image.FromFile(@"C:\temp\temp.jpg");
                     Point p = new Point(100, 100);
                     args.Graphics.DrawImage(i, args.MarginBounds);
-
                 };
 
                 pd.DefaultPageSettings.Landscape = true;
@@ -266,7 +245,6 @@ namespace ShopFloorPlacementPlanner
             }
             catch
             {
-
             }
         }
 
@@ -282,7 +260,6 @@ namespace ShopFloorPlacementPlanner
 
         private void frmProductivity_Load(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

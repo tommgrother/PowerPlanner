@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace ShopFloorPlacementPlanner
 {
-    class Overtime
+    internal class Overtime
     {
-     
-
         public int _dateID { get; set; }
+
         public Overtime()
         {
-
-            
         }
-
 
         public void getDateID(DateTime selectedDate)
         {
@@ -37,10 +29,8 @@ namespace ShopFloorPlacementPlanner
                 }
                 else
                 {
-
                     dateExists = false;
                     //ADDS DATE TABLE ENTRY
-
                 }
 
                 rdr.Close();
@@ -59,32 +49,26 @@ namespace ShopFloorPlacementPlanner
                     cmdDate.Parameters.AddWithValue("@department", SqlDbType.NVarChar).Value = "";
                     cmdDate.ExecuteNonQuery();
                 }
-
             }
         }
-
 
         public void updateOT(DateTime selectedDate, string department, double amount)
         {
             getDateID(selectedDate);
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-            using (SqlCommand cmd = new SqlCommand("usp_update_power_plan_OT", conn))  
+            using (SqlCommand cmd = new SqlCommand("usp_update_power_plan_OT", conn))
             {
-
                 conn.Open();
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@dateId", _dateID);
                 cmd.Parameters.AddWithValue("@dept", department);
                 cmd.Parameters.AddWithValue("@amount", amount);
                 cmd.ExecuteNonQuery();
-
             }
 
             conn.Close();
-
         }
-
 
         public void updateAD(DateTime selectedDate, string department, double amount)
         {
@@ -103,9 +87,6 @@ namespace ShopFloorPlacementPlanner
             }
 
             conn.Close();
-
         }
-
-
     }
 }

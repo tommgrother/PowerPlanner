@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Excel = Microsoft.Office.Interop.Excel;
-using System.Runtime.InteropServices;
-using System.Reflection;
-using System.Diagnostics;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ShopFloorPlacementPlanner
 {
-    class ExcelClass
+    internal class ExcelClass
     {
         public string filePath = @"\\designsvr1\public\Kevin Power Planner\TEMPLATE.xlsx";
-
-
-
-
 
         public int rowNumber { get; set; }
         public uint process_ID { get; set; }
@@ -57,6 +48,7 @@ namespace ShopFloorPlacementPlanner
             }
             return true;
         }
+
         public static void KillProcessByMainWindowHwnd(int hWnd)
         {
             uint processID;
@@ -66,13 +58,12 @@ namespace ShopFloorPlacementPlanner
             Process.GetProcessById((int)processID).Kill();
         }
 
-
-        public void openExcel(int print,int _rownumber, string _fileName, string Monday, string Tuesday, string Wednesday, string Thursday, string Friday, Double punchH, Double punchO, Double punchA, Double laserH, Double laserO, Double laserA, Double BendingH, Double BendingO, Double BendingA, Double weldingH, Double weldingO, Double weldingA, Double buffingH, Double buffingO, Double buffingA, Double paintingH, Double paintingO, Double paintingA, Double packingH, Double packingO, Double packingA)
+        public void openExcel(int print, int _rownumber, string _fileName, string Monday, string Tuesday, string Wednesday, string Thursday, string Friday, Double punchH, Double punchO, Double punchA, Double laserH, Double laserO, Double laserA, Double BendingH, Double BendingO, Double BendingA, Double weldingH, Double weldingO, Double weldingA, Double buffingH, Double buffingO, Double buffingA, Double paintingH, Double paintingO, Double paintingA, Double packingH, Double packingO, Double packingA)
         {
-        Excel.Application excelApp = new Excel.Application();
-        Excel.Workbooks workbooks;
-        Excel.Workbook excelBook;
-        fileName = _fileName;
+            Excel.Application excelApp = new Excel.Application();
+            Excel.Workbooks workbooks;
+            Excel.Workbook excelBook;
+            fileName = _fileName;
             //app = null;
             //app = new Excel.Application(); // create a new instance
             excelApp.DisplayAlerts = false; //turn off annoying alerts that make me want to cryyyy
@@ -139,7 +130,7 @@ namespace ShopFloorPlacementPlanner
             excelSheet.Cells[rowNumber, "AA"] = packingA;
             // workSheet.Cells[rowNumber, "AB"] = packingTH;
 
-            //print possibly 
+            //print possibly
             if (print == 1)
             {
                 excelSheet.PrintOut(
@@ -147,9 +138,9 @@ namespace ShopFloorPlacementPlanner
                     Type.Missing, Type.Missing, Type.Missing, Type.Missing);
             }
 
-                // now we release the objects
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(rng);
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(excelSheet);
+            // now we release the objects
+            //System.Runtime.InteropServices.Marshal.ReleaseComObject(rng);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excelSheet);
             System.Runtime.InteropServices.Marshal.ReleaseComObject(sheets);
             //excelBook.Save();
             excelBook.SaveAs(filePath, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Excel.XlSaveAsAccessMode.xlNoChange, Type.Missing, Type.Missing, Type.Missing,
@@ -173,7 +164,6 @@ namespace ShopFloorPlacementPlanner
                 excelApp.Quit();
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
             }
-
         }
 
         //public void addDAtes(string Monday, string Tuesday, string Wednesday, string Thursday, string Friday)
@@ -223,7 +213,6 @@ namespace ShopFloorPlacementPlanner
         //    // workSheet.Cells[rowNumber, "AB"] = packingTH;
         //}
 
-
         public void print()
         {
             // Print out 1 copy to the default printer:
@@ -235,7 +224,6 @@ namespace ShopFloorPlacementPlanner
             //GC.Collect();
             //GC.WaitForPendingFinalizers();
         }
-
 
         //public void closeExcel()
         //{
@@ -249,6 +237,5 @@ namespace ShopFloorPlacementPlanner
 
         //    System.Diagnostics.Process.Start(@"\\designsvr1\DropBox\TEMPLATE-" + fileName + ".xlsx");
         //}
-
     }
 }

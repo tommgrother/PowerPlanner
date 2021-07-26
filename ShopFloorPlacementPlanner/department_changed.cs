@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShopFloorPlacementPlanner
+﻿namespace ShopFloorPlacementPlanner
 {
-    class department_changed
+    internal class department_changed
     {
         //the whole point of this class is to track what departments have been updated etc so we can fire fillgrid() only for those
         //this will speed up everything hopefully :)
 
         //variable for each department
         public static int slimlineSelected { get; set; }
+
         public static int punchSelected { get; set; }
         public static int laserSelected { get; set; }
         public static int bendSelected { get; set; }
@@ -27,9 +21,8 @@ namespace ShopFloorPlacementPlanner
         public static int cleaningSelected { get; set; }
         public static int managementSelected { get; set; }
         public static int hsSelected { get; set; }
-        public static int slimlineStoresSelected{ get; set; }
-        public static int slimlineDispatchSelected{ get; set; }
-
+        public static int slimlineStoresSelected { get; set; }
+        public static int slimlineDispatchSelected { get; set; }
 
         public void resetData()
         {
@@ -51,62 +44,72 @@ namespace ShopFloorPlacementPlanner
 
         public void setDepartment(string dept)
         {
-            switch(dept)
+            switch (dept)
             {
                 case "Slimline":
                     slimlineSelected = -1;
                     break;
+
                 case "SlimlineDispatch":
                     slimlineDispatchSelected = -1;
                     break;
+
                 case "SlimlineStores":
                     slimlineStoresSelected = -1;
                     break;
+
                 case "Laser":
                     laserSelected = -1;
                     break;
+
                 case "Punching":
                     punchSelected = -1;
                     break;
+
                 case "Bending":
                     bendSelected = -1;
                     break;
+
                 case "Welding":
                     weldSelected = -1;
                     break;
+
                 case "Dressing":
                     buffSelected = -1;
                     break;
+
                 case "Painting":
                     paintSelected = -1;
                     break;
+
                 case "Packing":
                     packSelected = -1;
                     break;
+
                 case "Stores":
                     storesSelected = -1;
                     break;
+
                 case "Dispatch":
                     dispatchSelected = -1;
                     break;
+
                 case "ToolRoom":
                     toolSelected = -1;
                     break;
+
                 case "toolroom":
                     toolSelected = -1;
                     break;
+
                 case "Cleaning":
                     cleaningSelected = -1;
                     break;
+
                 case "Management":
                     managementSelected = -1;
                     break;
-                    
-
-
             }
         }
-
-
     }
 }

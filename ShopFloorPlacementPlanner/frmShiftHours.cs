@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -18,20 +11,17 @@ namespace ShopFloorPlacementPlanner
         public int _date { get; set; }
         public string _dept { get; set; }
 
-
-        public frmShiftHours(int staffID,DateTime tempDate,string dept)
+        public frmShiftHours(int staffID, DateTime tempDate, string dept)
         {
             InitializeComponent();
             _staffID = staffID;
             _dept = dept;
             Placement placement = new Placement(tempDate, 0, "", "", 0);
-        _date = placement._dateID;
+            _date = placement._dateID;
         }
- 
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-
             double getData;
             getData = 0;
 
@@ -47,18 +37,16 @@ namespace ShopFloorPlacementPlanner
                 string sql = "select sum(hours) as temp from dbo.power_plan_staff WHERE staff_id = " + _staffID.ToString() + " AND date_id = " + _date.ToString() + " AND department <> '" + _dept + "'";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-
                     try
                     {
-                             getData = Convert.ToDouble(cmd.ExecuteScalar());
+                        getData = Convert.ToDouble(cmd.ExecuteScalar());
                     }
                     catch
                     {
-                             getData = 0;
-                    } 
+                        getData = 0;
+                    }
 
-                
-                    if (getData  + Convert.ToDouble(txtManual.Text) > 6.4)
+                    if (getData + Convert.ToDouble(txtManual.Text) > 6.4)
                     {
                         MessageBox.Show("Staff is already in for " + getData.ToString() + " hours, the total cannot exceed 6.4");
                         return;
@@ -72,7 +60,7 @@ namespace ShopFloorPlacementPlanner
 
         private void txtManual_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //this one is broke for whatever reason -- 
+            //this one is broke for whatever reason --
         }
 
         private void txtManual_KeyPress_1(object sender, KeyPressEventArgs e)

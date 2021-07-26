@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
-
     public partial class frmCovidInput : Form
     {
         public int allowClose { get; set; }
         public int dateid { get; set; }
         public int Shopfloor { get; set; }
-        public DateTime placementDate   { get; set; }
+        public DateTime placementDate { get; set; }
         public DateTime lastDate { get; set; }
+
         public frmCovidInput(DateTime _placementDate, int _Shopfloor)
         {
             InitializeComponent();
@@ -43,16 +38,16 @@ namespace ShopFloorPlacementPlanner
                 SqlCommand cmdDate = new SqlCommand("usp_power_planner_covid_load_staff", conn);
                 cmdDate.CommandType = CommandType.StoredProcedure;
                 cmdDate.Parameters.AddWithValue("@date", SqlDbType.Date).Value = placementDate;
-                cmdDate.Parameters.AddWithValue("@shopfloor", SqlDbType.Date).Value = Shopfloor; //identifies if its shopfloor or office 
+                cmdDate.Parameters.AddWithValue("@shopfloor", SqlDbType.Date).Value = Shopfloor; //identifies if its shopfloor or office
 
-                SqlDataAdapter da = new SqlDataAdapter(cmdDate); //shopfloor is filtered by sortOrder which is the extra column in #covidtemps or whatever its called 
+                SqlDataAdapter da = new SqlDataAdapter(cmdDate); //shopfloor is filtered by sortOrder which is the extra column in #covidtemps or whatever its called
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dataGridView1.DataSource = dt;
             }
             else
             {
-                // if we're here then its because its the office 
+                // if we're here then its because its the office
                 label25.Text = "Office";
                 sql = "usp_power_planner_covid_load_staff";
                 SqlCommand cmdDate = new SqlCommand("usp_power_planner_covid_load_staff", conn);
@@ -77,23 +72,18 @@ namespace ShopFloorPlacementPlanner
                 sql = "SELECT temp_morning FROM dbo.power_plan_covid_temps WHERE staff_id = " + row.Cells[3].Value.ToString() + " AND date_id = " + dateid + "";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-
                     row.Cells[2].Value = Convert.ToString(cmd.ExecuteScalar());
-
                 }
                 //sql = "SELECT temp_afternoon FROM dbo.power_plan_covid_temps WHERE staff_id = " + row.Cells[3].Value.ToString() + " AND date_id = " + dateid + "";
                 //using (SqlCommand cmd = new SqlCommand(sql, conn))
                 //{
-
                 //    row.Cells[5].Value = Convert.ToString(cmd.ExecuteScalar());
 
                 //}
                 sql = "SELECT mask  FROM dbo.power_plan_covid_temps WHERE staff_id = " + row.Cells[3].Value.ToString() + " AND date_id = " + dateid + "";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-
                     row.Cells[6].Value = Convert.ToString(cmd.ExecuteScalar());
-
                 }
                 sql = "SELECT ear_protection FROM dbo.power_plan_covid_temps WHERE staff_id = " + row.Cells[3].Value.ToString() + " AND date_id = " + dateid + "";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -142,8 +132,6 @@ namespace ShopFloorPlacementPlanner
                 colour();
             }
 
-
-
             conn.Close();
 
             dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -169,6 +157,7 @@ namespace ShopFloorPlacementPlanner
                 }
             }
         }
+
         //also need this void to prevent letters etc
         private void Column_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -284,7 +273,7 @@ namespace ShopFloorPlacementPlanner
                     //check if they exist in the new vax table
                     if (row.Cells[9].Value.ToString() != "")
                     {
-                       string sql = "";
+                        string sql = "";
                         string temp = "SELECT staff_id FROM dbo.power_plan_covid_vax_dates WHERE staff_id = " + row.Cells[3].Value.ToString();
                         using (SqlCommand cmd = new SqlCommand(temp, conn))
                             temp = Convert.ToString(cmd.ExecuteScalar());
@@ -297,7 +286,6 @@ namespace ShopFloorPlacementPlanner
                             cmd.ExecuteNonQuery();
                             row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                         }
-
                     }
                     if (row.Cells[10].Value.ToString() != "")
                     {
@@ -317,7 +305,6 @@ namespace ShopFloorPlacementPlanner
                             row.Cells[10].Style.BackColor = Color.Empty;
                         }
                     }
-
                 }
                 conn.Close();
             }
@@ -338,7 +325,7 @@ namespace ShopFloorPlacementPlanner
                 else
                     row.Cells[6].Style.BackColor = Color.PaleVioletRed;
 
-                if (row.Cells[7].Value.ToString().Contains("y") || row.Cells[7].Value.ToString().Contains("Y")) //same as above but for ear protections not masks 
+                if (row.Cells[7].Value.ToString().Contains("y") || row.Cells[7].Value.ToString().Contains("Y")) //same as above but for ear protections not masks
                     row.Cells[7].Style.BackColor = Color.DarkSeaGreen;
                 else
                     row.Cells[7].Style.BackColor = Color.PaleVioletRed;
@@ -349,9 +336,9 @@ namespace ShopFloorPlacementPlanner
             {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            
+
             dataGridView1.Columns[5].Visible = false;
-            dataGridView1.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; //y/n looks better in the middle  
+            dataGridView1.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; //y/n looks better in the middle
             dataGridView1.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.ClearSelection();
         }
@@ -369,7 +356,7 @@ namespace ShopFloorPlacementPlanner
                 else
                     row.Cells[6].Style.BackColor = Color.PaleVioletRed;
 
-                if (row.Cells[7].Value.ToString().Contains("y") || row.Cells[7].Value.ToString().Contains("Y")) //same as above but for ear protections not masks 
+                if (row.Cells[7].Value.ToString().Contains("y") || row.Cells[7].Value.ToString().Contains("Y")) //same as above but for ear protections not masks
                     row.Cells[7].Style.BackColor = Color.DarkSeaGreen;
                 else
                     row.Cells[7].Style.BackColor = Color.PaleVioletRed;
@@ -382,7 +369,7 @@ namespace ShopFloorPlacementPlanner
             }
 
             dataGridView1.Columns[5].Visible = false;
-            dataGridView1.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; //y/n looks better in the middle  
+            dataGridView1.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; //y/n looks better in the middle
             dataGridView1.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.ClearSelection();
         }
@@ -402,12 +389,10 @@ namespace ShopFloorPlacementPlanner
                     return;
                 }
             }
-            
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-
         }
 
         private void dateTimePicker1_CloseUp(object sender, EventArgs e)
@@ -428,7 +413,7 @@ namespace ShopFloorPlacementPlanner
                 {
                     if (row.Cells[2].Value.ToString() != "")
                     {
-                         sql = "";
+                        sql = "";
                         if (row.DefaultCellStyle.BackColor == Color.DarkSeaGreen)
                             sql = "UPDATE dbo.power_plan_covid_temps SET temp_morning = " + row.Cells[2].Value.ToString() + " WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
                         else
@@ -457,7 +442,7 @@ namespace ShopFloorPlacementPlanner
                     //masks/ear protection
                     if (row.Cells[6].Value.ToString() != "")
                     {
-                         sql = "";
+                        sql = "";
                         if (row.DefaultCellStyle.BackColor == Color.DarkSeaGreen)
                             sql = "UPDATE dbo.power_plan_covid_temps SET mask = '" + row.Cells[6].Value.ToString() + "' WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
                         else
@@ -470,7 +455,7 @@ namespace ShopFloorPlacementPlanner
                     }
                     if (row.Cells[7].Value.ToString() != "")
                     {
-                         sql = "";
+                        sql = "";
                         if (row.DefaultCellStyle.BackColor == Color.DarkSeaGreen)
                             sql = "UPDATE dbo.power_plan_covid_temps SET ear_protection = '" + row.Cells[7].Value.ToString() + "' WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
                         else
@@ -484,7 +469,7 @@ namespace ShopFloorPlacementPlanner
                     //check if they exist in the new vax table
                     if (row.Cells[8].Value.ToString() != "")
                     {
-                         sql = "";
+                        sql = "";
                         string temp = "SELECT staff_id FROM dbo.power_plan_covid_vax_dates WHERE staff_id = " + row.Cells[3].Value.ToString();
                         using (SqlCommand cmd = new SqlCommand(temp, conn))
                             temp = Convert.ToString(cmd.ExecuteScalar());
@@ -502,7 +487,7 @@ namespace ShopFloorPlacementPlanner
                     //check if they exist in the new vax table
                     if (row.Cells[9].Value.ToString() != "")
                     {
-                         sql = "";
+                        sql = "";
                         string temp = "SELECT staff_id FROM dbo.power_plan_covid_vax_dates WHERE staff_id = " + row.Cells[3].Value.ToString();
                         using (SqlCommand cmd = new SqlCommand(temp, conn))
                             temp = Convert.ToString(cmd.ExecuteScalar());
@@ -515,11 +500,10 @@ namespace ShopFloorPlacementPlanner
                             cmd.ExecuteNonQuery();
                             row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                         }
-
                     }
                     if (row.Cells[10].Value.ToString() != "")
                     {
-                         sql = "";
+                        sql = "";
                         if (row.DefaultCellStyle.BackColor == Color.DarkSeaGreen)
                             sql = "UPDATE dbo.power_plan_covid_temps SET note = '" + row.Cells[10].Value.ToString() + "' WHERE date_id = " + dateid + " AND staff_id = " + row.Cells[3].Value.ToString();
                         else
@@ -530,7 +514,6 @@ namespace ShopFloorPlacementPlanner
                             row.Cells[10].Style.BackColor = Color.Empty;
                         }
                     }
-
                 }
                 conn.Close();
             }
@@ -559,4 +542,3 @@ namespace ShopFloorPlacementPlanner
         }
     }
 }
-

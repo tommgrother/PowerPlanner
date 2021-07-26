@@ -1,27 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 
 namespace ShopFloorPlacementPlanner
 {
-    class SubDeptClass
+    internal class SubDeptClass
     {
         public bool alreadyPlaced { get; set; }
         public int dateID { get; set; }
         public DateTime _dateTime { get; set; }
         public int staffID { get; set; }
 
-
         public void add_placement(int placement_ID, string sub_dept)
         {
-           // getDateID(placement_ID); dont ever need this now really...
+            // getDateID(placement_ID); dont ever need this now really...
             getStaffID(placement_ID);
             if (alreadyPlaced == false) //aslong as checkplacement has been run first running this right after selects the right one! just make sure to run the checkplacments again before adding/changing someone else!
             {
-                string sql = "INSERT INTO dbo.[power_plan_paint_sub_dept_test_temp_2] (staff_id,sub_department,placement_id) VALUES (" +staffID + ",'" + sub_dept + "'," + placement_ID + ");";
+                string sql = "INSERT INTO dbo.[power_plan_paint_sub_dept_test_temp_2] (staff_id,sub_department,placement_id) VALUES (" + staffID + ",'" + sub_dept + "'," + placement_ID + ");";
                 using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -45,9 +40,9 @@ namespace ShopFloorPlacementPlanner
                         conn.Close();
                     }
                 }
-
             }
         }
+
         public void checkPlacement(int placement_ID)
         {
             int variable = 0;
@@ -66,7 +61,6 @@ namespace ShopFloorPlacementPlanner
             else
                 alreadyPlaced = true;
         }
-
 
         private void getStaffID(int placementID)
         {
@@ -102,7 +96,6 @@ namespace ShopFloorPlacementPlanner
                     conn.Close();
                 }
             }
-
         }
     }
 }

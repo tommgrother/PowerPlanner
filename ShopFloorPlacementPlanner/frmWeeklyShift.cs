@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
     public partial class frmWeeklyShift : Form
     {
-        DateTime _tempDate;
-        int _staffID;
-        string _dept;
+        private DateTime _tempDate;
+        private int _staffID;
+        private string _dept;
+
         public frmWeeklyShift(DateTime tempDate, int staffID, string dept)
         {
             InitializeComponent();
@@ -41,8 +35,6 @@ namespace ShopFloorPlacementPlanner
                 //its fine so we can close this
                 this.Close();
             }
-
-
         }
 
         private void txtManual_KeyPress(object sender, KeyPressEventArgs e)

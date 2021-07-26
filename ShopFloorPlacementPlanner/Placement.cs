@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 
 namespace ShopFloorPlacementPlanner
 {
-    class Placement
+    internal class Placement
     {
-
-
         public DateTime _selectedDate { get; set; }
         public int _dateID { get; set; }
         public int _staffID { get; set; }
@@ -20,7 +14,6 @@ namespace ShopFloorPlacementPlanner
         public int _notPresentType { get; set; }
         public int[] _weldTeamStaffID { get; set; }
         public int _weldTeamMembersPresent { get; set; }
-
 
         public bool _alreadyPlaced { get; set; }
         public string _existingPlacementType { get; set; }
@@ -33,8 +26,6 @@ namespace ShopFloorPlacementPlanner
             _department = department;
             _placement_type = placementType;
             _hours = hours;
-
-
 
             getDateID();
         }
@@ -55,7 +46,7 @@ namespace ShopFloorPlacementPlanner
         private void removePlacement()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
-            //if its in here then it has a colour so we can remove it 
+            //if its in here then it has a colour so we can remove it
             string sql = "SELECT id FROM dbo.power_plan_staff WHERE staff_id = " + _staffID + " AND date_id = " + _dateID + " AND department = '" + _department + "'"; //grab the placement id?
             int placementID = 0;
             using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -90,8 +81,6 @@ namespace ShopFloorPlacementPlanner
                 }
 
                 conn.Close();
-
-
             }
         }
 
@@ -126,15 +115,12 @@ namespace ShopFloorPlacementPlanner
 
                     _weldTeamMembersPresent = members;
                 }
-
             }
         }
-
 
         public void addPlacment()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
-
 
             using (SqlCommand cmd = new SqlCommand("insert into dbo.power_plan_staff (date_id,staff_id,department,placement_type,hours) VALUES(@dateID,@staffID,@department,@placementType,@hours)", conn))
             {
@@ -147,10 +133,7 @@ namespace ShopFloorPlacementPlanner
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
-
-
         }
-
 
         public void notPresent()
         {
@@ -171,12 +154,8 @@ namespace ShopFloorPlacementPlanner
                 {
                     _notPresentType = 0;
                 }
-
             }
-
         }
-
-
 
         public void checkPlacement()
         {
@@ -197,19 +176,16 @@ namespace ShopFloorPlacementPlanner
                     try
                     {
                         _existingPlacementHours = Convert.ToDouble(rdr["sumHours"]);
-
                     }
                     catch
                     {
                         _existingPlacementHours = 0;
                     }
-
                 }
                 else
                 {
                     _alreadyPlaced = false;
                 }
-
             }
         }
     }
