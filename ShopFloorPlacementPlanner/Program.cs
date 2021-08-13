@@ -13,7 +13,7 @@ namespace ShopFloorPlacementPlanner
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MenuMain());
+            Application.Run(new frmLogin());
         }
     }
 }

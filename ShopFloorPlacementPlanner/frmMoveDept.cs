@@ -73,6 +73,17 @@ namespace ShopFloorPlacementPlanner
                 MessageBox.Show("Please select a new department before updating.");
                 return;
             }
+            //Check if there is a current placement for this dept
+            Placement pDate = new Placement(date, staffID, dept, PT, hours);
+            string sql = "DELETE  FROM dbo.power_plan_staff where staff_id = " + staffID.ToString() + " AND date_id = " + pDate._dateID + " AND department = '" + dept + "'";
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    cmd.ExecuteNonQuery();
+                conn.Close();
+            }
 
             DialogResult result = MessageBox.Show("Would you like to perform this operation over multiple dates?", "Multiple Dates?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -93,7 +104,7 @@ namespace ShopFloorPlacementPlanner
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("SELECT forename + ' '  + surname from dbo.[user] where id = @staffId", conn);
                 cmd.Parameters.AddWithValue("@staffId", staffID);
-                staffName = cmd.ExecuteScalar().ToString(); ;
+                staffName = cmd.ExecuteScalar().ToString(); 
                 conn.Close();
                 //uhhhhhhh
                 //does this also need the painting thing???

@@ -151,6 +151,8 @@ namespace ShopFloorPlacementPlanner
                             row.DefaultCellStyle.BackColor = Color.MediumPurple;
                         if (row.Cells[2].Value.ToString() == "Shift")
                             row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                        if (row.Cells[2].Value.ToString() == "Manual")
+                            row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
                     }
                     CONNECT.Close();
                 }
@@ -282,50 +284,102 @@ namespace ShopFloorPlacementPlanner
                         }
                         //get the current DATEID
                         // if they are already placed that day then move them
+
+                        /////////////////////////   REWRITING THIS BIT FOR MULTIPLE PLACEMENTS VVVVVV ///////////////////////////////////////////////////////////////////////////////////////////////////
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         if (alreadyPlaced == true)
                         {
+                            conn.Open();
+                            double hoursCurrentlyAssigned = 0;
+                            double hoursAssigned = 0;
+                            int timeIndex = 0;
+                            //before getting the sum hours we need to check if they are places in THAT department and remove it first
+                            sql = "DELETE  FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID + " AND department = '" + _dept + "'";
+                            using (SqlCommand cmd = new SqlCommand(sql, conn))
+                                cmd.ExecuteNonQuery();
+                            //i guess also remove any overtime thats been assigned too?
+                            sql = "DELETE  FROM dbo.power_plan_overtime_remake where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID + " AND department = '" + _dept + "'";
+                            using (SqlCommand cmd = new SqlCommand(sql, conn))
+                                cmd.ExecuteNonQuery();
+
+                            sql = "Select sum(hours) FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID; //get all the placement ids for this person
+                            using (SqlCommand cmd = new SqlCommand(sql, conn))
+                            {
+                                hoursCurrentlyAssigned = Convert.ToDouble(cmd.ExecuteScalar().ToString());
+                            }
+                            timeIndex = dataGridView1.Columns["Time"].Index;
+                            hoursAssigned = Convert.ToDouble(dataGridView1.Rows[i].Cells[timeIndex].Value.ToString());
+                            if (hoursCurrentlyAssigned + hoursAssigned > _standardHours)
+                            {
+                                //inform them whats the max hours they can add
+                                double maxHours = Math.Round(_standardHours - hoursCurrentlyAssigned, 2);
+                                MessageBox.Show("Placement for " + dgvDate.ToString("dd/MM/yyyy") + " exceeds the limit. The maximum hours " + _staff_fullname + " can be assigned in " + _dept + " is " + maxHours.ToString() + ".");
+                                dataGridView1.Rows[i].Cells[timeIndex].Value = maxHours;
+                                if (maxHours == _standardHours / 2)
+                                {
+                                    dataGridView1.Rows[i].Cells[timeIndex - 1].Value = "Half Day";
+                                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.MediumPurple;
+                                }
+                                else
+                                {
+                                    dataGridView1.Rows[i].Cells[timeIndex - 1].Value = "Manual";
+                                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.LightSeaGreen;
+
+                                }
+                                return;
+                            }
+
+
+                            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            ////////////// old code vvvvv///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             //get the placement id using date_id and staff_id
                             //this is the same as the above -- if the user is going into shift it needs to look at CURRENT dept and not every dept :}
                             //if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.Red)
                             //    sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID + " AND department = '" + _dept + "'";
                             //else
-                            sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
-                            //MessageBox.Show(sql);
-                            using (SqlCommand cmd = new SqlCommand(sql, conn))
-                            {
-                                conn.Open();
-                                cmd.ExecuteNonQuery();
-                                object isItNull = cmd.ExecuteScalar();
-                                if (isItNull != null)
-                                    placement_id = (Int32)cmd.ExecuteScalar(); //get placement ID for removing a person from a placement already
-                                else
-                                {
-                                    conn.Close();
-                                    continue; // pop an error message because there is no date returned
-                                }
-                                conn.Close();
-                                //  MessageBox.Show(test.ToString());
-                            }
-                            //they are already placed so just remove them  so they can be added down the line
-                            using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where date_id = @date_id AND staff_id = @staff_id", conn))
-                            {
-                                cmd.Parameters.AddWithValue("@date_id", p._dateID);
-                                cmd.Parameters.AddWithValue("@staff_id", _staff_id);
-                                conn.Open();
-                                cmd.ExecuteNonQuery();
-                                conn.Close();
-                            }
-                            //if its painting also delete it from here (as it will likely already have a placement??
-                            if (_dept == "Painting")
-                            {
-                                using (SqlCommand cmd = new SqlCommand("DELETE FROM dbo.power_plan_paint_sub_dept_test_temp_2 WHERE placement_id = " + placement_id, conn))
-                                {
-                                    conn.Open();
-                                    cmd.ExecuteNonQuery();
-                                    conn.Close();
-                                }
-                            }
+                            ////////////////////////////////sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
+                            //////////////////////////////////MessageBox.Show(sql);
+                            ////////////////////////////////using (SqlCommand cmd = new SqlCommand(sql, conn))
+                            ////////////////////////////////{
+                            ////////////////////////////////    // conn.Open();
+                            ////////////////////////////////    cmd.ExecuteNonQuery();
+                            ////////////////////////////////    object isItNull = cmd.ExecuteScalar();
+                            ////////////////////////////////    if (isItNull != null)
+                            ////////////////////////////////        placement_id = (Int32)cmd.ExecuteScalar(); //get placement ID for removing a person from a placement already
+                            ////////////////////////////////    else
+                            ////////////////////////////////    {
+                            ////////////////////////////////        conn.Close();
+                            ////////////////////////////////        continue; // pop an error message because there is no date returned
+                            ////////////////////////////////    }
+                            ////////////////////////////////    conn.Close();
+                            ////////////////////////////////    //  MessageBox.Show(test.ToString());
+                            ////////////////////////////////}
+                            //////////////////////////////////they are already placed so just remove them  so they can be added down the line
+                            ////////////////////////////////using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where date_id = @date_id AND staff_id = @staff_id", conn))
+                            ////////////////////////////////{
+                            ////////////////////////////////    cmd.Parameters.AddWithValue("@date_id", p._dateID);
+                            ////////////////////////////////    cmd.Parameters.AddWithValue("@staff_id", _staff_id);
+                            ////////////////////////////////    conn.Open();
+                            ////////////////////////////////    cmd.ExecuteNonQuery();
+                            ////////////////////////////////    conn.Close();
+                            ////////////////////////////////}
+                            //////////////////////////////////if its painting also delete it from here (as it will likely already have a placement??
+                            ////////////////////////////////if (_dept == "Painting")
+                            ////////////////////////////////{
+                            ////////////////////////////////    using (SqlCommand cmd = new SqlCommand("DELETE FROM dbo.power_plan_paint_sub_dept_test_temp_2 WHERE placement_id = " + placement_id, conn))
+                            ////////////////////////////////    {
+                            ////////////////////////////////        conn.Open();
+                            ////////////////////////////////        cmd.ExecuteNonQuery();
+                            ////////////////////////////////        conn.Close();
+                            ////////////////////////////////    }
+                            ////////////////////////////////}
+                            conn.Close();
                         }
+                        /////////////////////////   REWRITING THIS BIT FOR MULTIPLE PLACEMENTS VVVVVV ///////////////////////////////////////////////////////////////////////////////////////////////////
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                         p.notPresent(); //check for attendance
                         string placement_type = dataGridView1.Rows[i].Cells[6].Value.ToString();

@@ -347,6 +347,7 @@
             this.txtAvailPacking = new System.Windows.Forms.TextBox();
             this.label124 = new System.Windows.Forms.Label();
             this.txt730Packing = new System.Windows.Forms.TextBox();
+            this.kevinNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -979,7 +980,8 @@
             this.ryucxdToolStripMenuItem,
             this.cOVIDToolStripMenuItem,
             this.cOPYWEEKToolStripMenuItem,
-            this.productivityToolStripMenuItem});
+            this.productivityToolStripMenuItem,
+            this.kevinNoteToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1911, 24);
@@ -1063,19 +1065,20 @@
             this.cOVIDToolStripMenuItem.Name = "cOVIDToolStripMenuItem";
             this.cOVIDToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.cOVIDToolStripMenuItem.Text = "COVID";
+            this.cOVIDToolStripMenuItem.Visible = false;
             this.cOVIDToolStripMenuItem.Click += new System.EventHandler(this.cOVIDToolStripMenuItem_Click);
             // 
             // shopFloorInputToolStripMenuItem
             // 
             this.shopFloorInputToolStripMenuItem.Name = "shopFloorInputToolStripMenuItem";
-            this.shopFloorInputToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.shopFloorInputToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.shopFloorInputToolStripMenuItem.Text = "Shop floor Input";
             this.shopFloorInputToolStripMenuItem.Click += new System.EventHandler(this.shopFloorInputToolStripMenuItem_Click);
             // 
             // officeInputToolStripMenuItem
             // 
             this.officeInputToolStripMenuItem.Name = "officeInputToolStripMenuItem";
-            this.officeInputToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.officeInputToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.officeInputToolStripMenuItem.Text = "Office Input";
             this.officeInputToolStripMenuItem.Click += new System.EventHandler(this.officeInputToolStripMenuItem_Click);
             // 
@@ -1843,13 +1846,13 @@
             this.dgManagement.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgManagement.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgManagement.Enabled = false;
-            this.dgManagement.Location = new System.Drawing.Point(1145, 332);
+            this.dgManagement.Location = new System.Drawing.Point(1151, 356);
             this.dgManagement.Name = "dgManagement";
             this.dgManagement.RowHeadersVisible = false;
             dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgManagement.RowsDefaultCellStyle = dataGridViewCellStyle21;
             this.dgManagement.RowTemplate.Height = 50;
-            this.dgManagement.Size = new System.Drawing.Size(200, 155);
+            this.dgManagement.Size = new System.Drawing.Size(200, 241);
             this.dgManagement.TabIndex = 130;
             this.dgManagement.Visible = false;
             // 
@@ -1881,7 +1884,7 @@
             this.dgHS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgHS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgHS.Enabled = false;
-            this.dgHS.Location = new System.Drawing.Point(1145, 332);
+            this.dgHS.Location = new System.Drawing.Point(1151, 357);
             this.dgHS.Name = "dgHS";
             this.dgHS.RowHeadersVisible = false;
             dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3306,6 +3309,13 @@
             this.txt730Packing.TabIndex = 279;
             this.txt730Packing.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // kevinNoteToolStripMenuItem
+            // 
+            this.kevinNoteToolStripMenuItem.Name = "kevinNoteToolStripMenuItem";
+            this.kevinNoteToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.kevinNoteToolStripMenuItem.Text = "Messages";
+            this.kevinNoteToolStripMenuItem.Click += new System.EventHandler(this.kevinNoteToolStripMenuItem_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3590,7 +3600,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PowerPlanner!";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.MenuMain_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MenuMain_FormClosing);
+            this.Shown += new System.EventHandler(this.MenuMain_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).EndInit();
@@ -3906,6 +3917,7 @@
         private System.Windows.Forms.TextBox txtAvailPacking;
         private System.Windows.Forms.Label label124;
         private System.Windows.Forms.TextBox txt730Packing;
+        private System.Windows.Forms.ToolStripMenuItem kevinNoteToolStripMenuItem;
     }
 }
 

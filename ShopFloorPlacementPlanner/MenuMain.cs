@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceBrokerListener.Domain;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -10,11 +11,16 @@ namespace ShopFloorPlacementPlanner
     public partial class MenuMain : Form
     {
         public int skipMessageBox { get; set; }
+        public int queueName { get; set; }
 
         public MenuMain()
         {
             InitializeComponent();
+            kevinMessage();
+            login.formIsOpen = 0;
         }
+
+
 
         private void btnAddPunch_Click(object sender, EventArgs e)
         {
@@ -3309,5 +3315,106 @@ namespace ShopFloorPlacementPlanner
                 }
             }
         }
+
+        private void MenuMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void kevinMessage()
+        {
+
+            string person = login.userFullName;
+            person = person.Substring(0, person.IndexOf(" "));
+
+            if (person == "Kevin") //if its kevin take a different route and prompt for a message
+            {
+                DialogResult result = MessageBox.Show("Would you like to open the message screen before opening the Power Planner?", "Power Planner", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    frmKevinMessage KH = new frmKevinMessage(-1);
+                    KH.ShowDialog();
+                }
+
+            }
+            else if (person == "Other")
+            {
+
+            }
+            else
+            {
+                string sql = "SELECT top 1  COALESCE(" + person + ",0) FROM dbo.kevinMessage where  " + person + " is null order by id desc";
+                using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        conn.Open();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        conn.Close();
+                        if (dt.Rows.Count > 0)
+                        {
+                            frmKevinMessage KM = new frmKevinMessage(0);
+                            KM.ShowDialog();
+                        }
+                        //otherwise skip
+                    }
+                }
+            }
+        }
+
+        private void MenuMain_Shown(object sender, EventArgs e)
+        {
+            fillgrid();
+            currentAvailable();
+        }
+        private void Listener()
+        {
+           
+
+        }
+
+
+
+        private void kevinNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string person = login.userFullName;
+            person = person.Substring(0, person.IndexOf(" "));
+            if (person == "Kevin")
+            {
+                frmKevinMessage frm = new frmKevinMessage(-1);
+                frm.ShowDialog();
+            }
+            else
+            {
+                string sql = "SELECT top 1  COALESCE(" + person + ",0) FROM dbo.kevinMessage where message_date = cast(getdate() as date) and " + person + " is null order by id desc";
+                using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        conn.Open();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        conn.Close();
+                        if (dt.Rows.Count > 0)
+                        {
+                            frmKevinMessage frm = new frmKevinMessage(0);
+                            frm.ShowDialog();
+                        }
+                        else
+                        {
+                            MessageBox.Show("There are no new messages currently.", "Please wait for any new messages");
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
     }
 }
