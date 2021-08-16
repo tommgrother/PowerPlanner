@@ -52,6 +52,8 @@ namespace ShopFloorPlacementPlanner
                 person = person.Substring(0, person.IndexOf(" "));
                 if (person == "Kevin")
                     return;
+                if (person == "Other")
+                    return;
                 string sql = "SELECT top 1  COALESCE(" + person + ",0) FROM dbo.kevinMessage where  " + person + " is null order by id desc";
                 using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {

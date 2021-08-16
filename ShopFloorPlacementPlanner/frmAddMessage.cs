@@ -23,7 +23,32 @@ namespace ShopFloorPlacementPlanner
             string temp = txtNote.Text;
             temp = temp.Replace("'", "");
 
-            string sql = "INSERT INTO dbo.kevinMessage ([message],message_date) VALUES ('" + temp + "',cast(getdate() as date))";
+            string sql = "";
+
+            if (chkAll.Checked == true)
+                sql ="INSERT INTO dbo.kevinMessage ([message],message_date) VALUES ('" + temp + "',cast(getdate() as date))";
+            else
+            {
+                string sqlStart = "INSERT INTO dbo.kevinMessage ([message],message_date";
+                string sqlEnd =  " VALUES ('" + temp + "',cast(getdate() as date)";
+                if (chkSimon.Checked == false)
+                {
+                    sqlStart = sqlStart + ",simon";
+                    sqlEnd = sqlEnd + ",-2";
+                }
+                if (chkRichard.Checked == false)
+                {
+                    sqlStart = sqlStart + ",richard";
+                    sqlEnd = sqlEnd + ",-2";
+                }
+                if (chkDamian.Checked == false)
+                {
+                    sqlStart = sqlStart + ",damian";
+                    sqlEnd = sqlEnd + ",-2";
+                }
+
+                sql = sqlStart + ")" + sqlEnd + ")";
+            }
 
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
@@ -41,6 +66,40 @@ namespace ShopFloorPlacementPlanner
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void chkAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkAll.Checked == true)
+            {
+                chkSimon.Checked = false;
+                chkRichard.Checked = false;
+                chkDamian.Checked = false;
+            }
+        }
+
+        private void chkSimon_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkSimon.Checked == true)
+                chkAll.Checked = false;
+            if (chkSimon.Checked == false && chkDamian.Checked == false && chkRichard.Checked == false)
+                chkAll.Checked = true;
+        }
+
+        private void chkRichard_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkRichard.Checked == true)
+                chkAll.Checked = false;
+            if (chkSimon.Checked == false && chkDamian.Checked == false && chkRichard.Checked == false)
+                chkAll.Checked = true;
+        }
+
+        private void chkDamian_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkDamian.Checked == true)
+                chkAll.Checked = false;
+            if (chkSimon.Checked == false && chkDamian.Checked == false && chkRichard.Checked == false)
+                chkAll.Checked = true;
         }
     }
 }

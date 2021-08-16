@@ -69,9 +69,9 @@ namespace ShopFloorPlacementPlanner
 
             if (_keivn == -1)
             {
-                sql = "SELECT [message] as [Message],  case when simon = -1 then 'Acknowledged - ' + CAST(simon_date as nvarchar(max)) else 'Not Acknowledged' end as [Simon]," +
-                    "case when damian = -1 then 'Acknowledged - ' + CAST(damian_date as nvarchar(max)) else 'Not Acknowledged' end as [Damian]," +
-                    "case when richard = -1 then 'Acknowledged - ' + CAST(richard_date as nvarchar(max)) else 'Not Acknowledged' end as [Richard]  FROM dbo.kevinMessage WHERE message_date >= CAST(dateadd(day,-7,GETDATE()) as date) order by id desc";
+                sql = "SELECT [message] as [Message],  case when simon = -1 then 'Acknowledged - ' + CAST(simon_date as nvarchar(max)) WHEN simon = -2 then 'N/A' else 'Not Acknowledged' end as [Simon]," +
+                    "case when damian = -1 then 'Acknowledged - ' + CAST(damian_date as nvarchar(max)) WHEN damian = -2 then 'N/A' else 'Not Acknowledged' end as [Damian]," +
+                    "case when richard = -1 then 'Acknowledged - ' + CAST(richard_date as nvarchar(max)) WHEN richard = -2 then 'N/A' else 'Not Acknowledged' end as [Richard]  FROM dbo.kevinMessage WHERE message_date >= CAST(dateadd(day,-7,GETDATE()) as date) order by id desc";
                 using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -187,6 +187,12 @@ namespace ShopFloorPlacementPlanner
                             style.BackColor = Color.DarkSeaGreen;
                             row.Cells[i].Style = style;
                         }
+                        if (row.Cells[i].Value.ToString() == "N/A")
+                        {
+                            DataGridViewCellStyle style = new DataGridViewCellStyle();
+                            style.BackColor = Color.DarkSeaGreen;
+                            row.Cells[i].Style = style;
+                        }
                     }
                 }
             }
@@ -209,6 +215,12 @@ namespace ShopFloorPlacementPlanner
                             row.Cells[i].Style = style;
                         }
                         if (row.Cells[i].Value.ToString().Contains("Acknowledged -"))
+                        {
+                            DataGridViewCellStyle style = new DataGridViewCellStyle();
+                            style.BackColor = Color.DarkSeaGreen;
+                            row.Cells[i].Style = style;
+                        }
+                        if (row.Cells[i].Value.ToString() == "N/A")
                         {
                             DataGridViewCellStyle style = new DataGridViewCellStyle();
                             style.BackColor = Color.DarkSeaGreen;
