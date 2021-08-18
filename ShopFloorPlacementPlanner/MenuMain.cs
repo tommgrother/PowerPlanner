@@ -1048,6 +1048,7 @@ namespace ShopFloorPlacementPlanner
             countGrid();
             fillHSManagement();
             countMen();
+            currentAvailable();
 
             DataGridViewColumn columnSlimlineID = dgSlimline.Columns[2];
             columnSlimlineID.Visible = false;
@@ -3283,38 +3284,56 @@ namespace ShopFloorPlacementPlanner
 
         private void currentAvailable()
         {
-            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            try
             {
-                string sql = "select round(punching,2),round(bending,2),round(welding,2),round(buffing,2),round(painting,2),round(packing,2) from dbo.power_planner_7_30_available WHERE date_plan = '" + dteDateSelection.Text + "'";
-                using (SqlCommand cmd = new SqlCommand("usp_power_planner_available_work", conn))
+                using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@insert", SqlDbType.Int).Value = 0;
+                    string sql = "select round(punching,2),round(bending,2),round(welding,2),round(buffing,2),round(painting,2),round(packing,2) from dbo.power_planner_7_30_available WHERE date_plan = '" + dteDateSelection.Text + "'";
+                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_available_work", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@insert", SqlDbType.Int).Value = 0;
 
-                    SqlDataAdapter reader = new SqlDataAdapter(cmd);
-                    DataTable availableWork = new DataTable();
-                    reader.Fill(availableWork);
-                    txtAvailPunching.Text = availableWork.Rows[0][0].ToString();
-                    txtAvailBending.Text = availableWork.Rows[0][1].ToString();
-                    txtAvailWelding.Text = availableWork.Rows[0][2].ToString();
-                    txtAvailBuffing.Text = availableWork.Rows[0][3].ToString();
-                    txtAvailPainting.Text = availableWork.Rows[0][4].ToString();
-                    txtAvailPacking.Text = availableWork.Rows[0][5].ToString();
-                }
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    SqlDataAdapter reader = new SqlDataAdapter(cmd);
-                    DataTable availableWork = new DataTable();
-                    reader.Fill(availableWork);
-                    txt730punching.Text = availableWork.Rows[0][0].ToString();
-                    txt730Bending.Text = availableWork.Rows[0][1].ToString();
-                    txt730Welding.Text = availableWork.Rows[0][2].ToString();
-                    txt730Buffing.Text = availableWork.Rows[0][3].ToString();
-                    txt730Painting.Text = availableWork.Rows[0][4].ToString();
-                    txt730Packing.Text = availableWork.Rows[0][5].ToString();
+                        SqlDataAdapter reader = new SqlDataAdapter(cmd);
+                        DataTable availableWork = new DataTable();
+                        reader.Fill(availableWork);
+                        txtAvailPunching.Text = availableWork.Rows[0][0].ToString();
+                        txtAvailBending.Text = availableWork.Rows[0][1].ToString();
+                        txtAvailWelding.Text = availableWork.Rows[0][2].ToString();
+                        txtAvailBuffing.Text = availableWork.Rows[0][3].ToString();
+                        txtAvailPainting.Text = availableWork.Rows[0][4].ToString();
+                        txtAvailPacking.Text = availableWork.Rows[0][5].ToString();
+                    }
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        SqlDataAdapter reader = new SqlDataAdapter(cmd);
+                        DataTable availableWork = new DataTable();
+                        reader.Fill(availableWork);
+                        txt730punching.Text = availableWork.Rows[0][0].ToString();
+                        txt730Bending.Text = availableWork.Rows[0][1].ToString();
+                        txt730Welding.Text = availableWork.Rows[0][2].ToString();
+                        txt730Buffing.Text = availableWork.Rows[0][3].ToString();
+                        txt730Painting.Text = availableWork.Rows[0][4].ToString();
+                        txt730Packing.Text = availableWork.Rows[0][5].ToString();
+                    }
                 }
             }
-        }
+            catch
+            {
+                txtAvailPunching.Text = "0";
+                txtAvailBending.Text = "0";
+                txtAvailWelding.Text = "0";
+                txtAvailBuffing.Text = "0";
+                txtAvailPainting.Text = "0";
+                txtAvailPacking.Text = "0";
+                txt730punching.Text = "0";
+                txt730Bending.Text = "0";
+                txt730Welding.Text = "0";
+                txt730Buffing.Text = "0";
+                txt730Painting.Text = "0";
+                txt730Packing.Text = "0";
+            }
+            }
 
         private void MenuMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -3386,6 +3405,8 @@ namespace ShopFloorPlacementPlanner
                 frmKevinMessage frm = new frmKevinMessage(-1);
                 frm.ShowDialog();
             }
+            else if (person == "Other")
+                return;
             else
             {
                 string sql = "SELECT top 1  COALESCE(" + person + ",0) FROM dbo.kevinMessage where message_date = cast(getdate() as date) and " + person + " is null order by id desc";

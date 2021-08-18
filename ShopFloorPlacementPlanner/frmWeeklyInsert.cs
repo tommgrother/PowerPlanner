@@ -253,7 +253,7 @@ namespace ShopFloorPlacementPlanner
                         //p.checkPlacement();
                         //time to make my own  checkplacement()
 
-                        sql = "Select id from dbo.power_plan_date where date_plan = '" + dgvDate.ToString("yyyy - MM - dd") + "'";
+                        sql = "Select id from dbo.power_plan_date where date_plan = '" + dgvDate.ToString("yyyy-MM-dd") + "'";
                         using (SqlCommand cmd = new SqlCommand(sql, conn))
                         {
                             conn.Open();
@@ -306,7 +306,13 @@ namespace ShopFloorPlacementPlanner
                             sql = "Select sum(hours) FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID; //get all the placement ids for this person
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                             {
-                                hoursCurrentlyAssigned = Convert.ToDouble(cmd.ExecuteScalar().ToString());
+                                string temp = Convert.ToString(cmd.ExecuteScalar());
+                                if (string.IsNullOrEmpty(temp) == false) //in the scenario where you move from one dept to another (and pick weekly)  the first placement is broken
+                                {
+                                    hoursCurrentlyAssigned = Convert.ToDouble(cmd.ExecuteScalar().ToString());
+                                }
+                                else
+                                    hoursAssigned = 0;
                             }
                             timeIndex = dataGridView1.Columns["Time"].Index;
                             hoursAssigned = Convert.ToDouble(dataGridView1.Rows[i].Cells[timeIndex].Value.ToString());
@@ -325,7 +331,6 @@ namespace ShopFloorPlacementPlanner
                                 {
                                     dataGridView1.Rows[i].Cells[timeIndex - 1].Value = "Manual";
                                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.LightSeaGreen;
-
                                 }
                                 return;
                             }
