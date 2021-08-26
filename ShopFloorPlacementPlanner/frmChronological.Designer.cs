@@ -34,6 +34,7 @@
             this.dteAction = new System.Windows.Forms.DateTimePicker();
             this.dteActionEnd = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnEmail = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,11 +102,23 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "to";
             // 
+            // btnEmail
+            // 
+            this.btnEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEmail.Location = new System.Drawing.Point(488, 44);
+            this.btnEmail.Name = "btnEmail";
+            this.btnEmail.Size = new System.Drawing.Size(92, 26);
+            this.btnEmail.TabIndex = 6;
+            this.btnEmail.Text = "Email";
+            this.btnEmail.UseVisualStyleBackColor = true;
+            this.btnEmail.Click += new System.EventHandler(this.btnEmail_Click);
+            // 
             // frmChronological
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(690, 571);
+            this.Controls.Add(this.btnEmail);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dteActionEnd);
             this.Controls.Add(this.dteAction);
@@ -131,5 +144,6 @@
         private System.Windows.Forms.DateTimePicker dteAction;
         private System.Windows.Forms.DateTimePicker dteActionEnd;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnEmail;
     }
 }

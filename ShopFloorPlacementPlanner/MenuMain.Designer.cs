@@ -128,6 +128,7 @@
             this.officeInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cOPYWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productivityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kevinNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -347,7 +348,19 @@
             this.txtAvailPacking = new System.Windows.Forms.TextBox();
             this.label124 = new System.Windows.Forms.Label();
             this.txt730Packing = new System.Windows.Forms.TextBox();
-            this.kevinNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label113 = new System.Windows.Forms.Label();
+            this.txtPunchValue = new System.Windows.Forms.TextBox();
+            this.label125 = new System.Windows.Forms.Label();
+            this.txtBendValue = new System.Windows.Forms.TextBox();
+            this.label126 = new System.Windows.Forms.Label();
+            this.txtWeldValue = new System.Windows.Forms.TextBox();
+            this.label127 = new System.Windows.Forms.Label();
+            this.txtBuffValue = new System.Windows.Forms.TextBox();
+            this.label128 = new System.Windows.Forms.Label();
+            this.txtPaintValue = new System.Windows.Forms.TextBox();
+            this.label129 = new System.Windows.Forms.Label();
+            this.txtPackValue = new System.Windows.Forms.TextBox();
+            this.absentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -981,7 +994,8 @@
             this.cOVIDToolStripMenuItem,
             this.cOPYWEEKToolStripMenuItem,
             this.productivityToolStripMenuItem,
-            this.kevinNoteToolStripMenuItem});
+            this.kevinNoteToolStripMenuItem,
+            this.absentToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1911, 24);
@@ -1071,14 +1085,14 @@
             // shopFloorInputToolStripMenuItem
             // 
             this.shopFloorInputToolStripMenuItem.Name = "shopFloorInputToolStripMenuItem";
-            this.shopFloorInputToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.shopFloorInputToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.shopFloorInputToolStripMenuItem.Text = "Shop floor Input";
             this.shopFloorInputToolStripMenuItem.Click += new System.EventHandler(this.shopFloorInputToolStripMenuItem_Click);
             // 
             // officeInputToolStripMenuItem
             // 
             this.officeInputToolStripMenuItem.Name = "officeInputToolStripMenuItem";
-            this.officeInputToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.officeInputToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.officeInputToolStripMenuItem.Text = "Office Input";
             this.officeInputToolStripMenuItem.Click += new System.EventHandler(this.officeInputToolStripMenuItem_Click);
             // 
@@ -1095,6 +1109,13 @@
             this.productivityToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.productivityToolStripMenuItem.Text = "Productivity";
             this.productivityToolStripMenuItem.Click += new System.EventHandler(this.productivityToolStripMenuItem_Click);
+            // 
+            // kevinNoteToolStripMenuItem
+            // 
+            this.kevinNoteToolStripMenuItem.Name = "kevinNoteToolStripMenuItem";
+            this.kevinNoteToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.kevinNoteToolStripMenuItem.Text = "Messages";
+            this.kevinNoteToolStripMenuItem.Click += new System.EventHandler(this.kevinNoteToolStripMenuItem_Click);
             // 
             // label23
             // 
@@ -1356,11 +1377,11 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(79, 175);
+            this.label36.Location = new System.Drawing.Point(112, 175);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(65, 13);
+            this.label36.Size = new System.Drawing.Size(32, 13);
             this.label36.TabIndex = 80;
-            this.label36.Text = "Total Hours:";
+            this.label36.Text = "Goal:";
             // 
             // txtSlimlineTotal
             // 
@@ -1374,11 +1395,11 @@
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(294, 175);
+            this.label37.Location = new System.Drawing.Point(327, 175);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(65, 13);
+            this.label37.Size = new System.Drawing.Size(32, 13);
             this.label37.TabIndex = 82;
-            this.label37.Text = "Total Hours:";
+            this.label37.Text = "Goal:";
             // 
             // txtPunchingTotal
             // 
@@ -1392,11 +1413,11 @@
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(499, 175);
+            this.label38.Location = new System.Drawing.Point(532, 175);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(65, 13);
+            this.label38.Size = new System.Drawing.Size(32, 13);
             this.label38.TabIndex = 84;
-            this.label38.Text = "Total Hours:";
+            this.label38.Text = "Goal:";
             // 
             // txtLaserTotal
             // 
@@ -1410,11 +1431,11 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(706, 175);
+            this.label39.Location = new System.Drawing.Point(739, 175);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(65, 13);
+            this.label39.Size = new System.Drawing.Size(32, 13);
             this.label39.TabIndex = 86;
-            this.label39.Text = "Total Hours:";
+            this.label39.Text = "Goal:";
             // 
             // txtBendingTotal
             // 
@@ -1428,11 +1449,11 @@
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(910, 175);
+            this.label40.Location = new System.Drawing.Point(945, 175);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(65, 13);
+            this.label40.Size = new System.Drawing.Size(32, 13);
             this.label40.TabIndex = 88;
-            this.label40.Text = "Total Hours:";
+            this.label40.Text = "Goal:";
             // 
             // txtWeldingTotal
             // 
@@ -1446,11 +1467,11 @@
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(1115, 175);
+            this.label41.Location = new System.Drawing.Point(1148, 175);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(65, 13);
+            this.label41.Size = new System.Drawing.Size(32, 13);
             this.label41.TabIndex = 90;
-            this.label41.Text = "Total Hours:";
+            this.label41.Text = "Goal:";
             // 
             // txtBuffingTotal
             // 
@@ -1464,11 +1485,11 @@
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(1343, 175);
+            this.label42.Location = new System.Drawing.Point(1376, 175);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(65, 13);
+            this.label42.Size = new System.Drawing.Size(32, 13);
             this.label42.TabIndex = 92;
-            this.label42.Text = "Total Hours:";
+            this.label42.Text = "Goal:";
             // 
             // txtPaintingTotal
             // 
@@ -1482,11 +1503,11 @@
             // label43
             // 
             this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(1559, 175);
+            this.label43.Location = new System.Drawing.Point(1592, 175);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(65, 13);
+            this.label43.Size = new System.Drawing.Size(32, 13);
             this.label43.TabIndex = 94;
-            this.label43.Text = "Total Hours:";
+            this.label43.Text = "Goal:";
             // 
             // txtPackingTotal
             // 
@@ -2036,11 +2057,11 @@
             // lblSLActualHours
             // 
             this.lblSLActualHours.AutoSize = true;
-            this.lblSLActualHours.Location = new System.Drawing.Point(73, 199);
+            this.lblSLActualHours.Location = new System.Drawing.Point(104, 199);
             this.lblSLActualHours.Name = "lblSLActualHours";
-            this.lblSLActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblSLActualHours.Size = new System.Drawing.Size(40, 13);
             this.lblSLActualHours.TabIndex = 150;
-            this.lblSLActualHours.Text = "Actual Hours:";
+            this.lblSLActualHours.Text = "Actual:";
             // 
             // txtSLActualHours
             // 
@@ -2054,11 +2075,11 @@
             // lblPunchActualHours
             // 
             this.lblPunchActualHours.AutoSize = true;
-            this.lblPunchActualHours.Location = new System.Drawing.Point(284, 199);
+            this.lblPunchActualHours.Location = new System.Drawing.Point(319, 199);
             this.lblPunchActualHours.Name = "lblPunchActualHours";
-            this.lblPunchActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblPunchActualHours.Size = new System.Drawing.Size(40, 13);
             this.lblPunchActualHours.TabIndex = 152;
-            this.lblPunchActualHours.Text = "Actual Hours:";
+            this.lblPunchActualHours.Text = "Actual:";
             // 
             // txtPunchActualHours
             // 
@@ -2072,11 +2093,11 @@
             // lblLaserActualHours
             // 
             this.lblLaserActualHours.AutoSize = true;
-            this.lblLaserActualHours.Location = new System.Drawing.Point(493, 199);
+            this.lblLaserActualHours.Location = new System.Drawing.Point(524, 199);
             this.lblLaserActualHours.Name = "lblLaserActualHours";
-            this.lblLaserActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblLaserActualHours.Size = new System.Drawing.Size(40, 13);
             this.lblLaserActualHours.TabIndex = 154;
-            this.lblLaserActualHours.Text = "Actual Hours:";
+            this.lblLaserActualHours.Text = "Actual:";
             // 
             // txtlaserActualHours
             // 
@@ -2090,11 +2111,11 @@
             // lblBendingActualHours
             // 
             this.lblBendingActualHours.AutoSize = true;
-            this.lblBendingActualHours.Location = new System.Drawing.Point(697, 199);
+            this.lblBendingActualHours.Location = new System.Drawing.Point(731, 199);
             this.lblBendingActualHours.Name = "lblBendingActualHours";
-            this.lblBendingActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblBendingActualHours.Size = new System.Drawing.Size(40, 13);
             this.lblBendingActualHours.TabIndex = 156;
-            this.lblBendingActualHours.Text = "Actual Hours:";
+            this.lblBendingActualHours.Text = "Actual:";
             // 
             // txtBendActualHours
             // 
@@ -2108,11 +2129,11 @@
             // lblWeldingHours
             // 
             this.lblWeldingHours.AutoSize = true;
-            this.lblWeldingHours.Location = new System.Drawing.Point(904, 199);
+            this.lblWeldingHours.Location = new System.Drawing.Point(937, 199);
             this.lblWeldingHours.Name = "lblWeldingHours";
-            this.lblWeldingHours.Size = new System.Drawing.Size(71, 13);
+            this.lblWeldingHours.Size = new System.Drawing.Size(40, 13);
             this.lblWeldingHours.TabIndex = 158;
-            this.lblWeldingHours.Text = "Actual Hours:";
+            this.lblWeldingHours.Text = "Actual:";
             // 
             // txtWeldActualHours
             // 
@@ -2126,11 +2147,11 @@
             // lblBuffingActualHours
             // 
             this.lblBuffingActualHours.AutoSize = true;
-            this.lblBuffingActualHours.Location = new System.Drawing.Point(1109, 199);
+            this.lblBuffingActualHours.Location = new System.Drawing.Point(1140, 199);
             this.lblBuffingActualHours.Name = "lblBuffingActualHours";
-            this.lblBuffingActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblBuffingActualHours.Size = new System.Drawing.Size(40, 13);
             this.lblBuffingActualHours.TabIndex = 160;
-            this.lblBuffingActualHours.Text = "Actual Hours:";
+            this.lblBuffingActualHours.Text = "Actual:";
             // 
             // txtBuffActualHours
             // 
@@ -2144,11 +2165,11 @@
             // lblPaintingActualHours
             // 
             this.lblPaintingActualHours.AutoSize = true;
-            this.lblPaintingActualHours.Location = new System.Drawing.Point(1337, 199);
+            this.lblPaintingActualHours.Location = new System.Drawing.Point(1368, 199);
             this.lblPaintingActualHours.Name = "lblPaintingActualHours";
-            this.lblPaintingActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblPaintingActualHours.Size = new System.Drawing.Size(40, 13);
             this.lblPaintingActualHours.TabIndex = 162;
-            this.lblPaintingActualHours.Text = "Actual Hours:";
+            this.lblPaintingActualHours.Text = "Actual:";
             // 
             // txtPaintActualHours
             // 
@@ -2162,11 +2183,11 @@
             // lblPackingActualHours
             // 
             this.lblPackingActualHours.AutoSize = true;
-            this.lblPackingActualHours.Location = new System.Drawing.Point(1553, 199);
+            this.lblPackingActualHours.Location = new System.Drawing.Point(1584, 199);
             this.lblPackingActualHours.Name = "lblPackingActualHours";
-            this.lblPackingActualHours.Size = new System.Drawing.Size(71, 13);
+            this.lblPackingActualHours.Size = new System.Drawing.Size(40, 13);
             this.lblPackingActualHours.TabIndex = 164;
-            this.lblPackingActualHours.Text = "Actual Hours:";
+            this.lblPackingActualHours.Text = "Actual:";
             // 
             // txtPackActualHours
             // 
@@ -2181,9 +2202,9 @@
             // 
             this.lbl_time.BackColor = System.Drawing.SystemColors.MenuBar;
             this.lbl_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_time.Location = new System.Drawing.Point(1431, 0);
+            this.lbl_time.Location = new System.Drawing.Point(1542, 0);
             this.lbl_time.Name = "lbl_time";
-            this.lbl_time.Size = new System.Drawing.Size(475, 30);
+            this.lbl_time.Size = new System.Drawing.Size(364, 30);
             this.lbl_time.TabIndex = 165;
             this.lbl_time.Text = " ";
             // 
@@ -3309,12 +3330,126 @@
             this.txt730Packing.TabIndex = 279;
             this.txt730Packing.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // kevinNoteToolStripMenuItem
+            // label113
             // 
-            this.kevinNoteToolStripMenuItem.Name = "kevinNoteToolStripMenuItem";
-            this.kevinNoteToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.kevinNoteToolStripMenuItem.Text = "Messages";
-            this.kevinNoteToolStripMenuItem.Click += new System.EventHandler(this.kevinNoteToolStripMenuItem_Click);
+            this.label113.Enabled = false;
+            this.label113.Location = new System.Drawing.Point(216, 174);
+            this.label113.Name = "label113";
+            this.label113.Size = new System.Drawing.Size(95, 13);
+            this.label113.TabIndex = 284;
+            this.label113.Text = "Value:";
+            this.label113.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtPunchValue
+            // 
+            this.txtPunchValue.Enabled = false;
+            this.txtPunchValue.Location = new System.Drawing.Point(216, 190);
+            this.txtPunchValue.Name = "txtPunchValue";
+            this.txtPunchValue.Size = new System.Drawing.Size(95, 20);
+            this.txtPunchValue.TabIndex = 283;
+            this.txtPunchValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label125
+            // 
+            this.label125.Enabled = false;
+            this.label125.Location = new System.Drawing.Point(635, 174);
+            this.label125.Name = "label125";
+            this.label125.Size = new System.Drawing.Size(95, 13);
+            this.label125.TabIndex = 288;
+            this.label125.Text = "Value:";
+            this.label125.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtBendValue
+            // 
+            this.txtBendValue.Enabled = false;
+            this.txtBendValue.Location = new System.Drawing.Point(635, 190);
+            this.txtBendValue.Name = "txtBendValue";
+            this.txtBendValue.Size = new System.Drawing.Size(95, 20);
+            this.txtBendValue.TabIndex = 287;
+            this.txtBendValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label126
+            // 
+            this.label126.Enabled = false;
+            this.label126.Location = new System.Drawing.Point(841, 174);
+            this.label126.Name = "label126";
+            this.label126.Size = new System.Drawing.Size(95, 13);
+            this.label126.TabIndex = 290;
+            this.label126.Text = "Value:";
+            this.label126.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtWeldValue
+            // 
+            this.txtWeldValue.Enabled = false;
+            this.txtWeldValue.Location = new System.Drawing.Point(841, 190);
+            this.txtWeldValue.Name = "txtWeldValue";
+            this.txtWeldValue.Size = new System.Drawing.Size(95, 20);
+            this.txtWeldValue.TabIndex = 289;
+            this.txtWeldValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label127
+            // 
+            this.label127.Enabled = false;
+            this.label127.Location = new System.Drawing.Point(1044, 174);
+            this.label127.Name = "label127";
+            this.label127.Size = new System.Drawing.Size(95, 13);
+            this.label127.TabIndex = 292;
+            this.label127.Text = "Value:";
+            this.label127.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtBuffValue
+            // 
+            this.txtBuffValue.Enabled = false;
+            this.txtBuffValue.Location = new System.Drawing.Point(1044, 190);
+            this.txtBuffValue.Name = "txtBuffValue";
+            this.txtBuffValue.Size = new System.Drawing.Size(95, 20);
+            this.txtBuffValue.TabIndex = 291;
+            this.txtBuffValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label128
+            // 
+            this.label128.Enabled = false;
+            this.label128.Location = new System.Drawing.Point(1261, 174);
+            this.label128.Name = "label128";
+            this.label128.Size = new System.Drawing.Size(95, 13);
+            this.label128.TabIndex = 294;
+            this.label128.Text = "Value:";
+            this.label128.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtPaintValue
+            // 
+            this.txtPaintValue.Enabled = false;
+            this.txtPaintValue.Location = new System.Drawing.Point(1261, 190);
+            this.txtPaintValue.Name = "txtPaintValue";
+            this.txtPaintValue.Size = new System.Drawing.Size(95, 20);
+            this.txtPaintValue.TabIndex = 293;
+            this.txtPaintValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label129
+            // 
+            this.label129.Enabled = false;
+            this.label129.Location = new System.Drawing.Point(1480, 174);
+            this.label129.Name = "label129";
+            this.label129.Size = new System.Drawing.Size(95, 13);
+            this.label129.TabIndex = 296;
+            this.label129.Text = "Value:";
+            this.label129.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtPackValue
+            // 
+            this.txtPackValue.Enabled = false;
+            this.txtPackValue.Location = new System.Drawing.Point(1480, 190);
+            this.txtPackValue.Name = "txtPackValue";
+            this.txtPackValue.Size = new System.Drawing.Size(95, 20);
+            this.txtPackValue.TabIndex = 295;
+            this.txtPackValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // absentToolStripMenuItem
+            // 
+            this.absentToolStripMenuItem.Name = "absentToolStripMenuItem";
+            this.absentToolStripMenuItem.Size = new System.Drawing.Size(140, 20);
+            this.absentToolStripMenuItem.Text = "Absent/Holiday Search";
+            this.absentToolStripMenuItem.Click += new System.EventHandler(this.absentToolStripMenuItem_Click);
             // 
             // MenuMain
             // 
@@ -3322,6 +3457,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1911, 921);
+            this.Controls.Add(this.label129);
+            this.Controls.Add(this.txtPackValue);
+            this.Controls.Add(this.label128);
+            this.Controls.Add(this.txtPaintValue);
+            this.Controls.Add(this.label127);
+            this.Controls.Add(this.txtBuffValue);
+            this.Controls.Add(this.label126);
+            this.Controls.Add(this.txtWeldValue);
+            this.Controls.Add(this.label125);
+            this.Controls.Add(this.txtBendValue);
+            this.Controls.Add(this.label113);
+            this.Controls.Add(this.txtPunchValue);
             this.Controls.Add(this.label123);
             this.Controls.Add(this.txtAvailPacking);
             this.Controls.Add(this.label124);
@@ -3918,6 +4065,19 @@
         private System.Windows.Forms.Label label124;
         private System.Windows.Forms.TextBox txt730Packing;
         private System.Windows.Forms.ToolStripMenuItem kevinNoteToolStripMenuItem;
+        private System.Windows.Forms.Label label113;
+        private System.Windows.Forms.TextBox txtPunchValue;
+        private System.Windows.Forms.Label label125;
+        private System.Windows.Forms.TextBox txtBendValue;
+        private System.Windows.Forms.Label label126;
+        private System.Windows.Forms.TextBox txtWeldValue;
+        private System.Windows.Forms.Label label127;
+        private System.Windows.Forms.TextBox txtBuffValue;
+        private System.Windows.Forms.Label label128;
+        private System.Windows.Forms.TextBox txtPaintValue;
+        private System.Windows.Forms.Label label129;
+        private System.Windows.Forms.TextBox txtPackValue;
+        private System.Windows.Forms.ToolStripMenuItem absentToolStripMenuItem;
     }
 }
 

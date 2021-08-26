@@ -36,6 +36,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnPrint = new System.Windows.Forms.Button();
             this.lblDifference = new System.Windows.Forms.Label();
+            this.btnEmail = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -128,11 +129,22 @@
             this.lblDifference.Text = "   ";
             this.lblDifference.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnEmail
+            // 
+            this.btnEmail.Location = new System.Drawing.Point(675, 69);
+            this.btnEmail.Name = "btnEmail";
+            this.btnEmail.Size = new System.Drawing.Size(75, 23);
+            this.btnEmail.TabIndex = 9;
+            this.btnEmail.Text = "Email";
+            this.btnEmail.UseVisualStyleBackColor = true;
+            this.btnEmail.Click += new System.EventHandler(this.btnEmail_Click);
+            // 
             // frmProductivity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 859);
+            this.Controls.Add(this.btnEmail);
             this.Controls.Add(this.lblDifference);
             this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.dataGridView1);
@@ -162,5 +174,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.Label lblDifference;
+        private System.Windows.Forms.Button btnEmail;
     }
 }

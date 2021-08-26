@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
-    <ApplicationRevision>138</ApplicationRevision>
+    <ApplicationRevision>147</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -95,6 +95,12 @@
     <Compile Include="afk.cs" />
     <Compile Include="department_changed.cs" />
     <Compile Include="ExcelClass.cs" />
+    <Compile Include="frmAbsentHolidaySearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAbsentHolidaySearch.Designer.cs">
+      <DependentUpon>frmAbsentHolidaySearch.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmAddMessage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +112,12 @@
     </Compile>
     <Compile Include="frmChronological.Designer.cs">
       <DependentUpon>frmChronological.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmProductivityEmail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProductivityEmail.Designer.cs">
+      <DependentUpon>frmProductivityEmail.cs</DependentUpon>
     </Compile>
     <Compile Include="frmCopyWeek.cs">
       <SubType>Form</SubType>
@@ -266,6 +278,9 @@
       <DependentUpon>FloorListings.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmAbsentHolidaySearch.resx">
+      <DependentUpon>frmAbsentHolidaySearch.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmAddMessage.resx">
       <DependentUpon>frmAddMessage.cs</DependentUpon>
     </EmbeddedResource>
@@ -276,6 +291,9 @@
     <EmbeddedResource Include="frmChronological.resx">
       <DependentUpon>frmChronological.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProductivityEmail.resx">
+      <DependentUpon>frmProductivityEmail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCopyPlacements.resx">
       <DependentUpon>frmCopyPlacements.cs</DependentUpon>

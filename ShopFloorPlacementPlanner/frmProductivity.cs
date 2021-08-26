@@ -10,7 +10,7 @@ namespace ShopFloorPlacementPlanner
 {
     public partial class frmProductivity : Form
     {
-        public frmProductivity()
+        public frmProductivity() //productivity_email
         {
             InitializeComponent();
 
@@ -268,6 +268,69 @@ namespace ShopFloorPlacementPlanner
             placementID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[7].Value);
             PlacementNote pn = new PlacementNote(placementID);
             pn.ShowDialog();
+        }
+
+        private void btnEmail_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count < 1)
+            {
+                MessageBox.Show("Please select a user before attempting to send an email.", "No Data", MessageBoxButtons.OK);
+                return;
+            }
+            if (dataGridView1.Rows.Count == 1)
+            {
+                MessageBox.Show("There is not enough data to be able to send an email, please select a bigger date range.", "No Data", MessageBoxButtons.OK);
+                return;
+            }
+
+            int date = 0, day = 0, dept = 0, set_hours = 0, overtime = 0,actual_hours = 0, set_hours_and_overtime = 0, misc = 0;
+            date = 0;
+            day = 1;
+            dept = 2;
+            set_hours = 3;
+            overtime = 4;
+            set_hours_and_overtime = 5;
+            actual_hours = 6;
+            misc = 8;
+            
+            //insert into >>> productivity_email
+            //productivity_email
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+                string sql = "DELETE FROM dbo.productivity_email";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    string misc_temp = "";
+                    if (row.Cells[misc].Value.ToString() == "✔")
+                        misc_temp = "tick";
+                    else if (row.Cells[misc].Value.ToString() == "✖")
+                        misc_temp = "cross";
+                    else
+                        misc_temp = "";
+                    string date_temp = "";
+                    try
+                    { date_temp = Convert.ToDateTime(row.Cells[date].Value.ToString()).ToString("dd-MM-yyyy"); }
+                    catch
+                    { date_temp = ""; }
+
+                    sql = "INSERT INTO dbo.productivity_email ([date],[day],department,set_hours,overtime,set_hours_and_overtime,actual_hours,misc) VALUES ('" +
+                        date_temp + "','" + row.Cells[day].Value.ToString() + "','" + row.Cells[dept].Value.ToString() + "','" + row.Cells[set_hours].Value.ToString() + "','" + row.Cells[overtime].Value.ToString() + "','" + row.Cells[set_hours_and_overtime].Value.ToString() + "'," +
+                        "'" + row.Cells[actual_hours].Value.ToString()  + "','" + misc_temp + "')";
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                conn.Close();
+            }
+            frmProductivityEmail frm = new frmProductivityEmail(cmbEmployee.Text + " - " + lblDifference.Text);
+            frm.ShowDialog();
+
         }
     }
 }

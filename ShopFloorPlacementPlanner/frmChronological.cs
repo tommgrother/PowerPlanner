@@ -12,7 +12,17 @@ namespace ShopFloorPlacementPlanner
     {
         public int actionIndex { get; set; }
         public string _staff { get; set; }
+        public int _staff_id { get; set; }
         public string _dept { get; set; }
+
+
+        public int _status_index { get; set; }
+        public int _door_id_index { get; set; }
+        public int _door_type_index { get; set; }
+        public int _time_index { get; set; }
+        public int _action_index { get; set; }
+        public int _part_index { get; set; }
+        public int _time_for_part_index { get; set; }
 
         public frmChronological(string staff, string dept, DateTime plannerDate)
         {
@@ -30,6 +40,7 @@ namespace ShopFloorPlacementPlanner
             int staff_id = 0;
             //MessageBox.Show(staff);
             staff_id = staff.IndexOf(" ", staff.IndexOf(" ") + 1); //staff id is a temp int var here
+            _staff_id = staff_id;
             staff = staff.Substring(0, staff_id);
             //MessageBox.Show(staff);
             label1.Text = staff;
@@ -106,21 +117,28 @@ namespace ShopFloorPlacementPlanner
 
             int status, action, part, part_time, action_time, action_date, fullname, door_id, sort_order, department, department_time, predicted_end, note, door_type, time;
             status = dataGridView1.Columns["status"].Index;
+            _status_index = status;
             action = dataGridView1.Columns["action"].Index;
+            _action_index = action;
             actionIndex = action;
             part = dataGridView1.Columns["part"].Index;
+            _part_index = part;
             part_time = dataGridView1.Columns["part_time"].Index;
+            _time_for_part_index = part_time;
             action_time = dataGridView1.Columns["action_time"].Index;
             action_date = dataGridView1.Columns["action_date"].Index;
             fullname = dataGridView1.Columns["fullname"].Index;
             door_id = dataGridView1.Columns["door_id"].Index;
+            _door_id_index = door_id;
             sort_order = dataGridView1.Columns["sort_order"].Index;
             department = dataGridView1.Columns["department"].Index;
             department_time = dataGridView1.Columns["department_time"].Index;
             predicted_end = dataGridView1.Columns["predicted_end"].Index;
             note = dataGridView1.Columns["note"].Index;
             door_type = dataGridView1.Columns["door_type"].Index;
+            _door_type_index = door_type;
             time = dataGridView1.Columns["Time"].Index;
+            _time_index = time;
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -242,6 +260,35 @@ namespace ShopFloorPlacementPlanner
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+        }
+
+        private void btnEmail_Click(object sender, EventArgs e)
+        {
+            //insert into temptable
+
+            //using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            //{
+            //    conn.Open();
+            //    string sql = "DELETE FROM dbo.chronological_temp_table";
+            //    using (SqlCommand cmd = new SqlCommand(sql, conn))
+            //    {
+            //        cmd.ExecuteNonQuery();
+            //    }
+            //    foreach (DataGridViewRow row in dataGridView1.Rows)
+            //    {
+
+            //        sql = "INSERT INTO dbo.chronological_temp_table (status,door_id,door_type,time,action,part,time_for_part) VALUES ('" + row.Cells[_status_index].Value.ToString() + "','" + row.Cells[_door_id_index].Value.ToString() + "','" +
+            //             row.Cells[_door_type_index].Value.ToString() + "','" + row.Cells[_time_index].Value.ToString() + "','" + row.Cells[_action_index].Value.ToString() + "','" + row.Cells[_part_index].Value.ToString() + "','" + row.Cells[_time_for_part_index].Value.ToString() + "') ";
+            //        using (SqlCommand cmd = new SqlCommand(sql, conn))
+            //        {
+            //            cmd.ExecuteNonQuery();
+            //        }
+            //    }
+            //    conn.Close();
+            //}
+
+            //frmProductivityEmail frm = new frmProductivityEmail(label1.Text);
+            //frm.ShowDialog();
         }
     }
 }

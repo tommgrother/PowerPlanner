@@ -24,7 +24,6 @@ namespace ShopFloorPlacementPlanner
             temp = temp.Replace("'", "");
 
             string sql = "";
-
             if (chkAll.Checked == true)
                 sql ="INSERT INTO dbo.kevinMessage ([message],message_date) VALUES ('" + temp + "',cast(getdate() as date))";
             else
@@ -57,8 +56,23 @@ namespace ShopFloorPlacementPlanner
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     conn.Close();
+                    email();
                     MessageBox.Show("Note added!", " ", MessageBoxButtons.OK);
+
                     this.Close();
+                }
+            }
+        }
+        private void email()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_kevin_message_email", conn))
+                {
+                    conn.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
                 }
             }
         }

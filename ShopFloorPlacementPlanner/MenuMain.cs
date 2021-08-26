@@ -2704,6 +2704,8 @@ namespace ShopFloorPlacementPlanner
             department_changed.managementSelected = -1;
             skipMessageBox = 2;
             refreshSelectedDepartments();
+            fillShopGoals();
+            currentAvailable();
         }
 
         private void productivityToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3284,11 +3286,12 @@ namespace ShopFloorPlacementPlanner
 
         private void currentAvailable()
         {
+            string sql = "";
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {
-                    string sql = "select round(punching,2),round(bending,2),round(welding,2),round(buffing,2),round(painting,2),round(packing,2) from dbo.power_planner_7_30_available WHERE date_plan = '" + dteDateSelection.Text + "'";
+                    sql = "select round(punching,2),round(bending,2),round(welding,2),round(buffing,2),round(painting,2),round(packing,2) from dbo.power_planner_7_30_available WHERE date_plan = '" + dteDateSelection.Text + "'";
                     using (SqlCommand cmd = new SqlCommand("usp_power_planner_available_work", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -3333,6 +3336,27 @@ namespace ShopFloorPlacementPlanner
                 txt730Painting.Text = "0";
                 txt730Packing.Text = "0";
             }
+
+            //while we are here also get the current available values!!!
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_power_planner_available_work", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@insert", SqlDbType.Int).Value = 2;
+
+                    SqlDataAdapter reader = new SqlDataAdapter(cmd);
+                    DataTable availableWork = new DataTable();
+                    reader.Fill(availableWork);
+                    txtPunchValue.Text = availableWork.Rows[0][0].ToString();
+                    txtBendValue.Text = availableWork.Rows[0][1].ToString();
+                    txtWeldValue.Text = availableWork.Rows[0][2].ToString();
+                    txtBuffValue.Text = availableWork.Rows[0][3].ToString();
+                    txtPaintValue.Text = availableWork.Rows[0][4].ToString();
+                    txtPackValue.Text = availableWork.Rows[0][5].ToString();
+                }
+            }
+
             }
 
         private void MenuMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -3433,9 +3457,11 @@ namespace ShopFloorPlacementPlanner
             }
         }
 
-
-
-
-
+        private void absentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //select between two dates and  view all absences/holidays
+            frmAbsentHolidaySearch frm = new frmAbsentHolidaySearch();
+            frm.ShowDialog();
+        }
     }
 }
