@@ -56,17 +56,16 @@ namespace ShopFloorPlacementPlanner
                 }
             }
 
-            //usp_power_planner_chronological_shop_actions
+            //usp_power_planner_chronological_shop_actions_simline
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
-                if (dept != "Slimline")
+                if (dept == "Slimline")
                 {
-                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_chronological_shop_actions", conn))
+                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_chronological_shop_actions_slimline", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@action_time", SqlDbType.Date).Value = dteAction.Value;
                         cmd.Parameters.AddWithValue("@action_time_end", SqlDbType.Date).Value = dteActionEnd.Value;
-                        cmd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = dept;
                         cmd.Parameters.AddWithValue("@user_id", SqlDbType.Date).Value = staff_id;
 
                         conn.Open();
@@ -82,14 +81,40 @@ namespace ShopFloorPlacementPlanner
                         REarrange();
                         dataGridView1.Refresh();
                     }
+
                 }
-                else //usp_power_planner_chronological_shop_actions_slimline
+                else if (dept == "Bending")
                 {
-                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_chronological_shop_actions_slimline", conn))
+                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_chronological_shop_actions_bending", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@action_time", SqlDbType.Date).Value = dteAction.Value;
                         cmd.Parameters.AddWithValue("@action_time_end", SqlDbType.Date).Value = dteActionEnd.Value;
+                        cmd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = dept;
+                        cmd.Parameters.AddWithValue("@user_id", SqlDbType.Date).Value = staff_id;
+
+                        conn.Open();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        //dt.Columns.Add("Status");// dataGridView1.Columns.Add("Status", "Status");
+                        //dt.Columns.Add("Time");
+                        da.Fill(dt);
+                        conn.Close();
+                        dataGridView1.DataSource = dt;
+
+                        //format
+                        REarrange();
+                        dataGridView1.Refresh();
+                    }
+                }
+                else //usp_power_planner_chronological_shop_actions
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_chronological_shop_actions", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@action_time", SqlDbType.Date).Value = dteAction.Value;
+                        cmd.Parameters.AddWithValue("@action_time_end", SqlDbType.Date).Value = dteActionEnd.Value;
+                        cmd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = dept;
                         cmd.Parameters.AddWithValue("@user_id", SqlDbType.Date).Value = staff_id;
 
                         conn.Open();
@@ -116,93 +141,175 @@ namespace ShopFloorPlacementPlanner
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             int status, action, part, part_time, action_time, action_date, fullname, door_id, sort_order, department, department_time, predicted_end, note, door_type, time;
-            status = dataGridView1.Columns["status"].Index;
-            _status_index = status;
-            action = dataGridView1.Columns["action"].Index;
-            _action_index = action;
-            actionIndex = action;
-            part = dataGridView1.Columns["part"].Index;
-            _part_index = part;
-            part_time = dataGridView1.Columns["part_time"].Index;
-            _time_for_part_index = part_time;
-            action_time = dataGridView1.Columns["action_time"].Index;
-            action_date = dataGridView1.Columns["action_date"].Index;
-            fullname = dataGridView1.Columns["fullname"].Index;
-            door_id = dataGridView1.Columns["door_id"].Index;
-            _door_id_index = door_id;
-            sort_order = dataGridView1.Columns["sort_order"].Index;
-            department = dataGridView1.Columns["department"].Index;
-            department_time = dataGridView1.Columns["department_time"].Index;
-            predicted_end = dataGridView1.Columns["predicted_end"].Index;
-            note = dataGridView1.Columns["note"].Index;
-            door_type = dataGridView1.Columns["door_type"].Index;
-            _door_type_index = door_type;
-            time = dataGridView1.Columns["Time"].Index;
-            _time_index = time;
-
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            //start messing with the columns :}
-
-            //first column :- =IIf([Action]="Door Start",[Action] & " - Duration: " & Round(([department_time]/60),2) & " >>",IIf([Action]<>"Finish Part",[Action] & " >>",""))
-            //gonna need to loop through all the records for this one
-
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            if (_dept == "Bending")
             {
-                if (dataGridView1.Rows[i].Cells[action].Value.ToString() == "Door Start")
-                {
-                    dataGridView1.Rows[i].Cells[status].Value = dataGridView1.Rows[i].Cells[action].Value.ToString() + " - Duration: " +
-                        Convert.ToString(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2)) + " >>";
-                }
-                else if (dataGridView1.Rows[i].Cells[action].Value.ToString() != "Finish Part")
-                {
-                    dataGridView1.Rows[i].Cells[status].Value = dataGridView1.Rows[i].Cells[action].Value.ToString() + " >> ";
-                }
-                //while we are here also remove the date from the actiontime
-                DateTime tempDate = Convert.ToDateTime(dataGridView1.Rows[i].Cells[action_time].Value);
-                dataGridView1.Rows[i].Cells[time].Value = tempDate.ToString("HH:mm");
+                //status = dataGridView1.Columns["status"].Index;
+                //_status_index = status;
+                action = dataGridView1.Columns["action"].Index;
+                _action_index = action;
+                actionIndex = action;
+                part = dataGridView1.Columns["part"].Index;
+                _part_index = part;
+                part_time = dataGridView1.Columns["part_time"].Index;
+                _time_for_part_index = part_time;
+                //action_time = dataGridView1.Columns["action_time"].Index;
+                action_date = dataGridView1.Columns["action_date"].Index;
+                fullname = dataGridView1.Columns["fullname"].Index;
+                door_id = dataGridView1.Columns["door_id"].Index;
+                _door_id_index = door_id;
+                //sort_order = dataGridView1.Columns["sort_order"].Index;
+                //department = dataGridView1.Columns["department"].Index;
+                //department_time = dataGridView1.Columns["department_time"].Index;
+                //predicted_end = dataGridView1.Columns["predicted_end"].Index;
+                note = dataGridView1.Columns["note"].Index;
+                door_type = dataGridView1.Columns["door_type"].Index;
+                _door_type_index = door_type;
+                //time = dataGridView1.Columns["Time"].Index;
+                //_time_index = time;
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                //start messing with the columns :}
+
+                //first column :- =IIf([Action]="Door Start",[Action] & " - Duration: " & Round(([department_time]/60),2) & " >>",IIf([Action]<>"Finish Part",[Action] & " >>",""))
+                //gonna need to loop through all the records for this one
+
+
+
+                //formating
+                //hide the columns we do not need
+                //dataGridView1.Columns[action_date].Visible = false;
+                //dataGridView1.Columns[action_time].Visible = false;
+                dataGridView1.Columns[fullname].Visible = false;
+                //dataGridView1.Columns[sort_order].Visible = false;
+                //dataGridView1.Columns[department].Visible = false;
+                //dataGridView1.Columns[department_time].Visible = false;
+                //dataGridView1.Columns[predicted_end].Visible = false;
+                dataGridView1.Columns[note].Visible = false;
+
+                //dataGridView1.Columns[time].DisplayIndex = 3;
+                //dataGridView1.Columns[door_id].DisplayIndex = status + 1; //1st column
+                //dataGridView1.Columns[door_type].DisplayIndex = status + 2; //2nd etc...
+                //dataGridView1.Columns[action].DisplayIndex = status + 3;
+                //dataGridView1.Columns[part].DisplayIndex = status + 4;
+                //dataGridView1.Columns[part_time].DisplayIndex = status + 5;
+
+                //sizeeeees
+                //dataGridView1.Columns[status].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[door_type].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns[door_id].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[action].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[action_date].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[part].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[part_time].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                //dataGridView1.Columns[time].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                //headertext
+                //dataGridView1.Columns[status].HeaderText = "Status";
+                dataGridView1.Columns[door_type].HeaderText = "Door Type";
+                dataGridView1.Columns[door_id].HeaderText = "Door ID";
+                dataGridView1.Columns[action].HeaderText = "Action";
+                dataGridView1.Columns[part].HeaderText = "Part";
+                dataGridView1.Columns[action_date].HeaderText = "Action Date";
+                dataGridView1.Columns[part_time].HeaderText = "Time For Part";
+                //dataGridView1.Columns[time].HeaderText = "Time";
+
+                //messing with the colours
+                //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                //{
+                //    if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Finish")) //mark complete jobs as green
+                //        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+                //}
             }
-
-            //formating
-            //hide the columns we do not need
-            dataGridView1.Columns[action_date].Visible = false;
-            dataGridView1.Columns[action_time].Visible = false;
-            dataGridView1.Columns[fullname].Visible = false;
-            dataGridView1.Columns[sort_order].Visible = false;
-            dataGridView1.Columns[department].Visible = false;
-            dataGridView1.Columns[department_time].Visible = false;
-            dataGridView1.Columns[predicted_end].Visible = false;
-            dataGridView1.Columns[note].Visible = false;
-
-            dataGridView1.Columns[time].DisplayIndex = 3;
-            dataGridView1.Columns[door_id].DisplayIndex = status + 1; //1st column
-            dataGridView1.Columns[door_type].DisplayIndex = status + 2; //2nd etc...
-            dataGridView1.Columns[action].DisplayIndex = status + 3;
-            dataGridView1.Columns[part].DisplayIndex = status + 4;
-            dataGridView1.Columns[part_time].DisplayIndex = status + 5;
-
-            //sizeeeees
-            dataGridView1.Columns[status].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView1.Columns[door_type].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView1.Columns[door_id].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView1.Columns[action].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView1.Columns[part].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView1.Columns[part_time].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView1.Columns[time].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            //headertext
-            dataGridView1.Columns[status].HeaderText = "Status";
-            dataGridView1.Columns[door_type].HeaderText = "Door Type";
-            dataGridView1.Columns[door_id].HeaderText = "Door ID";
-            dataGridView1.Columns[action].HeaderText = "Action";
-            dataGridView1.Columns[part].HeaderText = "Part";
-            dataGridView1.Columns[part_time].HeaderText = "Time For Part";
-            dataGridView1.Columns[time].HeaderText = "Time";
-
-            //messing with the colours
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            else
             {
-                if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Finish")) //mark complete jobs as green
-                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+                status = dataGridView1.Columns["status"].Index;
+                _status_index = status;
+                action = dataGridView1.Columns["action"].Index;
+                _action_index = action;
+                actionIndex = action;
+                part = dataGridView1.Columns["part"].Index;
+                _part_index = part;
+                part_time = dataGridView1.Columns["part_time"].Index;
+                _time_for_part_index = part_time;
+                action_time = dataGridView1.Columns["action_time"].Index;
+                action_date = dataGridView1.Columns["action_date"].Index;
+                fullname = dataGridView1.Columns["fullname"].Index;
+                door_id = dataGridView1.Columns["door_id"].Index;
+                _door_id_index = door_id;
+                sort_order = dataGridView1.Columns["sort_order"].Index;
+                department = dataGridView1.Columns["department"].Index;
+                department_time = dataGridView1.Columns["department_time"].Index;
+                predicted_end = dataGridView1.Columns["predicted_end"].Index;
+                note = dataGridView1.Columns["note"].Index;
+                door_type = dataGridView1.Columns["door_type"].Index;
+                _door_type_index = door_type;
+                time = dataGridView1.Columns["Time"].Index;
+                _time_index = time;
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                //start messing with the columns :}
+
+                //first column :- =IIf([Action]="Door Start",[Action] & " - Duration: " & Round(([department_time]/60),2) & " >>",IIf([Action]<>"Finish Part",[Action] & " >>",""))
+                //gonna need to loop through all the records for this one
+
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    if (dataGridView1.Rows[i].Cells[action].Value.ToString() == "Door Start")
+                    {
+                        dataGridView1.Rows[i].Cells[status].Value = dataGridView1.Rows[i].Cells[action].Value.ToString() + " - Duration: " +
+                            Convert.ToString(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2)) + " >>";
+                    }
+                    else if (dataGridView1.Rows[i].Cells[action].Value.ToString() != "Finish Part")
+                    {
+                        dataGridView1.Rows[i].Cells[status].Value = dataGridView1.Rows[i].Cells[action].Value.ToString() + " >> ";
+                    }
+                    //while we are here also remove the date from the actiontime
+                    DateTime tempDate = Convert.ToDateTime(dataGridView1.Rows[i].Cells[action_time].Value);
+                    dataGridView1.Rows[i].Cells[time].Value = tempDate.ToString("HH:mm");
+                }
+
+                //formating
+                //hide the columns we do not need
+                dataGridView1.Columns[action_date].Visible = false;
+                dataGridView1.Columns[action_time].Visible = false;
+                dataGridView1.Columns[fullname].Visible = false;
+                dataGridView1.Columns[sort_order].Visible = false;
+                dataGridView1.Columns[department].Visible = false;
+                dataGridView1.Columns[department_time].Visible = false;
+                dataGridView1.Columns[predicted_end].Visible = false;
+                dataGridView1.Columns[note].Visible = false;
+
+                dataGridView1.Columns[time].DisplayIndex = 3;
+                dataGridView1.Columns[door_id].DisplayIndex = status + 1; //1st column
+                dataGridView1.Columns[door_type].DisplayIndex = status + 2; //2nd etc...
+                dataGridView1.Columns[action].DisplayIndex = status + 3;
+                dataGridView1.Columns[part].DisplayIndex = status + 4;
+                dataGridView1.Columns[part_time].DisplayIndex = status + 5;
+
+                //sizeeeees
+                dataGridView1.Columns[status].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[door_type].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[door_id].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[action].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[part].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[part_time].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[time].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                //headertext
+                dataGridView1.Columns[status].HeaderText = "Status";
+                dataGridView1.Columns[door_type].HeaderText = "Door Type";
+                dataGridView1.Columns[door_id].HeaderText = "Door ID";
+                dataGridView1.Columns[action].HeaderText = "Action";
+                dataGridView1.Columns[part].HeaderText = "Part";
+                dataGridView1.Columns[part_time].HeaderText = "Time For Part";
+                dataGridView1.Columns[time].HeaderText = "Time";
+
+                //messing with the colours
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Finish")) //mark complete jobs as green
+                        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+                }
             }
             dataGridView1.ClearSelection();
         }

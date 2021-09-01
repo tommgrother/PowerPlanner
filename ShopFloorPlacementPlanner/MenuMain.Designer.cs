@@ -129,6 +129,7 @@
             this.cOPYWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productivityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kevinNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.absentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -360,7 +361,6 @@
             this.txtPaintValue = new System.Windows.Forms.TextBox();
             this.label129 = new System.Windows.Forms.Label();
             this.txtPackValue = new System.Windows.Forms.TextBox();
-            this.absentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -430,6 +430,7 @@
             this.dgBend.RowTemplate.Height = 50;
             this.dgBend.Size = new System.Drawing.Size(200, 416);
             this.dgBend.TabIndex = 1;
+            this.dgBend.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBend_CellDoubleClick);
             // 
             // dgWeld
             // 
@@ -1116,6 +1117,13 @@
             this.kevinNoteToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
             this.kevinNoteToolStripMenuItem.Text = "Messages";
             this.kevinNoteToolStripMenuItem.Click += new System.EventHandler(this.kevinNoteToolStripMenuItem_Click);
+            // 
+            // absentToolStripMenuItem
+            // 
+            this.absentToolStripMenuItem.Name = "absentToolStripMenuItem";
+            this.absentToolStripMenuItem.Size = new System.Drawing.Size(140, 20);
+            this.absentToolStripMenuItem.Text = "Absent/Holiday Search";
+            this.absentToolStripMenuItem.Click += new System.EventHandler(this.absentToolStripMenuItem_Click);
             // 
             // label23
             // 
@@ -3443,13 +3451,6 @@
             this.txtPackValue.Size = new System.Drawing.Size(95, 20);
             this.txtPackValue.TabIndex = 295;
             this.txtPackValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // absentToolStripMenuItem
-            // 
-            this.absentToolStripMenuItem.Name = "absentToolStripMenuItem";
-            this.absentToolStripMenuItem.Size = new System.Drawing.Size(140, 20);
-            this.absentToolStripMenuItem.Text = "Absent/Holiday Search";
-            this.absentToolStripMenuItem.Click += new System.EventHandler(this.absentToolStripMenuItem_Click);
             // 
             // MenuMain
             // 

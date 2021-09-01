@@ -111,6 +111,7 @@
             this.btnEmail.TabIndex = 6;
             this.btnEmail.Text = "Email";
             this.btnEmail.UseVisualStyleBackColor = true;
+            this.btnEmail.Visible = false;
             this.btnEmail.Click += new System.EventHandler(this.btnEmail_Click);
             // 
             // frmChronological

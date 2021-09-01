@@ -3463,5 +3463,12 @@ namespace ShopFloorPlacementPlanner
             frmAbsentHolidaySearch frm = new frmAbsentHolidaySearch();
             frm.ShowDialog();
         }
+
+        private void dgBend_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgBend.ClearSelection();
+            frmChronological frm = new frmChronological(Convert.ToString(dgBend.Rows[e.RowIndex].Cells[0].Value), "Bending", dteDateSelection.Value);
+            frm.ShowDialog();
+        }
     }
 }
