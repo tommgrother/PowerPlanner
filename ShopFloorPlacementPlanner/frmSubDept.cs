@@ -38,7 +38,7 @@ namespace ShopFloorPlacementPlanner
                 //first we gotta check if they are already in the table
                 SubDeptClass check = new SubDeptClass();
                 check.checkPlacement(placement_ID);
-                check.add_placement(placement_ID, cmbSubDept.Text); //this seems to work fine
+                //check.add_placement(placement_ID, cmbSubDept.Text); //this seems to work fine
                 this.Close();
             }
             else

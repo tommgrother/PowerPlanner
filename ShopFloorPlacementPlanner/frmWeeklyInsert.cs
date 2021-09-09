@@ -302,6 +302,7 @@ namespace ShopFloorPlacementPlanner
                             sql = "DELETE  FROM dbo.power_plan_overtime_remake where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID + " AND department = '" + _dept + "'";
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                                 cmd.ExecuteNonQuery();
+                     
 
                             sql = "Select sum(hours) FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID; //get all the placement ids for this person
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -434,7 +435,7 @@ namespace ShopFloorPlacementPlanner
                                     }
                                     SubDeptClass place = new SubDeptClass();
                                     place.checkPlacement(placement_id);
-                                    place.add_placement(placement_id, _subDept);
+                                    //place.add_placement(placement_id, _subDept);
                                 }
                             }
                             else //
@@ -461,7 +462,7 @@ namespace ShopFloorPlacementPlanner
                                     }
                                     SubDeptClass place = new SubDeptClass();
                                     place.checkPlacement(placement_id);
-                                    place.add_placement(placement_id, _subDept);
+                                    place.add_placement_weekly(placement_id);
                                 }
                             }
                         }
@@ -500,7 +501,7 @@ namespace ShopFloorPlacementPlanner
                                 }
                                 SubDeptClass place = new SubDeptClass();
                                 place.checkPlacement(MAXplacementID);
-                                place.add_placement(MAXplacementID, _subDept);
+                                place.add_placement_weekly (MAXplacementID);
                             }
                         }
                     }

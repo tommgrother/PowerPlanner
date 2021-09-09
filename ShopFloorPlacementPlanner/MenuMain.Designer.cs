@@ -361,6 +361,7 @@
             this.txtPaintValue = new System.Windows.Forms.TextBox();
             this.label129 = new System.Windows.Forms.Label();
             this.txtPackValue = new System.Windows.Forms.TextBox();
+            this.ryucxd = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -3452,12 +3453,25 @@
             this.txtPackValue.TabIndex = 295;
             this.txtPackValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // ryucxd
+            // 
+            this.ryucxd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ryucxd.Location = new System.Drawing.Point(1706, 80);
+            this.ryucxd.Name = "ryucxd";
+            this.ryucxd.Size = new System.Drawing.Size(101, 36);
+            this.ryucxd.TabIndex = 297;
+            this.ryucxd.Text = "temp";
+            this.ryucxd.UseVisualStyleBackColor = true;
+            this.ryucxd.Visible = false;
+            this.ryucxd.Click += new System.EventHandler(this.ryucxd_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1911, 921);
+            this.Controls.Add(this.ryucxd);
             this.Controls.Add(this.label129);
             this.Controls.Add(this.txtPackValue);
             this.Controls.Add(this.label128);
@@ -4079,6 +4093,7 @@
         private System.Windows.Forms.Label label129;
         private System.Windows.Forms.TextBox txtPackValue;
         private System.Windows.Forms.ToolStripMenuItem absentToolStripMenuItem;
+        private System.Windows.Forms.Button ryucxd;
     }
 }
 

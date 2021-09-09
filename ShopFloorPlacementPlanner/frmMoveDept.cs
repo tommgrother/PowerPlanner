@@ -124,7 +124,7 @@ namespace ShopFloorPlacementPlanner
                         }
                     }
                     //now prompt the user to select which area they want the user in
-                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple();
+                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(staffID,MAXplacementID);
                     frmSDM.ShowDialog();
                     subDept = frmSDM.location;
                     //SubDeptClass add = new SubDeptClass();
@@ -132,8 +132,8 @@ namespace ShopFloorPlacementPlanner
                     //add.add_placement(MAXplacementID, subDept);
                 }
 
-                if (subDept.Length < 1)
-                    subDept = "ERROR";
+                //if (subDept.Length < 1)
+                //    subDept = "ERROR";
 
                 frmWeeklyInsert wi = new frmWeeklyInsert(staffID, staffName, date, dept, subDept);
                 wi.ShowDialog();
@@ -162,12 +162,12 @@ namespace ShopFloorPlacementPlanner
                         }
                     }
                     //now prompt the user to select which area they want the user in
-                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple();
+                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(staffID,MAXplacementID);
                     frmSDM.ShowDialog();
                     subDept = frmSDM.location;
                     SubDeptClass add = new SubDeptClass();
                     add.checkPlacement(MAXplacementID);
-                    add.add_placement(MAXplacementID, subDept);
+                    //add.add_placement(MAXplacementID, subDept);
                 }
             }
 

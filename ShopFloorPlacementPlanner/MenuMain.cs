@@ -1711,16 +1711,22 @@ namespace ShopFloorPlacementPlanner
                 dgPaint.Columns.Remove("overtime");
             }
 
-            //ryucxd paint
+            //ryucxd paint   12321
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(d.sub_department,'') + CHAR(13) + a.placement_type  AS [Staff Placement], a.hours, a.id " +
-                                "FROM dbo.power_plan_staff AS a " +
-                                "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
-                                "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
-                                "LEFT JOIN dbo.power_plan_paint_sub_dept_test_temp_2 as d ON a.id = d.placement_id " +
-                                "WHERE c.date_plan = '" + dteDateSelection.Text + "' and a.department = 'Painting'  order by b.forename + ' ' + b.surname";  //ORDER BY [Staff Name]
+            //  vvv old (before remaking _paint_sub_dept_temp_test
+            //string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(d.sub_department,'') + CHAR(13) + a.placement_type  AS [Staff Placement], a.hours, a.id " +
+            //                    "FROM dbo.power_plan_staff AS a " +
+            //                    "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
+            //                    "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
+            //                    "LEFT JOIN dbo.power_plan_paint_sub_dept_test_temp_2 as d ON a.id = d.placement_id " +
+            //                    "WHERE c.date_plan = '" + dteDateSelection.Text + "' and a.department = 'Painting'  order by b.forename + ' ' + b.surname";  //ORDER BY [Staff Name]
 
+            string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(d.up,'') + COALESCE(d.wash_wipe,'')  + COALESCE(d.etch,'')  +  COALESCE(d.sand,'')  +  COALESCE(d.powder_prime,'')  + " +
+                "COALESCE(d.powder_coat, '') + COALESCE(d.oven, '') + COALESCE(d.wet_prep, '') + COALESCE(d.wet_paint, '') + COALESCE(a.placement_type, '')   AS[Staff Placement], a.hours, a.id " +
+                "FROM dbo.power_plan_staff AS a INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
+                "LEFT JOIN dbo.view_power_plan_paint_sub_dept as d ON a.id = d.placement_id WHERE c.date_plan = '" + dteDateSelection.Text + "' and a.department = 'Painting'  order by b.forename + ' ' + b.surname";  //ORDER BY [Staff Name]  
+            //new version joins a view that displays all of the check boxes in a neat row (1 is the dept and 0 = ''
             SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -3469,6 +3475,12 @@ namespace ShopFloorPlacementPlanner
             dgBend.ClearSelection();
             frmChronological frm = new frmChronological(Convert.ToString(dgBend.Rows[e.RowIndex].Cells[0].Value), "Bending", dteDateSelection.Value);
             frm.ShowDialog();
+        }
+
+        private void ryucxd_Click(object sender, EventArgs e)
+        {
+            //frmSubDeptMultiple frm = new frmSubDeptMultiple();
+            //frm.Show();
         }
     }
 }

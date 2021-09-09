@@ -321,7 +321,7 @@ namespace ShopFloorPlacementPlanner
                 {
                     using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
                     {
-                        using (SqlCommand cmd = new SqlCommand("DELETE FROM dbo.power_plan_paint_sub_dept_test_temp_2 WHERE placement_ID = " + placementID, connection))
+                        using (SqlCommand cmd = new SqlCommand("DELETE FROM dbo.power_plan_paint_sub_dept WHERE placement_ID = " + placementID, connection))
                         {
                             connection.Open();
                             cmd.ExecuteNonQuery();
@@ -452,7 +452,7 @@ namespace ShopFloorPlacementPlanner
                             }
                         }
                         //now prompt the user to select which area they want the user in
-                        frmSubDeptMultiple frmSDM = new frmSubDeptMultiple();
+                        frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(staffID,MAXplacementID);
                         frmSDM.ShowDialog();
                         subDept = frmSDM.location;
                         //SubDeptClass add = new SubDeptClass();
@@ -462,8 +462,8 @@ namespace ShopFloorPlacementPlanner
                     //run procedure to populate all the dates for this week --
                     dateInsert di = new dateInsert();
                     di.check_date(_selectedDate);
-                    if (subDept.Length < 1)
-                        subDept = "ERROR";
+                    //if (subDept.Length < 1)
+                    //    subDept = "ERROR";
                     //open form
                     frmWeeklyInsert frm = new frmWeeklyInsert(s._staffID, s._fullname, _selectedDate, _department, subDept);
                     frm.ShowDialog();
@@ -523,8 +523,14 @@ namespace ShopFloorPlacementPlanner
                 if (e.ColumnIndex == dgSelected.Columns["Sub Dept"].Index)
                 {
                     //MessageBox.Show("Sub Dept");
-                    frmSubDept sd = new frmSubDept(placementID);
-                    sd.ShowDialog();
+
+                    //////////frmSubDept sd = new frmSubDept(placementID);
+                    //////////sd.ShowDialog();
+                    //^^ changing this for  multi (not sure why it has its own version but /shrug
+                    frmSubDeptMultiple frm = new frmSubDeptMultiple(staffID,placementID);
+                    frm.ShowDialog();
+
+
                     //PlacementNote pn = new PlacementNote(placementID);
                     //pn.ShowDialog();
                     //checkExistingSelections();
@@ -832,7 +838,7 @@ namespace ShopFloorPlacementPlanner
                                         }
                                     }
                                     //now prompt the user to select which area they want the user in
-                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple();
+                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(s._staffID,MAXplacementID);
                                     frmSDM.ShowDialog();
                                     subDept = frmSDM.location;
                                     //SubDeptClass add = new SubDeptClass();
@@ -842,8 +848,8 @@ namespace ShopFloorPlacementPlanner
                                 //run procedure to populate all the dates for this week --
                                 dateInsert di = new dateInsert();
                                 di.check_date(_selectedDate);
-                                if (subDept.Length < 1)
-                                    subDept = "ERROR";
+                                //if (subDept.Length < 1)
+                                //    subDept = "ERROR";
                                 //open form
                                 frmWeeklyInsert frm = new frmWeeklyInsert(s._staffID, s._fullname, _selectedDate, _department, subDept);
                                 frm.ShowDialog();
@@ -866,12 +872,10 @@ namespace ShopFloorPlacementPlanner
                                         }
                                     }
                                     //now prompt the user to select which area they want the user in
-                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple();
+                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(s._staffID,MAXplacementID);
                                     frmSDM.ShowDialog();
                                     string subDept = frmSDM.location;
-                                    SubDeptClass add = new SubDeptClass();
-                                    add.checkPlacement(MAXplacementID);
-                                    add.add_placement(MAXplacementID, subDept);
+                                   
                                 }
                             }
                         }
