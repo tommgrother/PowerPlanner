@@ -128,32 +128,32 @@ namespace ShopFloorPlacementPlanner
                     dataGridView1.DataSource = dt;
                     //here we are going to check if there are any placements for that day(s)
 
-                    foreach (DataGridViewRow row in dataGridView1.Rows)
-                    {
-                        sql = "SELECT placement_type,[hours] from dbo.power_plan_staff LEFT JOIN dbo.power_plan_date on power_plan_staff.date_id = power_plan_date.id " +
-                                 " WHERE date_plan = '" + Convert.ToDateTime(row.Cells[1].Value).ToString("yyyyMMdd") + "'  AND staff_id = " + _staff_id + " AND department = '" + _dept + "' ORDER BY date_plan ASC ";
+                    //foreach (DataGridViewRow row in dataGridView1.Rows)
+                    //{
+                    //    sql = "SELECT placement_type,[hours] from dbo.power_plan_staff LEFT JOIN dbo.power_plan_date on power_plan_staff.date_id = power_plan_date.id " +
+                    //             " WHERE date_plan = '" + Convert.ToDateTime(row.Cells[1].Value).ToString("yyyyMMdd") + "'  AND staff_id = " + _staff_id + " AND department = '" + _dept + "' ORDER BY date_plan ASC ";
 
-                        using (SqlCommand cmd = new SqlCommand(sql, CONNECT))
-                        {
-                            SqlDataReader reader = cmd.ExecuteReader();
+                    //    using (SqlCommand cmd = new SqlCommand(sql, CONNECT))
+                    //    {
+                    //        SqlDataReader reader = cmd.ExecuteReader();
 
-                            if (reader.Read())
-                            {
-                                row.Cells[2].Value = reader["placement_type"].ToString();
-                                row.Cells[3].Value = reader["hours"].ToString();
-                            }
-                            reader.Close();
-                        }
-                        //quickly alter colours too
-                        if (row.Cells[2].Value.ToString() == "Full Day")
-                            row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
-                        if (row.Cells[2].Value.ToString() == "Half Day")
-                            row.DefaultCellStyle.BackColor = Color.MediumPurple;
-                        if (row.Cells[2].Value.ToString() == "Shift")
-                            row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
-                        if (row.Cells[2].Value.ToString() == "Manual")
-                            row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
-                    }
+                    //        if (reader.Read())
+                    //        {
+                    //            row.Cells[2].Value = reader["placement_type"].ToString();
+                    //            row.Cells[3].Value = reader["hours"].ToString();
+                    //        }
+                    //        reader.Close();
+                    //    }
+                    //    //quickly alter colours too
+                    //    if (row.Cells[2].Value.ToString() == "Full Day")
+                    //        row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
+                    //    if (row.Cells[2].Value.ToString() == "Half Day")
+                    //        row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                    //    if (row.Cells[2].Value.ToString() == "Shift")
+                    //        row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                    //    if (row.Cells[2].Value.ToString() == "Manual")
+                    //        row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
+                    //}
                     CONNECT.Close();
                 }
 
@@ -295,11 +295,11 @@ namespace ShopFloorPlacementPlanner
                             double hoursAssigned = 0;
                             int timeIndex = 0;
                             //before getting the sum hours we need to check if they are places in THAT department and remove it first
-                            sql = "DELETE  FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID + " AND department = '" + _dept + "'";
+                            sql = "DELETE  FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID ;
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                                 cmd.ExecuteNonQuery();
                             //i guess also remove any overtime thats been assigned too?
-                            sql = "DELETE  FROM dbo.power_plan_overtime_remake where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID + " AND department = '" + _dept + "'";
+                            sql = "DELETE  FROM dbo.power_plan_overtime_remake where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                                 cmd.ExecuteNonQuery();
                      
