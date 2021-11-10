@@ -3417,6 +3417,20 @@ namespace ShopFloorPlacementPlanner
         {
             fillgrid();
             currentAvailable();
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                string sql = "select coalesce(press1UserID,0) FROM dbo.press_users ";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    conn.Open();
+                    int getData = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (getData > 0)
+                        lblPressPrompt.Visible = false;
+                    else
+                        lblPressPrompt.Visible = true;
+                    conn.Close();
+                }
+            }
         }
         private void Listener()
         {
@@ -3481,6 +3495,26 @@ namespace ShopFloorPlacementPlanner
         {
             //frmSubDeptMultiple frm = new frmSubDeptMultiple();
             //frm.Show();
+        }
+
+        private void btnPress_Click(object sender, EventArgs e)
+        {
+            frmBendingPress frm = new frmBendingPress();
+            frm.ShowDialog();
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                string sql = "select coalesce(press1UserID,0) FROM dbo.press_users ";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    conn.Open();
+                    int getData = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (getData > 0)
+                        lblPressPrompt.Visible = false;
+                    else
+                        lblPressPrompt.Visible = true;
+                    conn.Close();
+                }
+            }
         }
     }
 }

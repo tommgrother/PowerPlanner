@@ -362,6 +362,8 @@
             this.label129 = new System.Windows.Forms.Label();
             this.txtPackValue = new System.Windows.Forms.TextBox();
             this.ryucxd = new System.Windows.Forms.Button();
+            this.btnPress = new System.Windows.Forms.Button();
+            this.lblPressPrompt = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -3465,12 +3467,35 @@
             this.ryucxd.Visible = false;
             this.ryucxd.Click += new System.EventHandler(this.ryucxd_Click);
             // 
+            // btnPress
+            // 
+            this.btnPress.Location = new System.Drawing.Point(777, 28);
+            this.btnPress.Name = "btnPress";
+            this.btnPress.Size = new System.Drawing.Size(57, 23);
+            this.btnPress.TabIndex = 298;
+            this.btnPress.Text = "Press";
+            this.btnPress.UseVisualStyleBackColor = true;
+            this.btnPress.Click += new System.EventHandler(this.btnPress_Click);
+            // 
+            // lblPressPrompt
+            // 
+            this.lblPressPrompt.BackColor = System.Drawing.SystemColors.Control;
+            this.lblPressPrompt.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPressPrompt.ForeColor = System.Drawing.Color.Red;
+            this.lblPressPrompt.Location = new System.Drawing.Point(826, 27);
+            this.lblPressPrompt.Name = "lblPressPrompt";
+            this.lblPressPrompt.Size = new System.Drawing.Size(346, 25);
+            this.lblPressPrompt.TabIndex = 299;
+            this.lblPressPrompt.Text = "←PLEASE ASSIGN PRESS USERS";
+            this.lblPressPrompt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1911, 921);
+            this.Controls.Add(this.btnPress);
             this.Controls.Add(this.ryucxd);
             this.Controls.Add(this.label129);
             this.Controls.Add(this.txtPackValue);
@@ -3756,6 +3781,7 @@
             this.Controls.Add(this.dgPunch);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.lblTotalPacked);
+            this.Controls.Add(this.lblPressPrompt);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MenuMain";
@@ -4094,6 +4120,8 @@
         private System.Windows.Forms.TextBox txtPackValue;
         private System.Windows.Forms.ToolStripMenuItem absentToolStripMenuItem;
         private System.Windows.Forms.Button ryucxd;
+        private System.Windows.Forms.Button btnPress;
+        private System.Windows.Forms.Label lblPressPrompt;
     }
 }
 
