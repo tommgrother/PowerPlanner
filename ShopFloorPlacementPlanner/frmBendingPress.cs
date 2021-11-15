@@ -107,5 +107,27 @@ namespace ShopFloorPlacementPlanner
                 MessageBox.Show("You can't assign a user to more than one press!", "Error");
             }
         }
+
+        private void frmBendingPress_Shown(object sender, EventArgs e)
+        {
+            //select the users
+
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+                string sql = "select b.forename + ' ' + b.surname as fullName from dbo.press_users left join[user_info].dbo.[user] b on b.id = press1UserID where press1UserID = b.id";
+                //get the id's of each press user
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                   cmbPress1.Text = Convert.ToString(cmd.ExecuteScalar());
+
+                sql = "select b.forename + ' ' + b.surname as fullName from dbo.press_users left join[user_info].dbo.[user] b on b.id = press2UserID where press2UserID = b.id";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    cmbPress2.Text = Convert.ToString(cmd.ExecuteScalar());
+
+                sql = "select b.forename + ' ' + b.surname as fullName from dbo.press_users left join[user_info].dbo.[user] b on b.id = press3UserID where press3UserID = b.id";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    cmbPress3.Text = Convert.ToString(cmd.ExecuteScalar());
+            }
+            }
     }
 }

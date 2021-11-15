@@ -118,6 +118,7 @@
             this.Name = "frmBendingPress";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Asign Press Users";
+            this.Shown += new System.EventHandler(this.frmBendingPress_Shown);
             this.ResumeLayout(false);
 
         }

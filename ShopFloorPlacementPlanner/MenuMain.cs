@@ -1447,7 +1447,7 @@ namespace ShopFloorPlacementPlanner
             /////this is the original code that loads the section
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_bend_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
             cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
             cmd.Parameters.AddWithValue("@dept", "Bending");
 
