@@ -32,7 +32,7 @@ namespace ShopFloorPlacementPlanner
                         cmbPress2.Items.Add(dt.Rows[i][0]);
                         cmbPress3.Items.Add(dt.Rows[i][0]);
                     }
-                    conn.Close();
+                    conn.Close(); 
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     cmd.ExecuteNonQuery();
 
-                //update unfinished parts in part allocation
+                //update unfinished parts in part allocation 
                 sql = "update dbo.bending_split_parts_allocation set allocatedTo = " + press1User.ToString() + " where isComplete = 0 and specificPress = 1";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     cmd.ExecuteNonQuery();
@@ -83,29 +83,29 @@ namespace ShopFloorPlacementPlanner
 
         private void cmbPress1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbPress1.Text == cmbPress2.Text || cmbPress1.Text == cmbPress3.Text)
-            {
-                cmbPress1.SelectedIndex = -1;
-                MessageBox.Show("You can't assign a user to more than one press!", "Error");
-            }
+            //if (cmbPress1.Text == cmbPress2.Text || cmbPress1.Text == cmbPress3.Text)
+            //{
+            //    cmbPress1.SelectedIndex = -1;
+            //    MessageBox.Show("You can't assign a user to more than one press!", "Error");
+            //}
         }
 
         private void cmbPress2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbPress2.Text == cmbPress1.Text || cmbPress2.Text == cmbPress3.Text)
-            {
-                cmbPress2.SelectedIndex = -1;
-                MessageBox.Show("You can't assign a user to more than one press!", "Error");
-            }
+            //if (cmbPress2.Text == cmbPress1.Text || cmbPress2.Text == cmbPress3.Text)
+            //{
+            //    cmbPress2.SelectedIndex = -1;
+            //    MessageBox.Show("You can't assign a user to more than one press!", "Error");
+            //}
         }
 
         private void cmbPress3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbPress3.Text == cmbPress1.Text || cmbPress3.Text == cmbPress2.Text)
-            {
-                cmbPress3.SelectedIndex = -1;
-                MessageBox.Show("You can't assign a user to more than one press!", "Error");
-            }
+            //if (cmbPress3.Text == cmbPress1.Text || cmbPress3.Text == cmbPress2.Text)
+            //{
+            //    cmbPress3.SelectedIndex = -1;
+            //    MessageBox.Show("You can't assign a user to more than one press!", "Error");
+            //}
         }
 
         private void frmBendingPress_Shown(object sender, EventArgs e)
@@ -118,7 +118,7 @@ namespace ShopFloorPlacementPlanner
                 string sql = "select b.forename + ' ' + b.surname as fullName from dbo.press_users left join[user_info].dbo.[user] b on b.id = press1UserID where press1UserID = b.id";
                 //get the id's of each press user
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
-                   cmbPress1.Text = Convert.ToString(cmd.ExecuteScalar());
+                    cmbPress1.Text = Convert.ToString(cmd.ExecuteScalar());
 
                 sql = "select b.forename + ' ' + b.surname as fullName from dbo.press_users left join[user_info].dbo.[user] b on b.id = press2UserID where press2UserID = b.id";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -128,6 +128,6 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     cmbPress3.Text = Convert.ToString(cmd.ExecuteScalar());
             }
-            }
+        }
     }
 }

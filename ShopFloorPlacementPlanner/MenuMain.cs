@@ -1332,19 +1332,23 @@ namespace ShopFloorPlacementPlanner
             for (int i = 0; i < dgPunch.Rows.Count; i++)
             {
                 //MessageBox.Show(overtimeHours.Rows[0][i].ToString());
-                dgPunch[3, i].Value = overtimeHours.Rows[0][i].ToString();
+                dgPunch [3, i].Value = overtimeHours.Rows[0][i].ToString();
             }
 
             for (int i = 0; i < dgPunch.Rows.Count; i++)
             {
                 double overtimeTemp = Convert.ToDouble(dgPunch.Rows[i].Cells[3].Value) * 0.8;
                 overtimeTemp = overtimeTemp + Convert.ToDouble(dgPunch.Rows[i].Cells[1].Value.ToString());
-                dgPunch[2, i].Value = overtimeTemp;
+                //MessageBox.Show(dgPunch[2, i].Value.ToString());
+                dgPunch[1, i].Value = overtimeTemp;
+                //MessageBox.Show(dgPunch[2, i].Value.ToString());
             }
 
             conn.Close();
             dgPunch.Columns[3].Visible = false;
         }
+
+
 
         private void fillLaser()
         {
@@ -2340,19 +2344,23 @@ namespace ShopFloorPlacementPlanner
         private void ClearPlanToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //CLEARS ALL EXISTING SELECTION
-            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
-
-            using (SqlCommand cmd = new SqlCommand("usp_power_planner_clear_day", conn))
+            DialogResult result = MessageBox.Show("Are you sure you want to clear the plan?", "Clear Plan", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
             {
-                conn.Open();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@placementDate", SqlDbType.Date).Value = dteDateSelection.Text;
+                SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-                cmd.ExecuteNonQuery();
-                conn.Close();
+                using (SqlCommand cmd = new SqlCommand("usp_power_planner_clear_day", conn))
+                {
+                    conn.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@placementDate", SqlDbType.Date).Value = dteDateSelection.Text;
+
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+
+                fillgrid();
             }
-
-            fillgrid();
         }
 
         private void ryucxdToolStripMenuItem_Click(object sender, EventArgs e)

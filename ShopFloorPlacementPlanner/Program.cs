@@ -8,7 +8,7 @@ namespace ShopFloorPlacementPlanner
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
+        [MTAThread]
         private static void Main()
         {
             Application.EnableVisualStyles();

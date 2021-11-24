@@ -264,6 +264,10 @@ namespace ShopFloorPlacementPlanner
                     {
                         dataGridView1.Rows[i].Cells[status].Value = dataGridView1.Rows[i].Cells[action].Value.ToString() + " >> ";
                     }
+                    //else if (dataGridView1.Rows[i].Cells[action].Value.ToString().Contains("Door Allocated"))
+                    //{
+                    //    dataGridView1.Rows[i].Cells[actionIndex].Value = dataGridView1.Rows[i].Cells[action].Value = "Door Allocated";
+                    //}
                     //while we are here also remove the date from the actiontime
                     DateTime tempDate = Convert.ToDateTime(dataGridView1.Rows[i].Cells[action_time].Value);
                     dataGridView1.Rows[i].Cells[time].Value = tempDate.ToString("HH:mm");

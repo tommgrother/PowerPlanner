@@ -19,7 +19,7 @@ namespace ShopFloorPlacementPlanner
             InitializeComponent();
             cmbStaff.Items.Add("Kevin Edwards");
             cmbStaff.Items.Add("Simon Plumb");
-            cmbStaff.Items.Add("Richard Williams");
+            cmbStaff.Items.Add("Andrew Faulkner");
             cmbStaff.Items.Add("Damian Regis");
             cmbStaff.Items.Add("Other Staff");
             login.formIsOpen = -1;

@@ -330,6 +330,23 @@ namespace ShopFloorPlacementPlanner
                     }
                 }
 
+                //here we remove any and all doors allocated to the user we have removed (in this dept)
+                //remove from dbo.door_allocation / dbo.door 
+                if (_selectedDate == DateTime.Today)
+                using (SqlConnection con = new SqlConnection(connectionStrings.ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_deallocate_work", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@staff_id", SqlDbType.Int).Value = staffID;
+                        cmd.Parameters.Add("@department", SqlDbType.VarChar).Value = _department;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                    }
+
+                }
+
                 //ask if the user wants to move this person to another location ---
                 DialogResult result = MessageBox.Show("Would you like to move this user to another department?", "Move user?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (result == DialogResult.Yes)
