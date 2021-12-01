@@ -1304,6 +1304,10 @@ namespace ShopFloorPlacementPlanner
             {
                 dgPunch.Columns.Remove("overtime");
             }
+            if (dgPunch.Columns.Contains("set") == true)
+            {
+                dgPunch.Columns.Remove("set");
+            }
 
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
@@ -1335,16 +1339,24 @@ namespace ShopFloorPlacementPlanner
                 dgPunch [3, i].Value = overtimeHours.Rows[0][i].ToString();
             }
 
+            dgPunch.Columns.Add("set", "set");
+
             for (int i = 0; i < dgPunch.Rows.Count; i++)
             {
+                // MessageBox.Show(dgPunch.Rows[0].Cells[i].Value.ToString());
                 double overtimeTemp = Convert.ToDouble(dgPunch.Rows[i].Cells[3].Value) * 0.8;
-                overtimeTemp = overtimeTemp + Convert.ToDouble(dgPunch.Rows[i].Cells[1].Value.ToString());
+                //overtimeTemp = overtimeTemp + Convert.ToDouble(dgPunch.Rows[i].Cells[1].Value.ToString());
                 //MessageBox.Show(dgPunch[2, i].Value.ToString());
-                dgPunch[1, i].Value = overtimeTemp;
+                dgPunch[4, i].Value = Convert.ToString(Convert.ToDecimal(dgPunch.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));
                 //MessageBox.Show(dgPunch[2, i].Value.ToString());
             }
 
             conn.Close();
+            dgPunch.Columns[0].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgPunch.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgPunch.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+           // dgPunch.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgPunch.Columns[1].Visible = false;
             dgPunch.Columns[3].Visible = false;
         }
 
@@ -1714,6 +1726,10 @@ namespace ShopFloorPlacementPlanner
             {
                 dgPaint.Columns.Remove("overtime");
             }
+            if (dgPaint.Columns.Contains("set") == true)
+            {
+                dgPaint.Columns.Remove("set");
+            }
 
             //ryucxd paint   12321
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -1756,19 +1772,28 @@ namespace ShopFloorPlacementPlanner
                 dgPaint[3, i].Value = overtimeHours.Rows[0][i].ToString();
             }
 
+            dgPaint.Columns.Add("set", "set");
+
             for (int i = 0; i < dgPaint.Rows.Count; i++)
             {
                 double overtimeTemp = Convert.ToDouble(dgPaint.Rows[i].Cells[3].Value) * 0.8;
-                overtimeTemp = overtimeTemp + Convert.ToDouble(dgPaint.Rows[i].Cells[1].Value.ToString());
-                dgPaint[3, i].Value = overtimeTemp;
+                dgPaint[4, i].Value = Convert.ToString(Convert.ToDecimal(dgPaint.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));
             }
+            //old unworking code for adding OT to hours
+            //for (int i = 0; i < dgPaint.Rows.Count; i++)
+            //{
+            //    double overtimeTemp = Convert.ToDouble(dgPaint.Rows[i].Cells[3].Value) * 0.8;
+            //    overtimeTemp = overtimeTemp + Convert.ToDouble(dgPaint.Rows[i].Cells[1].Value.ToString());
+            //    dgPaint[3, i].Value = overtimeTemp;
+            //}
 
             conn.Close();
             dgPaint.Columns[0].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgPaint.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dgPaint.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgPaint.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgPaint.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgPaint.Columns[3].Visible = false;
+            dgPaint.Columns[1].Visible = false;
         }
 
         private void fillPack()
@@ -3424,7 +3449,13 @@ namespace ShopFloorPlacementPlanner
         private void MenuMain_Shown(object sender, EventArgs e)
         {
             fillgrid();
-            currentAvailable();
+            fillPunch();
+            fillPaint();
+            dgPunch.ClearSelection();
+            dgPaint.ClearSelection();
+            //btnRefresh.PerformClick();
+            
+            //currentAvailable();
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
                 string sql = "select coalesce(press1UserID,0) FROM dbo.press_users ";
