@@ -125,7 +125,7 @@ namespace ShopFloorPlacementPlanner
                         dt.Columns.Add("Status");// dataGridView1.Columns.Add("Status", "Status");
                         dt.Columns.Add("Time");
                         da.Fill(dt);
-                        conn.Close();
+                        conn.Close(); 
                         dataGridView1.DataSource = dt;
 
                         //format
@@ -326,11 +326,9 @@ namespace ShopFloorPlacementPlanner
                     }
                     if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Door Start")) //mark started doors as green
                         dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.CornflowerBlue;
-                    if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") && dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0) //mark started doors as green
-                        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                 }
                 string sql = "";
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++) 
                 {
                     sql = "select * from dbo.door_stoppages right join(select MAX(id) as id,MAX(door_id) as door_id from dbo.door_stoppages group by door_id,department) a on a.id = door_stoppages.id " +
                         "where [action] = 'Paused' AND department = '" + _dept + "' AND dbo.door_stoppages.door_id = " + dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString();
@@ -358,6 +356,9 @@ namespace ShopFloorPlacementPlanner
                     {
                         dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                     }
+                    //note = yellow is the final colour change to make
+                    if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") && dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0) 
+                        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                 }
             }
             dataGridView1.ClearSelection();
@@ -378,13 +379,11 @@ namespace ShopFloorPlacementPlanner
                 }
                 if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Door Start")) //mark started doors as green
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.CornflowerBlue;
-                if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") && dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0) //mark started doors as green
-                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
             }
             string sql = "";
             for (int i = 0; i <dataGridView1.Rows.Count;i++)
             {
-                sql = "select * from dbo.door_stoppages right join(select MAX(id) as id,MAX(door_id) as door_id from dbo.door_stoppages group by door_id,department) a on a.id = door_stoppages.id " +
+                sql = "select * from dbo.door_stoppages right join(select MAX(id) as id,MAX(door_id) as door_id from dbo.door_stoppages group by door_id,department) a on a.id = door_stoppages.id " + 
                     "where [action] = 'Paused' AND department = '" + _dept + "' AND dbo.door_stoppages.door_id = " + dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString();
                 using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {
@@ -411,6 +410,9 @@ namespace ShopFloorPlacementPlanner
                 {
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                 }
+                //note = yellow is the final colour change to make
+                if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") && dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0) 
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
             }
             dataGridView1.ClearSelection();
         }

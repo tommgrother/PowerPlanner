@@ -155,6 +155,11 @@ namespace ShopFloorPlacementPlanner
         {
         }
 
+        private void frmWeeklyOT_Shown(object sender, EventArgs e)
+        {
+
+        }
+
         //public static DateTime FirstDateInWeek(this DateTime dt)
         //{
         //    return dt;

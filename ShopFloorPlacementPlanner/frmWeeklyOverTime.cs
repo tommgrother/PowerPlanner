@@ -294,6 +294,12 @@ namespace ShopFloorPlacementPlanner
             if (countDays < 0)
                 countDays = countDays * -1;
             tabControl1.SelectedIndex = Convert.ToInt32(countDays);
+            if (countDays == 0)
+                tabControl1.SelectedIndex = Convert.ToInt32(countDays + 1);
+            else
+                tabControl1.SelectedIndex = Convert.ToInt32(countDays -1);
+            tabControl1.SelectedIndex = Convert.ToInt32(countDays);
+
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

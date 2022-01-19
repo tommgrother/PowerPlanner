@@ -207,7 +207,10 @@ namespace ShopFloorPlacementPlanner
                 }
                 else
                 {
-                    weldMen = weldMen + 1;
+                    if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
+                    { }
+                    else
+                        weldMen = weldMen + 1;
                 }
                 int hoursIndex = dgWeld.Columns["hours"].Index;
                 weldHours = weldHours + Convert.ToDouble(row.Cells[hoursIndex].Value);
@@ -221,7 +224,10 @@ namespace ShopFloorPlacementPlanner
                 }
                 else
                 {
-                    buffMen = buffMen + 1;
+                    if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
+                    { }
+                    else
+                        buffMen = buffMen + 1;
                 }
 
                 buffHours = buffHours + Convert.ToDouble(row.Cells[1].Value);
@@ -249,7 +255,10 @@ namespace ShopFloorPlacementPlanner
                 }
                 else
                 {
-                    packMen = packMen + 1;
+                    if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
+                    { }
+                    else
+                        packMen = packMen + 1;
                 }
 
                 packHours = packHours + Convert.ToDouble(row.Cells[1].Value);
@@ -286,7 +295,7 @@ namespace ShopFloorPlacementPlanner
                 ",COALESCE([buffing_AD],0) as [buffing_AD],COALESCE([painting_AD],0) as [painting_AD],COALESCE([packing_AD],0) as [packing_AD],COALESCE([stores_OT],0) as [stores_OT],COALESCE([dispatch_OT],0) as [dispatch_OT]" +
                 ",COALESCE([toolroom_OT],0) as [toolroom_OT],COALESCE([cleaning_OT],0) as [cleaning_OT],COALESCE([stores_AD],0) as [stores_AD],COALESCE([dispatch_AD],0) as [dispatch_AD],COALESCE([toolroom_AD],0) as [toolroom_AD]" +
                 ",COALESCE([cleaning_AD],0) as [cleaning_AD],COALESCE([management_OT],0) as [management_OT],COALESCE([management_AD],0) as [management_AD],COALESCE([hs_OT],0) as [hs_OT],COALESCE([hs_AD],0) as [hs_AD]" +
-                "FROM[order_database].[dbo].[power_plan_overtime]where date_id = @dateID", conn))
+                "FROM[order_database].[dbo].[power_plan_overtime] where date_id = @dateID", conn))
             {
                 conn.Open();
                 cmd.Parameters.AddWithValue("@dateID", o._dateID);
@@ -1005,6 +1014,46 @@ namespace ShopFloorPlacementPlanner
                     continue;
                 }
 
+            ///// same as above but for slimline version
+            foreach (DataGridViewRow row in dgNotPlacementSL.Rows)
+                try
+                {
+                    if (row.Cells[1].Value.ToString().Contains("HOLIDAY"))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            foreach (DataGridViewRow row in dgNotPlacementSL.Rows)
+                try
+                {
+                    if (row.Cells[1].Value.ToString().Contains("ABSENT"))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Salmon;
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+
+            foreach (DataGridViewRow row in dgNotPlacementSL.Rows)
+                try
+                {
+                    if (row.Cells[1].Value.ToString().Contains("UNPAID"))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.DeepPink;
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            ////
+
             dgSlimline.ClearSelection();
             dgPunch.ClearSelection();
             dgLaser.ClearSelection();
@@ -1020,6 +1069,7 @@ namespace ShopFloorPlacementPlanner
             dgManagement.ClearSelection();
             dgHS.ClearSelection();
             dgNotPlaced.ClearSelection();
+            dgNotPlacementSL.ClearSelection();
             dgvHSManagement.ClearSelection();
             dgSlDispatch.ClearSelection();
             dgSlStores.ClearSelection();
@@ -1336,7 +1386,7 @@ namespace ShopFloorPlacementPlanner
             for (int i = 0; i < dgPunch.Rows.Count; i++)
             {
                 //MessageBox.Show(overtimeHours.Rows[0][i].ToString());
-                dgPunch [3, i].Value = overtimeHours.Rows[0][i].ToString();
+                dgPunch[3, i].Value = overtimeHours.Rows[0][i].ToString();
             }
 
             dgPunch.Columns.Add("set", "set");
@@ -1355,7 +1405,7 @@ namespace ShopFloorPlacementPlanner
             dgPunch.Columns[0].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgPunch.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgPunch.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-           // dgPunch.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            // dgPunch.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgPunch.Columns[1].Visible = false;
             dgPunch.Columns[3].Visible = false;
         }
@@ -1899,7 +1949,9 @@ namespace ShopFloorPlacementPlanner
 
             //also add the label that shows how much has been packed
 
-            string sql = "select round(convert(float,sum(line_total)),2)  from dbo.door as a  inner join dbo.view_door_value as b on a.id = b.id    inner join dbo.door_type as c on a.door_type_id = c.id " +
+            string sql = "select round(convert(float,sum(line_total)),2)  from dbo.door as a  inner join" +
+                " (SELECT dbo.door.id, COALESCE (dbo.door_payment.door_cost, 0) + COALESCE (dbo.door_payment.extra_cost_total, 0) AS line_total " +
+                " FROM dbo.door LEFT OUTER JOIN dbo.door_payment ON dbo.door.id = dbo.door_payment.door_id) as b on a.id = b.id    inner join dbo.door_type as c on a.door_type_id = c.id " +
                                 "where(date_pack_complete >= '" + Convert.ToDateTime(dteDateSelection.Text).ToString("yyyy-MM-dd") + "' and date_pack_complete <= dateadd(D, 1, '" + Convert.ToDateTime(dteDateSelection.Text).ToString("yyyy-MM-dd") + "')) and(c.slimline_y_n = 0 or c.slimline_y_n is null)";
             using (SqlCommand cmd2 = new SqlCommand(sql, conn))
             {
@@ -2049,6 +2101,23 @@ namespace ShopFloorPlacementPlanner
             da.Fill(dt);
 
             dgNotPlaced.DataSource = dt;
+
+
+            //slimline version
+            SqlCommand cmdDateSlimline = new SqlCommand("usp_get_unplaced_staff_slimline", conn);
+            cmdDateSlimline.CommandType = CommandType.StoredProcedure;
+            cmdDateSlimline.Parameters.AddWithValue("@placementDate", SqlDbType.Date).Value = dteDateSelection.Text;
+
+            SqlDataAdapter daSlimline = new SqlDataAdapter(cmdDateSlimline);
+
+            DataTable dtSlimline = new DataTable();
+
+            daSlimline.Fill(dtSlimline);
+
+            dgNotPlacementSL.DataSource = dtSlimline;
+
+
+
         }
 
         private void dteDateSelection_ValueChanged(object sender, EventArgs e)
@@ -2204,12 +2273,13 @@ namespace ShopFloorPlacementPlanner
 
                 try
                 {
-                    //UPDATES AUTOPLACEMENTS IN AUTOMATIC ALLOCATION
+                    //UPDATES AUTOPLACEMENTS IN AUTOMATIC ALLOCATION 
                     updateAutomaticAllocation();
                 }
                 catch
                 {
                     MessageBox.Show("An error has occured with automatic allocation script, if this error persists please contact IT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
             }
         }
@@ -3396,7 +3466,7 @@ namespace ShopFloorPlacementPlanner
                 }
             }
 
-            }
+        }
 
         private void MenuMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -3454,7 +3524,7 @@ namespace ShopFloorPlacementPlanner
             dgPunch.ClearSelection();
             dgPaint.ClearSelection();
             //btnRefresh.PerformClick();
-            
+
             //currentAvailable();
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
@@ -3473,7 +3543,7 @@ namespace ShopFloorPlacementPlanner
         }
         private void Listener()
         {
-           
+
 
         }
 
@@ -3554,6 +3624,69 @@ namespace ShopFloorPlacementPlanner
                     conn.Close();
                 }
             }
+        }
+
+        private void dgNotPlacementSL_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgNotPlacementSL.Rows[e.RowIndex].Cells[1].Value.ToString().Contains("HOLIDAY"))
+            {
+                //if its a holiday show the form that displays when it was created
+                //grab user ud
+                int id = 0;
+                string sql = "SELECT id FROM dbo.[user] WHERE forename + ' ' + surname = '" + dgNotPlacementSL.Rows[e.RowIndex].Cells[0].Value + "'";
+                using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionStringUser))
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        conn.Open();
+                        id = Convert.ToInt32(cmd.ExecuteScalar());
+                        conn.Close();
+                    }
+                }
+
+                frmHolidayCreated frm = new frmHolidayCreated(id, Convert.ToDateTime(dteDateSelection.Text), dgNotPlacementSL.Rows[e.RowIndex].Cells[0].Value.ToString());
+                frm.ShowDialog();
+            }
+        }
+
+        private void departmentManagementToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmDepartmentManagement frm = new frmDepartmentManagement();
+            frm.ShowDialog();
+        }
+
+        private void lOADWEEKToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DateTime startDate = dteDateSelection.Value;
+            DateTime _tempDate = startDate;
+            startDate = _tempDate;
+            while (_tempDate.DayOfWeek != System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
+                _tempDate = _tempDate.AddDays(-1);
+            startDate = _tempDate;
+
+            DialogResult result = MessageBox.Show("Are you sure you want to load defaults for this week?" + Environment.NewLine + "This will wipe ALL PLACEMENTS for this week. " + Environment.NewLine + " THIS ACTION CANNOT BE UNDONE." , "LOAD WEEK",MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+
+                for (int i = 0; i < 5; i++)
+                {
+                    //MessageBox.Show(startDate.DayOfWeek.ToString());
+                    SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_load_defaults", conn))
+                    {
+                        conn.Open();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@placementDate", SqlDbType.Date).Value = startDate.ToString("yyyy-MM-dd");
+
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    startDate = startDate.AddDays(1);
+                }
+                fillgrid();
+            }
+          
         }
     }
 }

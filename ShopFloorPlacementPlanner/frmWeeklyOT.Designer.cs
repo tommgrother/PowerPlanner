@@ -87,6 +87,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Weekly Over Time";
             this.Load += new System.EventHandler(this.FrmWeeklyOT_Load);
+            this.Shown += new System.EventHandler(this.frmWeeklyOT_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

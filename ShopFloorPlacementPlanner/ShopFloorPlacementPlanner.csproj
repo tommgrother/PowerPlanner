@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
-    <ApplicationRevision>164</ApplicationRevision>
+    <ApplicationRevision>172</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -83,6 +83,7 @@
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
@@ -130,6 +131,12 @@
     </Compile>
     <Compile Include="frmChronological.Designer.cs">
       <DependentUpon>frmChronological.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDepartmentManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDepartmentManagement.Designer.cs">
+      <DependentUpon>frmDepartmentManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="frmProductivityEmail.cs">
       <SubType>Form</SubType>
@@ -312,6 +319,9 @@
     <EmbeddedResource Include="frmChronological.resx">
       <DependentUpon>frmChronological.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDepartmentManagement.resx">
+      <DependentUpon>frmDepartmentManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProductivityEmail.resx">
       <DependentUpon>frmProductivityEmail.cs</DependentUpon>

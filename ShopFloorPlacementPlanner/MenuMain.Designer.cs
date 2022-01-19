@@ -120,7 +120,6 @@
             this.updateAutomaticAllocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadDefaultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.floorListingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.batchOperationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearPlanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ryucxdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cOVIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -364,6 +363,9 @@
             this.ryucxd = new System.Windows.Forms.Button();
             this.btnPress = new System.Windows.Forms.Button();
             this.lblPressPrompt = new System.Windows.Forms.Label();
+            this.dgNotPlacementSL = new System.Windows.Forms.DataGridView();
+            this.departmentManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lOADWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -383,6 +385,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvHSManagement)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSlDispatch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSlStores)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgNotPlacementSL)).BeginInit();
             this.SuspendLayout();
             // 
             // dgPunch
@@ -657,11 +660,11 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgNotPlaced.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgNotPlaced.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgNotPlaced.Location = new System.Drawing.Point(1706, 167);
+            this.dgNotPlaced.Location = new System.Drawing.Point(1706, 134);
             this.dgNotPlaced.Name = "dgNotPlaced";
             this.dgNotPlaced.RowHeadersVisible = false;
             this.dgNotPlaced.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgNotPlaced.Size = new System.Drawing.Size(200, 637);
+            this.dgNotPlaced.Size = new System.Drawing.Size(200, 592);
             this.dgNotPlaced.TabIndex = 19;
             this.dgNotPlaced.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgNotPlaced_CellDoubleClick);
             // 
@@ -992,14 +995,15 @@
             this.updateAutomaticAllocationToolStripMenuItem,
             this.loadDefaultsToolStripMenuItem,
             this.floorListingsToolStripMenuItem,
-            this.batchOperationsToolStripMenuItem,
             this.clearPlanToolStripMenuItem,
             this.ryucxdToolStripMenuItem,
             this.cOVIDToolStripMenuItem,
             this.cOPYWEEKToolStripMenuItem,
             this.productivityToolStripMenuItem,
             this.kevinNoteToolStripMenuItem,
-            this.absentToolStripMenuItem});
+            this.absentToolStripMenuItem,
+            this.departmentManagementToolStripMenuItem,
+            this.lOADWEEKToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1911, 24);
@@ -1025,6 +1029,7 @@
             this.printDayToolStripMenuItem.Name = "printDayToolStripMenuItem";
             this.printDayToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
             this.printDayToolStripMenuItem.Text = "Email Printable Copy";
+            this.printDayToolStripMenuItem.Visible = false;
             this.printDayToolStripMenuItem.Click += new System.EventHandler(this.printDayToolStripMenuItem_Click);
             // 
             // printScreenToolStripMenuItem
@@ -1053,13 +1058,6 @@
             this.floorListingsToolStripMenuItem.Name = "floorListingsToolStripMenuItem";
             this.floorListingsToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
             this.floorListingsToolStripMenuItem.Text = "Floor Listings";
-            // 
-            // batchOperationsToolStripMenuItem
-            // 
-            this.batchOperationsToolStripMenuItem.Name = "batchOperationsToolStripMenuItem";
-            this.batchOperationsToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
-            this.batchOperationsToolStripMenuItem.Text = "Batch Operations";
-            this.batchOperationsToolStripMenuItem.Click += new System.EventHandler(this.BatchOperationsToolStripMenuItem_Click);
             // 
             // clearPlanToolStripMenuItem
             // 
@@ -2213,7 +2211,7 @@
             // 
             this.lbl_time.BackColor = System.Drawing.SystemColors.MenuBar;
             this.lbl_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_time.Location = new System.Drawing.Point(1542, 0);
+            this.lbl_time.Location = new System.Drawing.Point(1522, 0);
             this.lbl_time.Name = "lbl_time";
             this.lbl_time.Size = new System.Drawing.Size(364, 30);
             this.lbl_time.TabIndex = 165;
@@ -2222,7 +2220,7 @@
             // btnRefresh
             // 
             this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefresh.Location = new System.Drawing.Point(1752, 121);
+            this.btnRefresh.Location = new System.Drawing.Point(1752, 92);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(101, 36);
             this.btnRefresh.TabIndex = 166;
@@ -3489,12 +3487,44 @@
             this.lblPressPrompt.Text = "←PLEASE ASSIGN PRESS USERS";
             this.lblPressPrompt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // dgNotPlacementSL
+            // 
+            this.dgNotPlacementSL.AllowUserToAddRows = false;
+            this.dgNotPlacementSL.AllowUserToDeleteRows = false;
+            this.dgNotPlacementSL.AllowUserToResizeColumns = false;
+            this.dgNotPlacementSL.AllowUserToResizeRows = false;
+            this.dgNotPlacementSL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.dgNotPlacementSL.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgNotPlacementSL.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgNotPlacementSL.Location = new System.Drawing.Point(1706, 732);
+            this.dgNotPlacementSL.Name = "dgNotPlacementSL";
+            this.dgNotPlacementSL.RowHeadersVisible = false;
+            this.dgNotPlacementSL.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgNotPlacementSL.Size = new System.Drawing.Size(200, 178);
+            this.dgNotPlacementSL.TabIndex = 300;
+            this.dgNotPlacementSL.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgNotPlacementSL_CellDoubleClick);
+            // 
+            // departmentManagementToolStripMenuItem
+            // 
+            this.departmentManagementToolStripMenuItem.Name = "departmentManagementToolStripMenuItem";
+            this.departmentManagementToolStripMenuItem.Size = new System.Drawing.Size(156, 20);
+            this.departmentManagementToolStripMenuItem.Text = "Department Management";
+            this.departmentManagementToolStripMenuItem.Click += new System.EventHandler(this.departmentManagementToolStripMenuItem_Click);
+            // 
+            // lOADWEEKToolStripMenuItem
+            // 
+            this.lOADWEEKToolStripMenuItem.Name = "lOADWEEKToolStripMenuItem";
+            this.lOADWEEKToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.lOADWEEKToolStripMenuItem.Text = "LOAD WEEK";
+            this.lOADWEEKToolStripMenuItem.Click += new System.EventHandler(this.lOADWEEKToolStripMenuItem_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1911, 921);
+            this.Controls.Add(this.dgNotPlacementSL);
             this.Controls.Add(this.btnPress);
             this.Controls.Add(this.ryucxd);
             this.Controls.Add(this.label129);
@@ -3810,6 +3840,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvHSManagement)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSlDispatch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSlStores)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgNotPlacementSL)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3956,7 +3987,6 @@
         private System.Windows.Forms.Button btnAddHS;
         private System.Windows.Forms.Label lblMenCount;
         private System.Windows.Forms.Label label59;
-        private System.Windows.Forms.ToolStripMenuItem batchOperationsToolStripMenuItem;
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.Label label61;
         private System.Windows.Forms.Label label62;
@@ -4122,6 +4152,9 @@
         private System.Windows.Forms.Button ryucxd;
         private System.Windows.Forms.Button btnPress;
         private System.Windows.Forms.Label lblPressPrompt;
+        private System.Windows.Forms.DataGridView dgNotPlacementSL;
+        private System.Windows.Forms.ToolStripMenuItem departmentManagementToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lOADWEEKToolStripMenuItem;
     }
 }
 
