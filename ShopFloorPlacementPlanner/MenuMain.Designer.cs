@@ -129,6 +129,8 @@
             this.productivityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kevinNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.absentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.departmentManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lOADWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -364,8 +366,6 @@
             this.btnPress = new System.Windows.Forms.Button();
             this.lblPressPrompt = new System.Windows.Forms.Label();
             this.dgNotPlacementSL = new System.Windows.Forms.DataGridView();
-            this.departmentManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lOADWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -1015,6 +1015,7 @@
             this.copyPlacementsToolStripMenuItem.Name = "copyPlacementsToolStripMenuItem";
             this.copyPlacementsToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
             this.copyPlacementsToolStripMenuItem.Text = "Copy Placements";
+            this.copyPlacementsToolStripMenuItem.Visible = false;
             this.copyPlacementsToolStripMenuItem.Click += new System.EventHandler(this.copyPlacementsToolStripMenuItem_Click);
             // 
             // sendToDailyGoalsToolStripMenuItem
@@ -1022,6 +1023,7 @@
             this.sendToDailyGoalsToolStripMenuItem.Name = "sendToDailyGoalsToolStripMenuItem";
             this.sendToDailyGoalsToolStripMenuItem.Size = new System.Drawing.Size(120, 20);
             this.sendToDailyGoalsToolStripMenuItem.Text = "Send to Daily Goals";
+            this.sendToDailyGoalsToolStripMenuItem.Visible = false;
             this.sendToDailyGoalsToolStripMenuItem.Click += new System.EventHandler(this.sendToDailyGoalsToolStripMenuItem_Click);
             // 
             // printDayToolStripMenuItem
@@ -1044,6 +1046,7 @@
             this.updateAutomaticAllocationToolStripMenuItem.Name = "updateAutomaticAllocationToolStripMenuItem";
             this.updateAutomaticAllocationToolStripMenuItem.Size = new System.Drawing.Size(173, 20);
             this.updateAutomaticAllocationToolStripMenuItem.Text = "Update Automatic Allocation";
+            this.updateAutomaticAllocationToolStripMenuItem.Visible = false;
             this.updateAutomaticAllocationToolStripMenuItem.Click += new System.EventHandler(this.updateAutomaticAllocationToolStripMenuItem_Click);
             // 
             // loadDefaultsToolStripMenuItem
@@ -1051,6 +1054,7 @@
             this.loadDefaultsToolStripMenuItem.Name = "loadDefaultsToolStripMenuItem";
             this.loadDefaultsToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
             this.loadDefaultsToolStripMenuItem.Text = "Load Defaults";
+            this.loadDefaultsToolStripMenuItem.Visible = false;
             this.loadDefaultsToolStripMenuItem.Click += new System.EventHandler(this.loadDefaultsToolStripMenuItem_Click);
             // 
             // floorListingsToolStripMenuItem
@@ -1058,6 +1062,7 @@
             this.floorListingsToolStripMenuItem.Name = "floorListingsToolStripMenuItem";
             this.floorListingsToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
             this.floorListingsToolStripMenuItem.Text = "Floor Listings";
+            this.floorListingsToolStripMenuItem.Visible = false;
             // 
             // clearPlanToolStripMenuItem
             // 
@@ -1103,6 +1108,7 @@
             this.cOPYWEEKToolStripMenuItem.Name = "cOPYWEEKToolStripMenuItem";
             this.cOPYWEEKToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.cOPYWEEKToolStripMenuItem.Text = "COPY WEEK";
+            this.cOPYWEEKToolStripMenuItem.Visible = false;
             this.cOPYWEEKToolStripMenuItem.Click += new System.EventHandler(this.cOPYWEEKToolStripMenuItem_Click);
             // 
             // productivityToolStripMenuItem
@@ -1125,6 +1131,20 @@
             this.absentToolStripMenuItem.Size = new System.Drawing.Size(140, 20);
             this.absentToolStripMenuItem.Text = "Absent/Holiday Search";
             this.absentToolStripMenuItem.Click += new System.EventHandler(this.absentToolStripMenuItem_Click);
+            // 
+            // departmentManagementToolStripMenuItem
+            // 
+            this.departmentManagementToolStripMenuItem.Name = "departmentManagementToolStripMenuItem";
+            this.departmentManagementToolStripMenuItem.Size = new System.Drawing.Size(156, 20);
+            this.departmentManagementToolStripMenuItem.Text = "Department Management";
+            this.departmentManagementToolStripMenuItem.Click += new System.EventHandler(this.departmentManagementToolStripMenuItem_Click);
+            // 
+            // lOADWEEKToolStripMenuItem
+            // 
+            this.lOADWEEKToolStripMenuItem.Name = "lOADWEEKToolStripMenuItem";
+            this.lOADWEEKToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.lOADWEEKToolStripMenuItem.Text = "LOAD WEEK";
+            this.lOADWEEKToolStripMenuItem.Click += new System.EventHandler(this.lOADWEEKToolStripMenuItem_Click);
             // 
             // label23
             // 
@@ -3503,20 +3523,6 @@
             this.dgNotPlacementSL.Size = new System.Drawing.Size(200, 178);
             this.dgNotPlacementSL.TabIndex = 300;
             this.dgNotPlacementSL.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgNotPlacementSL_CellDoubleClick);
-            // 
-            // departmentManagementToolStripMenuItem
-            // 
-            this.departmentManagementToolStripMenuItem.Name = "departmentManagementToolStripMenuItem";
-            this.departmentManagementToolStripMenuItem.Size = new System.Drawing.Size(156, 20);
-            this.departmentManagementToolStripMenuItem.Text = "Department Management";
-            this.departmentManagementToolStripMenuItem.Click += new System.EventHandler(this.departmentManagementToolStripMenuItem_Click);
-            // 
-            // lOADWEEKToolStripMenuItem
-            // 
-            this.lOADWEEKToolStripMenuItem.Name = "lOADWEEKToolStripMenuItem";
-            this.lOADWEEKToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
-            this.lOADWEEKToolStripMenuItem.Text = "LOAD WEEK";
-            this.lOADWEEKToolStripMenuItem.Click += new System.EventHandler(this.lOADWEEKToolStripMenuItem_Click);
             // 
             // MenuMain
             // 

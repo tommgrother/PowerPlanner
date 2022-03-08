@@ -357,8 +357,8 @@ namespace ShopFloorPlacementPlanner
                         dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                     }
                     //note = yellow is the final colour change to make
-                    if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") && dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0) 
-                        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+                    if (/*dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") &&*/ dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0) 
+                        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
                 }
             }
             dataGridView1.ClearSelection();
@@ -411,8 +411,8 @@ namespace ShopFloorPlacementPlanner
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                 }
                 //note = yellow is the final colour change to make
-                if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") && dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0) 
-                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+                if (/*dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") &&*/ dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0) 
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
             }
             dataGridView1.ClearSelection();
         }
@@ -493,7 +493,12 @@ namespace ShopFloorPlacementPlanner
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor == Color.LightGoldenrodYellow)
+
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor == Color.Yellow)
             {
                 MessageBox.Show(dataGridView1.Rows[e.RowIndex].Cells[_note_index].Value.ToString());
             }
