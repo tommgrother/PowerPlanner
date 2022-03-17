@@ -1661,20 +1661,41 @@ namespace ShopFloorPlacementPlanner
                 // MessageBox.Show(workedHours.Rows[0][i].ToString());
                 dgWeld[3, i].Value = workedHours.Rows[0][i].ToString();
             }
+
+            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Welding' AND date_plan = cast(getdate() as date) ORDER BY [Staff Name]";
+            DataTable dtStaffID = new DataTable();
+            using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
+            {
+                SqlDataAdapter daStaffID = new SqlDataAdapter(cmdStaffID);
+                daStaffID.Fill(dtStaffID);
+            }
+
+
             //put the columns together into one column! :D
             string hours = "";
             string worked = "";
             for (int i = 0; i < dgWeld.Rows.Count; i++)
             {
+                sql = "SELECT sum(hours) FROM (select round(cast(sum(time_weld) * sum(quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
+                         "left join dbo.door d on da.door_id = d.id where da.department = 'welding' and cast(da.operation_date as date) = cast(getdate() as date) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                         " group by staff_id,da.door_id) as a";
+                string allocated = "";
+                using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                {
+                    allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                    if (allocated == "")
+                        allocated = "0";
+                }
                 double overtimeTemp = Convert.ToDouble(dgWeld.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgWeld.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));   //dgWeld.Rows[i].Cells[1].Value.ToString();
                 worked = dgWeld.Rows[i].Cells[3].Value.ToString();
-                dgWeld[4, i].Value = hours + " / " + worked;
+                dgWeld[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
             }
 
             //dgWeld.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             //dgWeld.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgWeld.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgWeld.Columns["set/worked"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgWeld.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgWeld.Columns["hours"].Visible = false;
             dgWeld.Columns["worked"].Visible = false;
@@ -1746,20 +1767,43 @@ namespace ShopFloorPlacementPlanner
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
                 dgBuff[3, i].Value = workedHours.Rows[0][i].ToString();
             }
+
+
+            //get all the staff ids
+            //get the total assigned hours aswell 
+            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Dressing' AND date_plan = cast(getdate() as date) ORDER BY [Staff Name]";
+            DataTable dtStaffID = new DataTable();
+            using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
+            {
+                SqlDataAdapter daStaffID = new SqlDataAdapter(cmdStaffID);
+                daStaffID.Fill(dtStaffID);
+            }
             //put the columns together into one column! :D
             string hours = "";
             string worked = "";
             for (int i = 0; i < dgBuff.Rows.Count; i++)
             {
+                sql = "SELECT sum(hours) FROM (select round(cast(sum(time_buff) * sum(quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
+                         "left join dbo.door d on da.door_id = d.id where da.department = 'dressing' and cast(da.operation_date as date) = cast(getdate() as date) and staff_id = " + dtStaffID.Rows[i][0].ToString() + 
+                         " group by staff_id,da.door_id) as a";
+                string allocated = "";
+                using (SqlCommand cmdAllocated = new SqlCommand(sql,conn))
+                {
+                    allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                    if (allocated == "")
+                        allocated = "0";
+                }
                 double overtimeTemp = Convert.ToDouble(dgBuff.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgBuff.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));    //dgBuff.Rows[i].Cells[1].Value.ToString();
                 worked = dgBuff.Rows[i].Cells[3].Value.ToString();
-                dgBuff[4, i].Value = hours + " / " + worked;
+                
+                dgBuff[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + ""+ allocated + " Allo";
             }
 
             //dgBuff.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             //dgBuff.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgBuff.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgBuff.Columns["set/worked"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgBuff.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgBuff.Columns["hours"].Visible = false;
             dgBuff.Columns["worked"].Visible = false;
@@ -1926,15 +1970,34 @@ namespace ShopFloorPlacementPlanner
                 dgPack[5, i].Value = packValue.Rows[0][i].ToString();
             }
 
+            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Packing' AND date_plan = cast(getdate() as date) ORDER BY [Staff Name]";
+            DataTable dtStaffID = new DataTable();
+            using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
+            {
+                SqlDataAdapter daStaffID = new SqlDataAdapter(cmdStaffID);
+                daStaffID.Fill(dtStaffID);
+            }
+
             //put the columns together into one column! :D
             string hours = "";
             string worked = "";
             for (int i = 0; i < dgPack.Rows.Count; i++)
             {
+
+                sql = "SELECT sum(hours) FROM (select round(cast(sum(time_pack) * sum(quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
+                                         "left join dbo.door d on da.door_id = d.id where da.department = 'packing' and cast(da.operation_date as date) = cast(getdate() as date) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                                         " group by staff_id,da.door_id) as a";
+                string allocated = "";
+                using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                {
+                    allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                    if (allocated == "")
+                        allocated = "0";
+                }
                 double overtimeTemp = Convert.ToDouble(dgPack.Rows[i].Cells[6].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgPack.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));   // dgPack.Rows[i].Cells[1].Value.ToString();
                 worked = dgPack.Rows[i].Cells[3].Value.ToString();
-                dgPack[4, i].Value = hours + " / " + worked + Environment.NewLine + "£" + packValue.Rows[0][i].ToString();
+                dgPack[4, i].Value = hours + " / " + worked + Environment.NewLine + "£" + packValue.Rows[0][i].ToString() + " " + Environment.NewLine + "" + allocated + " Allo";
             }
 
             //dgPack.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -1949,7 +2012,7 @@ namespace ShopFloorPlacementPlanner
 
             //also add the label that shows how much has been packed
 
-            string sql = "select round(convert(float,sum(line_total)),2)  from dbo.door as a  inner join" +
+            sql = "select round(convert(float,sum(line_total)),2)  from dbo.door as a  inner join" +
                 " (SELECT dbo.door.id, COALESCE (dbo.door_payment.door_cost, 0) + COALESCE (dbo.door_payment.extra_cost_total, 0) AS line_total " +
                 " FROM dbo.door LEFT OUTER JOIN dbo.door_payment ON dbo.door.id = dbo.door_payment.door_id) as b on a.id = b.id    inner join dbo.door_type as c on a.door_type_id = c.id " +
                                 "where(date_pack_complete >= '" + Convert.ToDateTime(dteDateSelection.Text).ToString("yyyy-MM-dd") + "' and date_pack_complete <= dateadd(D, 1, '" + Convert.ToDateTime(dteDateSelection.Text).ToString("yyyy-MM-dd") + "')) and(c.slimline_y_n = 0 or c.slimline_y_n is null)";
@@ -3664,7 +3727,7 @@ namespace ShopFloorPlacementPlanner
                 _tempDate = _tempDate.AddDays(-1);
             startDate = _tempDate;
 
-            DialogResult result = MessageBox.Show("Are you sure you want to load defaults for this week?" + Environment.NewLine + "This will wipe ALL PLACEMENTS for this week. " + Environment.NewLine + " THIS ACTION CANNOT BE UNDONE." , "LOAD WEEK",MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show("Are you sure you want to load defaults for this week?" + Environment.NewLine + "This will wipe ALL PLACEMENTS for this week. " + Environment.NewLine + " THIS ACTION CANNOT BE UNDONE.", "LOAD WEEK", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {
@@ -3686,7 +3749,7 @@ namespace ShopFloorPlacementPlanner
                 }
                 fillgrid();
             }
-          
+
         }
     }
 }
