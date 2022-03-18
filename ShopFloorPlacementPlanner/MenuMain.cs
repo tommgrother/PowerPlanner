@@ -1676,15 +1676,23 @@ namespace ShopFloorPlacementPlanner
             string worked = "";
             for (int i = 0; i < dgWeld.Rows.Count; i++)
             {
-                sql = "SELECT sum(hours) FROM (select round(cast(sum(time_weld) * sum(quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
-                         "left join dbo.door d on da.door_id = d.id where da.department = 'welding' and cast(da.operation_date as date) = cast(getdate() as date) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
-                         " group by staff_id,da.door_id) as a";
                 string allocated = "";
-                using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                try
                 {
-                    allocated = (string)cmdAllocated.ExecuteScalar().ToString();
-                    if (allocated == "")
-                        allocated = "0";
+                    sql = "SELECT sum(hours) FROM (select round(cast(sum(time_weld) * sum(quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
+                             "left join dbo.door d on da.door_id = d.id where da.department = 'welding' and cast(da.operation_date as date) = cast(getdate() as date) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                             " group by staff_id,da.door_id) as a";
+                    
+                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                    {
+                        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                        if (allocated == "")
+                            allocated = "0";
+                    }
+                }
+                catch
+                {
+                    allocated = "0";
                 }
                 double overtimeTemp = Convert.ToDouble(dgWeld.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgWeld.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));   //dgWeld.Rows[i].Cells[1].Value.ToString();
@@ -1783,15 +1791,23 @@ namespace ShopFloorPlacementPlanner
             string worked = "";
             for (int i = 0; i < dgBuff.Rows.Count; i++)
             {
-                sql = "SELECT sum(hours) FROM (select round(cast(sum(time_buff) * sum(quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
-                         "left join dbo.door d on da.door_id = d.id where da.department = 'dressing' and cast(da.operation_date as date) = cast(getdate() as date) and staff_id = " + dtStaffID.Rows[i][0].ToString() + 
-                         " group by staff_id,da.door_id) as a";
                 string allocated = "";
-                using (SqlCommand cmdAllocated = new SqlCommand(sql,conn))
+                try
                 {
-                    allocated = (string)cmdAllocated.ExecuteScalar().ToString();
-                    if (allocated == "")
-                        allocated = "0";
+                    sql = "SELECT sum(hours) FROM (select round(cast(sum(time_buff) * sum(quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
+                             "left join dbo.door d on da.door_id = d.id where da.department = 'dressing' and cast(da.operation_date as date) = cast(getdate() as date) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                             " group by staff_id,da.door_id) as a";
+                    
+                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                    {
+                        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                        if (allocated == "")
+                            allocated = "0";
+                    }
+                }
+                catch
+                {
+                    allocated = "0";
                 }
                 double overtimeTemp = Convert.ToDouble(dgBuff.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgBuff.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));    //dgBuff.Rows[i].Cells[1].Value.ToString();
@@ -1983,16 +1999,22 @@ namespace ShopFloorPlacementPlanner
             string worked = "";
             for (int i = 0; i < dgPack.Rows.Count; i++)
             {
-
-                sql = "SELECT sum(hours) FROM (select round(cast(sum(time_pack) * sum(quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
-                                         "left join dbo.door d on da.door_id = d.id where da.department = 'packing' and cast(da.operation_date as date) = cast(getdate() as date) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
-                                         " group by staff_id,da.door_id) as a";
                 string allocated = "";
-                using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                try
                 {
-                    allocated = (string)cmdAllocated.ExecuteScalar().ToString();
-                    if (allocated == "")
-                        allocated = "0";
+                    sql = "SELECT sum(hours) FROM (select round(cast(sum(time_pack) * sum(quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
+                                             "left join dbo.door d on da.door_id = d.id where da.department = 'packing' and cast(da.operation_date as date) = cast(getdate() as date) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                                             " group by staff_id,da.door_id) as a";
+                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                    {
+                        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                        if (allocated == "")
+                            allocated = "0";
+                    }
+                }
+                catch
+                {
+                    allocated = "0";
                 }
                 double overtimeTemp = Convert.ToDouble(dgPack.Rows[i].Cells[6].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgPack.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));   // dgPack.Rows[i].Cells[1].Value.ToString();
