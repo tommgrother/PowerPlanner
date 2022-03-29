@@ -22,7 +22,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string sql = "select CAST(date_absent as nvarchar(max)) ," +
+            string sql = "select CAST(date_absent as nvarchar(max))  as Date," +
                 "CAST(sum(case when absent_type = 2 then 1 else 0 end) as nvarchar(max)) as [Full Holiday]," +
                 "CAST(sum(case when absent_type = 3 then 1 else 0 end) as nvarchar(max)) as [Half Day Holiday] ," +
                 "CAST(sum(case when absent_type = 8 then 1 else 0 end) as nvarchar(max)) as [Absent Taken Holiday]," +
