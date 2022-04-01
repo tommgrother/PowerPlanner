@@ -1661,8 +1661,7 @@ namespace ShopFloorPlacementPlanner
                 // MessageBox.Show(workedHours.Rows[0][i].ToString());
                 dgWeld[3, i].Value = workedHours.Rows[0][i].ToString();
             }
-
-            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Welding' AND date_plan = cast(getdate() as date) ORDER BY [Staff Name]";
+            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Welding' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]"; //12324
             DataTable dtStaffID = new DataTable();
             using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
             {
@@ -1780,7 +1779,7 @@ namespace ShopFloorPlacementPlanner
 
             //get all the staff ids
             //get the total assigned hours aswell 
-            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Dressing' AND date_plan = cast(getdate() as date) ORDER BY [Staff Name]";
+            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Dressing' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]";
             DataTable dtStaffID = new DataTable();
             using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
             {
@@ -1987,7 +1986,7 @@ namespace ShopFloorPlacementPlanner
                 dgPack[5, i].Value = packValue.Rows[0][i].ToString();
             }
 
-            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Packing' AND date_plan = cast(getdate() as date) ORDER BY [Staff Name]";
+            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Packing' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]";
             DataTable dtStaffID = new DataTable();
             using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
             {

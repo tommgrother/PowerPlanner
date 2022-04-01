@@ -22,17 +22,68 @@ namespace ShopFloorPlacementPlanner
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            //get the unique dept
+            string default_in_department = "";
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0:
+                    default_in_department = "Punching";
+                    break;
+
+                case 1:
+                    default_in_department = "Laser";
+                    break;
+
+                case 2:
+                    default_in_department = "Bending";
+                    break;
+
+                case 3:
+                    default_in_department = "Welding";
+                    break;
+
+                case 4:
+                    default_in_department = "Buffing";
+                    break;
+
+                case 5:
+                    default_in_department = "painting";
+                    break;
+
+                case 6:
+                    default_in_department = "Packing";
+                    break;
+
+                case 7:
+                    default_in_department = "Slimline";
+                    break;
+
+                case 8:
+                    default_in_department = "ALL";
+                    break;
+
+                default:
+                    default_in_department = "ALL";
+                    break;
+            }
+
+
             string sql = "select CAST(date_absent as nvarchar(max))  as Date," +
-                "CAST(sum(case when absent_type = 2 then 1 else 0 end) as nvarchar(max)) as [Full Holiday]," +
-                "CAST(sum(case when absent_type = 3 then 1 else 0 end) as nvarchar(max)) as [Half Day Holiday] ," +
-                "CAST(sum(case when absent_type = 8 then 1 else 0 end) as nvarchar(max)) as [Absent Taken Holiday]," +
-                "CAST(sum(case when absent_type = 5 then 1 else 0 end) as nvarchar(max)) as [Absent] ," +
-                "CAST(sum(case when absent_type = 9 then 1 else 0 end) as nvarchar(max)) as [Unpaid], " +
-                "CAST(sum(case when absent_type = 2 then 1 when absent_type = 3 then 1 when absent_type = 8 then 1 when absent_type = 5 then 1 when absent_type = 2 then 1 when absent_type = 9 then 1 end) as nvarchar(max)) as [Total]" +
+                "COALESCE(CAST(sum(case when absent_type = 2 then 1 else 0 end) as nvarchar(max)),0) as [Full Holiday]," +
+                "COALESCE(CAST(sum(case when absent_type = 3 then 1 else 0 end) as nvarchar(max)),0) as [Half Day Holiday] ," +
+                "COALESCE(CAST(sum(case when absent_type = 8 then 1 else 0 end) as nvarchar(max)),0)as [Absent Taken Holiday]," +
+                "COALESCE(CAST(sum(case when absent_type = 5 then 1 else 0 end) as nvarchar(max)),0)as [Absent] ," +
+                "COALESCE(CAST(sum(case when absent_type = 9 then 1 else 0 end) as nvarchar(max)),0)as [Unpaid], " +
+                "COALESCE(CAST(sum(case when absent_type = 2 then 1 when absent_type = 3 then 1 when absent_type = 8 then 1 when absent_type = 5 then 1 when absent_type = 2 then 1 when absent_type = 9 then 1 end) as nvarchar(max)),0) as [Total]" +
                 "from dbo.absent_holidays a " +
                 "left join[user_info].dbo.[user] b on a.staff_id = b.id " +
-                "where date_absent >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and date_absent <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' and b.shopfloor = -1 " +
-                "group by date_absent";
+                "where date_absent >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and date_absent <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' and b.shopfloor = -1 ";
+
+
+                if (default_in_department != "ALL")
+                sql = sql + " AND b.default_in_department = '" + default_in_department + "' ";
+                
+                sql = sql + "group by date_absent";
 
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
@@ -149,6 +200,12 @@ namespace ShopFloorPlacementPlanner
             catch
             {
             }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           // MessageBox.Show(tabControl1.SelectedIndex.ToString());
+            btnSearch.PerformClick();
         }
     }
 }

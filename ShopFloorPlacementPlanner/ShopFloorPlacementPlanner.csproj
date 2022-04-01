@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
-    <ApplicationRevision>179</ApplicationRevision>
+    <ApplicationRevision>182</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
