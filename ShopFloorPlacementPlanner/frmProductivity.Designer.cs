@@ -103,13 +103,14 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(816, 737);
+            this.dataGridView1.Size = new System.Drawing.Size(1068, 737);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // btnPrint
             // 
-            this.btnPrint.Location = new System.Drawing.Point(756, 69);
+            this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPrint.Location = new System.Drawing.Point(1008, 76);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
             this.btnPrint.TabIndex = 7;
@@ -124,14 +125,15 @@
             this.lblDifference.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDifference.Location = new System.Drawing.Point(12, 3);
             this.lblDifference.Name = "lblDifference";
-            this.lblDifference.Size = new System.Drawing.Size(819, 23);
+            this.lblDifference.Size = new System.Drawing.Size(1071, 23);
             this.lblDifference.TabIndex = 8;
             this.lblDifference.Text = "   ";
             this.lblDifference.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnEmail
             // 
-            this.btnEmail.Location = new System.Drawing.Point(675, 69);
+            this.btnEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEmail.Location = new System.Drawing.Point(927, 76);
             this.btnEmail.Name = "btnEmail";
             this.btnEmail.Size = new System.Drawing.Size(75, 23);
             this.btnEmail.TabIndex = 9;
@@ -143,7 +145,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(843, 859);
+            this.ClientSize = new System.Drawing.Size(1095, 859);
             this.Controls.Add(this.btnEmail);
             this.Controls.Add(this.lblDifference);
             this.Controls.Add(this.btnPrint);

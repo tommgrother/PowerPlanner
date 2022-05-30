@@ -6,13 +6,14 @@ using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 
-namespace ShopFloorPlacementPlanner
+namespace ShopFloorPlacementPlanner 
 {
     public partial class frmProductivity : Form
     {
-        public frmProductivity() //productivity_email
+        public frmProductivity() //productivity_email 
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
 
             //fill combobox
             string sql = "SELECT [forename] + ' ' + [surname] AS full_name FROM dbo.[user] WHERE dbo.[user].ShopFloor = -1 AND dbo.[user].[current] = 1 AND forename<> 'Weld' AND forename <> 'Allocation' ORDER BY[forename] +' ' + [surname] ";
@@ -66,10 +67,10 @@ namespace ShopFloorPlacementPlanner
                 //    "AND CAST(part_complete_date as DATE)<= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + "' AND part_status = 'Complete' " +
                 //    "GROUP BY op,CAST(part_complete_date as date),dbo.door_part_completion_log.staff_id";
 
-                sql = "SELECT max(b.date_plan) as [Date],MAX(DATENAME(dw,b.date_plan)) as [day],max(department) as [department], MAX(a.[hours]) as [set_hours],'0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours],max(a.id) as [placement] " +
+                sql = "SELECT max(b.date_plan) as [Date],MAX(DATENAME(dw,b.date_plan)) as [day],max(department) as [department], MAX(a.[hours]) as [set_hours],'0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours],max(a.id) as [placement],max(placement_note) as [note] " +
                     "FROM dbo.power_plan_staff a LEFT JOIN dbo.power_plan_date b on a.date_id = b.id " +
                     "WHERE a.staff_id = " + staff_id.ToString() + " AND CAST(b.date_plan as DATE)>= '" + Convert.ToDateTime(dteStart.Value).ToString("yyyy-MM-dd") + "' AND CAST(b.date_plan as DATE)<= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + "' " +
-                    "AND department <> 'Punching' AND department<> 'Stores' AND department<> 'Dispatch' AND department<> 'HS' AND department<> 'Cleaning' AND department<> 'ToolRoom' AND department<> 'Management'" +
+                    "AND department <> 'Punching' AND department <> 'Stores' AND department<> 'Dispatch' AND department<> 'HS' AND department<> 'Cleaning' AND department<> 'ToolRoom' AND department<> 'Management'" +
                     "GROUP BY department,b.date_plan,a.staff_id";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
@@ -80,7 +81,7 @@ namespace ShopFloorPlacementPlanner
                     // generate the data you want to insert
                     DataRow row = dt.NewRow();
                     dt.Rows.Add(row);
-                    dataGridView1.DataSource = dt;
+                    dataGridView1.DataSource = dt; 
                 }
 
                 //Am currently having issues where time_for_part / 60 is not giving me the correct number, going to manually add it here instead~
@@ -93,6 +94,7 @@ namespace ShopFloorPlacementPlanner
                 int departmentIndex = dataGridView1.Columns["department"].Index;
                 int overtimeIndex = dataGridView1.Columns["overtime"].Index;
                 int placementIndex = dataGridView1.Columns["placement"].Index;
+                int noteIndex = dataGridView1.Columns["note"].Index;
                 double runningSet = 0, runningOvertime = 0, runningActual = 0, runningSetAndOvertime = 0;
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
@@ -125,7 +127,8 @@ namespace ShopFloorPlacementPlanner
                     }
                     else
                     {
-                        string temp = "";
+
+                        string temp = ""; 
                         temp = row.Cells[departmentIndex].Value.ToString();
                         if (temp == "Dressing")
                             temp = "buffing";
@@ -159,12 +162,12 @@ namespace ShopFloorPlacementPlanner
 
                         if (hoursTemp < actualTemp)
                         {
-                            row.Cells[8].Value = "✔";
+                            row.Cells[9].Value = "✔";
                             row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                         }
                         else
                         {
-                            row.Cells[8].Value = "✖";
+                            row.Cells[9].Value = "✖";
                             row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
                         }
 
@@ -200,6 +203,12 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns[7].Visible = false;
 
+                foreach (DataGridViewColumn col in dataGridView1.Columns)
+                {
+                    col.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+                }
+                dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+
                 dataGridView1.ClearSelection();
                 dataGridView1.DefaultCellStyle.SelectionBackColor = dataGridView1.DefaultCellStyle.BackColor;
                 dataGridView1.DefaultCellStyle.SelectionForeColor = dataGridView1.DefaultCellStyle.ForeColor;
@@ -208,6 +217,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
+            
             try
             {
                 Rectangle bounds = this.Bounds;
@@ -217,7 +227,7 @@ namespace ShopFloorPlacementPlanner
                     {
                         g.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
                     }
-                    bitmap.Save(@"C:\Temp\temp.jpg", ImageFormat.Jpeg);
+                    bitmap.Save(@"C:\temp\temp.jpg", ImageFormat.Jpeg);
                     printImage();
                 }
             }
@@ -283,7 +293,7 @@ namespace ShopFloorPlacementPlanner
                 return;
             }
 
-            int date = 0, day = 0, dept = 0, set_hours = 0, overtime = 0,actual_hours = 0, set_hours_and_overtime = 0, misc = 0;
+            int date = 0, day = 0, dept = 0, set_hours = 0, overtime = 0, actual_hours = 0, set_hours_and_overtime = 0, misc = 0;
             date = 0;
             day = 1;
             dept = 2;
@@ -292,7 +302,7 @@ namespace ShopFloorPlacementPlanner
             set_hours_and_overtime = 5;
             actual_hours = 6;
             misc = 8;
-            
+
             //insert into >>> productivity_email
             //productivity_email
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
@@ -312,7 +322,7 @@ namespace ShopFloorPlacementPlanner
                         misc_temp = "cross";
                     else
                         misc_temp = "";
-                    string date_temp = "";
+                    string date_temp = ""; 
                     try
                     { date_temp = Convert.ToDateTime(row.Cells[date].Value.ToString()).ToString("dd-MM-yyyy"); }
                     catch
@@ -320,14 +330,14 @@ namespace ShopFloorPlacementPlanner
 
                     sql = "INSERT INTO dbo.productivity_email ([date],[day],department,set_hours,overtime,set_hours_and_overtime,actual_hours,misc) VALUES ('" +
                         date_temp + "','" + row.Cells[day].Value.ToString() + "','" + row.Cells[dept].Value.ToString() + "','" + row.Cells[set_hours].Value.ToString() + "','" + row.Cells[overtime].Value.ToString() + "','" + row.Cells[set_hours_and_overtime].Value.ToString() + "'," +
-                        "'" + row.Cells[actual_hours].Value.ToString()  + "','" + misc_temp + "')";
+                        "'" + row.Cells[actual_hours].Value.ToString() + "','" + misc_temp + "')";
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         cmd.ExecuteNonQuery();
                     }
                 }
                 conn.Close();
-            }
+            } 
             frmProductivityEmail frm = new frmProductivityEmail(cmbEmployee.Text + " - " + lblDifference.Text);
             frm.ShowDialog();
 
