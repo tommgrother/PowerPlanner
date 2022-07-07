@@ -73,21 +73,24 @@
             this.cmbFirst.Enabled = false;
             this.cmbFirst.FormattingEnabled = true;
             this.cmbFirst.Items.AddRange(new object[] {
-            "Estimating",
-            "Programming",
-            "Assessing",
-            "Drawing",
-            "Checking",
             "Cutting",
             "Prepping",
             "Assembly",
             "SL Buff",
+            "SlimlineStores",
+            "SlimlineDispatch",
+            "Laser",
             "Punching",
             "Bending",
             "Welding",
             "Dressing",
             "Painting",
-            "Packing"});
+            "Packing",
+            "Dispatch",
+            "Management",
+            "HS",
+            "ToolRoom",
+            "Cleaning"});
             this.cmbFirst.Location = new System.Drawing.Point(15, 113);
             this.cmbFirst.Name = "cmbFirst";
             this.cmbFirst.Size = new System.Drawing.Size(134, 21);
@@ -98,21 +101,24 @@
             this.cmbSecond.Enabled = false;
             this.cmbSecond.FormattingEnabled = true;
             this.cmbSecond.Items.AddRange(new object[] {
-            "Estimating",
-            "Programming",
-            "Assessing",
-            "Drawing",
-            "Checking",
             "Cutting",
             "Prepping",
             "Assembly",
             "SL Buff",
+            "SL Dispatch",
+            "sl_stores",
+            "Laser",
             "Punching",
             "Bending",
             "Welding",
             "Dressing",
             "Painting",
-            "Packing"});
+            "Packing",
+            "Dispatch",
+            "Management",
+            "HS",
+            "ToolRoom",
+            "Cleaning"});
             this.cmbSecond.Location = new System.Drawing.Point(155, 113);
             this.cmbSecond.Name = "cmbSecond";
             this.cmbSecond.Size = new System.Drawing.Size(134, 21);
@@ -123,21 +129,24 @@
             this.cmbThird.Enabled = false;
             this.cmbThird.FormattingEnabled = true;
             this.cmbThird.Items.AddRange(new object[] {
-            "Estimating",
-            "Programming",
-            "Assessing",
-            "Drawing",
-            "Checking",
             "Cutting",
             "Prepping",
             "Assembly",
             "SL Buff",
+            "SL Dispatch",
+            "sl_stores",
+            "Laser",
             "Punching",
             "Bending",
             "Welding",
             "Dressing",
             "Painting",
-            "Packing"});
+            "Packing",
+            "Dispatch",
+            "Management",
+            "HS",
+            "ToolRoom",
+            "Cleaning"});
             this.cmbThird.Location = new System.Drawing.Point(15, 163);
             this.cmbThird.Name = "cmbThird";
             this.cmbThird.Size = new System.Drawing.Size(134, 21);
@@ -148,21 +157,24 @@
             this.cmbFourth.Enabled = false;
             this.cmbFourth.FormattingEnabled = true;
             this.cmbFourth.Items.AddRange(new object[] {
-            "Estimating",
-            "Programming",
-            "Assessing",
-            "Drawing",
-            "Checking",
             "Cutting",
             "Prepping",
             "Assembly",
             "SL Buff",
+            "SL Dispatch",
+            "sl_stores",
+            "Laser",
             "Punching",
             "Bending",
             "Welding",
             "Dressing",
             "Painting",
-            "Packing"});
+            "Packing",
+            "Dispatch",
+            "Management",
+            "HS",
+            "ToolRoom",
+            "Cleaning"});
             this.cmbFourth.Location = new System.Drawing.Point(155, 163);
             this.cmbFourth.Name = "cmbFourth";
             this.cmbFourth.Size = new System.Drawing.Size(134, 21);
@@ -173,21 +185,24 @@
             this.cmbFifth.Enabled = false;
             this.cmbFifth.FormattingEnabled = true;
             this.cmbFifth.Items.AddRange(new object[] {
-            "Estimating",
-            "Programming",
-            "Assessing",
-            "Drawing",
-            "Checking",
             "Cutting",
             "Prepping",
             "Assembly",
             "SL Buff",
+            "SL Dispatch",
+            "sl_stores",
+            "Laser",
             "Punching",
             "Bending",
             "Welding",
             "Dressing",
             "Painting",
-            "Packing"});
+            "Packing",
+            "Dispatch",
+            "Management",
+            "HS",
+            "ToolRoom",
+            "Cleaning"});
             this.cmbFifth.Location = new System.Drawing.Point(15, 214);
             this.cmbFifth.Name = "cmbFifth";
             this.cmbFifth.Size = new System.Drawing.Size(134, 21);

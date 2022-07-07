@@ -46,7 +46,7 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     tempID = Convert.ToInt32(cmd.ExecuteScalar());
                 sql = "SELECT dbo.[user].actual_department as [First Department],dbo.[user].allocation_dept_2 as [Second Department], dbo.[user].allocation_dept_3 as [Third Department], dbo.[user].allocation_dept_4 as [Fourth Department], dbo.[user].allocation_dept_5 as [Fifth Department], " +
-                    "dbo.[user].slimline as [Slimline],[default_in_department] FROM dbo.[user]   WHERE  id = " + tempID.ToString();
+                    "dbo.[user].slimline_staff as [Slimline],[default_in_department] FROM dbo.[user]   WHERE  id = " + tempID.ToString();
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -122,9 +122,9 @@ namespace ShopFloorPlacementPlanner
                     sql = sql + ", allocation_dept_5 = '" + cmbFifth.Text + "'";
 
                 if (chkSlimline.Checked == true)
-                    sql = sql + ", slimline = -1";
+                    sql = sql + ", slimline_staff = -1";
                 else
-                    sql = sql + ", slimline = 0";
+                    sql = sql + ", slimline_staff = 0";
 
                 if (cmbDefault.Text == "")
                     sql = sql + ", default_in_department = NULL";

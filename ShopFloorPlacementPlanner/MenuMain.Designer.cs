@@ -366,6 +366,7 @@
             this.btnPress = new System.Windows.Forms.Button();
             this.lblPressPrompt = new System.Windows.Forms.Label();
             this.dgNotPlacementSL = new System.Windows.Forms.DataGridView();
+            this.paintingDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -1030,7 +1031,8 @@
             this.kevinNoteToolStripMenuItem,
             this.absentToolStripMenuItem,
             this.departmentManagementToolStripMenuItem,
-            this.lOADWEEKToolStripMenuItem});
+            this.lOADWEEKToolStripMenuItem,
+            this.paintingDetailsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1911, 24);
@@ -3723,6 +3725,13 @@
             this.dgNotPlacementSL.TabIndex = 300;
             this.dgNotPlacementSL.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgNotPlacementSL_CellDoubleClick);
             // 
+            // paintingDetailsToolStripMenuItem
+            // 
+            this.paintingDetailsToolStripMenuItem.Name = "paintingDetailsToolStripMenuItem";
+            this.paintingDetailsToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
+            this.paintingDetailsToolStripMenuItem.Text = "Painting Details";
+            this.paintingDetailsToolStripMenuItem.Click += new System.EventHandler(this.paintingDetailsToolStripMenuItem_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4360,6 +4369,7 @@
         private System.Windows.Forms.DataGridView dgNotPlacementSL;
         private System.Windows.Forms.ToolStripMenuItem departmentManagementToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lOADWEEKToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem paintingDetailsToolStripMenuItem;
     }
 }
 

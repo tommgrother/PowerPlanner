@@ -14,7 +14,7 @@
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>S:\Design and Supply CSharp\MiniApps\PowerPlanner\</PublishUrl>
+    <PublishUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -25,7 +25,8 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
-    <ApplicationRevision>184</ApplicationRevision>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>192</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -137,6 +138,12 @@
     </Compile>
     <Compile Include="frmDepartmentManagement.Designer.cs">
       <DependentUpon>frmDepartmentManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPaintingDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPaintingDetails.Designer.cs">
+      <DependentUpon>frmPaintingDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="frmProductivityEmail.cs">
       <SubType>Form</SubType>
@@ -322,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmDepartmentManagement.resx">
       <DependentUpon>frmDepartmentManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPaintingDetails.resx">
+      <DependentUpon>frmPaintingDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProductivityEmail.resx">
       <DependentUpon>frmProductivityEmail.cs</DependentUpon>

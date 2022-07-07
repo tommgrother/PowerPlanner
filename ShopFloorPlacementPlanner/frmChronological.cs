@@ -379,6 +379,8 @@ namespace ShopFloorPlacementPlanner
                 }
                 if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Door Start")) //mark started doors as green
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.CornflowerBlue;
+                if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Door Complete")) //mark started doors as green
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.PaleVioletRed;
             }
             string sql = "";
             for (int i = 0; i <dataGridView1.Rows.Count;i++)
@@ -408,6 +410,13 @@ namespace ShopFloorPlacementPlanner
             {
                 if (door_list.Contains(dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString()))
                 {
+                    if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.CornflowerBlue )
+                    { }
+                    else if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.Yellow)
+                    { }
+                    else if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.PaleVioletRed)
+                    { }
+                    else
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                 }
                 //note = yellow is the final colour change to make

@@ -1635,14 +1635,14 @@ namespace ShopFloorPlacementPlanner
             workedHours.Load(dataReader);
             //da2.Fill(workedHours);
 
-            //overtime -- usp_power_planner_overtime_hours
+            //overtime -- usp_power_planner_overtime_hours~
             SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
             cmdOT.CommandType = CommandType.StoredProcedure;
             cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Welding";
             cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
             var OTreader = cmdOT.ExecuteReader();
-            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            //SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable overtimeHours = new DataTable();
             overtimeHours.Load(OTreader);
 
@@ -3772,6 +3772,12 @@ namespace ShopFloorPlacementPlanner
                 fillgrid();
             }
 
+        }
+
+        private void paintingDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPaintingDetails frm = new frmPaintingDetails(dteDateSelection.Value);
+            frm.ShowDialog();
         }
     }
 }
