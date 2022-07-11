@@ -284,6 +284,48 @@ namespace ShopFloorPlacementPlanner
             dgSelected.DefaultCellStyle.SelectionForeColor = dgSelected.DefaultCellStyle.ForeColor;
         }
 
+        private void manual_other_sections(int staff_id)
+        {
+            //count up the total of hours this user is in sections today, if they are < 6.4 (5.6 on friday)
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+                //SELECT sum([hours]) FROM dbo.view_planner_punch_staff where staff_id = 76 and date_plan = '20250716'
+                using (SqlCommand cmd = new SqlCommand("SELECT sum([hours]) FROM dbo.view_planner_punch_staff where date_plan = @selectedDate and staff_id  = @staff", conn))
+                {
+                    cmd.Parameters.AddWithValue("@selectedDate", _selectedDate);
+                    cmd.Parameters.AddWithValue("@staff", staff_id);
+
+                    double hours_already = Convert.ToDouble(cmd.ExecuteScalar().ToString());
+                    double max_hours = 0;
+                    if (_selectedDate.DayOfWeek == DayOfWeek.Friday)
+                        max_hours = 5.6;
+                    else
+                        max_hours = 6.4;
+
+                    double remaining_hours = Math.Round((max_hours - hours_already), 2);
+                    if (remaining_hours > 0)
+                    {
+                        DialogResult result = MessageBox.Show("Would you like to place this staff member in another department for " + remaining_hours.ToString(), "", MessageBoxButtons.YesNo);
+                        if (result == DialogResult.Yes)
+                        {
+                            frmManualExtraHours mh = new frmManualExtraHours(remaining_hours, staff_id, _selectedDate);
+                            mh.ShowDialog();
+
+                            if (mh._department != "Cancel")
+                            {
+                                Placement p = new Placement(_selectedDate, staff_id, mh._department, "Manual", mh._hours);
+                                p.addPlacment();
+                                MessageBox.Show(mh._staff_name + " has been placed for " + mh._hours.ToString() + " in " + mh._department + ".", "Placement added", MessageBoxButtons.OK);
+                            }
+                        }
+                    }
+
+                }
+                conn.Close();
+            }
+        }
+
         private void dataGridViewSoftware_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int selectedrowindex = dgSelected.SelectedCells[0].RowIndex;
@@ -396,6 +438,7 @@ namespace ShopFloorPlacementPlanner
                     conn.Close();
                     checkExistingSelections();
 
+                    manual_other_sections(staffID);
                     //dept change
                     department_changed dc = new department_changed();
                     dc.setDepartment(_department);
