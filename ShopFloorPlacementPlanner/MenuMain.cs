@@ -2911,6 +2911,7 @@ namespace ShopFloorPlacementPlanner
 
         private void cOVIDToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
         }
 
         private void fillShopGoals()
