@@ -18,15 +18,8 @@ namespace ShopFloorPlacementPlanner
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            try
-            {
-                _manualHours = Convert.ToDouble(txtManual.Text);
-                this.Close();
-            }
-            catch
-            { }
-
-            
+            _manualHours = Convert.ToDouble(txtManual.Text);
+            this.Close();
         }
 
         private void txtManual_KeyPress(object sender, KeyPressEventArgs e)

@@ -333,19 +333,19 @@ namespace ShopFloorPlacementPlanner
                 //here we remove any and all doors allocated to the user we have removed (in this dept)
                 //remove from dbo.door_allocation / dbo.door 
                 if (_selectedDate == DateTime.Today)
-                    using (SqlConnection con = new SqlConnection(connectionStrings.ConnectionString))
+                using (SqlConnection con = new SqlConnection(connectionStrings.ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_deallocate_work", con))
                     {
-                        using (SqlCommand cmd = new SqlCommand("usp_power_planner_deallocate_work", con))
-                        {
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Parameters.Add("@staff_id", SqlDbType.Int).Value = staffID;
-                            cmd.Parameters.Add("@department", SqlDbType.VarChar).Value = _department;
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-
-                        }
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@staff_id", SqlDbType.Int).Value = staffID;
+                        cmd.Parameters.Add("@department", SqlDbType.VarChar).Value = _department;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
 
                     }
+
+                }
 
                 //ask if the user wants to move this person to another location ---
                 DialogResult result = MessageBox.Show("Would you like to move this user to another department?", "Move user?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -396,7 +396,6 @@ namespace ShopFloorPlacementPlanner
                     conn.Close();
                     checkExistingSelections();
 
-                    manual_other_sections(staffID);
                     //dept change
                     department_changed dc = new department_changed();
                     dc.setDepartment(_department);
@@ -470,7 +469,7 @@ namespace ShopFloorPlacementPlanner
                             }
                         }
                         //now prompt the user to select which area they want the user in
-                        frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(staffID, MAXplacementID);
+                        frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(staffID,MAXplacementID);
                         frmSDM.ShowDialog();
                         subDept = frmSDM.location;
                         //SubDeptClass add = new SubDeptClass();
@@ -545,7 +544,7 @@ namespace ShopFloorPlacementPlanner
                     //////////frmSubDept sd = new frmSubDept(placementID);
                     //////////sd.ShowDialog();
                     //^^ changing this for  multi (not sure why it has its own version but /shrug
-                    frmSubDeptMultiple frm = new frmSubDeptMultiple(staffID, placementID);
+                    frmSubDeptMultiple frm = new frmSubDeptMultiple(staffID,placementID);
                     frm.ShowDialog();
 
 
@@ -555,48 +554,6 @@ namespace ShopFloorPlacementPlanner
                     department_changed dc = new department_changed();
                     dc.setDepartment(_department);
                 }
-            }
-        }
-
-        private void manual_other_sections(int staff_id)
-        {
-            //count up the total of hours this user is in sections today, if they are < 6.4 (5.6 on friday)
-            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
-            {
-                conn.Open();
-                //SELECT sum([hours]) FROM dbo.view_planner_punch_staff where staff_id = 76 and date_plan = '20250716'
-                using (SqlCommand cmd = new SqlCommand("SELECT sum([hours]) FROM dbo.view_planner_punch_staff where date_plan = @selectedDate and staff_id  = @staff", conn))
-                {
-                    cmd.Parameters.AddWithValue("@selectedDate", _selectedDate);
-                    cmd.Parameters.AddWithValue("@staff", staff_id);
-
-                    double hours_already = Convert.ToDouble(cmd.ExecuteScalar().ToString());
-                    double max_hours = 0;
-                    if (_selectedDate.DayOfWeek == DayOfWeek.Friday)
-                        max_hours = 5.6;
-                    else
-                        max_hours = 6.4;
-
-                    double remaining_hours = Math.Round((max_hours - hours_already),2);
-                    if (remaining_hours > 0)
-                    {
-                       DialogResult result =  MessageBox.Show("Would you like to place this staff member in another department for " + remaining_hours.ToString(),"",MessageBoxButtons.YesNo);
-                        if (result == DialogResult.Yes)
-                        {
-                            frmManualExtraHours mh = new frmManualExtraHours(remaining_hours,staff_id,_selectedDate);
-                            mh.ShowDialog();
-
-                            if (mh._department != "Cancel")
-                            {
-                                Placement p = new Placement(_selectedDate, staff_id, mh._department, "Manual", mh._hours);
-                                p.addPlacment();
-                                MessageBox.Show(mh._staff_name + " has been placed for " + mh._hours.ToString() + " in " + mh._department + ".","Placement added",MessageBoxButtons.OK);
-                            }
-                        }
-                    }
-
-                }
-                conn.Close();
             }
         }
 
@@ -898,7 +855,7 @@ namespace ShopFloorPlacementPlanner
                                         }
                                     }
                                     //now prompt the user to select which area they want the user in
-                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(s._staffID, MAXplacementID);
+                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(s._staffID,MAXplacementID);
                                     frmSDM.ShowDialog();
                                     subDept = frmSDM.location;
                                     //SubDeptClass add = new SubDeptClass();
@@ -932,10 +889,10 @@ namespace ShopFloorPlacementPlanner
                                         }
                                     }
                                     //now prompt the user to select which area they want the user in
-                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(s._staffID, MAXplacementID);
+                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(s._staffID,MAXplacementID);
                                     frmSDM.ShowDialog();
                                     string subDept = frmSDM.location;
-
+                                   
                                 }
                             }
                         }

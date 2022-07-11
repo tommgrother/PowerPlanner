@@ -6,7 +6,7 @@
                      "password=Dodid1;Network Address=192.168.0.150\\sqlexpress;" +
                      "Trusted_Connection=no;" +
                      "database=order_database; " +
-                     "connection timeout=60";
+                     "connection timeout=30";
 
         public const string ConnectionStringUser = "user id=sa;" +
                                "password=Dodid1;Network Address=192.168.0.150\\sqlexpress;" +
