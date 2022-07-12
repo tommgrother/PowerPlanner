@@ -2547,6 +2547,9 @@ namespace ShopFloorPlacementPlanner
         {
             ExcelClass excel = new ExcelClass();
             string sql = "";
+            int absent_row_number = 22;
+            int skipDT = 0;
+            int dt_row_number = 0;
             //from the current day, get all the days in that week (to iterate through
             DateTime date = Convert.ToDateTime(dteDateSelection.Value.ToShortDateString());
             DateTime Monday = new DateTime();
@@ -2624,6 +2627,7 @@ namespace ShopFloorPlacementPlanner
                             packing_OT = Convert.ToDouble(reader["packing_OT"]) * 0.8;
                             packing_AD = Convert.ToDouble(reader["packing_AD"]);
                         }
+
                         conn.Close();
                     }
                     //get normal hours here i think?
@@ -2672,13 +2676,33 @@ namespace ShopFloorPlacementPlanner
                     int print = 0;
                     if (i == 20)
                         print = 1;
-                    excel.openExcel(print, i, fileName, mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR, Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
-                                               Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
-                                               Convert.ToDouble(bending_hours), Convert.ToDouble(bending_OT), Convert.ToDouble(bending_AD),
-                                               Convert.ToDouble(welding_hours), Convert.ToDouble(welding_OT), Convert.ToDouble(welding_AD),
-                                               Convert.ToDouble(buffing_hours), Convert.ToDouble(buffing_OT), Convert.ToDouble(buffing_AD),
-                                               Convert.ToDouble(painting_hours), Convert.ToDouble(painting_OT), Convert.ToDouble(painting_AD),
-                                               Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD));
+
+                    //get datatable for absences
+                    DataTable dtAbsents = new DataTable();
+                    using (SqlConnection conn2 = new SqlConnection(connectionStrings.ConnectionString))
+                    {
+                        conn2.Open();
+                        sql = "select u.forename + ' ' + u.surname  + ' - ' + CAST(CASE WHEN absent_type = 2 then 'Full Holiday' WHEN absent_type = 3 then 'Half Holiday' WHEN absent_type = 5 then 'Absent' " +
+                            "WHEN absent_type = 9 then 'Unpaid' end as nvarchar(max))  + ' - ' + Convert(varchar,date_absent,103)  from dbo.absent_holidays a left join [user_info].dbo.[user] u on u.id = a.staff_id " +
+                            "where(absent_type = 2 or  absent_type = 3 or absent_type = 5 or absent_type = 8 or absent_type = 9) AND " +
+                            "date_absent >= '" + Monday.ToString("yyyy-MM-dd") + "' AND date_absent <= '" + Friday.ToString("yyyy-MM-dd") + "' and[current] = 1 and ShopFloor = -1 order by absent_type asc";
+                        using (SqlCommand cmd = new SqlCommand(sql, conn2))
+                        {
+                            SqlDataAdapter da = new SqlDataAdapter(cmd);
+                            da.Fill(dtAbsents);
+                        }
+                        conn2.Close();
+                    }
+
+                    
+
+                        excel.openExcel(print, i, fileName, mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR, Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
+                                                   Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
+                                                   Convert.ToDouble(bending_hours), Convert.ToDouble(bending_OT), Convert.ToDouble(bending_AD),
+                                                   Convert.ToDouble(welding_hours), Convert.ToDouble(welding_OT), Convert.ToDouble(welding_AD),
+                                                   Convert.ToDouble(buffing_hours), Convert.ToDouble(buffing_OT), Convert.ToDouble(buffing_AD),
+                                                   Convert.ToDouble(painting_hours), Convert.ToDouble(painting_OT), Convert.ToDouble(painting_AD),
+                                                   Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD),dtAbsents,absent_row_number,dt_row_number,skipDT);;
 
                     //excel.addData(Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
                     //                           Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
@@ -2693,6 +2717,9 @@ namespace ShopFloorPlacementPlanner
                     // excel.closeExcel();
 
                     row++;
+                    dt_row_number++;
+                    absent_row_number++;
+                    skipDT = -1;
                 }
             }
             //get the right fields into this and
