@@ -25,15 +25,16 @@ namespace ShopFloorPlacementPlanner
         public int _note_index { get; set; }
         public int _part_index { get; set; }
         public int _time_for_part_index { get; set; }
+        public string _hours { get; set; }
 
-        public frmChronological(string staff, string dept, DateTime plannerDate)
+        public frmChronological(string staff, string dept, DateTime plannerDate,string hours)
         {
             InitializeComponent();
             dteAction.Value = plannerDate;
             dteActionEnd.Value = plannerDate;
             _staff = staff;
             _dept = dept;
-
+            _hours = hours;
             getData(staff, dept);
         }
 
@@ -45,7 +46,11 @@ namespace ShopFloorPlacementPlanner
             _staff_id = staff_id;
             staff = staff.Substring(0, staff_id);
             //MessageBox.Show(staff);
-            label1.Text = staff;
+            label1.Text = staff +" " + _hours + " Hours";
+            if (label1.Text.Contains("Dropped"))
+                label1.BackColor = Color.PaleVioletRed;
+            else if (label1.Text.Contains("Gained"))
+                label1.BackColor = Color.YellowGreen;
             //grab the staff name
             using (SqlConnection conn2 = new SqlConnection(connectionStrings.ConnectionStringUser))
             {

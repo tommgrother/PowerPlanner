@@ -1683,7 +1683,7 @@ namespace ShopFloorPlacementPlanner
                         "group by staff_id,da.door_id) as a";
 
                     //and staff_id = " + dtStaffID.Rows[i][0].ToString() +
-            using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
                     {
                         allocated = (string)cmdAllocated.ExecuteScalar().ToString();
                         if (allocated == "")
@@ -1812,8 +1812,8 @@ namespace ShopFloorPlacementPlanner
                 double overtimeTemp = Convert.ToDouble(dgBuff.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgBuff.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));    //dgBuff.Rows[i].Cells[1].Value.ToString();
                 worked = dgBuff.Rows[i].Cells[3].Value.ToString();
-                
-                dgBuff[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + ""+ allocated + " Allo";
+
+                dgBuff[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
             }
 
             //dgBuff.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -2694,15 +2694,15 @@ namespace ShopFloorPlacementPlanner
                         conn2.Close();
                     }
 
-                    
 
-                        excel.openExcel(print, i, fileName, mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR, Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
-                                                   Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
-                                                   Convert.ToDouble(bending_hours), Convert.ToDouble(bending_OT), Convert.ToDouble(bending_AD),
-                                                   Convert.ToDouble(welding_hours), Convert.ToDouble(welding_OT), Convert.ToDouble(welding_AD),
-                                                   Convert.ToDouble(buffing_hours), Convert.ToDouble(buffing_OT), Convert.ToDouble(buffing_AD),
-                                                   Convert.ToDouble(painting_hours), Convert.ToDouble(painting_OT), Convert.ToDouble(painting_AD),
-                                                   Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD),dtAbsents,absent_row_number,dt_row_number,skipDT);;
+
+                    excel.openExcel(print, i, fileName, mondaySTR, tuesdaySTR, wednesdaySTR, thursdaySTR, fridaySTR, Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
+                                               Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
+                                               Convert.ToDouble(bending_hours), Convert.ToDouble(bending_OT), Convert.ToDouble(bending_AD),
+                                               Convert.ToDouble(welding_hours), Convert.ToDouble(welding_OT), Convert.ToDouble(welding_AD),
+                                               Convert.ToDouble(buffing_hours), Convert.ToDouble(buffing_OT), Convert.ToDouble(buffing_AD),
+                                               Convert.ToDouble(painting_hours), Convert.ToDouble(painting_OT), Convert.ToDouble(painting_AD),
+                                               Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD), dtAbsents, absent_row_number, dt_row_number, skipDT); ;
 
                     //excel.addData(Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
                     //                           Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
@@ -2846,21 +2846,125 @@ namespace ShopFloorPlacementPlanner
         private void dgWeld_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             dgWeld.ClearSelection();
-            frmChronological frm = new frmChronological(Convert.ToString(dgWeld.Rows[e.RowIndex].Cells[0].Value), "Welding", dteDateSelection.Value);
+
+            //need to work out the hours here to pass over
+            string dropped_gained_hours = "";
+            double hours = Convert.ToDouble(Convert.ToDecimal(dgWeld.Rows[e.RowIndex].Cells[1].Value) + Convert.ToDecimal((Convert.ToDouble(dgWeld.Rows[e.RowIndex].Cells[5].Value) * 0.8)));
+            string staff_name = Convert.ToString(dgWeld.Rows[e.RowIndex].Cells[0].Value);
+            double final_hours = 0;
+            int staff_id = 0;
+            staff_id = staff_name.IndexOf(" ", staff_name.IndexOf(" ") + 1); //staff id is being used as aa temp int var here
+            staff_name = staff_name.Substring(0, staff_id);
+
+            string sql = "SELECT id FROM [user_info].dbo.[user] WHERE forename + ' ' + surname = '" + staff_name + "'";
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    staff_id = Convert.ToInt32(cmd.ExecuteScalar().ToString());
+
+                sql = "SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] FROM dbo.door_part_completion_log WHERE staff_id = " +
+                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND part_status = 'Complete' AND op = 'Welding'  GROUP BY staff_id),0)";
+                double worked = 0;
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    worked = Convert.ToDouble(cmd.ExecuteScalar());
+
+                final_hours = hours - worked;
+                
+                if (final_hours < 0)
+                {
+                    final_hours = final_hours * -1;
+                    dropped_gained_hours = "Gained - " + final_hours;
+                }
+                else
+                    dropped_gained_hours = "Dropped - " + final_hours;
+                conn.Close();
+            }
+
+
+            frmChronological frm = new frmChronological(Convert.ToString(dgWeld.Rows[e.RowIndex].Cells[0].Value), "Welding", dteDateSelection.Value,dropped_gained_hours);
             frm.ShowDialog();
         }
 
         private void dgPack_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            //need to work out the hours here to pass over
+            string dropped_gained_hours = "";
+            double hours = Convert.ToDouble(Convert.ToDecimal(dgPack.Rows[e.RowIndex].Cells[1].Value) + Convert.ToDecimal((Convert.ToDouble(dgPack.Rows[e.RowIndex].Cells[6].Value) * 0.8)));
+            string staff_name = Convert.ToString(dgPack.Rows[e.RowIndex].Cells[0].Value);
+            double final_hours = 0;
+            int staff_id = 0;
+            staff_id = staff_name.IndexOf(" ", staff_name.IndexOf(" ") + 1); //staff id is being used as aa temp int var here
+            staff_name = staff_name.Substring(0, staff_id);
+
+            string sql = "SELECT id FROM [user_info].dbo.[user] WHERE forename + ' ' + surname = '" + staff_name + "'";
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    staff_id = Convert.ToInt32(cmd.ExecuteScalar().ToString());
+
+                sql = "SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] FROM dbo.door_part_completion_log WHERE staff_id = " +
+                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND part_status = 'Complete' AND op = 'Packing'  GROUP BY staff_id),0)";
+                double worked = 0;
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    worked = Convert.ToDouble(cmd.ExecuteScalar());
+
+                final_hours = hours - worked;
+
+                if (final_hours < 0)
+                {
+                    final_hours = final_hours * -1;
+                    dropped_gained_hours = "Gained - " + final_hours;
+                }
+                else
+                    dropped_gained_hours = "Dropped - " + final_hours;
+                conn.Close();
+            }
+
             dgPack.ClearSelection();
-            frmChronological frm = new frmChronological(Convert.ToString(dgPack.Rows[e.RowIndex].Cells[0].Value), "Packing", dteDateSelection.Value);
+            frmChronological frm = new frmChronological(Convert.ToString(dgPack.Rows[e.RowIndex].Cells[0].Value), "Packing", dteDateSelection.Value,dropped_gained_hours);
             frm.ShowDialog();
         }
 
         private void dgBuff_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            //need to work out the hours here to pass over
+            string dropped_gained_hours = "";
+            double hours = Convert.ToDouble(Convert.ToDecimal(dgBuff.Rows[e.RowIndex].Cells[1].Value) + Convert.ToDecimal((Convert.ToDouble(dgBuff.Rows[e.RowIndex].Cells[5].Value) * 0.8)));
+            string staff_name = Convert.ToString(dgBuff.Rows[e.RowIndex].Cells[0].Value);
+            double final_hours = 0;
+            int staff_id = 0;
+            staff_id = staff_name.IndexOf(" ", staff_name.IndexOf(" ") + 1); //staff id is being used as aa temp int var here
+            staff_name = staff_name.Substring(0, staff_id);
+
+            string sql = "SELECT id FROM [user_info].dbo.[user] WHERE forename + ' ' + surname = '" + staff_name + "'";
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    staff_id = Convert.ToInt32(cmd.ExecuteScalar().ToString());
+
+                sql = "SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] FROM dbo.door_part_completion_log WHERE staff_id = " +
+                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND part_status = 'Complete' AND op = 'Buffing'  GROUP BY staff_id),0)";
+                double worked = 0;
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    worked = Convert.ToDouble(cmd.ExecuteScalar());
+
+                final_hours = hours - worked;
+
+                if (final_hours < 0)
+                {
+                    final_hours = final_hours * -1;
+                    dropped_gained_hours = "Gained - " + final_hours;
+                }
+                else
+                    dropped_gained_hours = "Dropped - " + final_hours;
+                conn.Close();
+            }
+
             dgBuff.ClearSelection();
-            frmChronological frm = new frmChronological(Convert.ToString(dgBuff.Rows[e.RowIndex].Cells[0].Value), "Buffing", dteDateSelection.Value);
+            frmChronological frm = new frmChronological(Convert.ToString(dgBuff.Rows[e.RowIndex].Cells[0].Value), "Buffing", dteDateSelection.Value,dropped_gained_hours);
             frm.ShowDialog();
         }
 
@@ -3473,8 +3577,9 @@ namespace ShopFloorPlacementPlanner
 
         private void dgSlimline_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+
             dgSlimline.ClearSelection();
-            frmChronological frm = new frmChronological(Convert.ToString(dgSlimline.Rows[e.RowIndex].Cells[0].Value), "Slimline", dteDateSelection.Value);
+            frmChronological frm = new frmChronological(Convert.ToString(dgSlimline.Rows[e.RowIndex].Cells[0].Value), "Slimline", dteDateSelection.Value,"");
             frm.ShowDialog();
         }
 
@@ -3707,8 +3812,42 @@ namespace ShopFloorPlacementPlanner
 
         private void dgBend_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            //need to work out the hours here to pass over
+            string dropped_gained_hours = "";
+            double hours = Convert.ToDouble(Convert.ToDecimal(dgBend.Rows[e.RowIndex].Cells[1].Value) + Convert.ToDecimal((Convert.ToDouble(dgBend.Rows[e.RowIndex].Cells[5].Value) * 0.8)));
+            string staff_name = Convert.ToString(dgBend.Rows[e.RowIndex].Cells[0].Value);
+            double final_hours = 0;
+            int staff_id = 0;
+            staff_id = staff_name.IndexOf(" ", staff_name.IndexOf(" ") + 1); //staff id is being used as aa temp int var here
+            staff_name = staff_name.Substring(0, staff_id);
+
+            string sql = "SELECT id FROM [user_info].dbo.[user] WHERE forename + ' ' + surname = '" + staff_name + "'";
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    staff_id = Convert.ToInt32(cmd.ExecuteScalar().ToString());
+
+                sql = "SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] FROM dbo.door_part_completion_log WHERE staff_id = " +
+                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND part_status = 'Complete' AND op = 'Bending'  GROUP BY staff_id),0)";
+                double worked = 0;
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    worked = Convert.ToDouble(cmd.ExecuteScalar());
+
+                final_hours = hours - worked;
+
+                if (final_hours < 0)
+                {
+                    final_hours = final_hours * -1;
+                    dropped_gained_hours = "Gained - " + final_hours;
+                }
+                else
+                    dropped_gained_hours = "Dropped - " + final_hours;
+                conn.Close();
+            }
+
             dgBend.ClearSelection();
-            frmChronological frm = new frmChronological(Convert.ToString(dgBend.Rows[e.RowIndex].Cells[0].Value), "Bending", dteDateSelection.Value);
+            frmChronological frm = new frmChronological(Convert.ToString(dgBend.Rows[e.RowIndex].Cells[0].Value), "Bending", dteDateSelection.Value,dropped_gained_hours);
             frm.ShowDialog();
         }
 
