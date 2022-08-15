@@ -3010,7 +3010,7 @@ namespace ShopFloorPlacementPlanner
             frmCopyWeek frm = new frmCopyWeek(dteDateSelection.Value);
             frm.ShowDialog();
             //maybe if copy is successful we should jump to that date ---
-        } //
+        } 
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
