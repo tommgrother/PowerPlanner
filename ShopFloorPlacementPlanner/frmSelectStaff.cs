@@ -374,20 +374,22 @@ namespace ShopFloorPlacementPlanner
 
                 //here we remove any and all doors allocated to the user we have removed (in this dept)
                 //remove from dbo.door_allocation / dbo.door 
-                if (_selectedDate == DateTime.Today)
-                using (SqlConnection con = new SqlConnection(connectionStrings.ConnectionString))
-                {
-                    using (SqlCommand cmd = new SqlCommand("usp_power_planner_deallocate_work", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@staff_id", SqlDbType.Int).Value = staffID;
-                        cmd.Parameters.Add("@department", SqlDbType.VarChar).Value = _department;
-                        con.Open();
-                        cmd.ExecuteNonQuery();
 
-                    }
+                //commented out as requested by keivn 24/08/2022
+                //if (_selectedDate == DateTime.Today)
+                //    using (SqlConnection con = new SqlConnection(connectionStrings.ConnectionString))
+                //    {
+                //        using (SqlCommand cmd = new SqlCommand("usp_power_planner_deallocate_work", con))
+                //        {
+                //            cmd.CommandType = CommandType.StoredProcedure;
+                //            cmd.Parameters.Add("@staff_id", SqlDbType.Int).Value = staffID;
+                //            cmd.Parameters.Add("@department", SqlDbType.VarChar).Value = _department;
+                //            con.Open();
+                //            cmd.ExecuteNonQuery();
 
-                }
+                //        }
+
+                //    }
 
                 //ask if the user wants to move this person to another location ---
                 DialogResult result = MessageBox.Show("Would you like to move this user to another department?", "Move user?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -424,6 +426,7 @@ namespace ShopFloorPlacementPlanner
                         }
                     }
                 }
+
                 frmManualHours mh = new frmManualHours();
                 mh.ShowDialog();
 
@@ -512,7 +515,7 @@ namespace ShopFloorPlacementPlanner
                             }
                         }
                         //now prompt the user to select which area they want the user in
-                        frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(staffID,MAXplacementID);
+                        frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(staffID, MAXplacementID);
                         frmSDM.ShowDialog();
                         subDept = frmSDM.location;
                         //SubDeptClass add = new SubDeptClass();
@@ -587,7 +590,7 @@ namespace ShopFloorPlacementPlanner
                     //////////frmSubDept sd = new frmSubDept(placementID);
                     //////////sd.ShowDialog();
                     //^^ changing this for  multi (not sure why it has its own version but /shrug
-                    frmSubDeptMultiple frm = new frmSubDeptMultiple(staffID,placementID);
+                    frmSubDeptMultiple frm = new frmSubDeptMultiple(staffID, placementID);
                     frm.ShowDialog();
 
 
@@ -898,7 +901,7 @@ namespace ShopFloorPlacementPlanner
                                         }
                                     }
                                     //now prompt the user to select which area they want the user in
-                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(s._staffID,MAXplacementID);
+                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(s._staffID, MAXplacementID);
                                     frmSDM.ShowDialog();
                                     subDept = frmSDM.location;
                                     //SubDeptClass add = new SubDeptClass();
@@ -932,10 +935,10 @@ namespace ShopFloorPlacementPlanner
                                         }
                                     }
                                     //now prompt the user to select which area they want the user in
-                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(s._staffID,MAXplacementID);
+                                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(s._staffID, MAXplacementID);
                                     frmSDM.ShowDialog();
                                     string subDept = frmSDM.location;
-                                   
+
                                 }
                             }
                         }

@@ -1682,7 +1682,7 @@ namespace ShopFloorPlacementPlanner
                         "left join dbo.door d on da.door_id = d.id where da.department = 'welding' and (time_remaining_weld > 0) and (status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
                         "group by staff_id,da.door_id) as a";
 
-                    //and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                    //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
                     using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
                     {
                         allocated = (string)cmdAllocated.ExecuteScalar().ToString();
@@ -1698,6 +1698,8 @@ namespace ShopFloorPlacementPlanner
                 hours = Convert.ToString(Convert.ToDecimal(dgWeld.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));   //dgWeld.Rows[i].Cells[1].Value.ToString();
                 worked = dgWeld.Rows[i].Cells[3].Value.ToString();
                 dgWeld[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
+
+
             }
 
             //dgWeld.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
