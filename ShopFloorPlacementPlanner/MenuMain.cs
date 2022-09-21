@@ -1777,7 +1777,7 @@ namespace ShopFloorPlacementPlanner
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
                 dgBuff[3, i].Value = workedHours.Rows[0][i].ToString();
             }
-
+            //this is wy
 
             //get all the staff ids
             //get the total assigned hours aswell 
