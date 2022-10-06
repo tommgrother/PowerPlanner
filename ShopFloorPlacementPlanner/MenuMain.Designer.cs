@@ -122,15 +122,13 @@
             this.floorListingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearPlanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ryucxdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cOVIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.shopFloorInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.officeInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cOPYWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productivityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kevinNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.absentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.departmentManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lOADWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.paintingDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -366,7 +364,7 @@
             this.btnPress = new System.Windows.Forms.Button();
             this.lblPressPrompt = new System.Windows.Forms.Label();
             this.dgNotPlacementSL = new System.Windows.Forms.DataGridView();
-            this.paintingDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oVERTIMESHEETToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -1021,18 +1019,18 @@
             this.printDayToolStripMenuItem,
             this.printScreenToolStripMenuItem,
             this.updateAutomaticAllocationToolStripMenuItem,
+            this.ryucxdToolStripMenuItem,
             this.loadDefaultsToolStripMenuItem,
             this.floorListingsToolStripMenuItem,
             this.clearPlanToolStripMenuItem,
-            this.ryucxdToolStripMenuItem,
-            this.cOVIDToolStripMenuItem,
             this.cOPYWEEKToolStripMenuItem,
             this.productivityToolStripMenuItem,
             this.kevinNoteToolStripMenuItem,
             this.absentToolStripMenuItem,
             this.departmentManagementToolStripMenuItem,
             this.lOADWEEKToolStripMenuItem,
-            this.paintingDetailsToolStripMenuItem});
+            this.paintingDetailsToolStripMenuItem,
+            this.oVERTIMESHEETToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1911, 24);
@@ -1107,31 +1105,6 @@
             this.ryucxdToolStripMenuItem.Text = "Print Weekly Data";
             this.ryucxdToolStripMenuItem.Click += new System.EventHandler(this.ryucxdToolStripMenuItem_Click);
             // 
-            // cOVIDToolStripMenuItem
-            // 
-            this.cOVIDToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.shopFloorInputToolStripMenuItem,
-            this.officeInputToolStripMenuItem});
-            this.cOVIDToolStripMenuItem.Name = "cOVIDToolStripMenuItem";
-            this.cOVIDToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.cOVIDToolStripMenuItem.Text = "COVID";
-            this.cOVIDToolStripMenuItem.Visible = false;
-            this.cOVIDToolStripMenuItem.Click += new System.EventHandler(this.cOVIDToolStripMenuItem_Click);
-            // 
-            // shopFloorInputToolStripMenuItem
-            // 
-            this.shopFloorInputToolStripMenuItem.Name = "shopFloorInputToolStripMenuItem";
-            this.shopFloorInputToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.shopFloorInputToolStripMenuItem.Text = "Shop floor Input";
-            this.shopFloorInputToolStripMenuItem.Click += new System.EventHandler(this.shopFloorInputToolStripMenuItem_Click);
-            // 
-            // officeInputToolStripMenuItem
-            // 
-            this.officeInputToolStripMenuItem.Name = "officeInputToolStripMenuItem";
-            this.officeInputToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.officeInputToolStripMenuItem.Text = "Office Input";
-            this.officeInputToolStripMenuItem.Click += new System.EventHandler(this.officeInputToolStripMenuItem_Click);
-            // 
             // cOPYWEEKToolStripMenuItem
             // 
             this.cOPYWEEKToolStripMenuItem.Name = "cOPYWEEKToolStripMenuItem";
@@ -1174,6 +1147,13 @@
             this.lOADWEEKToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.lOADWEEKToolStripMenuItem.Text = "LOAD WEEK";
             this.lOADWEEKToolStripMenuItem.Click += new System.EventHandler(this.lOADWEEKToolStripMenuItem_Click);
+            // 
+            // paintingDetailsToolStripMenuItem
+            // 
+            this.paintingDetailsToolStripMenuItem.Name = "paintingDetailsToolStripMenuItem";
+            this.paintingDetailsToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
+            this.paintingDetailsToolStripMenuItem.Text = "Painting Details";
+            this.paintingDetailsToolStripMenuItem.Click += new System.EventHandler(this.paintingDetailsToolStripMenuItem_Click);
             // 
             // label23
             // 
@@ -2336,7 +2316,7 @@
             // 
             this.lbl_time.BackColor = System.Drawing.SystemColors.MenuBar;
             this.lbl_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_time.Location = new System.Drawing.Point(1522, 0);
+            this.lbl_time.Location = new System.Drawing.Point(1542, 0);
             this.lbl_time.Name = "lbl_time";
             this.lbl_time.Size = new System.Drawing.Size(364, 30);
             this.lbl_time.TabIndex = 165;
@@ -3725,12 +3705,12 @@
             this.dgNotPlacementSL.TabIndex = 300;
             this.dgNotPlacementSL.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgNotPlacementSL_CellDoubleClick);
             // 
-            // paintingDetailsToolStripMenuItem
+            // oVERTIMESHEETToolStripMenuItem
             // 
-            this.paintingDetailsToolStripMenuItem.Name = "paintingDetailsToolStripMenuItem";
-            this.paintingDetailsToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
-            this.paintingDetailsToolStripMenuItem.Text = "Painting Details";
-            this.paintingDetailsToolStripMenuItem.Click += new System.EventHandler(this.paintingDetailsToolStripMenuItem_Click);
+            this.oVERTIMESHEETToolStripMenuItem.Name = "oVERTIMESHEETToolStripMenuItem";
+            this.oVERTIMESHEETToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
+            this.oVERTIMESHEETToolStripMenuItem.Text = "OVERTIME SHEET";
+            this.oVERTIMESHEETToolStripMenuItem.Click += new System.EventHandler(this.oVERTIMESHEETToolStripMenuItem_Click);
             // 
             // MenuMain
             // 
@@ -4230,9 +4210,6 @@
         private System.Windows.Forms.TextBox txtPaintActualHours;
         private System.Windows.Forms.Label lblPackingActualHours;
         private System.Windows.Forms.TextBox txtPackActualHours;
-        private System.Windows.Forms.ToolStripMenuItem cOVIDToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem shopFloorInputToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem officeInputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cOPYWEEKToolStripMenuItem;
         private System.Windows.Forms.Label lbl_time;
         private System.Windows.Forms.Button btnRefresh;
@@ -4370,6 +4347,7 @@
         private System.Windows.Forms.ToolStripMenuItem departmentManagementToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lOADWEEKToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paintingDetailsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem oVERTIMESHEETToolStripMenuItem;
     }
 }
 

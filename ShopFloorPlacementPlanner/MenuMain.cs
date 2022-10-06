@@ -2704,7 +2704,7 @@ namespace ShopFloorPlacementPlanner
                                                Convert.ToDouble(welding_hours), Convert.ToDouble(welding_OT), Convert.ToDouble(welding_AD),
                                                Convert.ToDouble(buffing_hours), Convert.ToDouble(buffing_OT), Convert.ToDouble(buffing_AD),
                                                Convert.ToDouble(painting_hours), Convert.ToDouble(painting_OT), Convert.ToDouble(painting_AD),
-                                               Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD), dtAbsents, absent_row_number, dt_row_number, skipDT); ;
+                                               Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD),  dt_row_number, skipDT); ;
 
                     //excel.addData(Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
                     //                           Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
@@ -3945,6 +3945,12 @@ namespace ShopFloorPlacementPlanner
         private void paintingDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmPaintingDetails frm = new frmPaintingDetails(dteDateSelection.Value);
+            frm.ShowDialog();
+        }
+
+        private void oVERTIMESHEETToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmOvertimeSelection frm = new frmOvertimeSelection();
             frm.ShowDialog();
         }
     }

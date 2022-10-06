@@ -9,7 +9,7 @@ namespace ShopFloorPlacementPlanner
 {
     internal class ExcelClass
     {
-        public string filePath = @"\\designsvr1\public\Kevin Power Planner\TEMPLATE - absents.xlsx";
+        public string filePath = @"\\designsvr1\public\Kevin Power Planner\TEMPLATE.xlsx";
 
         public int rowNumber { get; set; }
         public uint process_ID { get; set; }
@@ -59,7 +59,7 @@ namespace ShopFloorPlacementPlanner
             Process.GetProcessById((int)processID).Kill();
         }
 
-        public void openExcel(int print, int _rownumber, string _fileName, string Monday, string Tuesday, string Wednesday, string Thursday, string Friday, Double punchH, Double punchO, Double punchA, Double laserH, Double laserO, Double laserA, Double BendingH, Double BendingO, Double BendingA, Double weldingH, Double weldingO, Double weldingA, Double buffingH, Double buffingO, Double buffingA, Double paintingH, Double paintingO, Double paintingA, Double packingH, Double packingO, Double packingA,DataTable dtAbsents,int excel_absence_row_number,int dt_row_number,int skipDT)
+        public void openExcel(int print, int _rownumber, string _fileName, string Monday, string Tuesday, string Wednesday, string Thursday, string Friday, Double punchH, Double punchO, Double punchA, Double laserH, Double laserO, Double laserA, Double BendingH, Double BendingO, Double BendingA, Double weldingH, Double weldingO, Double weldingA, Double buffingH, Double buffingO, Double buffingA, Double paintingH, Double paintingO, Double paintingA, Double packingH, Double packingO, Double packingA,int dt_row_number,int skipDT)
         {
             Excel.Application excelApp = new Excel.Application();
             Excel.Workbooks workbooks;
@@ -131,19 +131,6 @@ namespace ShopFloorPlacementPlanner
             excelSheet.Cells[rowNumber, "AA"] = packingA;
             // workSheet.Cells[rowNumber, "AB"] = packingTH;
 
-            //add the absences here
-            if (skipDT == 0)
-            {
-                foreach (DataRow row in dtAbsents.Rows)
-                {
-                    excelSheet.Cells[excel_absence_row_number, "A"] = row[0].ToString();
-                    //merge and center the rows
-                    Microsoft.Office.Interop.Excel.Range range = excelSheet.UsedRange;
-                    excelSheet.Range["A" + excel_absence_row_number.ToString() + ":AB" + excel_absence_row_number.ToString()].Merge();
-                    excelSheet.Range["A" + excel_absence_row_number.ToString() + ":AB" + excel_absence_row_number.ToString()].Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
-                    excel_absence_row_number++;
-                }
-            }
             
 
 
