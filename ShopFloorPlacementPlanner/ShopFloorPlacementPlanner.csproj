@@ -211,6 +211,12 @@
     <Compile Include="frmSubDeptMultiple.Designer.cs">
       <DependentUpon>frmSubDeptMultiple.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmTim.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTim.Designer.cs">
+      <DependentUpon>frmTim.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmWeeklyOverTime.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -403,6 +409,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSubDeptMultiple.resx">
       <DependentUpon>frmSubDeptMultiple.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTim.resx">
+      <DependentUpon>frmTim.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmWeeklyAD.resx">
       <DependentUpon>frmWeeklyAD.cs</DependentUpon>

@@ -365,6 +365,7 @@
             this.lblPressPrompt = new System.Windows.Forms.Label();
             this.dgNotPlacementSL = new System.Windows.Forms.DataGridView();
             this.oVERTIMESHEETToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOverTime = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -3712,12 +3713,24 @@
             this.oVERTIMESHEETToolStripMenuItem.Text = "OVERTIME SHEET";
             this.oVERTIMESHEETToolStripMenuItem.Click += new System.EventHandler(this.oVERTIMESHEETToolStripMenuItem_Click);
             // 
+            // btnOverTime
+            // 
+            this.btnOverTime.Location = new System.Drawing.Point(29, 150);
+            this.btnOverTime.Name = "btnOverTime";
+            this.btnOverTime.Size = new System.Drawing.Size(57, 23);
+            this.btnOverTime.TabIndex = 301;
+            this.btnOverTime.Text = "Overtime";
+            this.btnOverTime.UseVisualStyleBackColor = true;
+            this.btnOverTime.Visible = false;
+            this.btnOverTime.Click += new System.EventHandler(this.btnOverTime_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1911, 921);
+            this.Controls.Add(this.btnOverTime);
             this.Controls.Add(this.dgNotPlacementSL);
             this.Controls.Add(this.btnPress);
             this.Controls.Add(this.ryucxd);
@@ -4348,6 +4361,7 @@
         private System.Windows.Forms.ToolStripMenuItem lOADWEEKToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paintingDetailsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oVERTIMESHEETToolStripMenuItem;
+        private System.Windows.Forms.Button btnOverTime;
     }
 }
 

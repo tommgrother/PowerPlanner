@@ -3759,6 +3759,8 @@ namespace ShopFloorPlacementPlanner
                     conn.Close();
                 }
             }
+            if (login.userFullName == "Other Staff")
+                btnOverTime.Visible = true;
         }
         private void Listener()
         {
@@ -3951,6 +3953,12 @@ namespace ShopFloorPlacementPlanner
         private void oVERTIMESHEETToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmOvertimeSelection frm = new frmOvertimeSelection();
+            frm.ShowDialog();
+        }
+
+        private void btnOverTime_Click(object sender, EventArgs e)
+        {
+            frmTim frm = new frmTim(dteDateSelection.Value);
             frm.ShowDialog();
         }
     }
