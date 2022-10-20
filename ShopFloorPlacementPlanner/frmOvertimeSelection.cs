@@ -125,12 +125,17 @@ namespace ShopFloorPlacementPlanner
                 xlWorksheet.Cells[13][2].Value2 = sundaySTR;
 
                 //GET everyone 
+                //vv OLD STRING
+                //string sql = "select distinct forename + ' ' + surname from dbo.power_plan_staff s " +
+                //    "left join dbo.power_plan_date d on d.id = s.date_id " +
+                //    "LEFT JOIN[user_info].dbo.[user] u on u.id = s.staff_id " +
+                //    "where (u.non_user = 0 or u.non_user is null) AND S.department = '" + department + "'" +
+                //    "AND date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "'";
 
-                string sql = "select distinct forename + ' ' + surname from dbo.power_plan_staff s " +
-                    "left join dbo.power_plan_date d on d.id = s.date_id " +
-                    "LEFT JOIN[user_info].dbo.[user] u on u.id = s.staff_id " +
-                    "where(u.non_user = 0 or u.non_user is null) AND S.department = '" + department + "'" +
-                    "AND date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "'";
+                string sql = "Select distinct forename + ' ' + surname as fullname from [user_info].dbo.[user] where " +
+                    "([actual_department] = '" + department + "' or[allocation_dept_2] = '" + department + "' or[allocation_dept_3] = '" + department + "' or " +
+                    "[allocation_dept_4] = '" + department + "' or[allocation_dept_5] = '" + department + "' or[allocation_dept_6] = '" + department + "' ) and " +
+                    "[current] = 1 AND  (non_user = 0 or non_user is null) order by fullname";
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
