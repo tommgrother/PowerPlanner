@@ -38,10 +38,11 @@ namespace ShopFloorPlacementPlanner
 
         private void btnSaveNote_Click(object sender, EventArgs e)
         {
+            txtNote.Text = txtNote.Text + " - " + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("Update dbo.power_plan_staff set placement_note = @placementNote where id =@placementID", conn);
-            cmd.Parameters.AddWithValue("@placementNote", txtNote.Text);
+            cmd.Parameters.AddWithValue("@placementNote", txtNote.Text );
             cmd.Parameters.AddWithValue("@placementID", _pn);
 
             cmd.ExecuteNonQuery();

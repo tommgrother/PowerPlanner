@@ -99,7 +99,7 @@ namespace ShopFloorPlacementPlanner
             string sql = "select d.forename + ' ' + d.surname as [Full Name],placement_type as [Placement],b.id as [date_id], a.staff_id as [staff_id] from dbo.power_plan_staff  a " +
                 "LEFT JOIN dbo.power_plan_date b on a.date_id = b.id " +
                 "LEFT JOIN [user_info].dbo.[user] d ON d.id = a.staff_id " +
-                "WHERE b.id = " + dateID.ToString() + " AND a.department = '" + department + "'";
+                "WHERE b.id = " + dateID.ToString() + " AND a.department = '" + department + "' order by d.forename";
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
                 conn.Open();
