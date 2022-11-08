@@ -37,6 +37,9 @@
             this.chkPainting = new System.Windows.Forms.CheckBox();
             this.chkPacking = new System.Windows.Forms.CheckBox();
             this.btnAll = new System.Windows.Forms.Button();
+            this.chkDispatch = new System.Windows.Forms.CheckBox();
+            this.chkToolroom = new System.Windows.Forms.CheckBox();
+            this.chkStores = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // chkPunching
@@ -51,7 +54,7 @@
             // 
             // btnPrint
             // 
-            this.btnPrint.Location = new System.Drawing.Point(102, 121);
+            this.btnPrint.Location = new System.Drawing.Point(102, 167);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
             this.btnPrint.TabIndex = 1;
@@ -118,7 +121,7 @@
             // 
             // btnAll
             // 
-            this.btnAll.Location = new System.Drawing.Point(15, 121);
+            this.btnAll.Location = new System.Drawing.Point(15, 167);
             this.btnAll.Name = "btnAll";
             this.btnAll.Size = new System.Drawing.Size(75, 23);
             this.btnAll.TabIndex = 8;
@@ -126,11 +129,44 @@
             this.btnAll.UseVisualStyleBackColor = true;
             this.btnAll.Click += new System.EventHandler(this.btnAll_Click);
             // 
+            // chkDispatch
+            // 
+            this.chkDispatch.AutoSize = true;
+            this.chkDispatch.Location = new System.Drawing.Point(107, 117);
+            this.chkDispatch.Name = "chkDispatch";
+            this.chkDispatch.Size = new System.Drawing.Size(68, 17);
+            this.chkDispatch.TabIndex = 10;
+            this.chkDispatch.Text = "Dispatch";
+            this.chkDispatch.UseVisualStyleBackColor = true;
+            // 
+            // chkToolroom
+            // 
+            this.chkToolroom.AutoSize = true;
+            this.chkToolroom.Location = new System.Drawing.Point(15, 117);
+            this.chkToolroom.Name = "chkToolroom";
+            this.chkToolroom.Size = new System.Drawing.Size(75, 17);
+            this.chkToolroom.TabIndex = 9;
+            this.chkToolroom.Text = "ToolRoom";
+            this.chkToolroom.UseVisualStyleBackColor = true;
+            // 
+            // chkStores
+            // 
+            this.chkStores.AutoSize = true;
+            this.chkStores.Location = new System.Drawing.Point(15, 140);
+            this.chkStores.Name = "chkStores";
+            this.chkStores.Size = new System.Drawing.Size(56, 17);
+            this.chkStores.TabIndex = 11;
+            this.chkStores.Text = "Stores";
+            this.chkStores.UseVisualStyleBackColor = true;
+            // 
             // frmOvertimeSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(193, 158);
+            this.ClientSize = new System.Drawing.Size(193, 198);
+            this.Controls.Add(this.chkStores);
+            this.Controls.Add(this.chkDispatch);
+            this.Controls.Add(this.chkToolroom);
             this.Controls.Add(this.btnAll);
             this.Controls.Add(this.chkPacking);
             this.Controls.Add(this.chkPainting);
@@ -161,5 +197,8 @@
         private System.Windows.Forms.CheckBox chkPainting;
         private System.Windows.Forms.CheckBox chkPacking;
         private System.Windows.Forms.Button btnAll;
+        private System.Windows.Forms.CheckBox chkDispatch;
+        private System.Windows.Forms.CheckBox chkToolroom;
+        private System.Windows.Forms.CheckBox chkStores;
     }
 }

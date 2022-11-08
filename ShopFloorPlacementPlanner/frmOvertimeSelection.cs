@@ -29,9 +29,13 @@ namespace ShopFloorPlacementPlanner
             ChkBuffing.Enabled = value;
             chkPainting.Enabled = value;
             chkPacking.Enabled = value;
+            chkToolroom.Enabled = value;
+            chkDispatch.Enabled = value;
+            chkStores.Enabled = value;
             btnPrint.Enabled = value;
             btnAll.Enabled = value;
             dteDate.Enabled = value;
+
             if (value == true)
             {
                 chkPunching.Checked = false;
@@ -40,6 +44,9 @@ namespace ShopFloorPlacementPlanner
                 ChkBuffing.Checked = false;
                 chkPainting.Checked = false;
                 chkPacking.Checked = false;
+                chkToolroom.Checked = false;
+                chkDispatch.Checked = false;
+                chkStores.Checked = false;
             }
         }
 
@@ -61,6 +68,13 @@ namespace ShopFloorPlacementPlanner
                 printSheet("PAINTING");
             if (chkPacking.Checked)
                 printSheet("PACKING");
+            if (chkToolroom.Checked)
+                printSheet("toolroom");
+            if (chkDispatch.Checked)
+                printSheet("Dispatch");
+            if (chkStores.Checked)
+                printSheet("Stores");
+
             toggle_buttons(true);
             MessageBox.Show("Overtime Sheets printed!", "Default Printer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -79,7 +93,7 @@ namespace ShopFloorPlacementPlanner
 
             //now we just need the finishing touches ¬   finishing touches even tho we are at the start of the button press :p
             //the name of the day and date for each one
-            string mondaySTR = "", tuesdaySTR = "", wednesdaySTR = "", thursdaySTR = "", fridaySTR = "",saturdaySTR = "",sundaySTR = "", fileName = "";
+            string mondaySTR = "", tuesdaySTR = "", wednesdaySTR = "", thursdaySTR = "", fridaySTR = "", saturdaySTR = "", sundaySTR = "", fileName = "";
             fileName = date.ToShortDateString();
             fileName = fileName.Replace("/", "-");
             mondaySTR = "MON - " + Monday.ToString("dd/MM");
@@ -167,7 +181,7 @@ namespace ShopFloorPlacementPlanner
                             DataTable dt2 = new DataTable();
                             da2.Fill(dt2);
                             int absent_column = 2;
-                            for (int i = 0; i < dt2.Rows.Count;i++)
+                            for (int i = 0; i < dt2.Rows.Count; i++)
                             {
                                 xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][0].ToString();//mon
                                 absent_column = absent_column + 1;
@@ -186,7 +200,7 @@ namespace ShopFloorPlacementPlanner
                                 xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][7].ToString();//thur
                                 absent_column = absent_column + 1;
                                 xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][8].ToString();//fri
-                                absent_column = absent_column + 1; 
+                                absent_column = absent_column + 1;
                                 xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][9].ToString();//fri
                             }
                         }
@@ -247,8 +261,13 @@ namespace ShopFloorPlacementPlanner
             printSheet("DRESSING");
             printSheet("PAINTING");
             printSheet("PACKING");
+            printSheet("toolroom");
+            printSheet("Dispatch");
+            printSheet("Stores");
             toggle_buttons(true);
             MessageBox.Show("Overtime Sheets printed!", "Default Printer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+
     }
 }
