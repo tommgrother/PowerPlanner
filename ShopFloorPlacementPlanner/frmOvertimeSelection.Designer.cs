@@ -40,6 +40,7 @@
             this.chkDispatch = new System.Windows.Forms.CheckBox();
             this.chkToolroom = new System.Windows.Forms.CheckBox();
             this.chkStores = new System.Windows.Forms.CheckBox();
+            this.btnSummary = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // chkPunching
@@ -159,11 +160,22 @@
             this.chkStores.Text = "Stores";
             this.chkStores.UseVisualStyleBackColor = true;
             // 
+            // btnSummary
+            // 
+            this.btnSummary.Location = new System.Drawing.Point(15, 196);
+            this.btnSummary.Name = "btnSummary";
+            this.btnSummary.Size = new System.Drawing.Size(162, 23);
+            this.btnSummary.TabIndex = 12;
+            this.btnSummary.Text = "Print Summary Sheet";
+            this.btnSummary.UseVisualStyleBackColor = true;
+            this.btnSummary.Click += new System.EventHandler(this.btnSummary_Click);
+            // 
             // frmOvertimeSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(193, 198);
+            this.ClientSize = new System.Drawing.Size(193, 225);
+            this.Controls.Add(this.btnSummary);
             this.Controls.Add(this.chkStores);
             this.Controls.Add(this.chkDispatch);
             this.Controls.Add(this.chkToolroom);
@@ -200,5 +212,6 @@
         private System.Windows.Forms.CheckBox chkDispatch;
         private System.Windows.Forms.CheckBox chkToolroom;
         private System.Windows.Forms.CheckBox chkStores;
+        private System.Windows.Forms.Button btnSummary;
     }
 }
