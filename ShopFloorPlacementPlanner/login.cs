@@ -10,5 +10,6 @@ namespace ShopFloorPlacementPlanner
     {
         public static string userFullName;
         public static int formIsOpen;
+        public static List<string> errorList = new List<string>();
     }
 }
