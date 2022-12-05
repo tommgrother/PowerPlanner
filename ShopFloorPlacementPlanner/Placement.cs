@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 
 namespace ShopFloorPlacementPlanner
 {
-    class Placement
+    internal class Placement
     {
-
-
         public DateTime _selectedDate { get; set; }
         public int _dateID { get; set; }
         public int _staffID { get; set; }
@@ -20,7 +14,6 @@ namespace ShopFloorPlacementPlanner
         public int _notPresentType { get; set; }
         public int[] _weldTeamStaffID { get; set; }
         public int _weldTeamMembersPresent { get; set; }
-
 
         public bool _alreadyPlaced { get; set; }
         public string _existingPlacementType { get; set; }
@@ -34,21 +27,40 @@ namespace ShopFloorPlacementPlanner
             _placement_type = placementType;
             _hours = hours;
 
-
-
             getDateID();
         }
 
-        private void getDateID() 
+        private void getDateID()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-            using(SqlCommand cmd = new SqlCommand("SELECT id from dbo.power_plan_date where date_plan = @datePlan", conn))
+            using (SqlCommand cmd = new SqlCommand("SELECT id from dbo.power_plan_date where date_plan = @datePlan", conn))
             {
                 cmd.Parameters.AddWithValue("@datePlan", _selectedDate);
                 conn.Open();
                 _dateID = (Int32)cmd.ExecuteScalar();
                 conn.Close();
+            }
+        }
+
+        private void removePlacement()
+        {
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            //if its in here then it has a colour so we can remove it
+            string sql = "SELECT id FROM dbo.power_plan_staff WHERE staff_id = " + _staffID + " AND date_id = " + _dateID + " AND department = '" + _department + "'"; //grab the placement id?
+            int placementID = 0;
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                conn.Open();
+                placementID = Convert.ToInt32(cmd.ExecuteScalar());
+                conn.Close();
+            }
+
+            using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where ID = @placementID", conn))
+            {
+                cmd.Parameters.AddWithValue("@placementID", placementID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -65,12 +77,10 @@ namespace ShopFloorPlacementPlanner
 
                 if (rdr.Read())
                 {
-                    _weldTeamStaffID = new int[2] {Convert.ToInt16(rdr["user_id_1"]), Convert.ToInt16(rdr["user_id_2"]) };
+                    _weldTeamStaffID = new int[2] { Convert.ToInt32(rdr["user_id_1"]), Convert.ToInt32(rdr["user_id_2"]) };
                 }
 
                 conn.Close();
-               
-
             }
         }
 
@@ -105,15 +115,12 @@ namespace ShopFloorPlacementPlanner
 
                     _weldTeamMembersPresent = members;
                 }
-
             }
         }
-
 
         public void addPlacment()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
-
 
             using (SqlCommand cmd = new SqlCommand("insert into dbo.power_plan_staff (date_id,staff_id,department,placement_type,hours) VALUES(@dateID,@staffID,@department,@placementType,@hours)", conn))
             {
@@ -126,15 +133,12 @@ namespace ShopFloorPlacementPlanner
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
-    
-                
-         }
-
+        }
 
         public void notPresent()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
-            using (SqlCommand cmd = new SqlCommand("select absent_type from dbo.absent_holidays where staff_id=@staffID and date_absent = @dateAbsent",conn))
+            using (SqlCommand cmd = new SqlCommand("select absent_type from dbo.absent_holidays where staff_id=@staffID and date_absent = @dateAbsent", conn))
             {
                 conn.Open();
                 cmd.Parameters.AddWithValue("@staffID", _staffID);
@@ -144,24 +148,20 @@ namespace ShopFloorPlacementPlanner
 
                 if (rdr.Read())
                 {
-                    _notPresentType =  Convert.ToInt16(rdr["absent_type"]);
+                    _notPresentType = Convert.ToInt32(rdr["absent_type"]);
                 }
                 else
                 {
                     _notPresentType = 0;
                 }
-
             }
-           
         }
 
-
-
-        public void checkPlacement() 
+        public void checkPlacement()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
 
-            using (SqlCommand cmd = new SqlCommand("SELECT MAX(placement_type) as PT,sum(hours) as sumHours from dbo.power_plan_staff where date_id = @dateID and staff_id = @staffID",conn))
+            using (SqlCommand cmd = new SqlCommand("SELECT MAX(placement_type) as PT,sum(hours) as sumHours from dbo.power_plan_staff where date_id = @dateID and staff_id = @staffID", conn))
             {
                 conn.Open();
                 cmd.Parameters.AddWithValue("@dateID", _dateID);
@@ -169,31 +169,24 @@ namespace ShopFloorPlacementPlanner
 
                 SqlDataReader rdr = cmd.ExecuteReader();
 
-                    if (rdr.Read())
+                if (rdr.Read())
+                {
+                    _alreadyPlaced = true;
+                    _existingPlacementType = rdr["PT"].ToString();
+                    try
                     {
-                        _alreadyPlaced = true;
-                        _existingPlacementType = rdr["PT"].ToString();
-                        try
-                        {
-                            _existingPlacementHours = Convert.ToDouble(rdr["sumHours"]);
-                        
-                        }
-                        catch
-                        {
-                            _existingPlacementHours = 0;
-                        }
-
+                        _existingPlacementHours = Convert.ToDouble(rdr["sumHours"]);
                     }
-                    else
+                    catch
                     {
-                        _alreadyPlaced = false;
+                        _existingPlacementHours = 0;
                     }
-
+                }
+                else
+                {
+                    _alreadyPlaced = false;
+                }
             }
-
-
         }
-
-
     }
 }

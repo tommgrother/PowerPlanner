@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -23,7 +17,6 @@ namespace ShopFloorPlacementPlanner
 
         private void frmEmailPrint_Load(object sender, EventArgs e)
         {
-            
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -35,7 +28,6 @@ namespace ShopFloorPlacementPlanner
             cmdDate.CommandType = CommandType.StoredProcedure;
             cmdDate.Parameters.AddWithValue("@selectedDate", SqlDbType.Date).Value = _selectedDate;
             cmdDate.Parameters.AddWithValue("@emailAddress", SqlDbType.NVarChar).Value = cmbEmail.Text;
-
 
             cmdDate.ExecuteNonQuery();
         }

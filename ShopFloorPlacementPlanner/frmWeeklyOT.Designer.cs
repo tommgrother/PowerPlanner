@@ -76,7 +76,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(349, 286);
+            this.ClientSize = new System.Drawing.Size(296, 268);
             this.Controls.Add(this.btn_update);
             this.Controls.Add(this.btn_cancel);
             this.Controls.Add(this.dataGridView1);
@@ -87,6 +87,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Weekly Over Time";
             this.Load += new System.EventHandler(this.FrmWeeklyOT_Load);
+            this.Shown += new System.EventHandler(this.frmWeeklyOT_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

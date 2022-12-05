@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
     public partial class frmManualHours : Form
     {
-
-
         public double _manualHours { get; set; }
-
-
 
         public frmManualHours()
         {
@@ -25,7 +14,6 @@ namespace ShopFloorPlacementPlanner
 
         private void frmManualHours_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -36,7 +24,8 @@ namespace ShopFloorPlacementPlanner
 
         private void txtManual_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != '.'))
             {
                 e.Handled = true;
             }

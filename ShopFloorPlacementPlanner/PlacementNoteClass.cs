@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using System.Data;
+﻿using System.Data.SqlClient;
 
 namespace ShopFloorPlacementPlanner
 {
-    class PlacementNoteClass
+    internal class PlacementNoteClass
     {
-
         public int _pID { get; set; }
         public bool _hasNote { get; set; }
         public bool _nonStandardPlacment { get; set; }
-
 
         public PlacementNoteClass(int pID)
         {
@@ -26,20 +18,16 @@ namespace ShopFloorPlacementPlanner
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
 
-
             SqlCommand cmd = new SqlCommand("Select * from dbo.view_planner_non_default_placements where id=@placementID", conn);
             cmd.Parameters.AddWithValue("@placementID", _pID);
-         
 
             SqlDataReader rdr = cmd.ExecuteReader();
 
             if (rdr.Read())
             {
-
                 if (rdr["department"].ToString() != rdr["default_in_department"].ToString())
                 {
                     _nonStandardPlacment = true;
-
                 }
                 else
                 {
@@ -48,14 +36,12 @@ namespace ShopFloorPlacementPlanner
             }
             else
             {
-
                 _nonStandardPlacment = false;
             }
 
             conn.Close();
         }
 
-        
         public void getNote()
         {
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
@@ -65,14 +51,11 @@ namespace ShopFloorPlacementPlanner
 
             SqlDataReader rdr = cmd.ExecuteReader();
 
-          
             if (rdr.Read())
             {
-                
                 if (string.IsNullOrWhiteSpace(rdr["placement_note"].ToString()))
                 {
                     _hasNote = false;
-                    
                 }
                 else
                 {
@@ -81,18 +64,10 @@ namespace ShopFloorPlacementPlanner
             }
             else
             {
-              
                 _hasNote = false;
             }
 
-
             conn.Close();
-
-
         }
-
-
-
-
     }
 }

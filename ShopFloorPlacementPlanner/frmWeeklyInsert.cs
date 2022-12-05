@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -20,16 +16,22 @@ namespace ShopFloorPlacementPlanner
         public DateTime sunday { get; set; }
         public DateTime passed_date { get; set; }
         public string _dept { get; set; }
+        public int skipPassword { get; set; }
         public double _standardHours { get; set; }
         public bool alreadyPlaced { get; set; }
-        public frmWeeklyInsert(int staff_id, string staff_fullname, DateTime searchDate, string department)
+        public string _subDept { get; set; }
+
+        public frmWeeklyInsert(int staff_id, string staff_fullname, DateTime searchDate, string department, string subDept)
         {
             InitializeComponent();
             // add all the variables into new props
+
             _staff_id = staff_id;
+            skipPassword = 0;
             _staff_fullname = staff_fullname;
             _selectedDate = searchDate;
             _dept = department;
+            _subDept = subDept;
             //now get date range
             getDates();
             DGV();
@@ -82,6 +84,7 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns.Insert(columnIndex, manualButton);
             }
         }
+
         private void getDates()
         {
             passed_date = _selectedDate;
@@ -93,6 +96,7 @@ namespace ShopFloorPlacementPlanner
             sunday = _selectedDate.AddDays(4);
             // MessageBox.Show("sunday = " + sunday.ToString());
         }
+
         private void DGV()
         {
             string sql = "";
@@ -122,9 +126,36 @@ namespace ShopFloorPlacementPlanner
                     dt.Columns.Add("Placement Type", typeof(System.String));
                     dt.Columns.Add("Time", typeof(System.Double));
                     dataGridView1.DataSource = dt;
+                    //here we are going to check if there are any placements for that day(s)
+
+                    //foreach (DataGridViewRow row in dataGridView1.Rows)
+                    //{
+                    //    sql = "SELECT placement_type,[hours] from dbo.power_plan_staff LEFT JOIN dbo.power_plan_date on power_plan_staff.date_id = power_plan_date.id " +
+                    //             " WHERE date_plan = '" + Convert.ToDateTime(row.Cells[1].Value).ToString("yyyyMMdd") + "'  AND staff_id = " + _staff_id + " AND department = '" + _dept + "' ORDER BY date_plan ASC ";
+
+                    //    using (SqlCommand cmd = new SqlCommand(sql, CONNECT))
+                    //    {
+                    //        SqlDataReader reader = cmd.ExecuteReader();
+
+                    //        if (reader.Read())
+                    //        {
+                    //            row.Cells[2].Value = reader["placement_type"].ToString();
+                    //            row.Cells[3].Value = reader["hours"].ToString();
+                    //        }
+                    //        reader.Close();
+                    //    }
+                    //    //quickly alter colours too
+                    //    if (row.Cells[2].Value.ToString() == "Full Day")
+                    //        row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
+                    //    if (row.Cells[2].Value.ToString() == "Half Day")
+                    //        row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                    //    if (row.Cells[2].Value.ToString() == "Shift")
+                    //        row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                    //    if (row.Cells[2].Value.ToString() == "Manual")
+                    //        row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
+                    //}
                     CONNECT.Close();
                 }
-
 
                 //format
                 dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -137,7 +168,7 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.DefaultCellStyle.Font = new Font("Calibri", 13F, FontStyle.Regular, GraphicsUnit.Pixel);
                 //------------
 
-                dataGridView1.Columns[1].HeaderText = "Date";
+                dataGridView1.Columns[1].HeaderText = "Date ";
 
                 //set the CURRENT dates checkbox to true
                 DateTime dgv; //date in the DGV
@@ -147,7 +178,6 @@ namespace ShopFloorPlacementPlanner
                 //    dgv = Convert.ToDateTime(dataGridView1.Rows[row.Index].Cells[1].Value);
                 //    if (dgv == passed_date)
                 //    {                                                 //TOM WANTED THIS REMOVED 23/01/2020
-
                 //        //row.Cells[2].Value = CheckState.Checked;
                 //        dataGridView1.Rows.RemoveAt(row.Index);
                 //    }
@@ -158,12 +188,22 @@ namespace ShopFloorPlacementPlanner
             }
         }
 
-
-
-
         private void frmWeeklyInsert_Load(object sender, EventArgs e)
         {
             lbl_title.Text = "Select Which days you want " + _staff_fullname + " in " + _dept;
+            int columnIndex = 0;
+            columnIndex = dataGridView1.Columns["Placement Type"].Index;
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                //quickly alter colours too
+                if (row.Cells[columnIndex].Value.ToString() == "Full Day")
+                    row.DefaultCellStyle.BackColor = Color.LightSeaGreen;
+                if (row.Cells[columnIndex].Value.ToString() == "Half Day")
+                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
+                if (row.Cells[columnIndex].Value.ToString() == "Shift")
+                    row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
+            }
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -181,7 +221,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btn_update_Click(object sender, EventArgs e)
         {
-            //loop through every single colour 
+            //loop through every single colour
             //if its green THEN run through absent-already placed-placement to make sure there are no doubles in this code.
             //declare variables
             DateTime dgvDate;
@@ -208,11 +248,12 @@ namespace ShopFloorPlacementPlanner
                         dgvDate = Convert.ToDateTime(dataGridView1.Rows[i].Cells[5].Value);
                         getStandardHours(_staff_id, dgvDate);
                         Placement p = new Placement(dgvDate, _staff_id, _dept, "Full Day", _standardHours); //initate the class
+
                         p._alreadyPlaced = false;
                         //p.checkPlacement();
                         //time to make my own  checkplacement()
 
-                        sql = "Select id from dbo.power_plan_date where date_plan = '" + dgvDate.ToString("yyyy - MM - dd") + "'";
+                        sql = "Select id from dbo.power_plan_date where date_plan = '" + dgvDate.ToString("yyyy-MM-dd") + "'";
                         using (SqlCommand cmd = new SqlCommand(sql, conn))
                         {
                             conn.Open();
@@ -225,6 +266,10 @@ namespace ShopFloorPlacementPlanner
                         //now we have the DATE id we can get into the validation
                         if (validationID != 0)
                         {
+                            //if the row is shift then allow for the user to be placed in TWO places (i check for maximum hours in shift anyway so they **probably** wont go over
+                            //if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.PaleVioletRed)
+                            //    sql = "SELECT id from dbo.power_plan_staff WHERE date_id = " + validationID.ToString() + " AND staff_id = " + _staff_id + " AND department = '" + _dept + "'";
+                            //else // t
                             sql = "SELECT id from dbo.power_plan_staff WHERE date_id = " + validationID.ToString() + " AND staff_id = " + _staff_id;
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                             {
@@ -238,53 +283,122 @@ namespace ShopFloorPlacementPlanner
                             }
                         }
                         //get the current DATEID
-
                         // if they are already placed that day then move them
-                        //possibly add a branch here "user is already placed, move them?
+
+                        /////////////////////////   REWRITING THIS BIT FOR MULTIPLE PLACEMENTS VVVVVV ///////////////////////////////////////////////////////////////////////////////////////////////////
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         if (alreadyPlaced == true)
                         {
-                            //get the placement id using date_id and staff_id
-                            sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
-                            //MessageBox.Show(sql);
+                            conn.Open();
+                            double hoursCurrentlyAssigned = 0;
+                            double hoursAssigned = 0;
+                            int timeIndex = 0;
+                            //before getting the sum hours we need to check if they are places in THAT department and remove it first
+                            sql = "DELETE  FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID ;
+                            using (SqlCommand cmd = new SqlCommand(sql, conn))
+                                cmd.ExecuteNonQuery();
+                            //i guess also remove any overtime thats been assigned too?
+                            sql = "DELETE  FROM dbo.power_plan_overtime_remake where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
+                            using (SqlCommand cmd = new SqlCommand(sql, conn))
+                                cmd.ExecuteNonQuery();
+                     
+
+                            sql = "Select sum(hours) FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID; //get all the placement ids for this person
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                             {
-
-                                conn.Open();
-                                cmd.ExecuteNonQuery();
-                                object isItNull = cmd.ExecuteScalar();
-                                if (isItNull != null)
-                                    placement_id = (Int32)cmd.ExecuteScalar(); //get placement ID for removing a person from a placement already
+                                string temp = Convert.ToString(cmd.ExecuteScalar());
+                                if (string.IsNullOrEmpty(temp) == false) //in the scenario where you move from one dept to another (and pick weekly)  the first placement is broken
+                                {
+                                    hoursCurrentlyAssigned = Convert.ToDouble(cmd.ExecuteScalar().ToString());
+                                }
+                                else
+                                    hoursAssigned = 0;
+                            }
+                            timeIndex = dataGridView1.Columns["Time"].Index;
+                            hoursAssigned = Convert.ToDouble(dataGridView1.Rows[i].Cells[timeIndex].Value.ToString());
+                            if (hoursCurrentlyAssigned + hoursAssigned > _standardHours)
+                            {
+                                //inform them whats the max hours they can add
+                                double maxHours = Math.Round(_standardHours - hoursCurrentlyAssigned, 2);
+                                MessageBox.Show("Placement for " + dgvDate.ToString("dd/MM/yyyy") + " exceeds the limit. The maximum hours " + _staff_fullname + " can be assigned in " + _dept + " is " + maxHours.ToString() + ".");
+                                dataGridView1.Rows[i].Cells[timeIndex].Value = maxHours;
+                                if (maxHours == _standardHours / 2)
+                                {
+                                    dataGridView1.Rows[i].Cells[timeIndex - 1].Value = "Half Day";
+                                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.MediumPurple;
+                                }
                                 else
                                 {
-                                    conn.Close();
-                                    continue; // pop an error message because there is no date returned
+                                    dataGridView1.Rows[i].Cells[timeIndex - 1].Value = "Manual";
+                                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.LightSeaGreen;
                                 }
-                                conn.Close();
-                                //  MessageBox.Show(test.ToString());
+                                return;
                             }
-                            //they are already placed so just remove them  so they can be added down the line
-                            using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where ID = @placementID", conn))
-                            {
-                                cmd.Parameters.AddWithValue("@placementID", placement_id);
-                                conn.Open();
-                                cmd.ExecuteNonQuery();
-                                conn.Close();
-                            }
-                        }
 
+
+                            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            ////////////// old code vvvvv///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            //get the placement id using date_id and staff_id
+                            //this is the same as the above -- if the user is going into shift it needs to look at CURRENT dept and not every dept :}
+                            //if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.Red)
+                            //    sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID + " AND department = '" + _dept + "'";
+                            //else
+                            ////////////////////////////////sql = "Select id FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
+                            //////////////////////////////////MessageBox.Show(sql);
+                            ////////////////////////////////using (SqlCommand cmd = new SqlCommand(sql, conn))
+                            ////////////////////////////////{
+                            ////////////////////////////////    // conn.Open();
+                            ////////////////////////////////    cmd.ExecuteNonQuery();
+                            ////////////////////////////////    object isItNull = cmd.ExecuteScalar();
+                            ////////////////////////////////    if (isItNull != null)
+                            ////////////////////////////////        placement_id = (Int32)cmd.ExecuteScalar(); //get placement ID for removing a person from a placement already
+                            ////////////////////////////////    else
+                            ////////////////////////////////    {
+                            ////////////////////////////////        conn.Close();
+                            ////////////////////////////////        continue; // pop an error message because there is no date returned
+                            ////////////////////////////////    }
+                            ////////////////////////////////    conn.Close();
+                            ////////////////////////////////    //  MessageBox.Show(test.ToString());
+                            ////////////////////////////////}
+                            //////////////////////////////////they are already placed so just remove them  so they can be added down the line
+                            ////////////////////////////////using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where date_id = @date_id AND staff_id = @staff_id", conn))
+                            ////////////////////////////////{
+                            ////////////////////////////////    cmd.Parameters.AddWithValue("@date_id", p._dateID);
+                            ////////////////////////////////    cmd.Parameters.AddWithValue("@staff_id", _staff_id);
+                            ////////////////////////////////    conn.Open();
+                            ////////////////////////////////    cmd.ExecuteNonQuery();
+                            ////////////////////////////////    conn.Close();
+                            ////////////////////////////////}
+                            //////////////////////////////////if its painting also delete it from here (as it will likely already have a placement??
+                            ////////////////////////////////if (_dept == "Painting")
+                            ////////////////////////////////{
+                            ////////////////////////////////    using (SqlCommand cmd = new SqlCommand("DELETE FROM dbo.power_plan_paint_sub_dept_test_temp_2 WHERE placement_id = " + placement_id, conn))
+                            ////////////////////////////////    {
+                            ////////////////////////////////        conn.Open();
+                            ////////////////////////////////        cmd.ExecuteNonQuery();
+                            ////////////////////////////////        conn.Close();
+                            ////////////////////////////////    }
+                            ////////////////////////////////}
+                            conn.Close();
+                        }
+                        /////////////////////////   REWRITING THIS BIT FOR MULTIPLE PLACEMENTS VVVVVV ///////////////////////////////////////////////////////////////////////////////////////////////////
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                         p.notPresent(); //check for attendance
                         string placement_type = dataGridView1.Rows[i].Cells[6].Value.ToString();
                         double h_o_u_r_s = Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value.ToString());
-                        if (p._notPresentType == 5 || p._notPresentType == 2) // find out what 5 and 2 
+                        if (p._notPresentType == 5 || p._notPresentType == 2) // find out what 5 and 2
                         {
-                            //add the messagebox note here 
+                            //add the messagebox note here
                             note = "\nUnable to place on " + dgvDate + ".";
                             note = note.Substring(0, note.Length - 8);
                             continue; // they have full holiday so they cannot be placed   maybe have a running msgbox  - monday 11th cant be placed because of holiday etc
                         }
                         else if (p._notPresentType == 3) // has half a day booked
-                        {  //max placement on friday through half day is 5.6 / 2 
+                        {  //max placement on friday through half day is 5.6 / 2
                            //max placement on a normal day with half day is 6.4 / 2
                             if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "Manual")
                             {
@@ -292,9 +406,9 @@ namespace ShopFloorPlacementPlanner
                                 //if its above the max hous then reset it to max hours otherwise carry on as normal
                                 remainingHours = _standardHours / 2; // max hours
                                 double ManualHours = Convert.ToDouble(dataGridView1.Rows[i].Cells[7].Value.ToString());
-                                if ( ManualHours > remainingHours)
+                                if (ManualHours > remainingHours)
                                 {
-                                    //reduce it back to half and add note 
+                                    //reduce it back to half and add note
                                     Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Manual", remainingHours);
                                     p3.addPlacment();
                                     note = note + "\n Manual Hours reduced because placement has half day on " + dgvDate + "";
@@ -305,20 +419,57 @@ namespace ShopFloorPlacementPlanner
                                     Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Manual", remainingHours);
                                     p3.addPlacment();
                                 }
+                                //if i add painting here it should make a difference (either way if its manual it will fall into this else and then run thhis block of code
+                                if (_dept == "Painting")
+                                {
+                                    //get max id here maybe????
+                                    int MAXplacementID = 0;
+                                    using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
+                                    {
+                                        using (SqlCommand cmd = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", connection))
+                                        {
+                                            connection.Open();
+                                            MAXplacementID = Convert.ToInt32(cmd.ExecuteScalar());
+                                            connection.Close();
+                                        }
+                                    }
+                                    SubDeptClass place = new SubDeptClass();
+                                    place.checkPlacement(placement_id);
+                                    //place.add_placement(placement_id, _subDept);
+                                }
                             }
-                            else
+                            else //
                             {//should be the same as normal
                                 remainingHours = _standardHours / 2;
-                                Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Half Day", remainingHours); // adds them in but its for /half/ the time 
+                                Placement p3 = new Placement(_selectedDate, _staff_id, _dept, "Half Day", remainingHours); // adds them in but its for /half/ the time
                                 p3.addPlacment(); // a new instance of adding placement
-                                note = note + "\nHalf day placement on " + dgvDate + ""; 
+                                note = note + "\nHalf day placement on " + dgvDate + "";
                                 note = note.Substring(0, note.Length - 8);
+
+                                //another iteration for painting to be added
+                                if (_dept == "Painting")
+                                {
+                                    //get max id here maybe????
+                                    int MAXplacementID = 0;
+                                    using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
+                                    {
+                                        using (SqlCommand cmd = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", connection))
+                                        {
+                                            connection.Open();
+                                            MAXplacementID = Convert.ToInt32(cmd.ExecuteScalar());
+                                            connection.Close();
+                                        }
+                                    }
+                                    SubDeptClass place = new SubDeptClass();
+                                    place.checkPlacement(placement_id);
+                                    place.add_placement_weekly(placement_id);
+                                }
                             }
                         }
                         else
                         {//  they are present and they dont have time off == they also aren't placed in another dept
-                            //p.addPlacment();
-                            //no obscure data to consider, just plaster it in
+                         //p.addPlacment();
+                         //no obscure data to consider, just plaster it in
                             using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
                             {
                                 //placement type and hours assign
@@ -334,11 +485,26 @@ namespace ShopFloorPlacementPlanner
                                     conn.Close();
                                 }
                             }
+                            //this one is a bit weird but as far as my above commet says lets do the same and just /plaster/ it in
+                            if (_dept == "Painting")
+                            {
+                                //get max id here maybe????
+                                int MAXplacementID = 0;
+                                using (SqlConnection connection = new SqlConnection(connectionStrings.ConnectionString))
+                                {
+                                    using (SqlCommand cmd = new SqlCommand("SELECT MAX(placementID)  from dbo.view_planner_punch_staff", connection))
+                                    {
+                                        connection.Open();
+                                        MAXplacementID = Convert.ToInt32(cmd.ExecuteScalar());
+                                        connection.Close();
+                                    }
+                                }
+                                SubDeptClass place = new SubDeptClass();
+                                place.checkPlacement(MAXplacementID);
+                                place.add_placement_weekly (MAXplacementID);
+                            }
                         }
-
                     }
-
-
                 }//end of if back colour = green
             } //end of for loop
             MessageBox.Show("Placements updated!");
@@ -346,7 +512,6 @@ namespace ShopFloorPlacementPlanner
                 MessageBox.Show(note);
             this.Close();
         }
-
 
         private void getStandardHours(int staffID, DateTime dgvDate) //call this to get the time for each day of the week
         {
@@ -356,7 +521,6 @@ namespace ShopFloorPlacementPlanner
 
             //Differing standard hours for certain users
 
-
             if (dayOfWeek == "Friday")
             {
                 switch (staffID)
@@ -364,15 +528,19 @@ namespace ShopFloorPlacementPlanner
                     case 63:
                         _standardHours = 3.6;
                         break;
+
+                    case 68:
+                        _standardHours = 3.6;
+                        break;
+
                     case 165:
                         _standardHours = 11.2;
                         break;
+
                     default:
                         _standardHours = 5.6;
                         break;
-
                 }
-
             }
             else if (dayOfWeek == "Saturday" || dayOfWeek == "Sunday")
             {
@@ -385,18 +553,21 @@ namespace ShopFloorPlacementPlanner
                     case 63:
                         _standardHours = 4.4;
                         break;
+
+                    case 68:
+                        _standardHours = 4.4;
+                        break;
+
                     case 165:
                         _standardHours = 12.8;
                         break;
+
                     default:
                         _standardHours = 6.4;
                         break;
-
                 }
             }
         }
-
-
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -416,13 +587,62 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MediumPurple;
             }
             if (e.ColumnIndex == dataGridView1.Columns["Shift"].Index)
-            {//6.4
-                dataGridView1.Rows[e.RowIndex].Cells[7].Value = _standardHours;
+            {//this needs to be manual input now
+                if (_dept == "Slimline")
+                {
+                    if (skipPassword != -1)
+                    {
+                        string passcode = "design";
+
+                        string input = Interaction.InputBox("ENTER THE PASSWORD", "PASSWORD");
+                        if (input == passcode)
+                        {
+                            skipPassword = -1;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wrong password!", "!!", MessageBoxButtons.OK);
+                            return;
+                        }
+                    }
+                }
+
+                int index = 5;
+                if (dataGridView1.Columns.Contains("Date ") == true)
+                    index = dataGridView1.Columns["Date "].Index;
+                frmWeeklyShift frm = new frmWeeklyShift(Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells[index].Value.ToString()), _staff_id, _dept);
+                frm.ShowDialog();
+
+                //if (shiftHours.validation == 0)
+                //{
+                //    MessageBox.Show("Shift Cancelled");
+                //    return;
+                //}
+
+                dataGridView1.Rows[e.RowIndex].Cells[7].Value = shiftHours._hours;
                 dataGridView1.Rows[e.RowIndex].Cells[6].Value = "Shift";
-                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.PaleVioletRed;
             }
             if (e.ColumnIndex == dataGridView1.Columns["Manual"].Index)
             {
+                if (_dept == "Slimline")
+                {
+                    if (skipPassword != -1)
+                    {
+                        string passcode = "design";
+
+                        string input = Interaction.InputBox("ENTER THE PASSWORD", "PASSWORD");
+                        if (input == passcode)
+                        {
+                            skipPassword = -1;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wrong password!", "!!", MessageBoxButtons.OK);
+                            return;
+                        }
+                    }
+                }
                 //grab time from user input
                 //open form
                 frmManualHours mh = new frmManualHours();
@@ -434,4 +654,3 @@ namespace ShopFloorPlacementPlanner
         }
     }
 }
-

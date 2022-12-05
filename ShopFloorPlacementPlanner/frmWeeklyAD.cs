@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
     public partial class frmWeeklyAD : Form
     {
-
         public DateTime Monday { get; set; }
         public DateTime Sunday { get; set; }
         public DateTime passedDate { get; set; }
         public string dept { get; set; }
         public int dateID { get; set; }
         public int additionForSD { get; set; }
+
         public frmWeeklyAD(DateTime selectedDate, string department)
         {
             InitializeComponent();
@@ -98,16 +93,11 @@ namespace ShopFloorPlacementPlanner
             {
                 if (dataGridView1.Rows[i].Cells[2].Value.ToString() == "")
                     dataGridView1.Rows[i].Cells[2].Value = "0";
-
             }
         }
 
-
-
-
         private void FrmWeeklyAD_Load(object sender, EventArgs e)
         {
-
         }
 
         private void Btn_update_Click(object sender, EventArgs e)
@@ -118,15 +108,11 @@ namespace ShopFloorPlacementPlanner
                 string sql = "";
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-
                     Overtime o = new Overtime();
                     o.updateAD(Convert.ToDateTime(dataGridView1.Rows[i].Cells[1].Value), dept, Convert.ToDouble(dataGridView1.Rows[i].Cells[2].Value));
 
-
-                        if (dataGridView1.Rows[i].Cells[0].Value.ToString() == dateID.ToString())
-                            additionForSD = Convert.ToInt32(dataGridView1.Rows[i].Cells[2].Value);
-
-                   
+                    if (dataGridView1.Rows[i].Cells[0].Value.ToString() == dateID.ToString())
+                        additionForSD = Convert.ToInt32(dataGridView1.Rows[i].Cells[2].Value);
                 }
             }
             this.Close();
