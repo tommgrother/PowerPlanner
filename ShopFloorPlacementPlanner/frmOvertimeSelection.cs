@@ -10,6 +10,9 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
+using Microsoft.VisualBasic.ApplicationServices;
+using System.Activities.Expressions;
+//using Microsoft.Office.Interop.Excel;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -307,7 +310,7 @@ namespace ShopFloorPlacementPlanner
             // Store the Excel processes before opening.
             Process[] processesBefore = Process.GetProcessesByName("excel");
             // Open the file in Excel.
-            string temp = @"\\designsvr1\public\Kevin Power Planner\OVERTIME_SHEET_SUMMARY.xlsx";
+            string temp = @"\\designsvr1\public\Kevin Power Planner\OVERTIME_SHEET_SUMMARY_remake.xlsx";
             var xlApp = new Excel.Application();
             var xlWorkbooks = xlApp.Workbooks;
             var xlWorkbook = xlWorkbooks.Open(temp);
@@ -354,29 +357,45 @@ namespace ShopFloorPlacementPlanner
                         xlWorksheet.Cells[1][staff_row].Value2 = row[0].ToString();
                         //also work out if that this staff member is absent etc
                         string absent_sql = "select " +
-                            "case when max(monday) = '0' then '' else max(monday) end," +
-                            "case when max(tuesday) = '0' then '' else max(tuesday) end," +
-                            "case when max(wednesday) = '0' then '' else max(wednesday) end," +
-                            "case when max(thursday) = '0' then '' else max(thursday) end," +
-                            "case when max(friday) = '0' then '' else max(friday) end," +
-                            "case when max(saturday) = '0' then '' else max(saturday) end," +
-                            "case when max(sunday)  = '0' then '' else max(sunday) end " +
-                            " from (select  " +
-                            "cast(case when date_plan = '" + Monday.ToString("yyyyMMdd") + "' AND overtime > 0 then overtime else '' end as nvarchar) as monday," +
-                            "cast(case when date_plan = DATEADD(day, 1, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as tuesday, " +
-                            "cast(case when date_plan = DATEADD(day, 2, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as wednesday, " +
-                            "cast(case when date_plan = DATEADD(day, 3, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as thursday, " +
-                            "cast(case when date_plan = DATEADD(day, 4, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as friday, " +
-                            "cast(case when date_plan = DATEADD(day, 5, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as saturday, " +
-                            "cast(case when date_plan = DATEADD(day, 6, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as sunday " +
-                            "from  dbo.power_plan_overtime_remake r " +
-                            "left join dbo.power_plan_date d on r.date_id = d.id " +
-                            "left join[user_info].dbo.[user] u on r.staff_id = u.id  " +
-                            "where forename +' ' + surname = '" + row[0].ToString() + "' and date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "') as a";
+                                            "case when max(monday_am) = '0' then '' else max(monday_am) end, " +
+                                            "case when max(monday_pm) = '0' then '' else max(monday_pm) end, " +
+                                            "case when max(tuesday_am) = '0' then '' else max(tuesday_am) end, " +
+                                            "case when max(tuesday_pm) = '0' then '' else max(tuesday_pm) end, " +
+                                            "case when max(wednesday_am) = '0' then '' else max(wednesday_am) end, " +
+                                            "case when max(wednesday_pm) = '0' then '' else max(wednesday_pm) end, " +
+                                            "case when max(thursday_am) = '0' then '' else max(thursday_am) end, " +
+                                            "case when max(thursday_pm) = '0' then '' else max(thursday_pm) end, " +
+                                            "case when max(friday_am) = '0' then '' else max(friday_am) end, " +
+                                            "case when max(friday_pm) = '0' then '' else max(friday_pm) end, " +
+                                            "case when max(saturday_am) = '0' then '' else max(saturday_am) end, " +
+                                            "case when max(saturday_pm) = '0' then '' else max(saturday_pm) end, " +
+                                            "case when max(sunday_am)  = '0' then '' else max(sunday_am) end, " +
+                                            "case when max(sunday_pm)  = '0' then '' else max(sunday_pm) end " +
+                                            "from(select " +
+                                              "cast(case when date_plan = '" + Monday.ToString("yyyyMMdd") + "' AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as monday_am," +
+                                              "cast(case when date_plan = '" + Monday.ToString("yyyyMMdd") + "' AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as monday_pm, " +
+                                              "cast(case when date_plan = DATEADD(day, 1, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as tuesday_am," +
+                                              "cast(case when date_plan = DATEADD(day, 1, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as tuesday_pm," +
+                                              "cast(case when date_plan = DATEADD(day, 2, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as wednesday_am," +
+                                              "cast(case when date_plan = DATEADD(day, 2, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as wednesday_pm," +
+                                              "cast(case when date_plan = DATEADD(day, 3, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as thursday_am, " +
+                                              "cast(case when date_plan = DATEADD(day, 3, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as thursday_pm," +
+                                              "cast(case when date_plan = DATEADD(day, 4, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as friday_am," +
+                                              "cast(case when date_plan = DATEADD(day, 4, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as friday_pm," +
+                                              "cast(case when date_plan = DATEADD(day, 5, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as saturday_am, " +
+                                              "cast(case when date_plan = DATEADD(day, 5, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as saturday_pm, " +
+                                              "cast(case when date_plan = DATEADD(day, 6, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as sunday_am," +
+                                              "cast(case when date_plan = DATEADD(day, 6, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as sunday_pm " +
+                                              "from dbo.power_plan_overtime_remake r " +
+                                              "left join dbo.power_plan_overtime_remake_am_pm am_pm on r.id = am_pm.overtime_remake_id " +
+                                              "left join dbo.power_plan_date d on r.date_id = d.id " +
+                                              "left join [user_info].dbo.[user] u on r.staff_id = u.id " + //Monday.ToString("yyyyMMdd")
+                                              "where forename + ' ' + surname = '" + row[0].ToString() + "' and " +
+                                              "date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "') as a";
                         using (SqlCommand absent_cmd = new SqlCommand(absent_sql, conn))
                         {
                             SqlDataAdapter da2 = new SqlDataAdapter(absent_cmd);
-                            DataTable dt2 = new DataTable();
+                            System.Data.DataTable dt2 = new System.Data.DataTable();
                             da2.Fill(dt2);
 
                             dt2.Columns.Add("Total", typeof(System.String));
@@ -398,6 +417,20 @@ namespace ShopFloorPlacementPlanner
                                     total_ot = total_ot + Convert.ToDouble(total[5].ToString());
                                 if (string.IsNullOrEmpty(total[6].ToString()) == false)
                                     total_ot = total_ot + Convert.ToDouble(total[6].ToString());
+                                if (string.IsNullOrEmpty(total[7].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[7].ToString());
+                                if (string.IsNullOrEmpty(total[8].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[8].ToString());
+                                if (string.IsNullOrEmpty(total[9].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[9].ToString());
+                                if (string.IsNullOrEmpty(total[10].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[10].ToString());
+                                if (string.IsNullOrEmpty(total[11].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[11].ToString());
+                                if (string.IsNullOrEmpty(total[12].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[12].ToString());
+                                if (string.IsNullOrEmpty(total[13].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[13].ToString());
 
 
                                 total["Total"] = total_ot.ToString();   // or set it to some other value
@@ -406,21 +439,35 @@ namespace ShopFloorPlacementPlanner
                             int absent_column = 2;
                             for (int i = 0; i < dt2.Rows.Count; i++)
                             {
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][0].ToString();//mon
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][1].ToString();//tues
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][2].ToString();//wed
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][3].ToString();//thur
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][4].ToString();//fri
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][5].ToString();//sat
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][6].ToString();//sun
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][7].ToString();//OT
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][0].ToString();//mon am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][1].ToString();//mon pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][2].ToString();//tues am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][3].ToString();//tues pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][4].ToString();//wed am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][5].ToString();//wed pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][6].ToString();//thur am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][7].ToString();//thur pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][8].ToString();//fri am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][9].ToString();//fri pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][10].ToString();//sat am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][11].ToString();//sat pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][12].ToString();//sun am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][13].ToString();//sun pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][14].ToString();//total OT
                             }
                         }
                         staff_row++;
@@ -432,7 +479,7 @@ namespace ShopFloorPlacementPlanner
                 xlRange.Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
 
                 //autosize the first row
-                xlWorksheet.Columns.AutoFit();
+                xlWorksheet.Columns["A"].AutoFit();
 
                 //make the x's middle
                 Microsoft.Office.Interop.Excel.Range RangeYour = xlWorksheet.Range["B4:k100"];
@@ -440,7 +487,14 @@ namespace ShopFloorPlacementPlanner
                 RangeYour.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
 
                 //print it
-                xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                //pageSetup.PrintArea = "A1:J100";
+                // This will force the workbook to be printed on one page.
+                Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
+                xlPageSetUp.Zoom = false;
+                xlPageSetUp.FitToPagesWide = 1;
+                //xlPageSetUp.FitToPagesTall= 2
+
+                xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,Type.Missing);
 
                 xlWorkbook.Close(false); //close the excel sheet without saving
                                          // xlApp.Quit();
@@ -467,6 +521,7 @@ namespace ShopFloorPlacementPlanner
                 }
                 conn.Close();
             }
+            MessageBox.Show("Print out has been sent to your default printer.", "Printed!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnSupervisorSheet_Click(object sender, EventArgs e)
@@ -535,7 +590,7 @@ namespace ShopFloorPlacementPlanner
             // Store the Excel processes before opening.
             Process[] processesBefore = Process.GetProcessesByName("excel");
             // Open the file in Excel.
-            string temp = @"\\designsvr1\public\Kevin Power Planner\OVERTIME_SUPERVISOR_SHEET.xlsx";
+            string temp = @"\\designsvr1\public\Kevin Power Planner\OVERTIME_SUPERVISOR_SHEET_remake.xlsx";
             var xlApp = new Excel.Application();
             var xlWorkbooks = xlApp.Workbooks;
             var xlWorkbook = xlWorkbooks.Open(temp);
@@ -612,25 +667,40 @@ namespace ShopFloorPlacementPlanner
                         xlWorksheet.Cells[1][staff_row].Value2 = row[0].ToString();
                         //also work out if that this staff member is absent etc
                         string absent_sql = "select " +
-                            "case when max(monday) = '0' then '' else max(monday) end," +
-                            "case when max(tuesday) = '0' then '' else max(tuesday) end," +
-                            "case when max(wednesday) = '0' then '' else max(wednesday) end," +
-                            "case when max(thursday) = '0' then '' else max(thursday) end," +
-                            "case when max(friday) = '0' then '' else max(friday) end," +
-                            "case when max(saturday) = '0' then '' else max(saturday) end," +
-                            "case when max(sunday)  = '0' then '' else max(sunday) end " +
-                            " from (select  " +
-                            "cast(case when date_plan = '" + Monday.ToString("yyyyMMdd") + "' AND overtime > 0 then overtime else '' end as nvarchar) as monday," +
-                            "cast(case when date_plan = DATEADD(day, 1, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as tuesday, " +
-                            "cast(case when date_plan = DATEADD(day, 2, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as wednesday, " +
-                            "cast(case when date_plan = DATEADD(day, 3, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as thursday, " +
-                            "cast(case when date_plan = DATEADD(day, 4, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as friday, " +
-                            "cast(case when date_plan = DATEADD(day, 5, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as saturday, " +
-                            "cast(case when date_plan = DATEADD(day, 6, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND overtime > 0 then overtime else '' end as nvarchar) as sunday " +
-                            "from  dbo.power_plan_overtime_remake r " +
-                            "left join dbo.power_plan_date d on r.date_id = d.id " +
-                            "left join[user_info].dbo.[user] u on r.staff_id = u.id  " +
-                            "where forename +' ' + surname = '" + row[0].ToString() + "' AND r.department = '" + department + "' and date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "') as a";
+                                            "case when max(monday_am) = '0' then '' else max(monday_am) end, " +
+                                            "case when max(monday_pm) = '0' then '' else max(monday_pm) end, " +
+                                            "case when max(tuesday_am) = '0' then '' else max(tuesday_am) end, " +
+                                            "case when max(tuesday_pm) = '0' then '' else max(tuesday_pm) end, " +
+                                            "case when max(wednesday_am) = '0' then '' else max(wednesday_am) end, " +
+                                            "case when max(wednesday_pm) = '0' then '' else max(wednesday_pm) end, " +
+                                            "case when max(thursday_am) = '0' then '' else max(thursday_am) end, " +
+                                            "case when max(thursday_pm) = '0' then '' else max(thursday_pm) end, " +
+                                            "case when max(friday_am) = '0' then '' else max(friday_am) end, " +
+                                            "case when max(friday_pm) = '0' then '' else max(friday_pm) end, " +
+                                            "case when max(saturday_am) = '0' then '' else max(saturday_am) end, " +
+                                            "case when max(saturday_pm) = '0' then '' else max(saturday_pm) end, " +
+                                            "case when max(sunday_am)  = '0' then '' else max(sunday_am) end, " +
+                                            "case when max(sunday_pm)  = '0' then '' else max(sunday_pm) end " +
+                                            "from(select " +
+                                              "cast(case when date_plan = '" + Monday.ToString("yyyyMMdd") + "' AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as monday_am," +
+                                              "cast(case when date_plan = '" + Monday.ToString("yyyyMMdd") + "' AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as monday_pm, " +
+                                              "cast(case when date_plan = DATEADD(day, 1, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as tuesday_am," +
+                                              "cast(case when date_plan = DATEADD(day, 1, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as tuesday_pm," +
+                                              "cast(case when date_plan = DATEADD(day, 2, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as wednesday_am," +
+                                              "cast(case when date_plan = DATEADD(day, 2, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as wednesday_pm," +
+                                              "cast(case when date_plan = DATEADD(day, 3, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as thursday_am, " +
+                                              "cast(case when date_plan = DATEADD(day, 3, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as thursday_pm," +
+                                              "cast(case when date_plan = DATEADD(day, 4, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as friday_am," +
+                                              "cast(case when date_plan = DATEADD(day, 4, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as friday_pm," +
+                                              "cast(case when date_plan = DATEADD(day, 5, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as saturday_am, " +
+                                              "cast(case when date_plan = DATEADD(day, 5, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as saturday_pm, " +
+                                              "cast(case when date_plan = DATEADD(day, 6, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.am > 0 then am_pm.am else '' end as nvarchar) as sunday_am," +
+                                              "cast(case when date_plan = DATEADD(day, 6, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND am_pm.pm > 0 then am_pm.pm else '' end as nvarchar) as sunday_pm " +
+                                              "from dbo.power_plan_overtime_remake r " +
+                                              "left join dbo.power_plan_overtime_remake_am_pm am_pm on r.id = am_pm.overtime_remake_id " +
+                                              "left join dbo.power_plan_date d on r.date_id = d.id " +
+                                              "left join [user_info].dbo.[user] u on r.staff_id = u.id " + //Monday.ToString("yyyyMMdd")
+                                              "where forename +' ' + surname = '" + row[0].ToString() + "' AND r.department = '" + department + "' and date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "') as a";
                         using (SqlCommand absent_cmd = new SqlCommand(absent_sql, conn))
                         {
                             SqlDataAdapter da2 = new SqlDataAdapter(absent_cmd);
@@ -656,6 +726,20 @@ namespace ShopFloorPlacementPlanner
                                     total_ot = total_ot + Convert.ToDouble(total[5].ToString());
                                 if (string.IsNullOrEmpty(total[6].ToString()) == false)
                                     total_ot = total_ot + Convert.ToDouble(total[6].ToString());
+                                if (string.IsNullOrEmpty(total[7].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[7].ToString());
+                                if (string.IsNullOrEmpty(total[8].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[8].ToString());
+                                if (string.IsNullOrEmpty(total[9].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[9].ToString());
+                                if (string.IsNullOrEmpty(total[10].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[10].ToString());
+                                if (string.IsNullOrEmpty(total[11].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[11].ToString());
+                                if (string.IsNullOrEmpty(total[12].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[12].ToString());
+                                if (string.IsNullOrEmpty(total[13].ToString()) == false)
+                                    total_ot = total_ot + Convert.ToDouble(total[13].ToString());
 
 
                                 total["Total"] = total_ot.ToString();   // or set it to some other value
@@ -664,21 +748,35 @@ namespace ShopFloorPlacementPlanner
                             int absent_column = 2;
                             for (int i = 0; i < dt2.Rows.Count; i++)
                             {
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][0].ToString();//mon
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][1].ToString();//tues
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][2].ToString();//wed
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][3].ToString();//thur
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][4].ToString();//fri
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][5].ToString();//sat
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][6].ToString();//sun
-                                absent_column = absent_column + 1;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][7].ToString();//OT
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][0].ToString();//mon am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][1].ToString();//mon pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][2].ToString();//tues am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][3].ToString();//tues pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][4].ToString();//wed am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][5].ToString();//wed pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][6].ToString();//thur am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][7].ToString();//thur pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][8].ToString();//fri am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][9].ToString();//fri pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][10].ToString();//sat am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][11].ToString();//sat pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][12].ToString();//sun am
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][13].ToString();//sun pm
+                                absent_column++;
+                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][14].ToString();//total OT
                             }
                         }
                         staff_row++;
@@ -690,7 +788,7 @@ namespace ShopFloorPlacementPlanner
                 xlRange.Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
 
                 //autosize the first row
-                xlWorksheet.Columns.AutoFit();
+                xlWorksheet.Columns["A"].AutoFit();
 
                 //make the x's middle
                 Microsoft.Office.Interop.Excel.Range RangeYour = xlWorksheet.Range["B4:k100"];
@@ -698,6 +796,10 @@ namespace ShopFloorPlacementPlanner
                 RangeYour.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
 
                 //print it
+                Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
+                xlPageSetUp.Zoom = false;
+                xlPageSetUp.FitToPagesWide = 1;
+
                 xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
 
                 xlWorkbook.Close(false); //close the excel sheet without saving

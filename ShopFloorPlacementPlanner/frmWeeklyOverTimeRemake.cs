@@ -175,6 +175,9 @@ namespace ShopFloorPlacementPlanner
             foreach (DataGridViewColumn col in dataGridView1.Columns)
                 col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[full_name_index].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            dataGridView1.Columns[full_name_index].ReadOnly = true;
+            dataGridView1.Columns[placement_index].ReadOnly = true;
         }
 
 
