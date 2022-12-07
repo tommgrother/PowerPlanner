@@ -223,6 +223,12 @@
     <Compile Include="frmWeeklyOverTime.Designer.cs">
       <DependentUpon>frmWeeklyOverTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmWeeklyOverTimeRemake.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWeeklyOverTimeRemake.Designer.cs">
+      <DependentUpon>frmWeeklyOverTimeRemake.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmWeeklyShift.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -424,6 +430,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmWeeklyOverTime.resx">
       <DependentUpon>frmWeeklyOverTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWeeklyOverTimeRemake.resx">
+      <DependentUpon>frmWeeklyOverTimeRemake.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmWeeklyShift.resx">
       <DependentUpon>frmWeeklyShift.cs</DependentUpon>
