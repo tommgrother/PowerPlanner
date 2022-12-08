@@ -92,6 +92,11 @@ namespace ShopFloorPlacementPlanner
                 conn.Open();
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
+                    if (dataGridView1.Rows[i].Cells[am_index].Value.ToString().Length < 1)
+                        dataGridView1.Rows[i].Cells[am_index].Value = 0;
+                    if (dataGridView1.Rows[i].Cells[pm_index].Value.ToString().Length < 1)
+                        dataGridView1.Rows[i].Cells[pm_index].Value = 0;
+
                     using (SqlCommand cmd = new SqlCommand("usp_power_plan_add_overtime_remake_am_pm", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -130,7 +135,7 @@ namespace ShopFloorPlacementPlanner
                       "LEFT JOIN [user_info].dbo.[user] d ON d.id = a.staff_id " +
                       "left join dbo.power_plan_overtime_remake ot on a.staff_id = ot.staff_id AND a.date_id = ot.date_id and a.department = ot.department  " +
                       "left join dbo.power_plan_overtime_remake_am_pm am_pm on ot.id = am_pm.overtime_remake_id " +
-                      "WHERE b.id = " + date_id.ToString() + " AND a.department = '" + department + "' order by d.forename";
+                      "WHERE b.id = " + date_id.ToString() + " AND a.department = '" + department + "' AND (non_user = 0 or non_user is null) order by d.forename";
 
 
                 using (SqlCommand cmd = new SqlCommand(sql,conn))
@@ -173,7 +178,10 @@ namespace ShopFloorPlacementPlanner
             dataGridView1.Columns[pm_index].HeaderText = "PM Overtime";
 
             foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
                 col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
             dataGridView1.Columns[full_name_index].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             dataGridView1.Columns[full_name_index].ReadOnly = true;

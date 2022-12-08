@@ -324,12 +324,12 @@ namespace ShopFloorPlacementPlanner
                 //[row][column]
                 xlWorksheet.Cells[1][1].Value2 = "PLANNED OVERTIME";
                 xlWorksheet.Cells[2][2].Value2 = mondaySTR;
-                xlWorksheet.Cells[3][2].Value2 = tuesdaySTR;
-                xlWorksheet.Cells[4][2].Value2 = wednesdaySTR;
-                xlWorksheet.Cells[5][2].Value2 = thursdaySTR;
-                xlWorksheet.Cells[6][2].Value2 = fridaySTR;
-                xlWorksheet.Cells[7][2].Value2 = saturdaySTR;
-                xlWorksheet.Cells[8][2].Value2 = sundaySTR;
+                xlWorksheet.Cells[4][2].Value2 = tuesdaySTR;
+                xlWorksheet.Cells[6][2].Value2 = wednesdaySTR;
+                xlWorksheet.Cells[8][2].Value2 = thursdaySTR;
+                xlWorksheet.Cells[10][2].Value2 = fridaySTR;
+                xlWorksheet.Cells[12][2].Value2 = saturdaySTR;
+                xlWorksheet.Cells[14][2].Value2 = sundaySTR;
 
                 //GET everyone 
                 //vv OLD STRING
@@ -604,12 +604,12 @@ namespace ShopFloorPlacementPlanner
                 //[row][column]
                 xlWorksheet.Cells[1][1].Value2 = "PLANNED " + department.Replace("Dressing","BUFFING") + " OVERTIME";
                 xlWorksheet.Cells[2][2].Value2 = mondaySTR;
-                xlWorksheet.Cells[3][2].Value2 = tuesdaySTR;
-                xlWorksheet.Cells[4][2].Value2 = wednesdaySTR;
-                xlWorksheet.Cells[5][2].Value2 = thursdaySTR;
-                xlWorksheet.Cells[6][2].Value2 = fridaySTR;
-                xlWorksheet.Cells[7][2].Value2 = saturdaySTR;
-                xlWorksheet.Cells[8][2].Value2 = sundaySTR;
+                xlWorksheet.Cells[4][2].Value2 = tuesdaySTR;
+                xlWorksheet.Cells[6][2].Value2 = wednesdaySTR;
+                xlWorksheet.Cells[8][2].Value2 = thursdaySTR;
+                xlWorksheet.Cells[10][2].Value2 = fridaySTR;
+                xlWorksheet.Cells[12][2].Value2 = saturdaySTR;
+                xlWorksheet.Cells[14][2].Value2 = sundaySTR;
 
                 //GET everyone 
                 //vv OLD STRING
