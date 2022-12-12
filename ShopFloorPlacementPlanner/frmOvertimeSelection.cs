@@ -39,6 +39,8 @@ namespace ShopFloorPlacementPlanner
             btnPrint.Enabled = value;
             btnAll.Enabled = value;
             dteDate.Enabled = value;
+            btnSupervisorSheet.Enabled = value;
+            btnSummary.Enabled = value;
 
             if (value == true)
             {
@@ -78,8 +80,8 @@ namespace ShopFloorPlacementPlanner
                 printSheet("Dispatch");
             if (chkStores.Checked)
                 printSheet("Stores");
-
             toggle_buttons(true);
+
             MessageBox.Show("Overtime Sheets printed!", "Default Printer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -257,19 +259,44 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAll_Click(object sender, EventArgs e)
         {
-            toggle_buttons(false);
-            printSheet("PUNCHING");
-            printSheet("LASER");
-            printSheet("BENDING");
-            printSheet("WELDING");
-            printSheet("DRESSING");
-            printSheet("PAINTING");
-            printSheet("PACKING");
-            printSheet("toolroom");
-            printSheet("Dispatch");
-            printSheet("Stores");
-            toggle_buttons(true);
-            MessageBox.Show("Overtime Sheets printed!", "Default Printer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (chkPunching.Checked == true)
+            {
+                chkPunching.Checked = false;
+                chkBending.Checked = false;
+                chkWelding.Checked = false;
+                ChkBuffing.Checked = false;
+                chkPainting.Checked = false;
+                chkPacking.Checked = false;
+                chkToolroom.Checked = false;
+                chkDispatch.Checked = false;
+                chkStores.Checked = false;
+            }
+            else
+            {
+                chkPunching.Checked = true;
+                chkBending.Checked = true;
+                chkWelding.Checked = true;
+                ChkBuffing.Checked = true;
+                chkPainting.Checked = true;
+                chkPacking.Checked = true;
+                chkToolroom.Checked = true;
+                chkDispatch.Checked = true;
+                chkStores.Checked = true;
+            }
+
+            //toggle_buttons(false);
+            //printSheet("PUNCHING");
+            //printSheet("LASER");
+            //printSheet("BENDING");
+            //printSheet("WELDING");
+            //printSheet("DRESSING");
+            //printSheet("PAINTING");
+            //printSheet("PACKING");
+            //printSheet("toolroom");
+            //printSheet("Dispatch");
+            //printSheet("Stores");
+            //toggle_buttons(true);
+            //MessageBox.Show("Overtime Sheets printed!", "Default Printer", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnSummary_Click(object sender, EventArgs e)
@@ -527,15 +554,41 @@ namespace ShopFloorPlacementPlanner
         private void btnSupervisorSheet_Click(object sender, EventArgs e)
         {
             login.errorList.Clear();
-            supervisor_print("LASER");
-            supervisor_print("PUNCHING");
-            supervisor_print("BENDING");
-            supervisor_print("DRESSING");
-            supervisor_print("PAINTING");
-            supervisor_print("PACKING");
-            supervisor_print("TOOLROOM");
-            supervisor_print("DISPATCH");
-            supervisor_print("STORES");
+
+            toggle_buttons(false);
+            if (chkPunching.Checked)
+            {
+                supervisor_print("PUNCHING");
+                supervisor_print("LASER");
+            }
+            if (chkBending.Checked)
+                supervisor_print("BENDING");
+            if (chkWelding.Checked)
+                supervisor_print("WELDING");
+            if (ChkBuffing.Checked)
+                supervisor_print("DRESSING");
+            if (chkPainting.Checked)
+                supervisor_print("PAINTING");
+            if (chkPacking.Checked)
+                supervisor_print("PACKING");
+            if (chkToolroom.Checked)
+                supervisor_print("toolroom");
+            if (chkDispatch.Checked)
+                supervisor_print("Dispatch");
+            if (chkStores.Checked)
+                supervisor_print("Stores");
+            toggle_buttons(true);
+
+            //supervisor_print("LASER");
+            //supervisor_print("PUNCHING");
+            //supervisor_print("BENDING");
+            //supervisor_print("WELDING");
+            //supervisor_print("DRESSING");
+            //supervisor_print("PAINTING");
+            //supervisor_print("PACKING");
+            //supervisor_print("TOOLROOM");
+            //supervisor_print("DISPATCH");
+            //supervisor_print("STORES");
 
             if (login.errorList.Count> 0)
             {
@@ -602,7 +655,34 @@ namespace ShopFloorPlacementPlanner
             {
                 conn.Open();
                 //[row][column]
-                xlWorksheet.Cells[1][1].Value2 = "PLANNED " + department.Replace("Dressing","BUFFING") + " OVERTIME";
+
+                //quickly loop through the supervisors and concat them onto the end of the below [1][1] cell
+                string sql = "select distinct forename + ' ' + surname from dbo.power_plan_staff s " +
+                    "left join dbo.power_plan_date d on d.id = s.date_id " +
+                    "LEFT JOIN[user_info].dbo.[user] u on u.id = s.staff_id " +
+                     "left join dbo.power_plan_overtime_remake ot on s.staff_id = ot.staff_id AND s.date_id = ot.date_id " +
+                    "where (u.non_user = 0 or u.non_user is null) AND s.department = '" + department + "' AND ot.department = '" + department + "' " +
+                    "AND date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "'  and u.supervisor = -1 ";
+
+                string supervisor = "";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    for (int i = 0; i < dt.Rows.Count;i++)
+                    {
+                        if (i == 0)
+                            supervisor = supervisor + dt.Rows[i][0].ToString();
+                        else
+                            supervisor = supervisor + " / " + dt.Rows[i][0].ToString();
+                    }
+
+
+                }
+
+                    xlWorksheet.Cells[1][1].Value2 = "PLANNED " + department.Replace("Dressing", "BUFFING") + " OVERTIME - SUPERVISOR: " + supervisor;
                 xlWorksheet.Cells[2][2].Value2 = mondaySTR;
                 xlWorksheet.Cells[4][2].Value2 = tuesdaySTR;
                 xlWorksheet.Cells[6][2].Value2 = wednesdaySTR;
@@ -613,11 +693,11 @@ namespace ShopFloorPlacementPlanner
 
                 //GET everyone 
                 //vv OLD STRING
-                string sql = "select distinct forename + ' ' + surname from dbo.power_plan_staff s " +
+                sql = "select distinct forename + ' ' + surname from dbo.power_plan_staff s " +
                     "left join dbo.power_plan_date d on d.id = s.date_id " +
                     "LEFT JOIN[user_info].dbo.[user] u on u.id = s.staff_id " +
                      "left join dbo.power_plan_overtime_remake ot on s.staff_id = ot.staff_id AND s.date_id = ot.date_id " +
-                    "where (u.non_user = 0 or u.non_user is null) AND ot.overtime > 0 AND s.department = '" + department + "' AND ot.department = '" + department + "' " +
+                    "where (u.non_user = 0 or u.non_user is null) AND s.department = '" + department + "' AND ot.department = '" + department + "' " +
                     "AND date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "'";
 
                 //new ugly string
