@@ -118,10 +118,9 @@
             this.printDayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateAutomaticAllocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadDefaultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.floorListingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearPlanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ryucxdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadDefaultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearPlanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cOPYWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productivityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kevinNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -129,6 +128,7 @@
             this.departmentManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lOADWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paintingDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oVERTIMESHEETToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -364,8 +364,8 @@
             this.btnPress = new System.Windows.Forms.Button();
             this.lblPressPrompt = new System.Windows.Forms.Label();
             this.dgNotPlacementSL = new System.Windows.Forms.DataGridView();
-            this.oVERTIMESHEETToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnOverTime = new System.Windows.Forms.Button();
+            this.weeklyPlacementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -1022,7 +1022,6 @@
             this.updateAutomaticAllocationToolStripMenuItem,
             this.ryucxdToolStripMenuItem,
             this.loadDefaultsToolStripMenuItem,
-            this.floorListingsToolStripMenuItem,
             this.clearPlanToolStripMenuItem,
             this.cOPYWEEKToolStripMenuItem,
             this.productivityToolStripMenuItem,
@@ -1031,7 +1030,8 @@
             this.departmentManagementToolStripMenuItem,
             this.lOADWEEKToolStripMenuItem,
             this.paintingDetailsToolStripMenuItem,
-            this.oVERTIMESHEETToolStripMenuItem});
+            this.oVERTIMESHEETToolStripMenuItem,
+            this.weeklyPlacementsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1911, 24);
@@ -1077,6 +1077,13 @@
             this.updateAutomaticAllocationToolStripMenuItem.Visible = false;
             this.updateAutomaticAllocationToolStripMenuItem.Click += new System.EventHandler(this.updateAutomaticAllocationToolStripMenuItem_Click);
             // 
+            // ryucxdToolStripMenuItem
+            // 
+            this.ryucxdToolStripMenuItem.Name = "ryucxdToolStripMenuItem";
+            this.ryucxdToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
+            this.ryucxdToolStripMenuItem.Text = "Print Weekly Data";
+            this.ryucxdToolStripMenuItem.Click += new System.EventHandler(this.ryucxdToolStripMenuItem_Click);
+            // 
             // loadDefaultsToolStripMenuItem
             // 
             this.loadDefaultsToolStripMenuItem.Name = "loadDefaultsToolStripMenuItem";
@@ -1085,26 +1092,12 @@
             this.loadDefaultsToolStripMenuItem.Visible = false;
             this.loadDefaultsToolStripMenuItem.Click += new System.EventHandler(this.loadDefaultsToolStripMenuItem_Click);
             // 
-            // floorListingsToolStripMenuItem
-            // 
-            this.floorListingsToolStripMenuItem.Name = "floorListingsToolStripMenuItem";
-            this.floorListingsToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
-            this.floorListingsToolStripMenuItem.Text = "Floor Listings";
-            this.floorListingsToolStripMenuItem.Visible = false;
-            // 
             // clearPlanToolStripMenuItem
             // 
             this.clearPlanToolStripMenuItem.Name = "clearPlanToolStripMenuItem";
             this.clearPlanToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.clearPlanToolStripMenuItem.Text = "Clear Plan";
             this.clearPlanToolStripMenuItem.Click += new System.EventHandler(this.ClearPlanToolStripMenuItem_Click);
-            // 
-            // ryucxdToolStripMenuItem
-            // 
-            this.ryucxdToolStripMenuItem.Name = "ryucxdToolStripMenuItem";
-            this.ryucxdToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
-            this.ryucxdToolStripMenuItem.Text = "Print Weekly Data";
-            this.ryucxdToolStripMenuItem.Click += new System.EventHandler(this.ryucxdToolStripMenuItem_Click);
             // 
             // cOPYWEEKToolStripMenuItem
             // 
@@ -1155,6 +1148,13 @@
             this.paintingDetailsToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
             this.paintingDetailsToolStripMenuItem.Text = "Painting Details";
             this.paintingDetailsToolStripMenuItem.Click += new System.EventHandler(this.paintingDetailsToolStripMenuItem_Click);
+            // 
+            // oVERTIMESHEETToolStripMenuItem
+            // 
+            this.oVERTIMESHEETToolStripMenuItem.Name = "oVERTIMESHEETToolStripMenuItem";
+            this.oVERTIMESHEETToolStripMenuItem.Size = new System.Drawing.Size(109, 20);
+            this.oVERTIMESHEETToolStripMenuItem.Text = "OVERTIME SHEET";
+            this.oVERTIMESHEETToolStripMenuItem.Click += new System.EventHandler(this.oVERTIMESHEETToolStripMenuItem_Click);
             // 
             // label23
             // 
@@ -2317,7 +2317,7 @@
             // 
             this.lbl_time.BackColor = System.Drawing.SystemColors.MenuBar;
             this.lbl_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_time.Location = new System.Drawing.Point(1542, 0);
+            this.lbl_time.Location = new System.Drawing.Point(1495, 0);
             this.lbl_time.Name = "lbl_time";
             this.lbl_time.Size = new System.Drawing.Size(364, 30);
             this.lbl_time.TabIndex = 165;
@@ -3706,13 +3706,6 @@
             this.dgNotPlacementSL.TabIndex = 300;
             this.dgNotPlacementSL.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgNotPlacementSL_CellDoubleClick);
             // 
-            // oVERTIMESHEETToolStripMenuItem
-            // 
-            this.oVERTIMESHEETToolStripMenuItem.Name = "oVERTIMESHEETToolStripMenuItem";
-            this.oVERTIMESHEETToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
-            this.oVERTIMESHEETToolStripMenuItem.Text = "OVERTIME SHEET";
-            this.oVERTIMESHEETToolStripMenuItem.Click += new System.EventHandler(this.oVERTIMESHEETToolStripMenuItem_Click);
-            // 
             // btnOverTime
             // 
             this.btnOverTime.Location = new System.Drawing.Point(29, 150);
@@ -3723,6 +3716,13 @@
             this.btnOverTime.UseVisualStyleBackColor = true;
             this.btnOverTime.Visible = false;
             this.btnOverTime.Click += new System.EventHandler(this.btnOverTime_Click);
+            // 
+            // weeklyPlacementsToolStripMenuItem
+            // 
+            this.weeklyPlacementsToolStripMenuItem.Name = "weeklyPlacementsToolStripMenuItem";
+            this.weeklyPlacementsToolStripMenuItem.Size = new System.Drawing.Size(121, 20);
+            this.weeklyPlacementsToolStripMenuItem.Text = "Weekly Placements";
+            this.weeklyPlacementsToolStripMenuItem.Click += new System.EventHandler(this.weeklyPlacementsToolStripMenuItem_Click);
             // 
             // MenuMain
             // 
@@ -4185,7 +4185,6 @@
         private System.Windows.Forms.DataGridView dgCleaning;
         private System.Windows.Forms.DataGridView dgDispatch;
         private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.ToolStripMenuItem floorListingsToolStripMenuItem;
         private System.Windows.Forms.DataGridView dgManagement;
         private System.Windows.Forms.Label label57;
         private System.Windows.Forms.Button btnAddManagement;
@@ -4362,6 +4361,7 @@
         private System.Windows.Forms.ToolStripMenuItem paintingDetailsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oVERTIMESHEETToolStripMenuItem;
         private System.Windows.Forms.Button btnOverTime;
+        private System.Windows.Forms.ToolStripMenuItem weeklyPlacementsToolStripMenuItem;
     }
 }
 

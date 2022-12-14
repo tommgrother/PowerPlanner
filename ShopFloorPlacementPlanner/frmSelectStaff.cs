@@ -1044,7 +1044,7 @@ namespace ShopFloorPlacementPlanner
             //txtOvertime.Text = frm.totalOvertime.ToString();
             ////test end
 
-            frmWeeklyOverTime frm = new frmWeeklyOverTime(_selectedDate, _department);
+            frmWeeklyOverTimeRemake frm = new frmWeeklyOverTimeRemake(_selectedDate, _department);
             frm.ShowDialog();
             txtOvertime.Text = frm.totalOvertime.ToString();
             //frmWeeklyOT OT = new frmWeeklyOT(_selectedDate, _department);

@@ -56,11 +56,11 @@
             // 
             // btnPrint
             // 
-            this.btnPrint.Location = new System.Drawing.Point(102, 167);
+            this.btnPrint.Location = new System.Drawing.Point(15, 167);
             this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(75, 23);
+            this.btnPrint.Size = new System.Drawing.Size(162, 23);
             this.btnPrint.TabIndex = 1;
-            this.btnPrint.Text = "Print";
+            this.btnPrint.Text = "Print Overtime Form";
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
@@ -123,11 +123,11 @@
             // 
             // btnAll
             // 
-            this.btnAll.Location = new System.Drawing.Point(15, 167);
+            this.btnAll.Location = new System.Drawing.Point(107, 140);
             this.btnAll.Name = "btnAll";
-            this.btnAll.Size = new System.Drawing.Size(75, 23);
+            this.btnAll.Size = new System.Drawing.Size(65, 23);
             this.btnAll.TabIndex = 8;
-            this.btnAll.Text = "Print ALL";
+            this.btnAll.Text = "TICK ALL";
             this.btnAll.UseVisualStyleBackColor = true;
             this.btnAll.Click += new System.EventHandler(this.btnAll_Click);
             // 
