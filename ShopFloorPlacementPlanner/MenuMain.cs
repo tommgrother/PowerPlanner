@@ -3961,5 +3961,11 @@ namespace ShopFloorPlacementPlanner
             frmTim frm = new frmTim(dteDateSelection.Value);
             frm.ShowDialog();
         }
+
+        private void weeklyPlacementsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmWeeklyDepartmentPlacements frm = new frmWeeklyDepartmentPlacements();
+            frm.ShowDialog();
+        }
     }
 }
