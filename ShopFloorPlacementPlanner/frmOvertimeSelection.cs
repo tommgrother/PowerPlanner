@@ -12,13 +12,14 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Activities.Expressions;
+using DocumentFormat.OpenXml.Spreadsheet;
 //using Microsoft.Office.Interop.Excel;
 
 namespace ShopFloorPlacementPlanner
 {
     public partial class frmOvertimeSelection : Form
     {
-        
+
         public frmOvertimeSelection()
         {
             InitializeComponent();
@@ -150,7 +151,7 @@ namespace ShopFloorPlacementPlanner
                     "left join dbo.power_plan_date d on d.id = s.date_id " +
                     "LEFT JOIN[user_info].dbo.[user] u on u.id = s.staff_id " +
                     "where (u.non_user = 0 or u.non_user is null) AND S.department = '" + department + "'" +
-                    "AND date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "'";
+                    "AND date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "' and u.[current] = 1";
 
                 //new ugly string
                 ////string sql = "Select distinct forename + ' ' + surname as fullname from [user_info].dbo.[user] where " +
@@ -365,7 +366,7 @@ namespace ShopFloorPlacementPlanner
                     "LEFT JOIN[user_info].dbo.[user] u on u.id = s.staff_id " +
                      "left join dbo.power_plan_overtime_remake ot on s.staff_id = ot.staff_id AND s.date_id = ot.date_id " +
                     "where (u.non_user = 0 or u.non_user is null) AND ot.overtime > 0 " +
-                    "AND date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "'";
+                    "AND date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "' and u.[current] = 1";
 
                 //new ugly string
                 ////string sql = "Select distinct forename + ' ' + surname as fullname from [user_info].dbo.[user] where " +
@@ -521,7 +522,7 @@ namespace ShopFloorPlacementPlanner
                 xlPageSetUp.FitToPagesWide = 1;
                 //xlPageSetUp.FitToPagesTall= 2
 
-                xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,Type.Missing);
+                xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
 
                 xlWorkbook.Close(false); //close the excel sheet without saving
                                          // xlApp.Quit();
@@ -590,14 +591,14 @@ namespace ShopFloorPlacementPlanner
             //supervisor_print("DISPATCH");
             //supervisor_print("STORES");
 
-            if (login.errorList.Count> 0)
+            if (login.errorList.Count > 0)
             {
                 string note = "The following departments have no overtime planned:- ";
                 for (int i = 0; i < login.errorList.Count; i++)
-                    note = note + Environment.NewLine+ login.errorList[i].ToString();
+                    note = note + Environment.NewLine + login.errorList[i].ToString();
 
                 note = note + Environment.NewLine + " The other sheets have been sent to your default printer";
-                MessageBox.Show(note,"Error List",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show(note, "Error List", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
                 MessageBox.Show("Supervisor sheets have been sent to your default printer", "Printed!", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -606,7 +607,7 @@ namespace ShopFloorPlacementPlanner
 
         private void supervisor_print(string department)
         {
-            
+
             //get the MONDAY and the FRIDAY of this week
             DateTime date = Convert.ToDateTime(dteDate.Value);
             DateTime Monday = new DateTime();
@@ -643,7 +644,7 @@ namespace ShopFloorPlacementPlanner
             // Store the Excel processes before opening.
             Process[] processesBefore = Process.GetProcessesByName("excel");
             // Open the file in Excel.
-            string temp = @"\\designsvr1\public\Kevin Power Planner\OVERTIME_SUPERVISOR_SHEET_remake.xlsx";
+            string temp = @"\\designsvr1\public\Kevin Power Planner\OVERTIME_SUPERVISOR_SHEET.xlsx";
             var xlApp = new Excel.Application();
             var xlWorkbooks = xlApp.Workbooks;
             var xlWorkbook = xlWorkbooks.Open(temp);
@@ -671,7 +672,7 @@ namespace ShopFloorPlacementPlanner
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
-                    for (int i = 0; i < dt.Rows.Count;i++)
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         if (i == 0)
                             supervisor = supervisor + dt.Rows[i][0].ToString();
@@ -682,7 +683,7 @@ namespace ShopFloorPlacementPlanner
 
                 }
 
-                    xlWorksheet.Cells[1][1].Value2 = "PLANNED " + department.Replace("Dressing", "BUFFING") + " OVERTIME - SUPERVISOR: " + supervisor;
+                xlWorksheet.Cells[1][1].Value2 = "PLANNED " + department.Replace("Dressing", "BUFFING") + " OVERTIME - SUPERVISOR: " + supervisor;
                 xlWorksheet.Cells[2][2].Value2 = mondaySTR;
                 xlWorksheet.Cells[4][2].Value2 = tuesdaySTR;
                 xlWorksheet.Cells[6][2].Value2 = wednesdaySTR;
@@ -698,7 +699,7 @@ namespace ShopFloorPlacementPlanner
                     "LEFT JOIN[user_info].dbo.[user] u on u.id = s.staff_id " +
                      "left join dbo.power_plan_overtime_remake ot on s.staff_id = ot.staff_id AND s.date_id = ot.date_id " +
                     "where (u.non_user = 0 or u.non_user is null) AND s.department = '" + department + "' AND ot.department = '" + department + "' " +
-                    "AND date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "'";
+                    "AND date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "' and u.[current] = 1";
 
                 //new ugly string
                 ////string sql = "Select distinct forename + ' ' + surname as fullname from [user_info].dbo.[user] where " +
@@ -713,9 +714,9 @@ namespace ShopFloorPlacementPlanner
                     da.Fill(dt);
 
                     //if there is no rows we need to error out 
-                    if (dt.Rows.Count < 1 )
+                    if (dt.Rows.Count < 1)
                     {
-                        login.errorList.Add(department.Replace("Dressing","Buffing"));
+                        login.errorList.Add(department.Replace("Dressing", "Buffing"));
 
                         //exit excel
                         // Manual disposal because of COM
@@ -745,8 +746,7 @@ namespace ShopFloorPlacementPlanner
                     foreach (DataRow row in dt.Rows)
                     {
                         xlWorksheet.Cells[1][staff_row].Value2 = row[0].ToString();
-                        //also work out if that this staff member is absent etc
-                        string absent_sql = "select " +
+                        string data_sql = "select " +
                                             "case when max(monday_am) = '0' then '' else max(monday_am) end, " +
                                             "case when max(monday_pm) = '0' then '' else max(monday_pm) end, " +
                                             "case when max(tuesday_am) = '0' then '' else max(tuesday_am) end, " +
@@ -781,9 +781,9 @@ namespace ShopFloorPlacementPlanner
                                               "left join dbo.power_plan_date d on r.date_id = d.id " +
                                               "left join [user_info].dbo.[user] u on r.staff_id = u.id " + //Monday.ToString("yyyyMMdd")
                                               "where forename +' ' + surname = '" + row[0].ToString() + "' AND r.department = '" + department + "' and date_plan >= '" + Monday.ToString("yyyyMMdd") + "' AND date_plan <= '" + Friday.ToString("yyyyMMdd") + "') as a";
-                        using (SqlCommand absent_cmd = new SqlCommand(absent_sql, conn))
+                        using (SqlCommand data_cmd = new SqlCommand(data_sql, conn))
                         {
-                            SqlDataAdapter da2 = new SqlDataAdapter(absent_cmd);
+                            SqlDataAdapter da2 = new SqlDataAdapter(data_cmd);
                             DataTable dt2 = new DataTable();
                             da2.Fill(dt2);
 
@@ -791,76 +791,183 @@ namespace ShopFloorPlacementPlanner
                             foreach (DataRow total in dt2.Rows)
                             {
                                 //need to set value to NewColumn column
-                                double total_ot = 0;
-                                if (string.IsNullOrEmpty(total[0].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[0].ToString());
-                                if (string.IsNullOrEmpty(total[1].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[1].ToString());
-                                if (string.IsNullOrEmpty(total[2].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[2].ToString());
-                                if (string.IsNullOrEmpty(total[3].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[3].ToString());
-                                if (string.IsNullOrEmpty(total[4].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[4].ToString());
-                                if (string.IsNullOrEmpty(total[5].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[5].ToString());
-                                if (string.IsNullOrEmpty(total[6].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[6].ToString());
-                                if (string.IsNullOrEmpty(total[7].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[7].ToString());
-                                if (string.IsNullOrEmpty(total[8].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[8].ToString());
-                                if (string.IsNullOrEmpty(total[9].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[9].ToString());
-                                if (string.IsNullOrEmpty(total[10].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[10].ToString());
-                                if (string.IsNullOrEmpty(total[11].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[11].ToString());
-                                if (string.IsNullOrEmpty(total[12].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[12].ToString());
-                                if (string.IsNullOrEmpty(total[13].ToString()) == false)
-                                    total_ot = total_ot + Convert.ToDouble(total[13].ToString());
+                                //double total_ot = 0;
+                                //if (string.IsNullOrEmpty(total[0].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[0].ToString());
+                                //if (string.IsNullOrEmpty(total[1].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[1].ToString());
+                                //if (string.IsNullOrEmpty(total[2].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[2].ToString());
+                                //if (string.IsNullOrEmpty(total[3].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[3].ToString());
+                                //if (string.IsNullOrEmpty(total[4].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[4].ToString());
+                                //if (string.IsNullOrEmpty(total[5].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[5].ToString());
+                                //if (string.IsNullOrEmpty(total[6].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[6].ToString());
+                                //if (string.IsNullOrEmpty(total[7].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[7].ToString());
+                                //if (string.IsNullOrEmpty(total[8].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[8].ToString());
+                                //if (string.IsNullOrEmpty(total[9].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[9].ToString());
+                                //if (string.IsNullOrEmpty(total[10].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[10].ToString());
+                                //if (string.IsNullOrEmpty(total[11].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[11].ToString());
+                                //if (string.IsNullOrEmpty(total[12].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[12].ToString());
+                                //if (string.IsNullOrEmpty(total[13].ToString()) == false)
+                                //    //total_ot = total_ot + Convert.ToDouble(total[13].ToString());
 
 
-                                total["Total"] = total_ot.ToString();   // or set it to some other value
+                                total["Total"] = "=(SUM(B" + staff_row + ":O" + staff_row + "))";   // or set it to some other value
                             }
 
-                            int absent_column = 2;
+                            //handle absents here
+                            foreach (DataRow absent_row in dt.Rows)
+                            {
+                                xlWorksheet.Cells[1][staff_row].Value2 = row[0].ToString();
+                                //also work out if that this staff member is absent etc
+                                string absent_sql = "select max(monday),max(monday2),max(tuesday),max(tuesday2),max(wednesday),max(wednesday2),max(thursday),max(thursday2),max(friday),max(friday2) from (select  " +
+                                    "case when date_absent = '" + Monday.ToString("yyyyMMdd") + "' AND absent_type is not null then 'X' else '' end as monday," +
+                                    "case when date_absent = '" + Monday.ToString("yyyyMMdd") + "' AND absent_type is not null then 'X' else '' end as monday2, " +
+                                    "case when date_absent = DATEADD(day, 1, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND absent_type is not null then 'X' else '' end as tuesday, " +
+                                    "case when date_absent = DATEADD(day, 1, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND absent_type is not null then 'X' else '' end as tuesday2, " +
+                                    "case when date_absent = DATEADD(day, 2, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND absent_type is not null then 'X' else '' end as wednesday, " +
+                                    "case when date_absent = DATEADD(day, 2, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND absent_type is not null then 'X' else '' end as wednesday2, " +
+                                    "case when date_absent = DATEADD(day, 3, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND absent_type is not null then 'X' else '' end as thursday, " +
+                                    "case when date_absent = DATEADD(day, 3, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND absent_type is not null then 'X' else '' end as thursday2, " +
+                                    "case when date_absent = DATEADD(day, 4, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND absent_type is not null then 'X' else '' end as friday, " +
+                                    "case when date_absent = DATEADD(day, 4, cast('" + Monday.ToString("yyyyMMdd") + "' as date)) AND absent_type is not null then 'X' else '' end as friday2 " +
+                                    "from dbo.absent_holidays h left join [user_info].dbo.[user] u on h.staff_id = u.id " +
+                                    "where forename +' ' + surname = '" + row[0].ToString() + "' and date_absent >= '" + Monday.ToString("yyyyMMdd") + "' AND date_absent <= '" + Friday.ToString("yyyyMMdd") + "') as a";
+                                using (SqlCommand absent_cmd = new SqlCommand(absent_sql, conn))
+                                {
+                                    SqlDataAdapter absent_da = new SqlDataAdapter(absent_cmd);
+                                    DataTable absent_dt = new DataTable();
+                                    absent_da.Fill(absent_dt);
+                                    int absent_column = 2;
+                                    for (int i = 0; i < absent_dt.Rows.Count; i++)
+                                    {
+                                        //xlWorksheet.Cells[absent_column][staff_row].Value2 = absent_dt.Rows[0][0].ToString();//mon
+                                        if (absent_dt.Rows[0][0].ToString() == "X")
+                                            dt2.Rows[0][0] = absent_dt.Rows[0][0].ToString();//mon
+                                      
+                                        if (absent_dt.Rows[0][1].ToString() == "X")
+                                            dt2.Rows[0][1] = absent_dt.Rows[0][1].ToString();//mon
+
+                                        if (absent_dt.Rows[0][2].ToString() == "X")
+                                            dt2.Rows[0][2] = absent_dt.Rows[0][2].ToString();//tue
+                                        if (absent_dt.Rows[0][3].ToString() == "X")
+                                            dt2.Rows[0][3] = absent_dt.Rows[0][3].ToString();//tue
+                                        if (absent_dt.Rows[0][4].ToString() == "X")
+                                            dt2.Rows[0][4] = absent_dt.Rows[0][4].ToString();//wed
+                                        if (absent_dt.Rows[0][5].ToString() == "X")
+                                            dt2.Rows[0][5] = absent_dt.Rows[0][5].ToString();//wed
+
+                                        if (absent_dt.Rows[0][6].ToString() == "X")
+                                            dt2.Rows[0][6] = absent_dt.Rows[0][6].ToString();//thur
+                                        if (absent_dt.Rows[0][7].ToString() == "X")
+                                            dt2.Rows[0][7] = absent_dt.Rows[0][7].ToString();//thur
+
+                                        if (absent_dt.Rows[0][8].ToString() == "X")
+                                            dt2.Rows[0][8] = absent_dt.Rows[0][8].ToString();//fri
+                                        if (absent_dt.Rows[0][9].ToString() == "X")
+                                            dt2.Rows[0][9] = absent_dt.Rows[0][9].ToString();//fri
+                                        
+                                        //vv cant be absent for the weekend
+                                        ////if (absent_dt.Rows[0][10].ToString() == "X")
+                                        ////    dt2.Rows[0][10] = absent_dt.Rows[0][10].ToString();//sat
+                                        ////if (absent_dt.Rows[0][11].ToString() == "X")
+                                        ////    dt2.Rows[0][11] = absent_dt.Rows[0][11].ToString();//sat
+
+                                        ////if (absent_dt.Rows[0][12].ToString() == "X")
+                                        ////    dt2.Rows[0][12] = absent_dt.Rows[0][12].ToString();//sun
+                                        ////if (absent_dt.Rows[0][2].ToString() == "X")
+                                        ////    dt2.Rows[0][13] = absent_dt.Rows[0][13].ToString();//sun
+
+                                        ////absent_column = absent_column + 1;
+                                        ////xlWorksheet.Cells[absent_column][staff_row].Value2 = absent_dt.Rows[0][1].ToString(); //mon
+                                        ////absent_column = absent_column + 1;
+                                        ////xlWorksheet.Cells[absent_column][staff_row].Value2 = absent_dt.Rows[0][2].ToString();//tues
+                                        ////absent_column = absent_column + 1;
+                                        ////xlWorksheet.Cells[absent_column][staff_row].Value2 = absent_dt.Rows[0][3].ToString();//tues
+                                        ////absent_column = absent_column + 1;
+                                        ////xlWorksheet.Cells[absent_column][staff_row].Value2 = absent_dt.Rows[0][4].ToString();//wed
+                                        ////absent_column = absent_column + 1;
+                                        ////xlWorksheet.Cells[absent_column][staff_row].Value2 = absent_dt.Rows[0][5].ToString();//wed
+                                        ////absent_column = absent_column + 1;
+                                        ////xlWorksheet.Cells[absent_column][staff_row].Value2 = absent_dt.Rows[0][6].ToString();//thur
+                                        ////absent_column = absent_column + 1;
+                                        ////xlWorksheet.Cells[absent_column][staff_row].Value2 = absent_dt.Rows[0][7].ToString();//thur
+                                        ////absent_column = absent_column + 1;
+                                        ////xlWorksheet.Cells[absent_column][staff_row].Value2 = absent_dt.Rows[0][8].ToString();//fri
+                                        ////absent_column = absent_column + 1;
+                                        ////xlWorksheet.Cells[absent_column][staff_row].Value2 = absent_dt.Rows[0][9].ToString();//fri
+                                    }
+                                }
+                            }
+
+
+                            int data_column = 2;
                             for (int i = 0; i < dt2.Rows.Count; i++)
                             {
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][0].ToString();//mon am
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][1].ToString();//mon pm
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][2].ToString();//tues am
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][3].ToString();//tues pm
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][4].ToString();//wed am
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][5].ToString();//wed pm
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][6].ToString();//thur am
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][7].ToString();//thur pm
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][8].ToString();//fri am
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][9].ToString();//fri pm
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][10].ToString();//sat am
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][11].ToString();//sat pm
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][12].ToString();//sun am
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][13].ToString();//sun pm
-                                absent_column++;
-                                xlWorksheet.Cells[absent_column][staff_row].Value2 = dt2.Rows[0][14].ToString();//total OT
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][0].ToString();//mon am
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][1].ToString();//mon pm
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][2].ToString();//tues am
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][3].ToString();//tues pm
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][4].ToString();//wed am
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][5].ToString();//wed pm
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][6].ToString();//thur am
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][7].ToString();//thur pm
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][8].ToString();//fri am
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][9].ToString();//fri pm
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][10].ToString();//sat am
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][11].ToString();//sat pm
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][12].ToString();//sun am
+                                data_column++;
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][13].ToString();//sun pm
+                                data_column++;
+                               // MessageBox.Show(dt2.Rows[0][14].ToString());
+                                xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][14].ToString();//total OT
                             }
                         }
                         staff_row++;
                     }
+                    //add the sum for all the rows
+                    ////staff_row = staff_row - 1;
+                    xlWorksheet.Cells[1][staff_row].Value2 = "Totals:";
+                    xlWorksheet.Cells[2][staff_row].Value2 = "=SUM(B4:C" + (staff_row - 1).ToString() + ")";
+                    xlWorksheet.Cells[4][staff_row].Value2 = "=SUM(D4:E" + (staff_row - 1).ToString() + ")";
+                    xlWorksheet.Cells[6][staff_row].Value2 = "=SUM(F4:G" + (staff_row - 1).ToString() + ")";
+                    xlWorksheet.Cells[8][staff_row].Value2 = "=SUM(H4:I" + (staff_row - 1).ToString() + ")";
+                    xlWorksheet.Cells[10][staff_row].Value2 = "=SUM(J4:K" + (staff_row - 1).ToString() + ")";
+                    xlWorksheet.Cells[12][staff_row].Value2 = "=SUM(L4:M" + (staff_row - 1).ToString() + ")";
+                    xlWorksheet.Cells[14][staff_row].Value2 = "=SUM(N4:O" + (staff_row - 1).ToString() + ")";
+                    xlWorksheet.Cells[16][staff_row].Value2 = "=SUM(P4:P" + (staff_row - 1).ToString() + ")";
+
+                    //merge
+                    xlWorksheet.Range[xlWorksheet.Cells[staff_row, 2], xlWorksheet.Cells[staff_row, 3]].Merge();
+                    xlWorksheet.Range[xlWorksheet.Cells[staff_row, 4], xlWorksheet.Cells[staff_row, 5]].Merge();
+                    xlWorksheet.Range[xlWorksheet.Cells[staff_row, 6], xlWorksheet.Cells[staff_row, 7]].Merge();
+                    xlWorksheet.Range[xlWorksheet.Cells[staff_row, 8], xlWorksheet.Cells[staff_row, 9]].Merge();
+                    xlWorksheet.Range[xlWorksheet.Cells[staff_row, 10], xlWorksheet.Cells[staff_row, 11]].Merge();
+                    xlWorksheet.Range[xlWorksheet.Cells[staff_row, 12], xlWorksheet.Cells[staff_row, 13]].Merge();
+                    xlWorksheet.Range[xlWorksheet.Cells[staff_row, 14], xlWorksheet.Cells[staff_row, 15]].Merge();
                 }
 
                 //border them all
@@ -871,7 +978,7 @@ namespace ShopFloorPlacementPlanner
                 xlWorksheet.Columns["A"].AutoFit();
 
                 //make the x's middle
-                Microsoft.Office.Interop.Excel.Range RangeYour = xlWorksheet.Range["B4:k100"];
+                Microsoft.Office.Interop.Excel.Range RangeYour = xlWorksheet.Range["B4:P100"];
                 RangeYour.VerticalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
                 RangeYour.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
 
@@ -881,6 +988,9 @@ namespace ShopFloorPlacementPlanner
                 xlPageSetUp.FitToPagesWide = 1;
 
                 xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+
+                xlWorkbook.SaveAs(@"c:\temp\test.xlsx");  // or book.Save();
 
                 xlWorkbook.Close(false); //close the excel sheet without saving
                                          // xlApp.Quit();

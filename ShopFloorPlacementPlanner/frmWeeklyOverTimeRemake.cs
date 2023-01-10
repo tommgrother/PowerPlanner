@@ -186,6 +186,14 @@ namespace ShopFloorPlacementPlanner
 
             dataGridView1.Columns[full_name_index].ReadOnly = true;
             dataGridView1.Columns[placement_index].ReadOnly = true;
+
+            //while we are here -- loop -- through each person and add up the OT
+            double overtime_label = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                overtime_label = overtime_label + (Convert.ToDouble(dataGridView1.Rows[i].Cells[am_index].Value) + Convert.ToDouble(dataGridView1.Rows[i].Cells[pm_index].Value));
+
+            lblTotalOT.Text = overtime_label.ToString();
+
         }
 
 

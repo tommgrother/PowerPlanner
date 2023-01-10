@@ -41,6 +41,7 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.lblTotalOT = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -89,7 +90,7 @@
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F);
             this.lblTitle.Location = new System.Drawing.Point(12, 4);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(484, 28);
+            this.lblTitle.Size = new System.Drawing.Size(432, 28);
             this.lblTitle.TabIndex = 5;
             this.lblTitle.Text = "Over Time For DEPARTMENT X";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -181,11 +182,22 @@
             this.tabPage7.Text = "Sunday";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
+            // lblTotalOT
+            // 
+            this.lblTotalOT.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F);
+            this.lblTotalOT.Location = new System.Drawing.Point(450, 4);
+            this.lblTotalOT.Name = "lblTotalOT";
+            this.lblTotalOT.Size = new System.Drawing.Size(46, 28);
+            this.lblTotalOT.TabIndex = 7;
+            this.lblTotalOT.Text = "0";
+            this.lblTotalOT.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // frmWeeklyOverTimeRemake
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 539);
+            this.Controls.Add(this.lblTotalOT);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.tabControl1);
@@ -215,5 +227,6 @@
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.Label lblTotalOT;
     }
 }

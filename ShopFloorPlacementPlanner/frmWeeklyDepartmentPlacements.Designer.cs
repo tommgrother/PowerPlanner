@@ -51,6 +51,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.dtePicker = new System.Windows.Forms.DateTimePicker();
             this.cmbDepartment = new System.Windows.Forms.ComboBox();
+            this.btnPrint = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMonday)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTuesday)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvWednesday)).BeginInit();
@@ -287,11 +288,23 @@
             this.cmbDepartment.Text = "Punching";
             this.cmbDepartment.SelectedIndexChanged += new System.EventHandler(this.cmbDepartment_SelectedIndexChanged);
             // 
+            // btnPrint
+            // 
+            this.btnPrint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.btnPrint.Location = new System.Drawing.Point(939, 10);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(83, 26);
+            this.btnPrint.TabIndex = 22;
+            this.btnPrint.Text = "Print";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            // 
             // frmWeeklyDepartmentPlacements
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1497, 741);
+            this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.cmbDepartment);
             this.Controls.Add(this.dtePicker);
             this.Controls.Add(this.label7);
@@ -343,5 +356,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DateTimePicker dtePicker;
         private System.Windows.Forms.ComboBox cmbDepartment;
+        private System.Windows.Forms.Button btnPrint;
     }
 }
