@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>335</ApplicationRevision>
+    <ApplicationRevision>340</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -204,6 +204,12 @@
     </Compile>
     <Compile Include="frmShiftHours.Designer.cs">
       <DependentUpon>frmShiftHours.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStockParts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStockParts.Designer.cs">
+      <DependentUpon>frmStockParts.cs</DependentUpon>
     </Compile>
     <Compile Include="frmSubDeptMultiple.cs">
       <SubType>Form</SubType>
@@ -415,6 +421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmShiftHours.resx">
       <DependentUpon>frmShiftHours.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStockParts.resx">
+      <DependentUpon>frmStockParts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSubDept.resx">
       <DependentUpon>frmSubDept.cs</DependentUpon>

@@ -359,7 +359,18 @@ namespace ShopFloorPlacementPlanner
 
             //add the actual hours
 
-            string sql = "SELECT ROUND(COALESCE(actual_hours_slimline,0),2) as slimline, ROUND(COALESCE(actual_hours_punch,0),2) as punch, ROUND(COALESCE(actual_hours_laser,0),2) as laser, ROUND(COALESCE(actual_hours_bend,0),2) as bend, ROUND(COALESCE(actual_hours_weld,0),2) as weld, ROUND(COALESCE(actual_hours_buff,0),2) as buff,ROUND(COALESCE(actual_hours,0),2) as paint , ROUND(COALESCE(actual_hours_pack,0),2) as boxes FROM dbo.daily_department_goal WHERE date_goal ='" + dteDateSelection.Text + "'";
+            txtSLActualHours.Text = "0";
+            txtPunchActualHours.Text = "0";
+            txtlaserActualHours.Text = "0";
+            txtBendActualHours.Text = "0";
+            txtWeldActualHours.Text = "0";
+            txtBuffActualHours.Text = "0";
+            txtPaintActualHours.Text = "0";
+            txtPackActualHours.Text = "0";
+            txtStockHours.Text = "0";
+
+
+            string sql = "SELECT ROUND(COALESCE(actual_hours_slimline,0),2) as slimline, ROUND(COALESCE(actual_hours_punch,0),2) as punch, ROUND(COALESCE(actual_hours_laser,0),2) as laser, ROUND(COALESCE(actual_hours_bend,0),2) as bend, ROUND(COALESCE(actual_hours_weld,0),2) as weld, ROUND(COALESCE(actual_hours_buff,0),2) as buff,ROUND(COALESCE(actual_hours,0),2) as paint , ROUND(COALESCE(actual_hours_pack,0),2) as boxes,ROUND(COALESCE(actual_hours_bend_stock,0),2) as stock_parts  FROM dbo.daily_department_goal WHERE date_goal ='" + dteDateSelection.Text + "'";
             //actual_hours paint is tbc
             using (SqlConnection conn2 = new SqlConnection(connectionStrings.ConnectionString))
             {
@@ -380,6 +391,8 @@ namespace ShopFloorPlacementPlanner
                         txtBuffActualHours.Text = row[5].ToString();
                         txtPaintActualHours.Text = row[6].ToString();
                         txtPackActualHours.Text = row[7].ToString();
+                        txtStockHours.Text = row[8].ToString();
+
                     }
 
                     conn2.Close();
@@ -3965,6 +3978,12 @@ namespace ShopFloorPlacementPlanner
         private void weeklyPlacementsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmWeeklyDepartmentPlacements frm = new frmWeeklyDepartmentPlacements();
+            frm.ShowDialog();
+        }
+
+        private void txtStockHours_Click(object sender, EventArgs e)
+        {
+            frmStockParts frm = new frmStockParts(dteDateSelection.Value);
             frm.ShowDialog();
         }
     }

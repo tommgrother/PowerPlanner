@@ -77,7 +77,7 @@ namespace ShopFloorPlacementPlanner
                 "COALESCE(CAST(sum(case when absent_type = 2 then 1 when absent_type = 3 then 1 when absent_type = 8 then 1 when absent_type = 5 then 1 when absent_type = 2 then 1 when absent_type = 9 then 1 end) as nvarchar(max)),0) as [Total]" +
                 "from dbo.absent_holidays a " +
                 "left join[user_info].dbo.[user] b on a.staff_id = b.id " +
-                "where date_absent >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and date_absent <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' and b.shopfloor = -1 ";
+                "where [current] = 1 AND date_absent >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and date_absent <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' and b.shopfloor = -1 ";
 
 
                 if (default_in_department != "ALL")

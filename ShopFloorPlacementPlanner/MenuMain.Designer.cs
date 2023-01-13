@@ -129,6 +129,7 @@
             this.lOADWEEKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paintingDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oVERTIMESHEETToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.weeklyPlacementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -365,7 +366,8 @@
             this.lblPressPrompt = new System.Windows.Forms.Label();
             this.dgNotPlacementSL = new System.Windows.Forms.DataGridView();
             this.btnOverTime = new System.Windows.Forms.Button();
-            this.weeklyPlacementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label114 = new System.Windows.Forms.Label();
+            this.txtStockHours = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -1155,6 +1157,13 @@
             this.oVERTIMESHEETToolStripMenuItem.Size = new System.Drawing.Size(109, 20);
             this.oVERTIMESHEETToolStripMenuItem.Text = "OVERTIME SHEET";
             this.oVERTIMESHEETToolStripMenuItem.Click += new System.EventHandler(this.oVERTIMESHEETToolStripMenuItem_Click);
+            // 
+            // weeklyPlacementsToolStripMenuItem
+            // 
+            this.weeklyPlacementsToolStripMenuItem.Name = "weeklyPlacementsToolStripMenuItem";
+            this.weeklyPlacementsToolStripMenuItem.Size = new System.Drawing.Size(121, 20);
+            this.weeklyPlacementsToolStripMenuItem.Text = "Weekly Placements";
+            this.weeklyPlacementsToolStripMenuItem.Click += new System.EventHandler(this.weeklyPlacementsToolStripMenuItem_Click);
             // 
             // label23
             // 
@@ -2107,7 +2116,7 @@
             this.label65.Name = "label65";
             this.label65.Size = new System.Drawing.Size(73, 13);
             this.label65.TabIndex = 143;
-            this.label65.Text = "Men Req: 5";
+            this.label65.Text = "Men Req: 6";
             // 
             // label66
             // 
@@ -2117,7 +2126,7 @@
             this.label66.Name = "label66";
             this.label66.Size = new System.Drawing.Size(73, 13);
             this.label66.TabIndex = 144;
-            this.label66.Text = "Men Req: 7";
+            this.label66.Text = "Men Req: 6";
             // 
             // label67
             // 
@@ -3558,7 +3567,7 @@
             // label125
             // 
             this.label125.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label125.Location = new System.Drawing.Point(635, 174);
+            this.label125.Location = new System.Drawing.Point(635, 168);
             this.label125.Name = "label125";
             this.label125.Size = new System.Drawing.Size(95, 13);
             this.label125.TabIndex = 288;
@@ -3569,7 +3578,7 @@
             // 
             this.txtBendValue.Enabled = false;
             this.txtBendValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBendValue.Location = new System.Drawing.Point(635, 190);
+            this.txtBendValue.Location = new System.Drawing.Point(635, 184);
             this.txtBendValue.Name = "txtBendValue";
             this.txtBendValue.Size = new System.Drawing.Size(95, 20);
             this.txtBendValue.TabIndex = 287;
@@ -3717,12 +3726,25 @@
             this.btnOverTime.Visible = false;
             this.btnOverTime.Click += new System.EventHandler(this.btnOverTime_Click);
             // 
-            // weeklyPlacementsToolStripMenuItem
+            // label114
             // 
-            this.weeklyPlacementsToolStripMenuItem.Name = "weeklyPlacementsToolStripMenuItem";
-            this.weeklyPlacementsToolStripMenuItem.Size = new System.Drawing.Size(121, 20);
-            this.weeklyPlacementsToolStripMenuItem.Text = "Weekly Placements";
-            this.weeklyPlacementsToolStripMenuItem.Click += new System.EventHandler(this.weeklyPlacementsToolStripMenuItem_Click);
+            this.label114.AutoSize = true;
+            this.label114.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label114.Location = new System.Drawing.Point(636, 207);
+            this.label114.Name = "label114";
+            this.label114.Size = new System.Drawing.Size(77, 13);
+            this.label114.TabIndex = 303;
+            this.label114.Text = "Stock Hours";
+            // 
+            // txtStockHours
+            // 
+            this.txtStockHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStockHours.Location = new System.Drawing.Point(645, 222);
+            this.txtStockHours.Name = "txtStockHours";
+            this.txtStockHours.Size = new System.Drawing.Size(60, 20);
+            this.txtStockHours.TabIndex = 302;
+            this.txtStockHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtStockHours.Click += new System.EventHandler(this.txtStockHours_Click);
             // 
             // MenuMain
             // 
@@ -3730,6 +3752,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1911, 921);
+            this.Controls.Add(this.label114);
+            this.Controls.Add(this.txtStockHours);
             this.Controls.Add(this.btnOverTime);
             this.Controls.Add(this.dgNotPlacementSL);
             this.Controls.Add(this.btnPress);
@@ -4362,6 +4386,8 @@
         private System.Windows.Forms.ToolStripMenuItem oVERTIMESHEETToolStripMenuItem;
         private System.Windows.Forms.Button btnOverTime;
         private System.Windows.Forms.ToolStripMenuItem weeklyPlacementsToolStripMenuItem;
+        private System.Windows.Forms.Label label114;
+        private System.Windows.Forms.TextBox txtStockHours;
     }
 }
 

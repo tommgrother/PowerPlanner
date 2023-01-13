@@ -60,7 +60,7 @@
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(162, 23);
             this.btnPrint.TabIndex = 1;
-            this.btnPrint.Text = "Print Overtime Form";
+            this.btnPrint.Text = "Print Office Form";
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
@@ -169,15 +169,16 @@
             this.btnSummary.TabIndex = 12;
             this.btnSummary.Text = "Print Summary Sheet";
             this.btnSummary.UseVisualStyleBackColor = true;
+            this.btnSummary.Visible = false;
             this.btnSummary.Click += new System.EventHandler(this.btnSummary_Click);
             // 
             // btnSupervisorSheet
             // 
-            this.btnSupervisorSheet.Location = new System.Drawing.Point(15, 225);
+            this.btnSupervisorSheet.Location = new System.Drawing.Point(15, 196);
             this.btnSupervisorSheet.Name = "btnSupervisorSheet";
             this.btnSupervisorSheet.Size = new System.Drawing.Size(162, 23);
             this.btnSupervisorSheet.TabIndex = 13;
-            this.btnSupervisorSheet.Text = "Print Supervisor Sheet";
+            this.btnSupervisorSheet.Text = "Print Supervisor Form";
             this.btnSupervisorSheet.UseVisualStyleBackColor = true;
             this.btnSupervisorSheet.Click += new System.EventHandler(this.btnSupervisorSheet_Click);
             // 
@@ -185,7 +186,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(193, 254);
+            this.ClientSize = new System.Drawing.Size(193, 226);
             this.Controls.Add(this.btnSupervisorSheet);
             this.Controls.Add(this.btnSummary);
             this.Controls.Add(this.chkStores);
