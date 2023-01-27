@@ -1311,18 +1311,59 @@ namespace ShopFloorPlacementPlanner
                 //MessageBox.Show(workedHours.Rows[0][i].ToString()); //
                 dgSlimline[3, i].Value = workedHours.Rows[0][i].ToString();
             }
+
+
+            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Slimline' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]"; //12324
+            DataTable dtStaffID = new DataTable();
+            using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
+            {
+                SqlDataAdapter daStaffID = new SqlDataAdapter(cmdStaffID);
+                daStaffID.Fill(dtStaffID);
+            }
+
+
             //put the columns together into one column! :D
             string hours = "";
             string worked = "";
             for (int i = 0; i < dgSlimline.Rows.Count; i++)
             {
+
+                string allocated = "";
+                try
+                {
+                     sql = "SELECT sum(hours) FROM ( " +
+                        "select round(cast((sum(time_remaining_cutting * quantity_same) + sum(time_remaining_prepping * quantity_same) + sum(time_remianing_assembly * quantity_same)) as float) /60,2) as hours from dbo.door_allocation da " +
+                        "left join dbo.door d on da.door_id = d.id " +
+                        "where (da.department = 'Assembly' or da.department = 'Cutting' or da.department = 'Prepping') and " +
+                        "(time_remaining_cutting > 0 or time_remaining_prepping > 0 or time_remianing_assembly > 0) and " +
+                        "(status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                        "group by staff_id,da.door_id) as a";
+
+                    //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
+                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                    {
+                        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                        if (allocated == "")
+                            allocated = "0";
+                    }
+                }
+                catch
+                {
+                    allocated = "0";
+                }
+
+
                 double overtimeTemp = Convert.ToDouble(dgSlimline.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgSlimline.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));       //dgSlimline.Rows[i].Cells[1].Value.ToString();
                 worked = dgSlimline.Rows[i].Cells[3].Value.ToString();
-                dgSlimline[4, i].Value = hours + " / " + worked;
+                dgSlimline[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
             }
 
+      
+            
+
             dgSlimline.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgSlimline.Columns["set/worked"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgSlimline.Columns["hours"].Visible = false;
             dgSlimline.Columns["worked"].Visible = false;
@@ -3984,6 +4025,12 @@ namespace ShopFloorPlacementPlanner
         private void txtStockHours_Click(object sender, EventArgs e)
         {
             frmStockParts frm = new frmStockParts(dteDateSelection.Value);
+            frm.ShowDialog();
+        }
+
+        private void departmentActivityTrackerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmDepartmentActivityTracker frm = new frmDepartmentActivityTracker();
             frm.ShowDialog();
         }
     }

@@ -990,7 +990,7 @@ namespace ShopFloorPlacementPlanner
                 xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
 
 
-                xlWorkbook.SaveAs(@"c:\temp\test.xlsx");  // or book.Save();
+               // xlWorkbook.SaveAs(@"c:\temp\test.xlsx");  // or book.Save();
 
                 xlWorkbook.Close(false); //close the excel sheet without saving
                                          // xlApp.Quit();

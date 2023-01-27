@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>340</ApplicationRevision>
+    <ApplicationRevision>346</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -132,6 +132,12 @@
     </Compile>
     <Compile Include="frmChronological.Designer.cs">
       <DependentUpon>frmChronological.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDepartmentActivityTracker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDepartmentActivityTracker.Designer.cs">
+      <DependentUpon>frmDepartmentActivityTracker.cs</DependentUpon>
     </Compile>
     <Compile Include="frmDepartmentManagement.cs">
       <SubType>Form</SubType>
@@ -362,6 +368,9 @@
     <EmbeddedResource Include="frmChronological.resx">
       <DependentUpon>frmChronological.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDepartmentActivityTracker.resx">
+      <DependentUpon>frmDepartmentActivityTracker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDepartmentManagement.resx">
       <DependentUpon>frmDepartmentManagement.cs</DependentUpon>

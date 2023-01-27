@@ -115,7 +115,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.copyPlacementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendToDailyGoalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.printDayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateAutomaticAllocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ryucxdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,6 +129,7 @@
             this.paintingDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oVERTIMESHEETToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.weeklyPlacementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -368,6 +368,7 @@
             this.btnOverTime = new System.Windows.Forms.Button();
             this.label114 = new System.Windows.Forms.Label();
             this.txtStockHours = new System.Windows.Forms.TextBox();
+            this.departmentActivityTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -1019,7 +1020,6 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyPlacementsToolStripMenuItem,
             this.sendToDailyGoalsToolStripMenuItem,
-            this.printDayToolStripMenuItem,
             this.printScreenToolStripMenuItem,
             this.updateAutomaticAllocationToolStripMenuItem,
             this.ryucxdToolStripMenuItem,
@@ -1033,7 +1033,9 @@
             this.lOADWEEKToolStripMenuItem,
             this.paintingDetailsToolStripMenuItem,
             this.oVERTIMESHEETToolStripMenuItem,
-            this.weeklyPlacementsToolStripMenuItem});
+            this.weeklyPlacementsToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.departmentActivityTrackerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1911, 24);
@@ -1055,14 +1057,6 @@
             this.sendToDailyGoalsToolStripMenuItem.Text = "Send to Daily Goals";
             this.sendToDailyGoalsToolStripMenuItem.Visible = false;
             this.sendToDailyGoalsToolStripMenuItem.Click += new System.EventHandler(this.sendToDailyGoalsToolStripMenuItem_Click);
-            // 
-            // printDayToolStripMenuItem
-            // 
-            this.printDayToolStripMenuItem.Name = "printDayToolStripMenuItem";
-            this.printDayToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
-            this.printDayToolStripMenuItem.Text = "Email Printable Copy";
-            this.printDayToolStripMenuItem.Visible = false;
-            this.printDayToolStripMenuItem.Click += new System.EventHandler(this.printDayToolStripMenuItem_Click);
             // 
             // printScreenToolStripMenuItem
             // 
@@ -1164,6 +1158,11 @@
             this.weeklyPlacementsToolStripMenuItem.Size = new System.Drawing.Size(121, 20);
             this.weeklyPlacementsToolStripMenuItem.Text = "Weekly Placements";
             this.weeklyPlacementsToolStripMenuItem.Click += new System.EventHandler(this.weeklyPlacementsToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(12, 20);
             // 
             // label23
             // 
@@ -2326,7 +2325,7 @@
             // 
             this.lbl_time.BackColor = System.Drawing.SystemColors.MenuBar;
             this.lbl_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_time.Location = new System.Drawing.Point(1495, 0);
+            this.lbl_time.Location = new System.Drawing.Point(1382, 0);
             this.lbl_time.Name = "lbl_time";
             this.lbl_time.Size = new System.Drawing.Size(364, 30);
             this.lbl_time.TabIndex = 165;
@@ -3746,6 +3745,13 @@
             this.txtStockHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtStockHours.Click += new System.EventHandler(this.txtStockHours_Click);
             // 
+            // departmentActivityTrackerToolStripMenuItem
+            // 
+            this.departmentActivityTrackerToolStripMenuItem.Name = "departmentActivityTrackerToolStripMenuItem";
+            this.departmentActivityTrackerToolStripMenuItem.Size = new System.Drawing.Size(165, 20);
+            this.departmentActivityTrackerToolStripMenuItem.Text = "Department Activity Tracker";
+            this.departmentActivityTrackerToolStripMenuItem.Click += new System.EventHandler(this.departmentActivityTrackerToolStripMenuItem_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4160,7 +4166,6 @@
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.ToolStripMenuItem sendToDailyGoalsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem printDayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printScreenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateAutomaticAllocationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadDefaultsToolStripMenuItem;
@@ -4388,6 +4393,8 @@
         private System.Windows.Forms.ToolStripMenuItem weeklyPlacementsToolStripMenuItem;
         private System.Windows.Forms.Label label114;
         private System.Windows.Forms.TextBox txtStockHours;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem departmentActivityTrackerToolStripMenuItem;
     }
 }
 
