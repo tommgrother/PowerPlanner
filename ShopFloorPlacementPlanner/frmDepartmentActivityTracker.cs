@@ -879,5 +879,10 @@ namespace ShopFloorPlacementPlanner
         {
             print_department_sheet("Painting");
         }
+
+        private void txtBending_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

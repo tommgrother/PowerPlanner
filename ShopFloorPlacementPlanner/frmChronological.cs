@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
+using System.Linq;
 using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -28,7 +31,8 @@ namespace ShopFloorPlacementPlanner
         public int _time_for_part_index { get; set; }
         public string _hours { get; set; }
 
-        public frmChronological(string staff, string dept, DateTime plannerDate,string hours)
+
+        public frmChronological(string staff, string dept, DateTime plannerDate, string hours)
         {
             InitializeComponent();
             dteAction.Value = plannerDate;
@@ -47,7 +51,7 @@ namespace ShopFloorPlacementPlanner
             _staff_id = staff_id;
             staff = staff.Substring(0, staff_id);
             //MessageBox.Show(staff);
-            label1.Text = staff +" " + _hours + " Hours";
+            label1.Text = staff + " " + _hours + " Hours";
             if (label1.Text.Contains("Dropped"))
                 label1.BackColor = Color.PaleVioletRed;
             else if (label1.Text.Contains("Gained"))
@@ -131,7 +135,7 @@ namespace ShopFloorPlacementPlanner
                         dt.Columns.Add("Status");// dataGridView1.Columns.Add("Status", "Status");
                         dt.Columns.Add("Time");
                         da.Fill(dt);
-                        conn.Close(); 
+                        conn.Close();
                         dataGridView1.DataSource = dt;
 
                         //format
@@ -279,7 +283,7 @@ namespace ShopFloorPlacementPlanner
                     {
                         dataGridView1.Rows[i].Cells[status].Value = dataGridView1.Rows[i].Cells[action].Value.ToString() + " >> ";
                     }
-       
+
                     //else if (dataGridView1.Rows[i].Cells[action].Value.ToString().Contains("Door Allocated"))
                     //{
                     //    dataGridView1.Rows[i].Cells[actionIndex].Value = dataGridView1.Rows[i].Cells[action].Value = "Door Allocated";
@@ -340,7 +344,7 @@ namespace ShopFloorPlacementPlanner
                         dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.CornflowerBlue;
                 }
                 string sql = "";
-                for (int i = 0; i < dataGridView1.Rows.Count; i++) 
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     sql = "select * from dbo.door_stoppages right join(select MAX(id) as id,MAX(door_id) as door_id from dbo.door_stoppages group by door_id,department) a on a.id = door_stoppages.id " +
                         "where [action] = 'Paused' AND department = '" + _dept + "' AND dbo.door_stoppages.door_id = " + dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString();
@@ -369,7 +373,7 @@ namespace ShopFloorPlacementPlanner
                         dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                     }
                     //note = yellow is the final colour change to make
-                    if (/*dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") &&*/ dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0) 
+                    if (/*dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") &&*/ dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0)
                         dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
                 }
             }
@@ -395,13 +399,13 @@ namespace ShopFloorPlacementPlanner
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.PaleVioletRed;
             }
             string sql = "";
-            for (int i = 0; i <dataGridView1.Rows.Count;i++)
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                sql = "select * from dbo.door_stoppages right join(select MAX(id) as id,MAX(door_id) as door_id from dbo.door_stoppages group by door_id,department) a on a.id = door_stoppages.id " + 
+                sql = "select * from dbo.door_stoppages right join(select MAX(id) as id,MAX(door_id) as door_id from dbo.door_stoppages group by door_id,department) a on a.id = door_stoppages.id " +
                     "where [action] = 'Paused' AND department = '" + _dept + "' AND dbo.door_stoppages.door_id = " + dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString();
                 using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand(sql,conn))
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         conn.Open();
                         var temp = cmd.ExecuteScalar();
@@ -422,34 +426,126 @@ namespace ShopFloorPlacementPlanner
             {
                 if (door_list.Contains(dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString()))
                 {
-                    if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.CornflowerBlue )
+                    if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.CornflowerBlue)
                     { }
                     else if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.Yellow)
                     { }
                     else if (dataGridView1.Rows[i].DefaultCellStyle.BackColor == Color.PaleVioletRed)
                     { }
                     else
-                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+                        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                 }
                 //note = yellow is the final colour change to make
-                if (/*dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") &&*/ dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0) 
+                if (/*dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Paused") &&*/ dataGridView1.Rows[i].Cells[_note_index].Value.ToString().Length > 0)
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
             }
             dataGridView1.ClearSelection();
         }
 
+
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            Rectangle bounds = this.Bounds;
-            using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
+            //Rectangle bounds = this.Bounds;
+            //using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
+            //{
+            //    using (Graphics g = Graphics.FromImage(bitmap))
+            //    {
+            //        g.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
+            //    }
+            //    bitmap.Save(@"C:\Temp\temp.jpg", ImageFormat.Jpeg);
+            //    printImage();
+            //}
+
+            //^^ old way to print
+
+            print_excel();
+        }
+
+
+        private void print_excel()
+        {
+
+            int current_excel_row = 1;
+            // Store the Excel processes before opening.
+            Process[] processesBefore = Process.GetProcessesByName("excel");
+            // Open the file in Excel.
+            string temp = @"\\designsvr1\public\Kevin Power Planner\Chronological.xlsx";
+            var xlApp = new Excel.Application();
+            var xlWorkbooks = xlApp.Workbooks;
+            var xlWorkbook = xlWorkbooks.Open(temp);
+            var xlWorksheet = xlWorkbook.Sheets[1]; // assume it is the first sheet
+            // Get Excel processes after opening the file.
+            Process[] processesAfter = Process.GetProcessesByName("excel");
+
+
+            //add the title
+            xlWorksheet.Cells[1][current_excel_row].Value2 = label1.Text;
+            //
+            if (label1.BackColor != Color.Empty)
+                xlWorksheet.Range["A" + current_excel_row.ToString() + ":G" + current_excel_row.ToString()].Interior.Color = label1.BackColor;
+            current_excel_row++;
+
+            //column headers
+            current_excel_row++;
+
+            //vvv we need to loop through dgv 
+            foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                using (Graphics g = Graphics.FromImage(bitmap))
-                {
-                    g.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
-                }
-                bitmap.Save(@"C:\Temp\temp.jpg", ImageFormat.Jpeg);
-                printImage();
+                xlWorksheet.Cells[1][current_excel_row].Value2 = row.Cells[_status_index].Value.ToString();
+                xlWorksheet.Cells[2][current_excel_row].Value2 = row.Cells[_door_id_index].Value.ToString();
+                xlWorksheet.Cells[3][current_excel_row].Value2 = row.Cells[_door_type_index].Value.ToString();
+                xlWorksheet.Cells[4][current_excel_row].Value2 = row.Cells[_time_index].Value.ToString();
+                xlWorksheet.Cells[5][current_excel_row].Value2 = row.Cells[actionIndex].Value.ToString();
+                xlWorksheet.Cells[6][current_excel_row].Value2 = row.Cells[_part_index].Value.ToString();
+                xlWorksheet.Cells[7][current_excel_row].Value2 = row.Cells[_time_for_part_index].Value.ToString();
+                //paint the row based on what the dgv is
+                if (row.DefaultCellStyle.BackColor != Color.Empty)
+                    xlWorksheet.Range["A" + current_excel_row.ToString() + ":G" + current_excel_row.ToString()].Interior.Color = row.DefaultCellStyle.BackColor;
+                current_excel_row++;
             }
+
+            //border
+            xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 7]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+
+
+            xlWorksheet.Columns.AutoFit();
+            xlWorksheet.Rows.AutoFit();
+
+            Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
+            xlPageSetUp.Zoom = false;
+            xlPageSetUp.FitToPagesWide = 1;
+            xlPageSetUp.Orientation = Excel.XlPageOrientation.xlPortrait;
+
+            xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+
+
+
+            //xlWorkbook.SaveAs(@"c:\temp\test.xlsx");  // or book.Save();
+
+            xlWorkbook.Close(false); //close the excel sheet without saving
+                                     // xlApp.Quit();
+
+
+            // Manual disposal because of COM
+            xlApp.Quit();
+
+            // Now find the process id that was created, and store it.
+            int processID = 0;
+            foreach (Process process in processesAfter)
+            {
+                if (!processesBefore.Select(p => p.Id).Contains(process.Id))
+                    processID = process.Id;
+
+            }
+
+            // And now kill the process.
+            if (processID != 0)
+            {
+                Process process = Process.GetProcessById(processID);
+                process.Kill();
+            }
+
         }
 
         private void printImage()
@@ -572,7 +668,7 @@ namespace ShopFloorPlacementPlanner
                 }
 
                 //now loop through it again - checking each door_id for a match and make it green
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)  
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     if (door_list.Contains(dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString()))
                     {
@@ -594,9 +690,9 @@ namespace ShopFloorPlacementPlanner
             else
             {
                 btnSort.Text = "Sort by Doors";
-                getData(_staff, _dept); 
+                getData(_staff, _dept);
             }
 
         }
-        }
+    }
 }

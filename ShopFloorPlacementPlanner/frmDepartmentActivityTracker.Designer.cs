@@ -97,6 +97,7 @@
             this.txtBending.TabIndex = 4;
             this.txtBending.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtBending.Click += new System.EventHandler(this.txtBending_Click);
+            this.txtBending.TextChanged += new System.EventHandler(this.txtBending_TextChanged);
             // 
             // label3
             // 
