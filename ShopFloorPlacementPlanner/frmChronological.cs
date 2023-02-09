@@ -567,6 +567,7 @@ namespace ShopFloorPlacementPlanner
             }
             catch
             {
+
             }
         }
 

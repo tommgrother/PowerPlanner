@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
+using System.Linq;
 using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ShopFloorPlacementPlanner 
 {
@@ -341,6 +344,105 @@ namespace ShopFloorPlacementPlanner
             frmProductivityEmail frm = new frmProductivityEmail(cmbEmployee.Text + " - " + lblDifference.Text);
             frm.ShowDialog();
 
+        }
+
+
+        private void print_excel()
+        {
+
+            int current_excel_row = 1;
+            // Store the Excel processes before opening.
+            Process[] processesBefore = Process.GetProcessesByName("excel");
+            // Open the file in Excel.
+            string temp = @"\\designsvr1\public\Kevin Power Planner\Productivity.xlsx";
+            var xlApp = new Excel.Application();
+            var xlWorkbooks = xlApp.Workbooks;
+            var xlWorkbook = xlWorkbooks.Open(temp);
+            var xlWorksheet = xlWorkbook.Sheets[1]; // assume it is the first sheet
+            // Get Excel processes after opening the file.
+            Process[] processesAfter = Process.GetProcessesByName("excel");
+
+
+            //add the title
+            xlWorksheet.Cells[1][current_excel_row].Value2 = cmbEmployee.Text + " " + lblDifference.Text;
+            //
+            if (lblDifference.BackColor != Color.Empty)
+                xlWorksheet.Range["A" + current_excel_row.ToString() + ":H" + current_excel_row.ToString()].Interior.Color = lblDifference.BackColor;
+            current_excel_row++;
+
+            //column headers
+            current_excel_row++;
+
+            //vvv we need to loop through dgv 
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                int noteIndex = dataGridView1.Columns["note"].Index;
+                xlWorksheet.Cells[1][current_excel_row].Value2 = row.Cells[0].Value.ToString();
+                xlWorksheet.Cells[2][current_excel_row].Value2 = row.Cells[1].Value.ToString();
+                xlWorksheet.Cells[3][current_excel_row].Value2 = row.Cells[2].Value.ToString();
+                xlWorksheet.Cells[4][current_excel_row].Value2 = row.Cells[3].Value.ToString();
+                xlWorksheet.Cells[5][current_excel_row].Value2 = row.Cells[4].Value.ToString();
+                xlWorksheet.Cells[6][current_excel_row].Value2 = row.Cells[5].Value.ToString();
+                xlWorksheet.Cells[7][current_excel_row].Value2 = row.Cells[6].Value.ToString();
+                xlWorksheet.Cells[8][current_excel_row].Value2 = row.Cells[noteIndex].Value.ToString();
+                //paint the row based on what the dgv is
+                if (row.DefaultCellStyle.BackColor != Color.Empty)
+                    xlWorksheet.Range["A" + current_excel_row.ToString() + ":H" + current_excel_row.ToString()].Interior.Color = row.DefaultCellStyle.BackColor;
+                current_excel_row++;
+            }
+
+            //border
+            xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 8]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+
+
+            xlWorksheet.Range["E:E"].NumberFormat = "@";
+
+            xlWorksheet.Columns.AutoFit();
+            xlWorksheet.Rows.AutoFit();
+
+            Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
+            xlPageSetUp.Zoom = false;
+            xlPageSetUp.FitToPagesWide = 1;
+            xlPageSetUp.Orientation = Excel.XlPageOrientation.xlPortrait;
+
+            //xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+
+
+            string FileName = @"c:\temp\Productivity_" + DateTime.Now.ToString("mmss") + ".xlsx";
+            xlWorkbook.SaveAs(@"c:\temp\Productivity_" + DateTime.Now.ToString("mmss") + ".xlsx");  // or book.Save();
+
+            xlWorkbook.Close(false); //close the excel sheet without saving
+                                     // xlApp.Quit();
+
+
+            // Manual disposal because of COM
+            xlApp.Quit();
+
+            // Now find the process id that was created, and store it.
+            int processID = 0;
+            foreach (Process process in processesAfter)
+            {
+                if (!processesBefore.Select(p => p.Id).Contains(process.Id))
+                    processID = process.Id;
+
+            }
+
+            // And now kill the process.
+            if (processID != 0)
+            {
+                Process process = Process.GetProcessById(processID);
+                process.Kill();
+            }
+
+            if (System.IO.File.Exists(FileName))
+                System.Diagnostics.Process.Start(FileName);
+
+        }
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            print_excel();
         }
     }
 }
