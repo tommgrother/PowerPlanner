@@ -12,6 +12,7 @@ namespace ShopFloorPlacementPlanner
     {
         public int skipMessageBox { get; set; }
         public int queueName { get; set; }
+        public string printout_file_name { get; set; }
 
         public MenuMain()
         {
@@ -1331,13 +1332,13 @@ namespace ShopFloorPlacementPlanner
                 string allocated = "";
                 try
                 {
-                     sql = "SELECT sum(hours) FROM ( " +
-                        "select round(cast((sum(time_remaining_cutting * quantity_same) + sum(time_remaining_prepping * quantity_same) + sum(time_remianing_assembly * quantity_same)) as float) /60,2) as hours from dbo.door_allocation da " +
-                        "left join dbo.door d on da.door_id = d.id " +
-                        "where (da.department = 'Assembly' or da.department = 'Cutting' or da.department = 'Prepping') and " +
-                        "(time_remaining_cutting > 0 or time_remaining_prepping > 0 or time_remianing_assembly > 0) and " +
-                        "(status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
-                        "group by staff_id,da.door_id) as a";
+                    sql = "SELECT sum(hours) FROM ( " +
+                       "select round(cast((sum(time_remaining_cutting * quantity_same) + sum(time_remaining_prepping * quantity_same) + sum(time_remianing_assembly * quantity_same)) as float) /60,2) as hours from dbo.door_allocation da " +
+                       "left join dbo.door d on da.door_id = d.id " +
+                       "where (da.department = 'Assembly' or da.department = 'Cutting' or da.department = 'Prepping') and " +
+                       "(time_remaining_cutting > 0 or time_remaining_prepping > 0 or time_remianing_assembly > 0) and " +
+                       "(status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                       "group by staff_id,da.door_id) as a";
 
                     //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
                     using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
@@ -1359,8 +1360,8 @@ namespace ShopFloorPlacementPlanner
                 dgSlimline[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
             }
 
-      
-            
+
+
 
             dgSlimline.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgSlimline.Columns["set/worked"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
@@ -2431,37 +2432,120 @@ namespace ShopFloorPlacementPlanner
             ep.ShowDialog();
         }
 
+        private void clear_times(bool value)
+        {
+
+            dgSlimline.Columns[4].Visible = value;
+            dgLaser.Columns[4].Visible = value;
+            dgPunch.Columns[4].Visible = value;
+            dgBend.Columns[4].Visible = value;
+            dgWeld.Columns[4].Visible = value;
+            dgBuff.Columns[4].Visible = value;
+            dgPaint.Columns[4].Visible = value;
+            dgPack.Columns[4].Visible = value;
+
+            if (value == false) //we are hiding times
+            {
+                dgSlimline.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgLaser.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgPunch.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgBend.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgWeld.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgBuff.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgPaint.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgPack.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+            else
+            {
+                dgSlimline.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgLaser.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgPunch.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgBend.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgWeld.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgBuff.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgPaint.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgPack.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
+
+
+            dgSlimline.Refresh();
+            dgLaser.Refresh();
+            dgPunch.Refresh();
+            dgBend.Refresh();
+            dgWeld.Refresh();
+            dgBuff.Refresh();
+            dgPaint.Refresh();
+            dgPack.Refresh();
+
+        }
         private void printScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            lbl_time.Text = DateTime.Now.ToString();
-            lbl_time.Refresh();
-            //  lbl_time.Visible = true;
-            try
+            printout_file_name = @"C:\temp\temp" + DateTime.Now.ToString("mmss") + ".jpg";
+            //prompt for times
+            DialogResult result = MessageBox.Show("Do you want to show times", "Power Plan", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.No)
             {
-                Image bit = new Bitmap(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
+                clear_times(false); //false turns them off
 
-                Graphics gs = Graphics.FromImage(bit);
 
-                gs.CopyFromScreen(new Point(0, 0), new Point(0, 0), bit.Size);
+                System.Threading.Thread.Sleep(3000);
 
-                bit.Save(@"C:\temp\temp.jpg");
 
-                printImage();
+                lbl_time.Text = DateTime.Now.ToString();
+                lbl_time.Refresh();
+                //  lbl_time.Visible = true;
+                try
+                {
+                    Image bit = new Bitmap(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
+
+                    Graphics gs = Graphics.FromImage(bit);
+
+                    gs.CopyFromScreen(new Point(0, 0), new Point(0, 0), bit.Size);
+
+                    bit.Save(printout_file_name);
+
+                    printImage();
+                }
+                catch
+                {
+                }
+                lbl_time.Text = "";
+
+                clear_times(true); //turns them back on
             }
-            catch
+            else
             {
+                lbl_time.Text = DateTime.Now.ToString();
+                lbl_time.Refresh();
+                //  lbl_time.Visible = true;
+                System.Threading.Thread.Sleep(3000);
+                try
+                {
+                    Image bit = new Bitmap(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
+
+                    Graphics gs = Graphics.FromImage(bit);
+
+                    gs.CopyFromScreen(new Point(0, 0), new Point(0, 0), bit.Size);
+
+                    bit.Save(printout_file_name);
+
+                    printImage();
+                }
+                catch
+                {
+                }
+                lbl_time.Text = "";
             }
-            lbl_time.Text = "";
         }
 
         private void printImage()
         {
-            try
-            {
+            //try
+            //{
                 PrintDocument pd = new PrintDocument();
                 pd.PrintPage += (sender, args) =>
                 {
-                    Image i = Image.FromFile(@"C:\temp\temp.jpg");
+                    Image i = Image.FromFile(printout_file_name);//@"C:\temp\temp" + DateTime.Now.ToString("mmss") + ".jpg";
                     Point p = new Point(100, 100);
                     args.Graphics.DrawImage(i, args.MarginBounds);
                 };
@@ -2470,10 +2554,11 @@ namespace ShopFloorPlacementPlanner
                 Margins margins = new Margins(50, 50, 50, 50);
                 pd.DefaultPageSettings.Margins = margins;
                 pd.Print();
-            }
-            catch
-            {
-            }
+                pd.Dispose();
+            //}
+            //catch
+            //{
+            //}
         }
 
         private void updateAutomaticAllocationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2758,7 +2843,7 @@ namespace ShopFloorPlacementPlanner
                                                Convert.ToDouble(welding_hours), Convert.ToDouble(welding_OT), Convert.ToDouble(welding_AD),
                                                Convert.ToDouble(buffing_hours), Convert.ToDouble(buffing_OT), Convert.ToDouble(buffing_AD),
                                                Convert.ToDouble(painting_hours), Convert.ToDouble(painting_OT), Convert.ToDouble(painting_AD),
-                                               Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD),  dt_row_number, skipDT); ;
+                                               Convert.ToDouble(packing_hours), Convert.ToDouble(packing_OT), Convert.ToDouble(packing_AD), dt_row_number, skipDT); ;
 
                     //excel.addData(Convert.ToDouble(punching_hours), Convert.ToDouble(punching_OT), Convert.ToDouble(punching_AD),
                     //                           Convert.ToDouble(laser_hours), Convert.ToDouble(laser_OT), Convert.ToDouble(laser_AD),
@@ -2926,7 +3011,7 @@ namespace ShopFloorPlacementPlanner
                     worked = Convert.ToDouble(cmd.ExecuteScalar());
 
                 final_hours = hours - worked;
-                
+
                 if (final_hours < 0)
                 {
                     final_hours = final_hours * -1;
@@ -2938,7 +3023,7 @@ namespace ShopFloorPlacementPlanner
             }
 
 
-            frmChronological frm = new frmChronological(Convert.ToString(dgWeld.Rows[e.RowIndex].Cells[0].Value), "Welding", dteDateSelection.Value,dropped_gained_hours);
+            frmChronological frm = new frmChronological(Convert.ToString(dgWeld.Rows[e.RowIndex].Cells[0].Value), "Welding", dteDateSelection.Value, dropped_gained_hours);
             frm.ShowDialog();
         }
 
@@ -2979,7 +3064,7 @@ namespace ShopFloorPlacementPlanner
             }
 
             dgPack.ClearSelection();
-            frmChronological frm = new frmChronological(Convert.ToString(dgPack.Rows[e.RowIndex].Cells[0].Value), "Packing", dteDateSelection.Value,dropped_gained_hours);
+            frmChronological frm = new frmChronological(Convert.ToString(dgPack.Rows[e.RowIndex].Cells[0].Value), "Packing", dteDateSelection.Value, dropped_gained_hours);
             frm.ShowDialog();
         }
 
@@ -3020,7 +3105,7 @@ namespace ShopFloorPlacementPlanner
             }
 
             dgBuff.ClearSelection();
-            frmChronological frm = new frmChronological(Convert.ToString(dgBuff.Rows[e.RowIndex].Cells[0].Value), "Buffing", dteDateSelection.Value,dropped_gained_hours);
+            frmChronological frm = new frmChronological(Convert.ToString(dgBuff.Rows[e.RowIndex].Cells[0].Value), "Buffing", dteDateSelection.Value, dropped_gained_hours);
             frm.ShowDialog();
         }
 
@@ -3066,7 +3151,7 @@ namespace ShopFloorPlacementPlanner
             frmCopyWeek frm = new frmCopyWeek(dteDateSelection.Value);
             frm.ShowDialog();
             //maybe if copy is successful we should jump to that date ---
-        } 
+        }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
@@ -3635,7 +3720,7 @@ namespace ShopFloorPlacementPlanner
         {
 
             dgSlimline.ClearSelection();
-            frmChronological frm = new frmChronological(Convert.ToString(dgSlimline.Rows[e.RowIndex].Cells[0].Value), "Slimline", dteDateSelection.Value,"");
+            frmChronological frm = new frmChronological(Convert.ToString(dgSlimline.Rows[e.RowIndex].Cells[0].Value), "Slimline", dteDateSelection.Value, "");
             frm.ShowDialog();
         }
 
@@ -3905,7 +3990,7 @@ namespace ShopFloorPlacementPlanner
             }
 
             dgBend.ClearSelection();
-            frmChronological frm = new frmChronological(Convert.ToString(dgBend.Rows[e.RowIndex].Cells[0].Value), "Bending", dteDateSelection.Value,dropped_gained_hours);
+            frmChronological frm = new frmChronological(Convert.ToString(dgBend.Rows[e.RowIndex].Cells[0].Value), "Bending", dteDateSelection.Value, dropped_gained_hours);
             frm.ShowDialog();
         }
 
