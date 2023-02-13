@@ -2457,14 +2457,14 @@ namespace ShopFloorPlacementPlanner
             }
             else
             {
-                dgSlimline.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dgLaser.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dgPunch.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dgBend.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dgWeld.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dgBuff.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dgPaint.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dgPack.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgSlimline.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgLaser.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgPunch.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgBend.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgWeld.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgBuff.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgPaint.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgPack.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             }
 
 
