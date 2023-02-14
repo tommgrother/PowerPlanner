@@ -59,13 +59,25 @@ namespace ShopFloorPlacementPlanner
             //grab the staff name
             using (SqlConnection conn2 = new SqlConnection(connectionStrings.ConnectionStringUser))
             {
+                conn2.Open();
                 string sql = "SELECT id FROM dbo.[user] WHERE forename + ' ' + surname = '" + staff + "'";
                 using (SqlCommand cmd = new SqlCommand(sql, conn2))
                 {
-                    conn2.Open();
+                    
                     staff_id = Convert.ToInt32(cmd.ExecuteScalar());
-                    conn2.Close();
+                   
                 }
+                //start date too
+                sql = "SELECT cast([start_date] as datE) FROM [user_info].dbo.[user] WHERE forename + ' ' + surname = '" + staff + "'";
+                using (SqlCommand cmd = new SqlCommand(sql, conn2))
+                {
+                    var temp = cmd.ExecuteScalar();
+                    if (temp != null)
+                        lblStartDate.Text = "Start Date: " + Convert.ToDateTime(cmd.ExecuteScalar().ToString()).ToString("dd/MM/yyyy");
+                    else
+                        lblStartDate.Text = "No Start Date";
+                }
+                conn2.Close();
             }
 
             //usp_power_planner_chronological_shop_actions_simline

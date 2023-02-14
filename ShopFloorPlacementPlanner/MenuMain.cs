@@ -3959,6 +3959,7 @@ namespace ShopFloorPlacementPlanner
             string dropped_gained_hours = "";
             double hours = Convert.ToDouble(Convert.ToDecimal(dgBend.Rows[e.RowIndex].Cells[1].Value) + Convert.ToDecimal((Convert.ToDouble(dgBend.Rows[e.RowIndex].Cells[5].Value) * 0.8)));
             string staff_name = Convert.ToString(dgBend.Rows[e.RowIndex].Cells[0].Value);
+            string start_date = "";
             double final_hours = 0;
             int staff_id = 0;
             staff_id = staff_name.IndexOf(" ", staff_name.IndexOf(" ") + 1); //staff id is being used as aa temp int var here
@@ -3970,6 +3971,7 @@ namespace ShopFloorPlacementPlanner
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     staff_id = Convert.ToInt32(cmd.ExecuteScalar().ToString());
+
 
                 sql = "SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] FROM dbo.door_part_completion_log WHERE staff_id = " +
                     staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND part_status = 'Complete' AND op = 'Bending'  GROUP BY staff_id),0)";
