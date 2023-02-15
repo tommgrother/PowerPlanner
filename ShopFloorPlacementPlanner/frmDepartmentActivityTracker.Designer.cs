@@ -156,6 +156,7 @@
             this.txtPainting.TabIndex = 10;
             this.txtPainting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtPainting.Click += new System.EventHandler(this.txtPainting_Click);
+            this.txtPainting.TextChanged += new System.EventHandler(this.txtPainting_TextChanged);
             // 
             // label6
             // 

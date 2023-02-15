@@ -68,7 +68,7 @@ namespace ShopFloorPlacementPlanner
                    
                 }
                 //start date too
-                sql = "SELECT cast([start_date] as datE) FROM [user_info].dbo.[user] WHERE forename + ' ' + surname = '" + staff + "'";
+                sql = "SELECT cast([start_date] as date) FROM [user_info].dbo.[user] WHERE forename + ' ' + surname = '" + staff + "'";
                 using (SqlCommand cmd = new SqlCommand(sql, conn2))
                 {
                     var temp = cmd.ExecuteScalar();

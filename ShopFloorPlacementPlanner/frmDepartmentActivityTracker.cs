@@ -191,7 +191,7 @@ namespace ShopFloorPlacementPlanner
                         //now we get the day of week/hours/actual/%
 
                         sql = "select '" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("dd/MM/yyyy") + "',datename(WEEKDAY,'" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "'),sum([hours]) as [hours],sum([actual]) as actual,coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent] from (" +
-                            "select sum(s.[hours]) + sum((ot.overtime * 0.8)) as [hours],0 as actual from dbo.power_plan_staff s " +
+                            "select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours],0 as actual from dbo.power_plan_staff s " +
                             "left join dbo.power_plan_date d on s.date_id = d.id " +
                             "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
                             "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
@@ -375,7 +375,7 @@ namespace ShopFloorPlacementPlanner
                     int date_row_count = 0;
                     date_row_count = dt_date.Rows.Count;
 
-                    int dropped_row_added = 0; 
+                    int dropped_row_added = 0;
                     for (int date_row = 0; date_row < dt_date.Rows.Count; date_row++)
                     {
                         //now we get the day of week/hours/actual/%
@@ -498,6 +498,238 @@ namespace ShopFloorPlacementPlanner
             }
 
 
+        }
+
+
+        private void print_new_staff_dropped_sheet(string department)
+        {
+            // Store the Excel processes before opening.
+            Process[] processesBefore = Process.GetProcessesByName("excel");
+            // Open the file in Excel.
+            string filName = @"\\designsvr1\public\Kevin Power Planner\DEPARTMENT_ACTIVITY.xlsx";
+            var xlApp = new Excel.Application();
+            var xlWorkbooks = xlApp.Workbooks;
+            var xlWorkbook = xlWorkbooks.Open(filName);
+            var xlWorksheet = xlWorkbook.Sheets[1]; // assume it is the first sheet
+            // Get Excel processes after opening the file.
+            Process[] processesAfter = Process.GetProcessesByName("excel");
+
+
+
+            //get all of the distinct staff in the department
+
+            //vvv we need to loop through the staff 
+            string sql = "select distinct u.forename + ' ' + u.surname as fullName from dbo.power_plan_staff s " +
+                         "left join dbo.power_plan_date d on s.date_id = d.id " +
+                         "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
+                         "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND (u.non_user = 0 or u.non_user is null) " +
+                         "AND d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' AND d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' order by u.forename + ' ' + u.surname asc ";
+
+
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+                DataTable dt_staff = new DataTable();
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt_staff);
+                }
+
+                int current_excel_row = 1;
+
+                xlWorksheet.Cells[1][current_excel_row].Value2 = department + " Activity";
+                current_excel_row++;
+                //need to workout the average for each of the staff
+
+                //if they are < 100 then we show everyday that they are placed
+
+                //else we go next
+
+                for (int i = 0;i < dt_staff.Rows.Count; i++)
+                {
+                    sql = "SELECT AVG([percent]) as [percent] FROM (" +
+                          "select datename(WEEKDAY,group_date) as [dayOfWeek],sum([hours]) as [hours]," +
+                          "sum([actual]) as actual,coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent],group_date from (" +
+                          "select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours],0 as actual,d.date_plan as group_date from dbo.power_plan_staff s " +
+                          "left join dbo.power_plan_date d on s.date_id = d.id " +
+                          "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
+                          "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
+                          "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND " +
+                          "d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
+                          "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' " +
+                          "group by d.date_plan " +
+                          "union all " +
+                          "select 0 as [hours],sum(l.time_for_part) / 60 as actual,cast(part_complete_date as date) as group_date from dbo.door_part_completion_log l " +
+                          "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
+                          "where op = '" + department + "' AND " +
+                          "cast(part_complete_date as date) >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and cast(part_complete_date as date) <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
+                          "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] +"' " +
+                          "group by part_complete_date ) as a " +
+                          "group by group_date) as temp";
+
+                    int skip_staff = 0;
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        var temp = cmd.ExecuteScalar();
+                        if (temp == null)
+                            skip_staff = -1;
+                        else
+                        {
+                            if (Convert.ToDecimal(temp) < 1)
+                                skip_staff = 0;
+                            else
+                                skip_staff = -1;
+                        }
+                    }
+                    
+                    if (skip_staff == 0)
+                    {
+
+                        xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Bold = true;
+                        xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Size = 14;
+
+                        //MERGE THESE ROWS
+                        xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Merge();
+                        //insert the staff members name into the excel sheet
+                        xlWorksheet.Cells[1][current_excel_row].Value2 = dt_staff.Rows[i][0].ToString();
+
+                        current_excel_row++;
+
+                        //column headers
+                        xlWorksheet.Cells[1][current_excel_row].Value2 = "Date";
+                        xlWorksheet.Cells[2][current_excel_row].Value2 = "Day of Week";
+                        xlWorksheet.Cells[3][current_excel_row].Value2 = "Hours";
+                        xlWorksheet.Cells[4][current_excel_row].Value2 = "Actual";
+                        xlWorksheet.Cells[5][current_excel_row].Value2 = "%";
+
+                        current_excel_row++;
+
+                        //we need to list all of the days this staff was in over the dates selected 
+
+                        //get all the days this staff member is in this department between the selected dates
+
+                        sql = "select d.date_plan from dbo.power_plan_staff s " +
+                              "left join dbo.power_plan_date d on s.date_id = d.id " +
+                              "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
+                              "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND " +
+                              "d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' AND d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
+                              "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' order by d.date_plan";
+
+                        DataTable dt_date = new DataTable();
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+                            SqlDataAdapter da = new SqlDataAdapter(cmd);
+                            da.Fill(dt_date);
+                        }
+
+                        int date_row_count = 0;
+                        date_row_count = dt_date.Rows.Count;
+
+                        for (int date_row = 0; date_row < dt_date.Rows.Count; date_row++)
+                        {
+                            //now we get the day of week/hours/actual/%
+
+                            sql = "select CAST('" + dt_date.Rows[date_row][0] + "' as date),datename(WEEKDAY,'" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "'),sum([hours]) as [hours],sum([actual]) as actual,coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent] from (" +
+                                "select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours],0 as actual from dbo.power_plan_staff s " +
+                                "left join dbo.power_plan_date d on s.date_id = d.id " +
+                                "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
+                                "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
+                                "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND d.date_plan = '" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' " +
+                                "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' " +
+                                "union all " +
+                                "select 0 as [hours],sum(l.time_for_part) / 60 as actual from dbo.door_part_completion_log l " +
+                                "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
+                                "where op = '" + department + "' AND cast(part_complete_date as date) = '" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' " +
+                                "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "') as a";
+
+                            using (SqlCommand cmd = new SqlCommand(sql, conn))
+                            {
+                                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                                DataTable dt = new DataTable();
+                                da.Fill(dt);
+
+                                xlWorksheet.Cells[1][current_excel_row].Value2 = Convert.ToDateTime(dt.Rows[0][0].ToString()).ToString("dd/MM/yyyy");
+                                xlWorksheet.Cells[2][current_excel_row].Value2 = dt.Rows[0][1].ToString();
+                                xlWorksheet.Cells[3][current_excel_row].Value2 = dt.Rows[0][2].ToString();
+                                xlWorksheet.Cells[4][current_excel_row].Value2 = dt.Rows[0][3].ToString();
+                                xlWorksheet.Cells[5][current_excel_row].Value2 = dt.Rows[0][4].ToString();
+
+                                //add conditional formatting to the last row (%)
+                                Excel.FormatCondition formatGreen = (Excel.FormatCondition)(xlWorksheet.Range("E" + current_excel_row.ToString(),
+                                    Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
+                                                       Excel.XlFormatConditionOperator.xlGreaterEqual, 1,
+                                                       Type.Missing, Type.Missing, Type.Missing,
+                                                       Type.Missing, Type.Missing));
+
+                                formatGreen.Font.Bold = true;
+                                formatGreen.Font.Color = Color.DarkGreen;
+                                formatGreen.Interior.Color = Color.LimeGreen;
+
+                                Excel.FormatCondition formatRed = (Excel.FormatCondition)(xlWorksheet.Range("E" + current_excel_row.ToString(),
+                                                   Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
+                                                   Excel.XlFormatConditionOperator.xlLess, 1,
+                                                   Type.Missing, Type.Missing, Type.Missing,
+                                                   Type.Missing, Type.Missing));
+
+                                formatRed.Font.Bold = true;
+                                formatRed.Font.Color = Color.DarkRed;
+                                formatRed.Interior.Color = Color.PaleVioletRed;
+                            }
+
+                            current_excel_row++;
+                        }
+                        //average %
+                        xlWorksheet.Cells[4][current_excel_row].Value2 = "AVERAGE %";
+                        xlWorksheet.Cells[5][current_excel_row].Value2 = "=AVERAGE(E" + (current_excel_row - 1 - date_row_count).ToString() + ":E" + (current_excel_row - 1).ToString() + ")";
+                        xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 3]].Merge();
+                        current_excel_row++;
+                    }
+
+                }
+
+                xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 5]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous; 
+
+
+                conn.Close();
+            }
+
+
+
+            Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
+            xlPageSetUp.Zoom = false;
+            xlPageSetUp.FitToPagesWide = 1;
+            xlPageSetUp.Orientation = Excel.XlPageOrientation.xlPortrait;
+
+            xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+
+
+
+            //xlWorkbook.SaveAs(@"c:\temp\test.xlsx");  // or book.Save();
+
+            xlWorkbook.Close(false); //close the excel sheet without saving
+                                     // xlApp.Quit();
+
+
+            // Manual disposal because of COM
+            xlApp.Quit();
+
+            // Now find the process id that was created, and store it.
+            int processID = 0;
+            foreach (Process process in processesAfter)
+            {
+                if (!processesBefore.Select(p => p.Id).Contains(process.Id))
+                    processID = process.Id;
+
+            }
+
+            // And now kill the process.
+            if (processID != 0)
+            {
+                Process process = Process.GetProcessById(processID);
+                process.Kill();
+            }
         }
 
 
@@ -852,22 +1084,22 @@ namespace ShopFloorPlacementPlanner
 
         private void txtWelding_Click(object sender, EventArgs e)
         {
-            print_staff_dropped_sheet("Welding");
+            print_new_staff_dropped_sheet("Welding");
         }
 
         private void txtBending_Click(object sender, EventArgs e)
         {
-            print_staff_dropped_sheet("Bending");
+            print_new_staff_dropped_sheet("Bending");
         }
 
         private void txtBuffing_Click(object sender, EventArgs e)
         {
-            print_staff_dropped_sheet("Buffing");
+            print_new_staff_dropped_sheet("Buffing");
         }
 
         private void txtPacking_Click(object sender, EventArgs e)
         {
-            print_staff_dropped_sheet("Packing");
+            print_new_staff_dropped_sheet("Packing");
         }
 
         private void txtPunching_Click(object sender, EventArgs e)
@@ -881,6 +1113,11 @@ namespace ShopFloorPlacementPlanner
         }
 
         private void txtBending_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPainting_TextChanged(object sender, EventArgs e)
         {
 
         }
