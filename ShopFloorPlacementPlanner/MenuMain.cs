@@ -1463,6 +1463,15 @@ namespace ShopFloorPlacementPlanner
             // dgPunch.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgPunch.Columns[1].Visible = false;
             dgPunch.Columns[3].Visible = false;
+
+
+            //go through each row and hide allocation block
+            foreach (DataGridViewRow row in dgPunch.Rows)
+            {
+                //MessageBox.Show(row.Cells[0].Value.ToString());
+                if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
+                    row.Height = 0;
+            }
         }
 
 
@@ -1548,6 +1557,15 @@ namespace ShopFloorPlacementPlanner
             dgLaser.Columns["overtime"].Visible = false;
 
             conn.Close();
+
+
+            //go through each row and hide allocation block
+            foreach (DataGridViewRow row in dgLaser.Rows)
+            {
+                //MessageBox.Show(row.Cells[0].Value.ToString());
+                if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
+                    row.Height = 0;
+            }
         }
 
         private void fillBend()
@@ -1634,6 +1652,14 @@ namespace ShopFloorPlacementPlanner
             // this seems to work fine i think afaik
 
             conn.Close();
+
+            //go through each row and hide allocation block
+            foreach (DataGridViewRow row in dgBend.Rows)
+            {
+                //MessageBox.Show(row.Cells[0].Value.ToString());
+                if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
+                    row.Height = 0;
+            }
         }
 
         private void fillWeld()
@@ -1767,6 +1793,15 @@ namespace ShopFloorPlacementPlanner
             dgWeld.Columns["overtime"].Visible = false;
 
             // conn.Close();
+
+
+            //go through each row and hide allocation block
+            foreach (DataGridViewRow row in dgWeld.Rows)
+            {
+                //MessageBox.Show(row.Cells[0].Value.ToString());
+                if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
+                    row.Height = 0;
+            }
         }
 
         private void fillBuff()
@@ -1883,6 +1918,14 @@ namespace ShopFloorPlacementPlanner
             dgBuff.Columns["overtime"].Visible = false;
 
             conn.Close();
+
+            //go through each row and hide allocation block
+            foreach (DataGridViewRow row in dgBuff.Rows)
+            {
+                //MessageBox.Show(row.Cells[0].Value.ToString());
+                if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
+                    row.Height = 0;
+            }
         }
 
         private void fillPaint()
@@ -1961,6 +2004,16 @@ namespace ShopFloorPlacementPlanner
             dgPaint.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgPaint.Columns[3].Visible = false;
             dgPaint.Columns[1].Visible = false;
+
+
+            //go through each row and hide allocation block
+            foreach (DataGridViewRow row in dgPaint.Rows)
+            {
+                //MessageBox.Show(row.Cells[0].Value.ToString());
+                if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
+                    row.Height = 0;
+            }
+
         }
 
         private void fillPack()
@@ -2107,6 +2160,14 @@ namespace ShopFloorPlacementPlanner
             }
 
             conn.Close();
+
+            //go through each row and hide allocation block
+            foreach (DataGridViewRow row in dgPack.Rows)
+            {
+                //MessageBox.Show(row.Cells[0].Value.ToString());
+                if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
+                    row.Height = 0;
+            }
         }
 
         private void fillStores()
