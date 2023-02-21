@@ -38,6 +38,9 @@
             this.lblDifference = new System.Windows.Forms.Label();
             this.btnEmail = new System.Windows.Forms.Button();
             this.btnExcel = new System.Windows.Forms.Button();
+            this.lblStartDate = new System.Windows.Forms.Label();
+            this.lblDepartment = new System.Windows.Forms.Label();
+            this.cmbDepartment = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +48,7 @@
             // 
             this.cmbEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbEmployee.FormattingEnabled = true;
-            this.cmbEmployee.Location = new System.Drawing.Point(91, 27);
+            this.cmbEmployee.Location = new System.Drawing.Point(94, 27);
             this.cmbEmployee.Name = "cmbEmployee";
             this.cmbEmployee.Size = new System.Drawing.Size(211, 23);
             this.cmbEmployee.TabIndex = 0;
@@ -64,9 +67,10 @@
             // dteStart
             // 
             this.dteStart.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dteStart.Location = new System.Drawing.Point(315, 28);
+            this.dteStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.dteStart.Location = new System.Drawing.Point(315, 27);
             this.dteStart.Name = "dteStart";
-            this.dteStart.Size = new System.Drawing.Size(211, 20);
+            this.dteStart.Size = new System.Drawing.Size(211, 21);
             this.dteStart.TabIndex = 3;
             this.dteStart.CloseUp += new System.EventHandler(this.dteStart_CloseUp);
             this.dteStart.ValueChanged += new System.EventHandler(this.dteStart_ValueChanged);
@@ -74,21 +78,23 @@
             // dteEnd
             // 
             this.dteEnd.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dteEnd.Location = new System.Drawing.Point(315, 69);
+            this.dteEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.dteEnd.Location = new System.Drawing.Point(315, 76);
             this.dteEnd.Name = "dteEnd";
-            this.dteEnd.Size = new System.Drawing.Size(211, 20);
+            this.dteEnd.Size = new System.Drawing.Size(211, 21);
             this.dteEnd.TabIndex = 4;
             this.dteEnd.CloseUp += new System.EventHandler(this.dteEnd_CloseUp);
             this.dteEnd.ValueChanged += new System.EventHandler(this.dteEnd_ValueChanged);
             // 
             // label2
             // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(411, 50);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F);
+            this.label2.Location = new System.Drawing.Point(312, 48);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(22, 15);
+            this.label2.Size = new System.Drawing.Size(214, 25);
             this.label2.TabIndex = 5;
             this.label2.Text = "to";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dataGridView1
             // 
@@ -153,11 +159,46 @@
             this.btnExcel.UseVisualStyleBackColor = true;
             this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
             // 
+            // lblStartDate
+            // 
+            this.lblStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblStartDate.Location = new System.Drawing.Point(15, 51);
+            this.lblStartDate.Name = "lblStartDate";
+            this.lblStartDate.Size = new System.Drawing.Size(290, 25);
+            this.lblStartDate.TabIndex = 49;
+            this.lblStartDate.Text = " ";
+            this.lblStartDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblDepartment
+            // 
+            this.lblDepartment.AutoSize = true;
+            this.lblDepartment.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDepartment.Location = new System.Drawing.Point(12, 79);
+            this.lblDepartment.Name = "lblDepartment";
+            this.lblDepartment.Size = new System.Drawing.Size(80, 16);
+            this.lblDepartment.TabIndex = 51;
+            this.lblDepartment.Text = "Department:";
+            this.lblDepartment.Visible = false;
+            // 
+            // cmbDepartment
+            // 
+            this.cmbDepartment.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbDepartment.FormattingEnabled = true;
+            this.cmbDepartment.Location = new System.Drawing.Point(94, 76);
+            this.cmbDepartment.Name = "cmbDepartment";
+            this.cmbDepartment.Size = new System.Drawing.Size(211, 23);
+            this.cmbDepartment.TabIndex = 50;
+            this.cmbDepartment.Visible = false;
+            this.cmbDepartment.SelectedIndexChanged += new System.EventHandler(this.cmbDepartment_SelectedIndexChanged);
+            // 
             // frmProductivity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1095, 859);
+            this.Controls.Add(this.lblDepartment);
+            this.Controls.Add(this.cmbDepartment);
+            this.Controls.Add(this.lblStartDate);
             this.Controls.Add(this.btnExcel);
             this.Controls.Add(this.btnEmail);
             this.Controls.Add(this.lblDifference);
@@ -191,5 +232,8 @@
         private System.Windows.Forms.Label lblDifference;
         private System.Windows.Forms.Button btnEmail;
         private System.Windows.Forms.Button btnExcel;
+        private System.Windows.Forms.Label lblStartDate;
+        private System.Windows.Forms.Label lblDepartment;
+        private System.Windows.Forms.ComboBox cmbDepartment;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Office.CustomUI;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -9,10 +10,11 @@ using System.Linq;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
-namespace ShopFloorPlacementPlanner 
+namespace ShopFloorPlacementPlanner
 {
     public partial class frmProductivity : Form
     {
+        public int skip_combo_box { get; set; }
         public frmProductivity() //productivity_email 
         {
             InitializeComponent();
@@ -37,6 +39,8 @@ namespace ShopFloorPlacementPlanner
 
         private void cmbEmployee_SelectedIndexChanged(object sender, EventArgs e)
         {
+            skip_combo_box = 0;
+            cmbDepartment.Text = "";
             fillDataGrid();
         }
 
@@ -63,6 +67,52 @@ namespace ShopFloorPlacementPlanner
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     staff_id = Convert.ToInt32(cmd.ExecuteScalar());
+
+
+                sql = "SELECT cast([start_date] as date) FROM [user_info].dbo.[user] WHERE id = '" + staff_id + "'";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    var temp = cmd.ExecuteScalar();
+                    if (temp != null)
+                        lblStartDate.Text = "Start Date: " + Convert.ToDateTime(cmd.ExecuteScalar().ToString()).ToString("dd/MM/yyyy");
+                    else
+                        lblStartDate.Text = "No Start Date";
+                }
+
+                //get all the departments that this user has been in between the selected dates
+
+                sql = "select distinct (s.department) from dbo.power_plan_staff  s " +
+                    "left join dbo.power_plan_date d on s.date_id = d.id " +
+                    "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND s.department = ot.department and s.staff_id = ot.staff_id " +
+                    "where  s.staff_id = " + staff_id + " AND cast(date_plan as DATE) >= '" + Convert.ToDateTime(dteStart.Value).ToString("yyyy-MM-dd") + "' AND " +
+                    "CAST(date_plan as DATE) <= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + "'";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (skip_combo_box == 0)
+                        cmbDepartment.Items.Clear();
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (cmbDepartment.Items.Contains(row[0].ToString()) == false)
+                            cmbDepartment.Items.Add(row[0].ToString());
+                    }
+
+                    if (cmbDepartment.Items.Count > 1)
+                    {
+                        lblDepartment.Visible = true;
+                        cmbDepartment.Visible = true;
+                    }
+                    else
+                    {
+                        lblDepartment.Visible = false;
+                        cmbDepartment.Visible = false;
+                    }
+                }
+
+
                 //sql = "SELECT  CAST(max(part_complete_date) as date) as [Date],MAX(DATENAME(dw,part_complete_date)) as [day],max(op) as [department], MAX(dbo.power_plan_staff.[hours]) as [set_hours], " +
                 //    " '0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours] FROM dbo.door_part_completion_log LEFT JOIN dbo.power_plan_date on CAST(dbo.door_part_completion_log.part_complete_date as date) = dbo.power_plan_date.date_plan " +
                 //    "LEFT JOIN dbo.power_plan_staff on dbo.power_plan_date.id = dbo.power_plan_staff.date_id AND dbo.power_plan_staff.department = dbo.door_part_completion_log.op " +
@@ -73,18 +123,21 @@ namespace ShopFloorPlacementPlanner
                 sql = "SELECT max(b.date_plan) as [Date],MAX(DATENAME(dw,b.date_plan)) as [day],max(department) as [department], MAX(a.[hours]) as [set_hours],'0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours],max(a.id) as [placement],max(placement_note) as [note] " +
                     "FROM dbo.power_plan_staff a LEFT JOIN dbo.power_plan_date b on a.date_id = b.id " +
                     "WHERE a.staff_id = " + staff_id.ToString() + " AND CAST(b.date_plan as DATE)>= '" + Convert.ToDateTime(dteStart.Value).ToString("yyyy-MM-dd") + "' AND CAST(b.date_plan as DATE)<= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + "' " +
-                    "AND department <> 'Punching' AND department <> 'Stores' AND department<> 'Dispatch' AND department<> 'HS' AND department<> 'Cleaning' AND department<> 'ToolRoom' AND department<> 'Management'" +
-                    "GROUP BY department,b.date_plan,a.staff_id";
+                    "AND department <> 'Punching' AND department <> 'Stores' AND department<> 'Dispatch' AND department<> 'HS' AND department<> 'Cleaning' AND department<> 'ToolRoom' AND department<> 'Management' ";
+
+                if (string.IsNullOrEmpty(cmbDepartment.Text) == false)
+                    sql = sql + " AND department = '" + cmbDepartment.Text + "' ";
+
+                sql = sql + " GROUP BY department,b.date_plan,a.staff_id";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     dt.Columns.Add(" ");
-                    // generate the data you want to insert
                     DataRow row = dt.NewRow();
                     dt.Rows.Add(row);
-                    dataGridView1.DataSource = dt; 
+                    dataGridView1.DataSource = dt;
                 }
 
                 //Am currently having issues where time_for_part / 60 is not giving me the correct number, going to manually add it here instead~
@@ -131,7 +184,7 @@ namespace ShopFloorPlacementPlanner
                     else
                     {
 
-                        string temp = ""; 
+                        string temp = "";
                         temp = row.Cells[departmentIndex].Value.ToString();
                         if (temp == "Dressing")
                             temp = "buffing";
@@ -220,7 +273,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            
+
             try
             {
                 Rectangle bounds = this.Bounds;
@@ -325,7 +378,7 @@ namespace ShopFloorPlacementPlanner
                         misc_temp = "cross";
                     else
                         misc_temp = "";
-                    string date_temp = ""; 
+                    string date_temp = "";
                     try
                     { date_temp = Convert.ToDateTime(row.Cells[date].Value.ToString()).ToString("dd-MM-yyyy"); }
                     catch
@@ -340,7 +393,7 @@ namespace ShopFloorPlacementPlanner
                     }
                 }
                 conn.Close();
-            } 
+            }
             frmProductivityEmail frm = new frmProductivityEmail(cmbEmployee.Text + " - " + lblDifference.Text);
             frm.ShowDialog();
 
@@ -443,6 +496,12 @@ namespace ShopFloorPlacementPlanner
         private void btnExcel_Click(object sender, EventArgs e)
         {
             print_excel();
+        }
+
+        private void cmbDepartment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            skip_combo_box = -1;
+            fillDataGrid();
         }
     }
 }
