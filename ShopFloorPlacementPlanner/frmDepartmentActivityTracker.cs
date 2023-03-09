@@ -630,7 +630,7 @@ namespace ShopFloorPlacementPlanner
                         {
                             //now we get the day of week/hours/actual/%
 
-                            sql = "select CAST('" + dt_date.Rows[date_row][0] + "' as date),datename(WEEKDAY,'" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "'),sum([hours]) as [hours],sum([actual]) as actual,coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent] from (" +
+                            sql = "select Convert(varchar,CAST('" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' as date),103),datename(WEEKDAY,'" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "'),sum([hours]) as [hours],sum([actual]) as actual,coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent] from (" +
                                 "select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours],0 as actual from dbo.power_plan_staff s " +
                                 "left join dbo.power_plan_date d on s.date_id = d.id " +
                                 "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +

@@ -99,7 +99,6 @@ namespace ShopFloorPlacementPlanner
                         if (cmbDepartment.Items.Contains(row[0].ToString()) == false)
                             cmbDepartment.Items.Add(row[0].ToString());
                     }
-
                     if (cmbDepartment.Items.Count > 1)
                     {
                         lblDepartment.Visible = true;
