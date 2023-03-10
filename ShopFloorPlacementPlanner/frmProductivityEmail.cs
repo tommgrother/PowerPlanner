@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
@@ -56,7 +50,7 @@ namespace ShopFloorPlacementPlanner
             //cmd.Parameters.AddWithValue("@action_time", SqlDbType.Date).Value = _action_time;
             //cmd.Parameters.AddWithValue("@action_time_end", SqlDbType.Date).Value = _action_time_end;
             cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
-            cmd.Parameters.AddWithValue("@staff", SqlDbType.VarChar).Value = _staff ;
+            cmd.Parameters.AddWithValue("@staff", SqlDbType.VarChar).Value = _staff;
             cmd.Parameters.AddWithValue("@message", SqlDbType.NVarChar).Value = message;
             cmd.ExecuteNonQuery();
             conn.Close();

@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 namespace ShopFloorPlacementPlanner
 {
     public partial class frmBendingPress : Form
@@ -32,7 +26,7 @@ namespace ShopFloorPlacementPlanner
                         cmbPress2.Items.Add(dt.Rows[i][0]);
                         cmbPress3.Items.Add(dt.Rows[i][0]);
                     }
-                    conn.Close(); 
+                    conn.Close();
                 }
             }
         }

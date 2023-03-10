@@ -1,16 +1,7 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-//using Microsoft.Office.Interop.Excel;
+﻿//using Microsoft.Office.Interop.Excel;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Drawing.Text;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
@@ -76,7 +67,7 @@ namespace ShopFloorPlacementPlanner
                 tempDate = trueMonday.AddDays(5);
             if (tabControl1.SelectedIndex == 6)//sunday
                 tempDate = trueMonday.AddDays(6);
-            
+
             fillDGV();
         }
 
@@ -138,7 +129,7 @@ namespace ShopFloorPlacementPlanner
                       "WHERE b.id = " + date_id.ToString() + " AND a.department = '" + department + "' AND (non_user = 0 or non_user is null) order by d.forename";
 
 
-                using (SqlCommand cmd = new SqlCommand(sql,conn))
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();

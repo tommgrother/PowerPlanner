@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -19,7 +13,7 @@ namespace ShopFloorPlacementPlanner
 
             string sql = "select department + ' ' + CAST((sum(overtime) * 0.8) as nvarchar(max)) as overtime from dbo.power_plan_date a " +
                 "left join dbo.power_plan_overtime_remake b on a.id = b.date_id " +
-                "where a.date_plan = cast('" + temp.ToString("yyyyMMdd")  + "' as date) AND(department = 'Punching' OR department = 'Bending') " +
+                "where a.date_plan = cast('" + temp.ToString("yyyyMMdd") + "' as date) AND(department = 'Punching' OR department = 'Bending') " +
                 "group by department";
 
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))

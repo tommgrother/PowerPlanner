@@ -1,5 +1,4 @@
-﻿using ServiceBrokerListener.Domain;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -2603,19 +2602,19 @@ namespace ShopFloorPlacementPlanner
         {
             //try
             //{
-                PrintDocument pd = new PrintDocument();
-                pd.PrintPage += (sender, args) =>
-                {
-                    Image i = Image.FromFile(printout_file_name);//@"C:\temp\temp" + DateTime.Now.ToString("mmss") + ".jpg";
-                    Point p = new Point(100, 100);
-                    args.Graphics.DrawImage(i, args.MarginBounds);
-                };
+            PrintDocument pd = new PrintDocument();
+            pd.PrintPage += (sender, args) =>
+            {
+                Image i = Image.FromFile(printout_file_name);//@"C:\temp\temp" + DateTime.Now.ToString("mmss") + ".jpg";
+                Point p = new Point(100, 100);
+                args.Graphics.DrawImage(i, args.MarginBounds);
+            };
 
-                pd.DefaultPageSettings.Landscape = true;
-                Margins margins = new Margins(50, 50, 50, 50);
-                pd.DefaultPageSettings.Margins = margins;
-                pd.Print();
-                pd.Dispose();
+            pd.DefaultPageSettings.Landscape = true;
+            Margins margins = new Margins(50, 50, 50, 50);
+            pd.DefaultPageSettings.Margins = margins;
+            pd.Print();
+            pd.Dispose();
             //}
             //catch
             //{

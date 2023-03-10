@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -45,7 +40,7 @@ namespace ShopFloorPlacementPlanner
             login.formIsOpen = -1;
 
             ActivateApplication(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
-                _keivn = kevin;
+            _keivn = kevin;
 
             fillDGV();
         }
@@ -55,7 +50,7 @@ namespace ShopFloorPlacementPlanner
             //remove any potential buttons
             try
             {
-             dataGridView1.Columns.Remove("Acknowledged");
+                dataGridView1.Columns.Remove("Acknowledged");
             }
             catch
             {
@@ -124,7 +119,7 @@ namespace ShopFloorPlacementPlanner
                         dataGridView1.ClearSelection();
                     }
                 }
-                
+
             }
 
 
@@ -250,7 +245,7 @@ namespace ShopFloorPlacementPlanner
 
                 }
             }
-                this.Close();
+            this.Close();
             login.formIsOpen = 0;
         }
 

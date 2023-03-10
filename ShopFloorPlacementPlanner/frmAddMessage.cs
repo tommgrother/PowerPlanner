@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
@@ -25,11 +19,11 @@ namespace ShopFloorPlacementPlanner
 
             string sql = "";
             if (chkAll.Checked == true)
-                sql ="INSERT INTO dbo.kevinMessage ([message],message_date) VALUES ('" + temp + "',cast(getdate() as date))";
+                sql = "INSERT INTO dbo.kevinMessage ([message],message_date) VALUES ('" + temp + "',cast(getdate() as date))";
             else
             {
                 string sqlStart = "INSERT INTO dbo.kevinMessage ([message],message_date";
-                string sqlEnd =  " VALUES ('" + temp + "',cast(getdate() as date)";
+                string sqlEnd = " VALUES ('" + temp + "',cast(getdate() as date)";
                 if (chkSimon.Checked == false)
                 {
                     sqlStart = sqlStart + ",simon";

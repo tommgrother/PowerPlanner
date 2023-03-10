@@ -104,7 +104,7 @@ namespace ShopFloorPlacementPlanner
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("SELECT forename + ' '  + surname from dbo.[user] where id = @staffId", conn);
                 cmd.Parameters.AddWithValue("@staffId", staffID);
-                staffName = cmd.ExecuteScalar().ToString(); 
+                staffName = cmd.ExecuteScalar().ToString();
                 conn.Close();
                 //uhhhhhhh
                 //does this also need the painting thing???
@@ -124,7 +124,7 @@ namespace ShopFloorPlacementPlanner
                         }
                     }
                     //now prompt the user to select which area they want the user in
-                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(staffID,MAXplacementID);
+                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(staffID, MAXplacementID);
                     frmSDM.ShowDialog();
                     subDept = frmSDM.location;
                     //SubDeptClass add = new SubDeptClass();
@@ -162,7 +162,7 @@ namespace ShopFloorPlacementPlanner
                         }
                     }
                     //now prompt the user to select which area they want the user in
-                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(staffID,MAXplacementID);
+                    frmSubDeptMultiple frmSDM = new frmSubDeptMultiple(staffID, MAXplacementID);
                     frmSDM.ShowDialog();
                     subDept = frmSDM.location;
                     SubDeptClass add = new SubDeptClass();

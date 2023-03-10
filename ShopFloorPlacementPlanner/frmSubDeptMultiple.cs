@@ -134,7 +134,7 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     conn.Open();
-                     date_plan = Convert.ToDateTime(cmd.ExecuteScalar());
+                    date_plan = Convert.ToDateTime(cmd.ExecuteScalar());
                     conn.Close();
                 }
                 sql = "select coalesce(SUM(up),0) as up,coalesce(SUM(wash_wipe),0) as wash_wipe,coalesce(SUM(etch),0) as etch,coalesce(SUM(sand),0) as sand,coalesce(SUM(powder_prime),0) as powder_prime,coalesce(SUM(powder_coat),0) as powder_coat,coalesce(SUM(oven),0) as oven," +
@@ -146,7 +146,7 @@ namespace ShopFloorPlacementPlanner
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     //go through each of the columns and if they are at 3 then they need to be locked
-                    
+
                     if (Convert.ToInt32(dt.Rows[0][0]) > 2)//UP
                     {
                         chkUp.Enabled = false;
@@ -318,7 +318,7 @@ namespace ShopFloorPlacementPlanner
 
         private void frmSubDeptMultiple_Shown(object sender, EventArgs e)
         {
-                        if (closeForm >= 9)
+            if (closeForm >= 9)
             {
                 MessageBox.Show("There are no available sub departments left.");
                 this.Close();

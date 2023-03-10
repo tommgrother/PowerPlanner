@@ -5,7 +5,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Windows.Forms;
@@ -63,9 +62,9 @@ namespace ShopFloorPlacementPlanner
                 string sql = "SELECT id FROM dbo.[user] WHERE forename + ' ' + surname = '" + staff + "'";
                 using (SqlCommand cmd = new SqlCommand(sql, conn2))
                 {
-                    
+
                     staff_id = Convert.ToInt32(cmd.ExecuteScalar());
-                   
+
                 }
                 //start date too
                 sql = "SELECT cast([start_date] as date) FROM [user_info].dbo.[user] WHERE forename + ' ' + surname = '" + staff + "'";

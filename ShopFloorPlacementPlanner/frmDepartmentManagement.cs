@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Threading;
-using System.Activities.Statements;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -74,7 +66,7 @@ namespace ShopFloorPlacementPlanner
                     cmbDefault.Enabled = true;
 
                 }
-                    conn.Close();
+                conn.Close();
             }
         }
 

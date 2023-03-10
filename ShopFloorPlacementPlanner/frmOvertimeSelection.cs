@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
-using Microsoft.VisualBasic.ApplicationServices;
-using System.Activities.Expressions;
-using DocumentFormat.OpenXml.Spreadsheet;
+using System.Linq;
+using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
 //using Microsoft.Office.Interop.Excel;
 
 namespace ShopFloorPlacementPlanner
@@ -854,7 +846,7 @@ namespace ShopFloorPlacementPlanner
                                         //xlWorksheet.Cells[absent_column][staff_row].Value2 = absent_dt.Rows[0][0].ToString();//mon
                                         if (absent_dt.Rows[0][0].ToString() == "X")
                                             dt2.Rows[0][0] = absent_dt.Rows[0][0].ToString();//mon
-                                      
+
                                         if (absent_dt.Rows[0][1].ToString() == "X")
                                             dt2.Rows[0][1] = absent_dt.Rows[0][1].ToString();//mon
 
@@ -876,7 +868,7 @@ namespace ShopFloorPlacementPlanner
                                             dt2.Rows[0][8] = absent_dt.Rows[0][8].ToString();//fri
                                         if (absent_dt.Rows[0][9].ToString() == "X")
                                             dt2.Rows[0][9] = absent_dt.Rows[0][9].ToString();//fri
-                                        
+
                                         //vv cant be absent for the weekend
                                         ////if (absent_dt.Rows[0][10].ToString() == "X")
                                         ////    dt2.Rows[0][10] = absent_dt.Rows[0][10].ToString();//sat
@@ -942,7 +934,7 @@ namespace ShopFloorPlacementPlanner
                                 data_column++;
                                 xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][13].ToString();//sun pm
                                 data_column++;
-                               // MessageBox.Show(dt2.Rows[0][14].ToString());
+                                // MessageBox.Show(dt2.Rows[0][14].ToString());
                                 xlWorksheet.Cells[data_column][staff_row].Value2 = dt2.Rows[0][14].ToString();//total OT
                             }
                         }
@@ -990,7 +982,7 @@ namespace ShopFloorPlacementPlanner
                 xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
 
 
-               // xlWorkbook.SaveAs(@"c:\temp\test.xlsx");  // or book.Save();
+                // xlWorkbook.SaveAs(@"c:\temp\test.xlsx");  // or book.Save();
 
                 xlWorkbook.Close(false); //close the excel sheet without saving
                                          // xlApp.Quit();

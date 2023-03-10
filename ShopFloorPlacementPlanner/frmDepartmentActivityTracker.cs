@@ -1,16 +1,12 @@
 ﻿
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -519,13 +515,13 @@ namespace ShopFloorPlacementPlanner
             //get all of the distinct staff in the department
 
             //vvv we need to loop through the staff 
-            string sql = "select distinct u.forename + ' ' + u.surname as fullName from dbo.power_plan_staff s " +
+            string sql = "select distinct u.forename + ' ' + u.surname as fullName,coalesce(u.[start_date],'') as [start_date]  from dbo.power_plan_staff s " +
                          "left join dbo.power_plan_date d on s.date_id = d.id " +
                          "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
                          "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND (u.non_user = 0 or u.non_user is null) " +
                          "AND d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' AND d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' order by u.forename + ' ' + u.surname asc ";
 
-
+            
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
                 conn.Open();
@@ -546,7 +542,7 @@ namespace ShopFloorPlacementPlanner
 
                 //else we go next
 
-                for (int i = 0;i < dt_staff.Rows.Count; i++)
+                for (int i = 0; i < dt_staff.Rows.Count; i++)
                 {
                     sql = "SELECT AVG([percent]) as [percent] FROM (" +
                           "select datename(WEEKDAY,group_date) as [dayOfWeek],sum([hours]) as [hours]," +
@@ -564,7 +560,7 @@ namespace ShopFloorPlacementPlanner
                           "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
                           "where op = '" + department + "' AND " +
                           "cast(part_complete_date as date) >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and cast(part_complete_date as date) <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
-                          "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] +"' " +
+                          "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' " +
                           "group by part_complete_date ) as a " +
                           "group by group_date) as temp";
 
@@ -582,7 +578,7 @@ namespace ShopFloorPlacementPlanner
                                 skip_staff = -1;
                         }
                     }
-                    
+
                     if (skip_staff == 0)
                     {
 
@@ -591,8 +587,8 @@ namespace ShopFloorPlacementPlanner
 
                         //MERGE THESE ROWS
                         xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Merge();
-                        //insert the staff members name into the excel sheet
-                        xlWorksheet.Cells[1][current_excel_row].Value2 = dt_staff.Rows[i][0].ToString();
+                        //insert the staff members name (AND ADD THE START DATE) into the excel sheet
+                        xlWorksheet.Cells[1][current_excel_row].Value2 = dt_staff.Rows[i][0].ToString() + " - Start Date: " + Convert.ToDateTime(dt_staff.Rows[i][1].ToString()).ToString("dd/MM/yyyy");
 
                         current_excel_row++;
 
@@ -688,7 +684,7 @@ namespace ShopFloorPlacementPlanner
 
                 }
 
-                xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 5]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous; 
+                xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 5]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
 
 
                 conn.Close();

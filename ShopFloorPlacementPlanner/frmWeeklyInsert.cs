@@ -295,14 +295,14 @@ namespace ShopFloorPlacementPlanner
                             double hoursAssigned = 0;
                             int timeIndex = 0;
                             //before getting the sum hours we need to check if they are places in THAT department and remove it first
-                            sql = "DELETE  FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID ;
+                            sql = "DELETE  FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                                 cmd.ExecuteNonQuery();
                             //i guess also remove any overtime thats been assigned too?
                             sql = "DELETE  FROM dbo.power_plan_overtime_remake where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID;
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                                 cmd.ExecuteNonQuery();
-                     
+
 
                             sql = "Select sum(hours) FROM dbo.power_plan_staff where staff_id = " + _staff_id.ToString() + " AND date_id = " + p._dateID; //get all the placement ids for this person
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -501,7 +501,7 @@ namespace ShopFloorPlacementPlanner
                                 }
                                 SubDeptClass place = new SubDeptClass();
                                 place.checkPlacement(MAXplacementID);
-                                place.add_placement_weekly (MAXplacementID);
+                                place.add_placement_weekly(MAXplacementID);
                             }
                         }
                     }

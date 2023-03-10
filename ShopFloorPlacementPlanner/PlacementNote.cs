@@ -42,7 +42,7 @@ namespace ShopFloorPlacementPlanner
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("Update dbo.power_plan_staff set placement_note = @placementNote where id =@placementID", conn);
-            cmd.Parameters.AddWithValue("@placementNote", txtNote.Text );
+            cmd.Parameters.AddWithValue("@placementNote", txtNote.Text);
             cmd.Parameters.AddWithValue("@placementID", _pn);
 
             cmd.ExecuteNonQuery();

@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
+using System.Windows.Forms;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -80,10 +75,10 @@ namespace ShopFloorPlacementPlanner
                 "where [current] = 1 AND date_absent >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and date_absent <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' and b.shopfloor = -1 ";
 
 
-                if (default_in_department != "ALL")
+            if (default_in_department != "ALL")
                 sql = sql + " AND b.default_in_department = '" + default_in_department + "' ";
-                
-                sql = sql + "group by date_absent";
+
+            sql = sql + "group by date_absent";
 
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
@@ -204,7 +199,7 @@ namespace ShopFloorPlacementPlanner
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-           // MessageBox.Show(tabControl1.SelectedIndex.ToString());
+            // MessageBox.Show(tabControl1.SelectedIndex.ToString());
             btnSearch.PerformClick();
         }
     }

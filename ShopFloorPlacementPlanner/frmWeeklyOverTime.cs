@@ -297,7 +297,7 @@ namespace ShopFloorPlacementPlanner
             if (countDays == 0)
                 tabControl1.SelectedIndex = Convert.ToInt32(countDays + 1);
             else
-                tabControl1.SelectedIndex = Convert.ToInt32(countDays -1);
+                tabControl1.SelectedIndex = Convert.ToInt32(countDays - 1);
             tabControl1.SelectedIndex = Convert.ToInt32(countDays);
 
         }

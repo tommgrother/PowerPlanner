@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -59,7 +58,7 @@ namespace ShopFloorPlacementPlanner
             Process.GetProcessById((int)processID).Kill();
         }
 
-        public void openExcel(int print, int _rownumber, string _fileName, string Monday, string Tuesday, string Wednesday, string Thursday, string Friday, Double punchH, Double punchO, Double punchA, Double laserH, Double laserO, Double laserA, Double BendingH, Double BendingO, Double BendingA, Double weldingH, Double weldingO, Double weldingA, Double buffingH, Double buffingO, Double buffingA, Double paintingH, Double paintingO, Double paintingA, Double packingH, Double packingO, Double packingA,int dt_row_number,int skipDT)
+        public void openExcel(int print, int _rownumber, string _fileName, string Monday, string Tuesday, string Wednesday, string Thursday, string Friday, Double punchH, Double punchO, Double punchA, Double laserH, Double laserO, Double laserA, Double BendingH, Double BendingO, Double BendingA, Double weldingH, Double weldingO, Double weldingA, Double buffingH, Double buffingO, Double buffingA, Double paintingH, Double paintingO, Double paintingA, Double packingH, Double packingO, Double packingA, int dt_row_number, int skipDT)
         {
             Excel.Application excelApp = new Excel.Application();
             Excel.Workbooks workbooks;
@@ -131,7 +130,7 @@ namespace ShopFloorPlacementPlanner
             excelSheet.Cells[rowNumber, "AA"] = packingA;
             // workSheet.Cells[rowNumber, "AB"] = packingTH;
 
-            
+
 
 
 

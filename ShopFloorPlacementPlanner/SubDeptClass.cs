@@ -11,7 +11,7 @@ namespace ShopFloorPlacementPlanner
         public int staffID { get; set; }
 
 
-        public static  int _up { get; set; }
+        public static int _up { get; set; }
         public static int _ww { get; set; }
         public static int _etch { get; set; }
         public static int _sand { get; set; }
