@@ -24,6 +24,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddPunch_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Punching", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
@@ -31,56 +32,67 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void btnAddBend_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Bending", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void btnAddWeld_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Welding", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void btnAddBuff_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Dressing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void btnAddPaint_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Painting", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void btnAddPack_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Packing", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void MenuMain_Load(object sender, EventArgs e)
@@ -2330,6 +2342,7 @@ namespace ShopFloorPlacementPlanner
 
         private void button1_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Laser", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
@@ -2337,6 +2350,7 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void copyPlacementsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2348,6 +2362,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddSlimline_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
 
             department_changed department_Changed = new department_changed();
@@ -2358,6 +2373,7 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void sendToDailyGoalsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2660,58 +2676,72 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddStores_Click(object sender, EventArgs e)
         {
+            remove_absents();
+
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Stores", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+
+            add_absents();
         }
 
         private void btnAddDispatch_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Dispatch", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void btnAddToolRoom_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("toolroom", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog(); //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
                                 // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void btnAddCleaning_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Cleaning", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void BtnAddManagement_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("Management", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog(); //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
                                 // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void BtnAddHS_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
             frmSelectStaff frmSS = new frmSelectStaff("HS", Convert.ToDateTime(dteDateSelection.Text));
             frmSS.ShowDialog();
             fillgrid();
+            add_absents();
         }
 
         private void BatchOperationsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2987,6 +3017,7 @@ namespace ShopFloorPlacementPlanner
             txtPackOT.Text = "0";
 
             fillgrid();
+            add_absents();
         }
 
         private void refreshSelectedDepartments()
@@ -3232,6 +3263,8 @@ namespace ShopFloorPlacementPlanner
             refreshSelectedDepartments();
             fillShopGoals();
             currentAvailable();
+
+            add_absents();
         }
 
         private void productivityToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3786,6 +3819,7 @@ namespace ShopFloorPlacementPlanner
 
         private void btnSlimlineDispatch_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
 
             department_changed department_Changed = new department_changed();
@@ -3796,10 +3830,12 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void btnSlimlineStores_Click(object sender, EventArgs e)
         {
+            remove_absents();
             skipMessageBox = 2;
 
             department_changed department_Changed = new department_changed();
@@ -3809,6 +3845,7 @@ namespace ShopFloorPlacementPlanner
             //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
             // fillgrid();
             refreshSelectedDepartments();
+            add_absents();
         }
 
         private void currentAvailable()
@@ -3936,6 +3973,7 @@ namespace ShopFloorPlacementPlanner
 
         private void MenuMain_Shown(object sender, EventArgs e)
         {
+            string sql = "";
             fillgrid();
             fillPunch();
             fillPaint();
@@ -3946,7 +3984,7 @@ namespace ShopFloorPlacementPlanner
             //currentAvailable();
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
-                string sql = "select coalesce(press1UserID,0) FROM dbo.press_users ";
+                sql = "select coalesce(press1UserID,0) FROM dbo.press_users ";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     conn.Open();
@@ -3960,7 +3998,15 @@ namespace ShopFloorPlacementPlanner
             }
             if (login.userFullName == "Other Staff")
                 btnOverTime.Visible = true;
+
+            //check absents here 
+            add_absents();
+
         }
+
+
+
+
         private void Listener()
         {
 
@@ -4180,5 +4226,273 @@ namespace ShopFloorPlacementPlanner
             frmDepartmentActivityTracker frm = new frmDepartmentActivityTracker();
             frm.ShowDialog();
         }
+        private void add_absents()
+        {
+            string sql = "";
+            foreach (DataGridViewRow row in dgNotPlaced.Rows)
+            {
+                using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+                {
+                    conn.Open();
+                    if (row.Cells[1].Value.ToString() == "ABSENT")
+                    {
+                        //find this users default placement and put him in that grid
+                        sql = "Select default_in_department from [user_info].dbo.[user] " +
+                            "where forename + ' ' + surname = '" + row.Cells[0].Value.ToString() + "'";
+                        string default_dept = "";
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+                            SqlDataAdapter da = new SqlDataAdapter(cmd);
+                            DataTable dt = new DataTable();
+                            da.Fill(dt);
+
+                            default_dept = dt.Rows[0][0].ToString();
+                        }
+                        if (default_dept == "Punching")
+                        {
+                            //copy the welding and then add my row and copy back
+
+                            DataTable dt = (DataTable)(dgPunch.DataSource);
+
+                            DataRow dataRow;
+                            dataRow = dt.NewRow();
+                            dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
+                            // dataRow[2] = "ABSENT";
+                            dt.Rows.Add(dataRow);
+
+                            dgPunch.DataSource = dt;
+
+                            foreach (DataGridViewRow dgvRow in dgPunch.Rows)
+                                if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
+                                    dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
+                        }
+                        else if (default_dept == "Bending")
+                        {
+                            //copy the welding and then add my row and copy back
+
+                            DataTable dt = (DataTable)(dgBend.DataSource);
+
+                            DataRow dataRow;
+                            dataRow = dt.NewRow();
+                            dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
+                            // dataRow[2] = "ABSENT";
+                            dt.Rows.Add(dataRow);
+
+                            dgBend.DataSource = dt;
+
+                            foreach (DataGridViewRow dgvRow in dgBend.Rows)
+                                if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
+                                    dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
+                        }
+                        else if (default_dept == "Welding")
+                        {
+                            //copy the welding and then add my row and copy back
+
+                            DataTable dt = (DataTable)(dgWeld.DataSource);
+
+                            DataRow dataRow;
+                            dataRow = dt.NewRow();
+                            dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
+                            // dataRow[2] = "ABSENT";
+                            dt.Rows.Add(dataRow);
+
+                            dgWeld.DataSource = dt;
+
+                            foreach (DataGridViewRow dgvRow in dgWeld.Rows)
+                                if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
+                                    dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
+                        }
+                        else if (default_dept == "Dressing" || default_dept == "Buffing")
+                        {
+                            //copy the welding and then add my row and copy back
+
+                            DataTable dt = (DataTable)(dgBuff.DataSource);
+
+                            DataRow dataRow;
+                            dataRow = dt.NewRow();
+                            dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
+                            // dataRow[2] = "ABSENT";
+                            dt.Rows.Add(dataRow);
+
+                            dgBuff.DataSource = dt;
+
+                            foreach (DataGridViewRow dgvRow in dgBuff.Rows)
+                                if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
+                                    dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
+                        }
+                        else if (default_dept == "Painting")
+                        {
+                            //copy the welding and then add my row and copy back
+
+                            DataTable dt = (DataTable)(dgPaint.DataSource);
+
+                            DataRow dataRow;
+                            dataRow = dt.NewRow();
+                            dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
+                            // dataRow[2] = "ABSENT";
+                            dt.Rows.Add(dataRow);
+
+                            dgPaint.DataSource = dt;
+
+                            foreach (DataGridViewRow dgvRow in dgPaint.Rows)
+                                if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
+                                    dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
+                        }
+                        else if (default_dept == "Packing")
+                        {
+                            //copy the welding and then add my row and copy back
+
+                            DataTable dt = (DataTable)(dgPack.DataSource);
+
+                            DataRow dataRow;
+                            dataRow = dt.NewRow();
+                            dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
+                            // dataRow[2] = "ABSENT";
+                            dt.Rows.Add(dataRow);
+
+                            dgPack.DataSource = dt;
+
+                            foreach (DataGridViewRow dgvRow in dgPack.Rows)
+                                if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
+                                    dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
+                        }
+                        else if (default_dept == "Laser")
+                        {
+                            //copy the welding and then add my row and copy back
+
+                            DataTable dt = (DataTable)(dgLaser.DataSource);
+
+                            DataRow dataRow;
+                            dataRow = dt.NewRow();
+                            dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
+                            // dataRow[2] = "ABSENT";
+                            dt.Rows.Add(dataRow);
+
+                            dgLaser.DataSource = dt;
+
+                            foreach (DataGridViewRow dgvRow in dgLaser.Rows)
+                                if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
+                                    dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+        }
+
+        private void remove_absents()
+        {
+
+            //remove absents from the dgvs
+            if ("Punch" == "Punch")
+            {
+                DataTable dt = (DataTable)(dgPunch.DataSource);
+
+                int count = dt.Rows.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    if (dt.Rows[i][0].ToString().Contains("ABSENT"))
+                    {
+                        dt.Rows[i].Delete();
+                        count--;
+                        i--;
+                    }
+                    //MessageBox.Show(dt.Rows[i][0].ToString());
+                }
+
+                dgPunch.DataSource = dt;
+            }
+            if ("Bend" == "Bend")
+            {
+                DataTable dt = (DataTable)(dgBend.DataSource);
+
+                int count = dt.Rows.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    if (dt.Rows[i][0].ToString().Contains("ABSENT"))
+                    {
+                        dt.Rows[i].Delete();
+                        count--;
+                        i--;
+                    }
+                    //MessageBox.Show(dt.Rows[i][0].ToString());
+                }
+
+                dgBend.DataSource = dt;
+            }
+            if ("weld" == "weld")
+            {
+                DataTable dt = (DataTable)(dgWeld.DataSource);
+
+                int count = dt.Rows.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    if (dt.Rows[i][0].ToString().Contains("ABSENT"))
+                    {
+                        dt.Rows[i].Delete();
+                        count--;
+                        i--;
+                    }
+                    //MessageBox.Show(dt.Rows[i][0].ToString());
+                }
+
+                dgWeld.DataSource = dt;
+            }
+            if ("Buff" == "Buff")
+            {
+                DataTable dt = (DataTable)(dgBuff.DataSource);
+
+                int count = dt.Rows.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    if (dt.Rows[i][0].ToString().Contains("ABSENT"))
+                    {
+                        dt.Rows[i].Delete();
+                        count--;
+                        i--;
+                    }
+                    //MessageBox.Show(dt.Rows[i][0].ToString());
+                }
+
+                dgBuff.DataSource = dt;
+            }
+            if ("Paint" == "Paint")
+            {
+                DataTable dt = (DataTable)(dgPaint.DataSource);
+
+                int count = dt.Rows.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    if (dt.Rows[i][0].ToString().Contains("ABSENT"))
+                    {
+                        dt.Rows[i].Delete();
+                        count--;
+                        i--;
+                    }
+                    //MessageBox.Show(dt.Rows[i][0].ToString());
+                }
+
+                dgPaint.DataSource = dt;
+            }
+            if ("Pack" == "Pack")
+            {
+                DataTable dt = (DataTable)(dgPack.DataSource);
+
+                int count = dt.Rows.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    if (dt.Rows[i][0].ToString().Contains("ABSENT"))
+                    {
+                        dt.Rows[i].Delete();
+                        count--;
+                        i--;
+                    }
+                    //MessageBox.Show(dt.Rows[i][0].ToString());
+                }
+
+                dgPack.DataSource = dt;
+            }
+        }
+
     }
 }

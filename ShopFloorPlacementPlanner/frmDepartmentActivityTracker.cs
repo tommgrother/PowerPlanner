@@ -521,7 +521,7 @@ namespace ShopFloorPlacementPlanner
                          "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND (u.non_user = 0 or u.non_user is null) " +
                          "AND d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' AND d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' order by u.forename + ' ' + u.surname asc ";
 
-            
+
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
                 conn.Open();
@@ -684,11 +684,91 @@ namespace ShopFloorPlacementPlanner
 
                 }
 
+
+                //supervisor attendence
+
+                //we need to count how many days there are between the selected dates 
+                int supervisor_dates = 0;
+
+                xlWorksheet.Cells[1][current_excel_row].Value2 = " Supervisor Attendence";
+                xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Bold = true;
+                xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Size = 14;
+                xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Merge();
+                current_excel_row++;
+
+                supervisor_dates = (dteEnd.Value - dteStart.Value).Days + 1;
+
+                DateTime current_supervisor_date = dteStart.Value;
+                for (int i = 0; i < supervisor_dates; i++)
+                {
+                    if (current_supervisor_date.DayOfWeek == DayOfWeek.Saturday || current_supervisor_date.DayOfWeek == DayOfWeek.Sunday)
+                    {
+                        current_supervisor_date = current_supervisor_date.AddDays(1);
+                        continue;
+                    }
+
+                    sql = "select coalesce([9_30],'Not Pressed'),coalesce([11_30],'Not Pressed'),coalesce([2_30],'Not Pressed'),coalesce([eos],'Not Pressed') " +
+                        "from dbo.supervisor_log where supervisor_date = '" + current_supervisor_date.ToString("yyyyMMdd") + "' AND department = '" + department.Replace("ing", "") + "'";
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        xlWorksheet.Cells[1][current_excel_row].Value2 = "Date";
+                        xlWorksheet.Cells[2][current_excel_row].Value2 = "9:30";
+                        xlWorksheet.Cells[3][current_excel_row].Value2 = "11:30";
+                        xlWorksheet.Cells[4][current_excel_row].Value2 = "2:30";
+                        xlWorksheet.Cells[5][current_excel_row].Value2 = "End of Shift";
+                        current_excel_row++;
+
+                        xlWorksheet.Cells[1][current_excel_row].Value2 = current_supervisor_date.ToString("dd/MM/yyyy");
+
+                        if (dt.Rows.Count < 1) //null rows
+                        {
+
+                            xlWorksheet.Cells[2][current_excel_row].Value2 = "Not Pressed";
+                            xlWorksheet.Cells[3][current_excel_row].Value2 = "Not Pressed";
+                            xlWorksheet.Cells[4][current_excel_row].Value2 = "Not Pressed";
+                            xlWorksheet.Cells[5][current_excel_row].Value2 = "Not Pressed";
+                        }
+                        else
+                        {
+                            xlWorksheet.Cells[2][current_excel_row].Value2 = dt.Rows[0][0].ToString();
+                            if (dt.Rows[0][0].ToString() != "Not Pressed" && dt.Rows[0][0].ToString() != "Nobody")
+                                xlWorksheet.Cells[2][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                            xlWorksheet.Cells[3][current_excel_row].Value2 = dt.Rows[0][1].ToString();
+                            if (dt.Rows[0][1].ToString() != "Not Pressed" && dt.Rows[0][1].ToString() != "Nobody")
+                                xlWorksheet.Cells[3][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                            xlWorksheet.Cells[4][current_excel_row].Value2 = dt.Rows[0][2].ToString();
+                            if (dt.Rows[0][2].ToString() != "Not Pressed" && dt.Rows[0][2].ToString() != "Nobody")
+                                xlWorksheet.Cells[4][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                            xlWorksheet.Cells[5][current_excel_row].Value2 = dt.Rows[0][3].ToString();
+                            if (dt.Rows[0][3].ToString() != "Not Pressed" && dt.Rows[0][3].ToString() != "Nobody")
+                                xlWorksheet.Cells[5][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                        }
+
+                    }
+                    current_excel_row++;
+                    current_supervisor_date = current_supervisor_date.AddDays(1);
+                }
+
+
+
+
+
                 xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 5]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                //autofit all rows
+                Microsoft.Office.Interop.Excel.Worksheet ws = xlApp.ActiveWorkbook.Worksheets[1];
+                Microsoft.Office.Interop.Excel.Range range = ws.UsedRange;
+                ws.Columns.AutoFit();
+                ws.Rows.AutoFit();
 
 
                 conn.Close();
             }
+
 
 
 
