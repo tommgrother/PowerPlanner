@@ -29,6 +29,7 @@ namespace ShopFloorPlacementPlanner
             chkToolroom.Enabled = value;
             chkDispatch.Enabled = value;
             chkStores.Enabled = value;
+            chkSlimline.Enabled = value;
             btnPrint.Enabled = value;
             btnAll.Enabled = value;
             dteDate.Enabled = value;
@@ -46,6 +47,7 @@ namespace ShopFloorPlacementPlanner
                 chkToolroom.Checked = false;
                 chkDispatch.Checked = false;
                 chkStores.Checked = false;
+                chkSlimline.Checked = false;
             }
         }
 
@@ -73,6 +75,9 @@ namespace ShopFloorPlacementPlanner
                 printSheet("Dispatch");
             if (chkStores.Checked)
                 printSheet("Stores");
+            if (chkSlimline.Checked)
+                printSheet("Slimline");
+
             toggle_buttons(true);
 
             MessageBox.Show("Overtime Sheets printed!", "Default Printer", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -263,6 +268,7 @@ namespace ShopFloorPlacementPlanner
                 chkToolroom.Checked = false;
                 chkDispatch.Checked = false;
                 chkStores.Checked = false;
+                chkSlimline.Checked = false;
             }
             else
             {
@@ -275,6 +281,7 @@ namespace ShopFloorPlacementPlanner
                 chkToolroom.Checked = true;
                 chkDispatch.Checked = true;
                 chkStores.Checked = true;
+                chkSlimline.Checked = true;
             }
 
             //toggle_buttons(false);
@@ -570,6 +577,7 @@ namespace ShopFloorPlacementPlanner
                 supervisor_print("Dispatch");
             if (chkStores.Checked)
                 supervisor_print("Stores");
+    
             toggle_buttons(true);
 
             //supervisor_print("LASER");

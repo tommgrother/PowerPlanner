@@ -42,6 +42,7 @@
             this.chkStores = new System.Windows.Forms.CheckBox();
             this.btnSummary = new System.Windows.Forms.Button();
             this.btnSupervisorSheet = new System.Windows.Forms.Button();
+            this.chkSlimline = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // chkPunching
@@ -56,7 +57,7 @@
             // 
             // btnPrint
             // 
-            this.btnPrint.Location = new System.Drawing.Point(15, 167);
+            this.btnPrint.Location = new System.Drawing.Point(15, 191);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(162, 23);
             this.btnPrint.TabIndex = 1;
@@ -123,7 +124,7 @@
             // 
             // btnAll
             // 
-            this.btnAll.Location = new System.Drawing.Point(107, 140);
+            this.btnAll.Location = new System.Drawing.Point(64, 162);
             this.btnAll.Name = "btnAll";
             this.btnAll.Size = new System.Drawing.Size(65, 23);
             this.btnAll.TabIndex = 8;
@@ -163,7 +164,7 @@
             // 
             // btnSummary
             // 
-            this.btnSummary.Location = new System.Drawing.Point(15, 196);
+            this.btnSummary.Location = new System.Drawing.Point(15, 220);
             this.btnSummary.Name = "btnSummary";
             this.btnSummary.Size = new System.Drawing.Size(162, 23);
             this.btnSummary.TabIndex = 12;
@@ -174,7 +175,7 @@
             // 
             // btnSupervisorSheet
             // 
-            this.btnSupervisorSheet.Location = new System.Drawing.Point(15, 196);
+            this.btnSupervisorSheet.Location = new System.Drawing.Point(15, 220);
             this.btnSupervisorSheet.Name = "btnSupervisorSheet";
             this.btnSupervisorSheet.Size = new System.Drawing.Size(162, 23);
             this.btnSupervisorSheet.TabIndex = 13;
@@ -182,11 +183,22 @@
             this.btnSupervisorSheet.UseVisualStyleBackColor = true;
             this.btnSupervisorSheet.Click += new System.EventHandler(this.btnSupervisorSheet_Click);
             // 
+            // chkSlimline
+            // 
+            this.chkSlimline.AutoSize = true;
+            this.chkSlimline.Location = new System.Drawing.Point(107, 140);
+            this.chkSlimline.Name = "chkSlimline";
+            this.chkSlimline.Size = new System.Drawing.Size(61, 17);
+            this.chkSlimline.TabIndex = 14;
+            this.chkSlimline.Text = "Slimline";
+            this.chkSlimline.UseVisualStyleBackColor = true;
+            // 
             // frmOvertimeSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(193, 226);
+            this.ClientSize = new System.Drawing.Size(193, 249);
+            this.Controls.Add(this.chkSlimline);
             this.Controls.Add(this.btnSupervisorSheet);
             this.Controls.Add(this.btnSummary);
             this.Controls.Add(this.chkStores);
@@ -227,5 +239,6 @@
         private System.Windows.Forms.CheckBox chkStores;
         private System.Windows.Forms.Button btnSummary;
         private System.Windows.Forms.Button btnSupervisorSheet;
+        private System.Windows.Forms.CheckBox chkSlimline;
     }
 }
