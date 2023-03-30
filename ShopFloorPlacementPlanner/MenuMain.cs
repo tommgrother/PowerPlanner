@@ -4378,6 +4378,48 @@ namespace ShopFloorPlacementPlanner
                     conn.Close();
                 }
             }
+
+            foreach (DataGridViewRow row in dgNotPlacementSL.Rows)
+            {
+                using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+                {
+                    conn.Open();
+                    if (row.Cells[1].Value.ToString() == "ABSENT")
+                    {
+                        //find this users default placement and put him in that grid
+                        sql = "Select default_in_department from [user_info].dbo.[user] " +
+                            "where forename + ' ' + surname = '" + row.Cells[0].Value.ToString() + "'";
+                        string default_dept = "";
+                        using (SqlCommand cmd = new SqlCommand(sql, conn))
+                        {
+                            SqlDataAdapter da = new SqlDataAdapter(cmd);
+                            DataTable dt = new DataTable();
+                            da.Fill(dt);
+
+                            default_dept = dt.Rows[0][0].ToString();
+                        }
+                        if (default_dept == "Slimline")
+                        {
+                            //copy the welding and then add my row and copy back
+
+                            DataTable dt = (DataTable)(dgSlimline.DataSource);
+
+                            DataRow dataRow;
+                            dataRow = dt.NewRow();
+                            dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
+                            // dataRow[2] = "ABSENT";
+                            dt.Rows.Add(dataRow);
+
+                            dgSlimline.DataSource = dt;
+
+                            foreach (DataGridViewRow dgvRow in dgSlimline.Rows)
+                                if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
+                                    dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
+                        }
+                    }
+                    conn.Close();
+                }
+            }
         }
 
         private void remove_absents()
@@ -4491,6 +4533,25 @@ namespace ShopFloorPlacementPlanner
                 }
 
                 dgPack.DataSource = dt;
+            }
+
+            if ("Slimline" == "Slimline")
+            {
+                DataTable dt = (DataTable)(dgSlimline.DataSource);
+
+                int count = dt.Rows.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    if (dt.Rows[i][0].ToString().Contains("ABSENT"))
+                    {
+                        dt.Rows[i].Delete();
+                        count--;
+                        i--;
+                    }
+                    //MessageBox.Show(dt.Rows[i][0].ToString());
+                }
+
+                dgSlimline.DataSource = dt;
             }
         }
 

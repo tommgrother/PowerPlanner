@@ -130,6 +130,7 @@
             this.oVERTIMESHEETToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.weeklyPlacementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.departmentActivityTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -368,7 +369,6 @@
             this.btnOverTime = new System.Windows.Forms.Button();
             this.label114 = new System.Windows.Forms.Label();
             this.txtStockHours = new System.Windows.Forms.TextBox();
-            this.departmentActivityTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -397,8 +397,6 @@
             this.dgPunch.AllowUserToDeleteRows = false;
             this.dgPunch.AllowUserToResizeColumns = false;
             this.dgPunch.AllowUserToResizeRows = false;
-            this.dgPunch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgPunch.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgPunch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -416,7 +414,7 @@
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgPunch.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgPunch.RowTemplate.Height = 50;
-            this.dgPunch.Size = new System.Drawing.Size(200, 416);
+            this.dgPunch.Size = new System.Drawing.Size(200, 380);
             this.dgPunch.TabIndex = 0;
             this.dgPunch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgPunch_CellDoubleClick);
             // 
@@ -733,7 +731,7 @@
             dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgLaser.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dgLaser.RowTemplate.Height = 50;
-            this.dgLaser.Size = new System.Drawing.Size(200, 355);
+            this.dgLaser.Size = new System.Drawing.Size(200, 224);
             this.dgLaser.TabIndex = 22;
             // 
             // txtPunchMen
@@ -1164,6 +1162,13 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(12, 20);
             // 
+            // departmentActivityTrackerToolStripMenuItem
+            // 
+            this.departmentActivityTrackerToolStripMenuItem.Name = "departmentActivityTrackerToolStripMenuItem";
+            this.departmentActivityTrackerToolStripMenuItem.Size = new System.Drawing.Size(165, 20);
+            this.departmentActivityTrackerToolStripMenuItem.Text = "Department Activity Tracker";
+            this.departmentActivityTrackerToolStripMenuItem.Click += new System.EventHandler(this.departmentActivityTrackerToolStripMenuItem_Click);
+            // 
             // label23
             // 
             this.label23.AutoSize = true;
@@ -1230,6 +1235,8 @@
             this.dgSlimline.AllowUserToDeleteRows = false;
             this.dgSlimline.AllowUserToResizeColumns = false;
             this.dgSlimline.AllowUserToResizeRows = false;
+            this.dgSlimline.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgSlimline.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
@@ -1255,7 +1262,7 @@
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgSlimline.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgSlimline.RowTemplate.Height = 50;
-            this.dgSlimline.Size = new System.Drawing.Size(200, 385);
+            this.dgSlimline.Size = new System.Drawing.Size(200, 619);
             this.dgSlimline.TabIndex = 54;
             this.dgSlimline.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgSlimline_CellDoubleClick);
             // 
@@ -1766,7 +1773,7 @@
             this.label52.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label52.AutoSize = true;
             this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.Location = new System.Drawing.Point(263, 723);
+            this.label52.Location = new System.Drawing.Point(477, 720);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(75, 26);
             this.label52.TabIndex = 124;
@@ -1775,7 +1782,7 @@
             // btnAddStores
             // 
             this.btnAddStores.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAddStores.Location = new System.Drawing.Point(357, 726);
+            this.btnAddStores.Location = new System.Drawing.Point(571, 723);
             this.btnAddStores.Name = "btnAddStores";
             this.btnAddStores.Size = new System.Drawing.Size(57, 23);
             this.btnAddStores.TabIndex = 123;
@@ -1872,7 +1879,7 @@
             dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgStores.DefaultCellStyle = dataGridViewCellStyle14;
             this.dgStores.Enabled = false;
-            this.dgStores.Location = new System.Drawing.Point(217, 755);
+            this.dgStores.Location = new System.Drawing.Point(431, 752);
             this.dgStores.Name = "dgStores";
             this.dgStores.RowHeadersVisible = false;
             dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1937,7 +1944,7 @@
             dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgDispatch.DefaultCellStyle = dataGridViewCellStyle19;
             this.dgDispatch.Enabled = false;
-            this.dgDispatch.Location = new System.Drawing.Point(629, 755);
+            this.dgDispatch.Location = new System.Drawing.Point(634, 755);
             this.dgDispatch.Name = "dgDispatch";
             this.dgDispatch.RowHeadersVisible = false;
             dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1980,7 +1987,7 @@
             // 
             this.label57.AutoSize = true;
             this.label57.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label57.Location = new System.Drawing.Point(429, 646);
+            this.label57.Location = new System.Drawing.Point(432, 520);
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(139, 26);
             this.label57.TabIndex = 131;
@@ -1988,7 +1995,7 @@
             // 
             // btnAddManagement
             // 
-            this.btnAddManagement.Location = new System.Drawing.Point(569, 650);
+            this.btnAddManagement.Location = new System.Drawing.Point(572, 524);
             this.btnAddManagement.Name = "btnAddManagement";
             this.btnAddManagement.Size = new System.Drawing.Size(57, 23);
             this.btnAddManagement.TabIndex = 132;
@@ -2018,7 +2025,7 @@
             // 
             this.label58.AutoSize = true;
             this.label58.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label58.Location = new System.Drawing.Point(476, 675);
+            this.label58.Location = new System.Drawing.Point(479, 549);
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(58, 26);
             this.label58.TabIndex = 134;
@@ -2026,7 +2033,7 @@
             // 
             // btnAddHS
             // 
-            this.btnAddHS.Location = new System.Drawing.Point(569, 680);
+            this.btnAddHS.Location = new System.Drawing.Point(572, 554);
             this.btnAddHS.Name = "btnAddHS";
             this.btnAddHS.Size = new System.Drawing.Size(57, 23);
             this.btnAddHS.TabIndex = 135;
@@ -2141,7 +2148,7 @@
             // 
             this.txtStoresMen.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.txtStoresMen.Enabled = false;
-            this.txtStoresMen.Location = new System.Drawing.Point(224, 730);
+            this.txtStoresMen.Location = new System.Drawing.Point(438, 727);
             this.txtStoresMen.Name = "txtStoresMen";
             this.txtStoresMen.Size = new System.Drawing.Size(33, 20);
             this.txtStoresMen.TabIndex = 146;
@@ -2155,7 +2162,7 @@
             // 
             this.label68.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(227, 713);
+            this.label68.Location = new System.Drawing.Point(441, 710);
             this.label68.Name = "label68";
             this.label68.Size = new System.Drawing.Size(28, 13);
             this.label68.TabIndex = 148;
@@ -3208,13 +3215,13 @@
             dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvHSManagement.DefaultCellStyle = dataGridViewCellStyle24;
             this.dgvHSManagement.Enabled = false;
-            this.dgvHSManagement.Location = new System.Drawing.Point(427, 712);
+            this.dgvHSManagement.Location = new System.Drawing.Point(430, 586);
             this.dgvHSManagement.Name = "dgvHSManagement";
             this.dgvHSManagement.RowHeadersVisible = false;
             dataGridViewCellStyle25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgvHSManagement.RowsDefaultCellStyle = dataGridViewCellStyle25;
             this.dgvHSManagement.RowTemplate.Height = 50;
-            this.dgvHSManagement.Size = new System.Drawing.Size(200, 198);
+            this.dgvHSManagement.Size = new System.Drawing.Size(200, 119);
             this.dgvHSManagement.TabIndex = 248;
             // 
             // dgSlDispatch
@@ -3231,7 +3238,7 @@
             dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgSlDispatch.DefaultCellStyle = dataGridViewCellStyle26;
             this.dgSlDispatch.Enabled = false;
-            this.dgSlDispatch.Location = new System.Drawing.Point(9, 713);
+            this.dgSlDispatch.Location = new System.Drawing.Point(220, 713);
             this.dgSlDispatch.Name = "dgSlDispatch";
             this.dgSlDispatch.RowHeadersVisible = false;
             dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3244,7 +3251,7 @@
             // 
             this.label109.AutoSize = true;
             this.label109.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label109.Location = new System.Drawing.Point(16, 679);
+            this.label109.Location = new System.Drawing.Point(227, 679);
             this.label109.Name = "label109";
             this.label109.Size = new System.Drawing.Size(130, 26);
             this.label109.TabIndex = 250;
@@ -3252,7 +3259,7 @@
             // 
             // btnSlimlineDispatch
             // 
-            this.btnSlimlineDispatch.Location = new System.Drawing.Point(149, 682);
+            this.btnSlimlineDispatch.Location = new System.Drawing.Point(360, 682);
             this.btnSlimlineDispatch.Name = "btnSlimlineDispatch";
             this.btnSlimlineDispatch.Size = new System.Drawing.Size(57, 23);
             this.btnSlimlineDispatch.TabIndex = 249;
@@ -3276,7 +3283,7 @@
             dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgSlStores.DefaultCellStyle = dataGridViewCellStyle28;
             this.dgSlStores.Enabled = false;
-            this.dgSlStores.Location = new System.Drawing.Point(9, 875);
+            this.dgSlStores.Location = new System.Drawing.Point(220, 875);
             this.dgSlStores.Name = "dgSlStores";
             this.dgSlStores.RowHeadersVisible = false;
             dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3289,7 +3296,7 @@
             // 
             this.label110.AutoSize = true;
             this.label110.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label110.Location = new System.Drawing.Point(14, 846);
+            this.label110.Location = new System.Drawing.Point(225, 846);
             this.label110.Name = "label110";
             this.label110.Size = new System.Drawing.Size(108, 26);
             this.label110.TabIndex = 253;
@@ -3297,7 +3304,7 @@
             // 
             // btnSlimlineStores
             // 
-            this.btnSlimlineStores.Location = new System.Drawing.Point(135, 848);
+            this.btnSlimlineStores.Location = new System.Drawing.Point(346, 848);
             this.btnSlimlineStores.Name = "btnSlimlineStores";
             this.btnSlimlineStores.Size = new System.Drawing.Size(57, 23);
             this.btnSlimlineStores.TabIndex = 252;
@@ -3744,13 +3751,6 @@
             this.txtStockHours.TabIndex = 302;
             this.txtStockHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtStockHours.Click += new System.EventHandler(this.txtStockHours_Click);
-            // 
-            // departmentActivityTrackerToolStripMenuItem
-            // 
-            this.departmentActivityTrackerToolStripMenuItem.Name = "departmentActivityTrackerToolStripMenuItem";
-            this.departmentActivityTrackerToolStripMenuItem.Size = new System.Drawing.Size(165, 20);
-            this.departmentActivityTrackerToolStripMenuItem.Text = "Department Activity Tracker";
-            this.departmentActivityTrackerToolStripMenuItem.Click += new System.EventHandler(this.departmentActivityTrackerToolStripMenuItem_Click);
             // 
             // MenuMain
             // 
