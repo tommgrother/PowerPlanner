@@ -536,6 +536,90 @@ namespace ShopFloorPlacementPlanner
 
                 xlWorksheet.Cells[1][current_excel_row].Value2 = department + " Activity";
                 current_excel_row++;
+
+                //insert the overall complete and overall dropped 
+
+                sql = "SELECT AVG([percent]) as [percent] FROM (select datename(WEEKDAY,group_date) as [dayOfWeek],sum([hours]) as [hours],sum([actual]) as actual," +
+                      "coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent],group_date from " +
+                      "(select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours], 0 as actual,d.date_plan as group_date " +
+                      "from dbo.power_plan_staff s " +
+                      "left join dbo.power_plan_date d on s.date_id = d.id  " +
+                      "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
+                      "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
+                      "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "'  group by d.date_plan " +
+                      "union all " +
+                      "select 0 as [hours],sum(l.time_for_part) / 60 as actual,cast(part_complete_date as date) as group_date from dbo.door_part_completion_log l " +
+                      "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
+                      "where op = '" + department + "' AND cast(part_complete_date as date) >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and cast(part_complete_date as date) <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
+                      "group by part_complete_date ) as a group by group_date) as temp where ([hours] >  0 or actual > 0)";
+
+                decimal overall_percent = 0;
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    var temp = cmd.ExecuteScalar();
+                    if (temp != null)
+                        overall_percent = Convert.ToDecimal(temp);
+                }
+
+                xlWorksheet.Cells[1][current_excel_row].Value2 = "Overall Complete";
+                xlWorksheet.Cells[4][current_excel_row].Value2 = "Overall Dropped";
+                xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Size = 14;
+                current_excel_row++;
+                xlWorksheet.Cells[1][current_excel_row].Value2 = overall_percent;
+
+                decimal overall_dropped = 0;
+
+                if (overall_percent < 1)
+                    overall_dropped = 1 - overall_percent;
+
+                xlWorksheet.Cells[4][current_excel_row].Value2 = overall_dropped;
+                xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Size = 14;
+
+
+                //add conditional formatting to the last row (%)
+                Excel.FormatCondition formatGreen = (Excel.FormatCondition)(xlWorksheet.Range("A" + current_excel_row.ToString(),
+                    Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
+                                       Excel.XlFormatConditionOperator.xlGreaterEqual, 1,
+                                       Type.Missing, Type.Missing, Type.Missing,
+                                       Type.Missing, Type.Missing));
+
+                formatGreen.Font.Bold = true;
+                formatGreen.Font.Color = Color.DarkGreen;
+                formatGreen.Interior.Color = Color.LimeGreen;
+
+                Excel.FormatCondition formatRed = (Excel.FormatCondition)(xlWorksheet.Range("A" + current_excel_row.ToString(),
+                                   Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
+                                   Excel.XlFormatConditionOperator.xlLess, 1,
+                                   Type.Missing, Type.Missing, Type.Missing,
+                                   Type.Missing, Type.Missing));
+
+                formatRed.Font.Bold = true;
+                formatRed.Font.Color = Color.DarkRed;
+                formatRed.Interior.Color = Color.PaleVioletRed;
+
+                Excel.FormatCondition formatGreen2 = (Excel.FormatCondition)(xlWorksheet.Range("D" + current_excel_row.ToString(),
+    Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
+                       Excel.XlFormatConditionOperator.xlEqual, 0,
+                       Type.Missing, Type.Missing, Type.Missing,
+                       Type.Missing, Type.Missing));
+
+                formatGreen2.Font.Bold = true;
+                formatGreen2.Font.Color = Color.DarkGreen;
+                formatGreen2.Interior.Color = Color.LimeGreen;
+
+                Excel.FormatCondition formatRed2 = (Excel.FormatCondition)(xlWorksheet.Range("D" + current_excel_row.ToString(),
+                                   Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
+                                   Excel.XlFormatConditionOperator.xlGreater, 0,
+                                   Type.Missing, Type.Missing, Type.Missing,
+                                   Type.Missing, Type.Missing));
+
+                formatRed2.Font.Bold = true;
+                formatRed2.Font.Color = Color.DarkRed;
+                formatRed2.Interior.Color = Color.PaleVioletRed;
+
+
+                current_excel_row++;
+
                 //need to workout the average for each of the staff
 
                 //if they are < 100 then we show everyday that they are placed
@@ -562,7 +646,7 @@ namespace ShopFloorPlacementPlanner
                           "cast(part_complete_date as date) >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and cast(part_complete_date as date) <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
                           "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' " +
                           "group by part_complete_date ) as a " +
-                          "group by group_date) as temp";
+                          "group by group_date) as temp where ([hours] >  0 or actual > 0)";
 
                     int skip_staff = 0;
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -578,6 +662,7 @@ namespace ShopFloorPlacementPlanner
                                 skip_staff = -1;
                         }
                     }
+
 
                     if (skip_staff == 0)
                     {
@@ -652,25 +737,25 @@ namespace ShopFloorPlacementPlanner
                                 xlWorksheet.Cells[5][current_excel_row].Value2 = dt.Rows[0][4].ToString();
 
                                 //add conditional formatting to the last row (%)
-                                Excel.FormatCondition formatGreen = (Excel.FormatCondition)(xlWorksheet.Range("E" + current_excel_row.ToString(),
+                                Excel.FormatCondition formatGreen3 = (Excel.FormatCondition)(xlWorksheet.Range("E" + current_excel_row.ToString(),
                                     Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
                                                        Excel.XlFormatConditionOperator.xlGreaterEqual, 1,
                                                        Type.Missing, Type.Missing, Type.Missing,
                                                        Type.Missing, Type.Missing));
 
-                                formatGreen.Font.Bold = true;
-                                formatGreen.Font.Color = Color.DarkGreen;
-                                formatGreen.Interior.Color = Color.LimeGreen;
+                                formatGreen3.Font.Bold = true;
+                                formatGreen3.Font.Color = Color.DarkGreen;
+                                formatGreen3.Interior.Color = Color.LimeGreen;
 
-                                Excel.FormatCondition formatRed = (Excel.FormatCondition)(xlWorksheet.Range("E" + current_excel_row.ToString(),
+                                Excel.FormatCondition formatRed3 = (Excel.FormatCondition)(xlWorksheet.Range("E" + current_excel_row.ToString(),
                                                    Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
                                                    Excel.XlFormatConditionOperator.xlLess, 1,
                                                    Type.Missing, Type.Missing, Type.Missing,
                                                    Type.Missing, Type.Missing));
 
-                                formatRed.Font.Bold = true;
-                                formatRed.Font.Color = Color.DarkRed;
-                                formatRed.Interior.Color = Color.PaleVioletRed;
+                                formatRed3.Font.Bold = true;
+                                formatRed3.Font.Color = Color.DarkRed;
+                                formatRed3.Interior.Color = Color.PaleVioletRed;
                             }
 
                             current_excel_row++;
@@ -849,6 +934,90 @@ namespace ShopFloorPlacementPlanner
 
                 current_excel_row++;
 
+                sql = "SELECT AVG([percent]) as [percent] FROM (select datename(WEEKDAY,group_date) as [dayOfWeek],sum([hours]) as [hours],sum([actual]) as actual," +
+                      "coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent],group_date from " +
+                      "(select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours], 0 as actual,d.date_plan as group_date " +
+                      "from dbo.power_plan_staff s " +
+                      "left join dbo.power_plan_date d on s.date_id = d.id  " +
+                      "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
+                      "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
+                      "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "'  group by d.date_plan " +
+                      "union all " +
+                      "select 0 as [hours],sum(l.time_for_part) / 60 as actual,cast(part_complete_date as date) as group_date from dbo.door_part_completion_log l " +
+                      "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
+                      "where op = '" + department + "' AND cast(part_complete_date as date) >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and cast(part_complete_date as date) <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
+                      "group by part_complete_date ) as a group by group_date) as temp where ([hours] >  0 or actual > 0)";
+
+                decimal overall_percent = 0;
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    var temp2 = cmd.ExecuteScalar();
+                    if (temp2 != null)
+                        overall_percent = Convert.ToDecimal(temp2);
+                }
+
+                xlWorksheet.Cells[1][current_excel_row].Value2 = "Overall Complete";
+                xlWorksheet.Cells[4][current_excel_row].Value2 = "Overall Dropped";
+                xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Size = 14;
+                current_excel_row++;
+                xlWorksheet.Cells[1][current_excel_row].Value2 = overall_percent;
+
+                decimal overall_dropped = 0;
+
+                if (overall_percent < 1)
+                    overall_dropped = 1 - overall_percent;
+
+                xlWorksheet.Cells[4][current_excel_row].Value2 = overall_dropped;
+                xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Size = 14;
+
+
+                //add conditional formatting to the last row (%)
+                Excel.FormatCondition formatGreen = (Excel.FormatCondition)(xlWorksheet.Range("A" + current_excel_row.ToString(),
+                    Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
+                                       Excel.XlFormatConditionOperator.xlGreaterEqual, 1,
+                                       Type.Missing, Type.Missing, Type.Missing,
+                                       Type.Missing, Type.Missing));
+
+                formatGreen.Font.Bold = true;
+                formatGreen.Font.Color = Color.DarkGreen;
+                formatGreen.Interior.Color = Color.LimeGreen;
+
+                Excel.FormatCondition formatRed = (Excel.FormatCondition)(xlWorksheet.Range("A" + current_excel_row.ToString(),
+                                   Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
+                                   Excel.XlFormatConditionOperator.xlLess, 1,
+                                   Type.Missing, Type.Missing, Type.Missing,
+                                   Type.Missing, Type.Missing));
+
+                formatRed.Font.Bold = true;
+                formatRed.Font.Color = Color.DarkRed;
+                formatRed.Interior.Color = Color.PaleVioletRed;
+
+                Excel.FormatCondition formatGreen2 = (Excel.FormatCondition)(xlWorksheet.Range("D" + current_excel_row.ToString(),
+    Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
+                       Excel.XlFormatConditionOperator.xlEqual, 0,
+                       Type.Missing, Type.Missing, Type.Missing,
+                       Type.Missing, Type.Missing));
+
+                formatGreen2.Font.Bold = true;
+                formatGreen2.Font.Color = Color.DarkGreen;
+                formatGreen2.Interior.Color = Color.LimeGreen;
+
+                Excel.FormatCondition formatRed2 = (Excel.FormatCondition)(xlWorksheet.Range("D" + current_excel_row.ToString(),
+                                   Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
+                                   Excel.XlFormatConditionOperator.xlGreater, 0,
+                                   Type.Missing, Type.Missing, Type.Missing,
+                                   Type.Missing, Type.Missing));
+
+                formatRed2.Font.Bold = true;
+                formatRed2.Font.Color = Color.DarkRed;
+                formatRed2.Interior.Color = Color.PaleVioletRed;
+
+
+                current_excel_row++;
+
+
+                current_excel_row++;
+
                 xlWorksheet.Cells[1][current_excel_row].Value2 = "Date";
                 xlWorksheet.Cells[2][current_excel_row].Value2 = "Day of Week";
                 xlWorksheet.Cells[3][current_excel_row].Value2 = "Hours";
@@ -904,25 +1073,25 @@ namespace ShopFloorPlacementPlanner
                         xlWorksheet.Cells[5][current_excel_row].Value2 = dt.Rows[0][4].ToString();
 
                         //add conditional formatting to the last row (%)
-                        Excel.FormatCondition formatGreen = (Excel.FormatCondition)(xlWorksheet.Range("E" + current_excel_row.ToString(),
+                        Excel.FormatCondition formatGreen3 = (Excel.FormatCondition)(xlWorksheet.Range("E" + current_excel_row.ToString(),
                             Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
                                                Excel.XlFormatConditionOperator.xlGreaterEqual, 1,
                                                Type.Missing, Type.Missing, Type.Missing,
                                                Type.Missing, Type.Missing));
 
-                        formatGreen.Font.Bold = true;
-                        formatGreen.Font.Color = Color.DarkGreen;
-                        formatGreen.Interior.Color = Color.LimeGreen;
+                        formatGreen3.Font.Bold = true;
+                        formatGreen3.Font.Color = Color.DarkGreen;
+                        formatGreen3.Interior.Color = Color.LimeGreen;
 
-                        Excel.FormatCondition formatRed = (Excel.FormatCondition)(xlWorksheet.Range("E" + current_excel_row.ToString(),
+                        Excel.FormatCondition formatRed3 = (Excel.FormatCondition)(xlWorksheet.Range("E" + current_excel_row.ToString(),
                                            Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlCellValue,
                                            Excel.XlFormatConditionOperator.xlLess, 1,
                                            Type.Missing, Type.Missing, Type.Missing,
                                            Type.Missing, Type.Missing));
 
-                        formatRed.Font.Bold = true;
-                        formatRed.Font.Color = Color.DarkRed;
-                        formatRed.Interior.Color = Color.PaleVioletRed;
+                        formatRed3.Font.Bold = true;
+                        formatRed3.Font.Color = Color.DarkRed;
+                        formatRed3.Interior.Color = Color.PaleVioletRed;
                     }
 
 
@@ -1001,12 +1170,12 @@ namespace ShopFloorPlacementPlanner
                         }
 
                     }
-                    
+
                     current_supervisor_date = current_supervisor_date.AddDays(1);
                 }
 
 
-                
+
 
                 xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row, 5]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
 
@@ -1271,6 +1440,11 @@ namespace ShopFloorPlacementPlanner
         }
 
         private void txtPainting_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPacking_TextChanged(object sender, EventArgs e)
         {
 
         }

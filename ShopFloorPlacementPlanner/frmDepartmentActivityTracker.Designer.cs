@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDepartmentActivityTracker));
             this.dteStart = new System.Windows.Forms.DateTimePicker();
             this.dteEnd = new System.Windows.Forms.DateTimePicker();
             this.txtPunching = new System.Windows.Forms.TextBox();
@@ -176,6 +177,7 @@
             this.txtPacking.TabIndex = 12;
             this.txtPacking.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtPacking.Click += new System.EventHandler(this.txtPacking_Click);
+            this.txtPacking.TextChanged += new System.EventHandler(this.txtPacking_TextChanged);
             // 
             // frmDepartmentActivityTracker
             // 
@@ -196,6 +198,7 @@
             this.Controls.Add(this.txtPunching);
             this.Controls.Add(this.dteEnd);
             this.Controls.Add(this.dteStart);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmDepartmentActivityTracker";
