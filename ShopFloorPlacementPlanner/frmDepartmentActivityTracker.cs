@@ -821,17 +821,28 @@ namespace ShopFloorPlacementPlanner
                         else
                         {
                             xlWorksheet.Cells[2][current_excel_row].Value2 = dt.Rows[0][0].ToString();
-                            if (dt.Rows[0][0].ToString() != "Not Pressed" && dt.Rows[0][0].ToString() != "Nobody")
+                            if (dt.Rows[0][0].ToString() != "Not Pressed" && dt.Rows[0][0].ToString() != "Nobody" && dt.Rows[0][0].ToString() != "No Management")
                                 xlWorksheet.Cells[2][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                            else if (dt.Rows[0][0].ToString() == "No Management")
+                                xlWorksheet.Cells[2][current_excel_row].Interior.Color = System.Drawing.Color.PaleVioletRed;
+
                             xlWorksheet.Cells[3][current_excel_row].Value2 = dt.Rows[0][1].ToString();
-                            if (dt.Rows[0][1].ToString() != "Not Pressed" && dt.Rows[0][1].ToString() != "Nobody")
+                            if (dt.Rows[0][1].ToString() != "Not Pressed" && dt.Rows[0][1].ToString() != "Nobody" && dt.Rows[0][1].ToString() != "No Management")
                                 xlWorksheet.Cells[3][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                            else if (dt.Rows[0][1].ToString() == "No Management")
+                                xlWorksheet.Cells[3][current_excel_row].Interior.Color = System.Drawing.Color.PaleVioletRed;
+
                             xlWorksheet.Cells[4][current_excel_row].Value2 = dt.Rows[0][2].ToString();
-                            if (dt.Rows[0][2].ToString() != "Not Pressed" && dt.Rows[0][2].ToString() != "Nobody")
+                            if (dt.Rows[0][2].ToString() != "Not Pressed" && dt.Rows[0][2].ToString() != "Nobody" && dt.Rows[0][2].ToString() != "No Management")
                                 xlWorksheet.Cells[4][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                            else if (dt.Rows[0][2].ToString() == "No Management")
+                                xlWorksheet.Cells[4][current_excel_row].Interior.Color = System.Drawing.Color.PaleVioletRed;
+
                             xlWorksheet.Cells[5][current_excel_row].Value2 = dt.Rows[0][3].ToString();
-                            if (dt.Rows[0][3].ToString() != "Not Pressed" && dt.Rows[0][3].ToString() != "Nobody")
+                            if (dt.Rows[0][3].ToString() != "Not Pressed" && dt.Rows[0][3].ToString() != "Nobody" && dt.Rows[0][3].ToString() != "No Management")
                                 xlWorksheet.Cells[5][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                            else if (dt.Rows[0][3].ToString() == "No Management")
+                                xlWorksheet.Cells[5][current_excel_row].Interior.Color = System.Drawing.Color.PaleVioletRed;
                         }
 
                     }
@@ -1156,17 +1167,28 @@ namespace ShopFloorPlacementPlanner
                         else
                         {
                             xlWorksheet.Cells[2][current_excel_row].Value2 = dt.Rows[0][0].ToString();
-                            if (dt.Rows[0][0].ToString() != "Not Pressed" && dt.Rows[0][0].ToString() != "Nobody")
+                            if (dt.Rows[0][0].ToString() != "Not Pressed" && dt.Rows[0][0].ToString() != "Nobody" && dt.Rows[0][0].ToString() != "No Management")
                                 xlWorksheet.Cells[2][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                            else if (dt.Rows[0][0].ToString() == "No Management")
+                                xlWorksheet.Cells[2][current_excel_row].Interior.Color = System.Drawing.Color.PaleVioletRed;
+
                             xlWorksheet.Cells[3][current_excel_row].Value2 = dt.Rows[0][1].ToString();
-                            if (dt.Rows[0][1].ToString() != "Not Pressed" && dt.Rows[0][1].ToString() != "Nobody")
+                            if (dt.Rows[0][1].ToString() != "Not Pressed" && dt.Rows[0][1].ToString() != "Nobody" && dt.Rows[0][1].ToString() != "No Management")
                                 xlWorksheet.Cells[3][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                            else if (dt.Rows[0][1].ToString() == "No Management")
+                                xlWorksheet.Cells[3][current_excel_row].Interior.Color = System.Drawing.Color.PaleVioletRed;
+
                             xlWorksheet.Cells[4][current_excel_row].Value2 = dt.Rows[0][2].ToString();
-                            if (dt.Rows[0][2].ToString() != "Not Pressed" && dt.Rows[0][2].ToString() != "Nobody")
+                            if (dt.Rows[0][2].ToString() != "Not Pressed" && dt.Rows[0][2].ToString() != "Nobody" && dt.Rows[0][2].ToString() != "No Management")
                                 xlWorksheet.Cells[4][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                            else if (dt.Rows[0][2].ToString() == "No Management")
+                                xlWorksheet.Cells[4][current_excel_row].Interior.Color = System.Drawing.Color.PaleVioletRed;
+
                             xlWorksheet.Cells[5][current_excel_row].Value2 = dt.Rows[0][3].ToString();
-                            if (dt.Rows[0][3].ToString() != "Not Pressed" && dt.Rows[0][3].ToString() != "Nobody")
+                            if (dt.Rows[0][3].ToString() != "Not Pressed" && dt.Rows[0][3].ToString() != "Nobody" && dt.Rows[0][3].ToString() != "No Management")
                                 xlWorksheet.Cells[5][current_excel_row].Interior.Color = System.Drawing.Color.LimeGreen;
+                            else if (dt.Rows[0][3].ToString() == "No Management")
+                                xlWorksheet.Cells[5][current_excel_row].Interior.Color = System.Drawing.Color.PaleVioletRed;
                         }
 
                     }

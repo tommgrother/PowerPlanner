@@ -303,10 +303,7 @@
             this.cmbDefault.Enabled = false;
             this.cmbDefault.FormattingEnabled = true;
             this.cmbDefault.Items.AddRange(new object[] {
-            "Cutting",
-            "Prepping",
-            "Assembly",
-            "SL Buff",
+            "Slimline",
             "Laser",
             "Punching",
             "Bending",
@@ -358,6 +355,8 @@
             this.Controls.Add(this.cmbFirst);
             this.Controls.Add(this.lblStaff);
             this.Controls.Add(this.cmbStaff);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmDepartmentManagement";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Department Management";

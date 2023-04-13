@@ -1113,6 +1113,7 @@
             this.kevinNoteToolStripMenuItem.Name = "kevinNoteToolStripMenuItem";
             this.kevinNoteToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
             this.kevinNoteToolStripMenuItem.Text = "Messages";
+            this.kevinNoteToolStripMenuItem.Visible = false;
             this.kevinNoteToolStripMenuItem.Click += new System.EventHandler(this.kevinNoteToolStripMenuItem_Click);
             // 
             // absentToolStripMenuItem

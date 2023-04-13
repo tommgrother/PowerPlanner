@@ -3931,44 +3931,44 @@ namespace ShopFloorPlacementPlanner
         private void kevinMessage()
         {
 
-            string person = login.userFullName;
-            person = person.Substring(0, person.IndexOf(" "));
+            //string person = login.userFullName;
+            //person = person.Substring(0, person.IndexOf(" "));
 
-            if (person == "Kevin") //if its kevin take a different route and prompt for a message
-            {
-                DialogResult result = MessageBox.Show("Would you like to open the message screen before opening the Power Planner?", "Power Planner", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
-                {
-                    frmKevinMessage KH = new frmKevinMessage(-1);
-                    KH.ShowDialog();
-                }
+            //if (person == "Kevin") //if its kevin take a different route and prompt for a message
+            //{
+            //    DialogResult result = MessageBox.Show("Would you like to open the message screen before opening the Power Planner?", "Power Planner", MessageBoxButtons.YesNo);
+            //    if (result == DialogResult.Yes)
+            //    {
+            //        frmKevinMessage KH = new frmKevinMessage(-1);
+            //        KH.ShowDialog();
+            //    }
 
-            }
-            else if (person == "Other")
-            {
+            //}
+            //else if (person == "Other")
+            //{
 
-            }
-            else
-            {
-                string sql = "SELECT top 1  COALESCE(" + person + ",0) FROM dbo.kevinMessage where  " + person + " is null order by id desc";
-                using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
-                {
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    {
-                        conn.Open();
-                        SqlDataAdapter da = new SqlDataAdapter(cmd);
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
-                        conn.Close();
-                        if (dt.Rows.Count > 0)
-                        {
-                            frmKevinMessage KM = new frmKevinMessage(0);
-                            KM.ShowDialog();
-                        }
-                        //otherwise skip
-                    }
-                }
-            }
+            //}
+            //else
+            //{
+            //    string sql = "SELECT top 1  COALESCE(" + person + ",0) FROM dbo.kevinMessage where  " + person + " is null order by id desc";
+            //    using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            //    {
+            //        using (SqlCommand cmd = new SqlCommand(sql, conn))
+            //        {
+            //            conn.Open();
+            //            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            //            DataTable dt = new DataTable();
+            //            da.Fill(dt);
+            //            conn.Close();
+            //            if (dt.Rows.Count > 0)
+            //            {
+            //                frmKevinMessage KM = new frmKevinMessage(0);
+            //                KM.ShowDialog();
+            //            }
+            //            //otherwise skip
+            //        }
+            //    }
+            //}
         }
 
         private void MenuMain_Shown(object sender, EventArgs e)
