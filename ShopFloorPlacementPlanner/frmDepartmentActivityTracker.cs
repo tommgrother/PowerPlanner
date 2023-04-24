@@ -518,7 +518,7 @@ namespace ShopFloorPlacementPlanner
             string sql = "select distinct u.forename + ' ' + u.surname as fullName,coalesce(u.[start_date],'') as [start_date]  from dbo.power_plan_staff s " +
                          "left join dbo.power_plan_date d on s.date_id = d.id " +
                          "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
-                         "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND (u.non_user = 0 or u.non_user is null) " +
+                         "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND (u.non_user = 0 or u.non_user is null) AND s.hours > 0 " +
                          "AND d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' AND d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' order by u.forename + ' ' + u.surname asc ";
 
 

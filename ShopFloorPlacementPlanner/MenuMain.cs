@@ -1325,7 +1325,7 @@ namespace ShopFloorPlacementPlanner
             }
 
 
-            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Slimline' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]"; //12324
+            string sql = "select [Staff Name] FROM view_planner_punch_staff WHERE department = 'Slimline' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]"; //12324
             DataTable dtStaffID = new DataTable();
             using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
             {
@@ -1343,13 +1343,16 @@ namespace ShopFloorPlacementPlanner
                 string allocated = "";
                 try
                 {
-                    sql = "SELECT sum(hours) FROM ( " +
-                       "select round(cast((sum(time_remaining_cutting * quantity_same) + sum(time_remaining_prepping * quantity_same) + sum(time_remianing_assembly * quantity_same)) as float) /60,2) as hours from dbo.door_allocation da " +
-                       "left join dbo.door d on da.door_id = d.id " +
-                       "where (da.department = 'Assembly' or da.department = 'Cutting' or da.department = 'Prepping') and " +
-                       "(time_remaining_cutting > 0 or time_remaining_prepping > 0 or time_remianing_assembly > 0) and " +
-                       "(status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
-                       "group by staff_id,da.door_id) as a";
+                    ////sql = "SELECT sum(hours) FROM ( " +
+                    ////   "select round(cast((sum(time_remaining_cutting * quantity_same) + sum(time_remaining_prepping * quantity_same) + sum(time_remianing_assembly * quantity_same)) as float) /60,2) as hours from dbo.door_allocation da " +
+                    ////   "left join dbo.door d on da.door_id = d.id " +
+                    ////   "where (da.department = 'Assembly' or da.department = 'Cutting' or da.department = 'Prepping') and " +
+                    ////   "(time_remaining_cutting > 0 or time_remaining_prepping > 0 or time_remianing_assembly > 0) and " +
+                    ////   "(status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                    ////   "group by staff_id,da.door_id) as a";
+                    ///
+                    //old string
+                    sql = "select SUM(time_remaining)  from dbo.c_view_slimline_allocation where [Allocated to] = '" + dtStaffID.Rows[i][0].ToString()  + "'";
 
                     //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
                     using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
