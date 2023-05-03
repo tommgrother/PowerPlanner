@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace ShopFloorPlacementPlanner
@@ -120,7 +122,24 @@ namespace ShopFloorPlacementPlanner
 
         public void addPlacment()
         {
+            double hours = 6.4;
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
+
+            //get the amount of hours for this staff member
+            //usp_power_planner_get_default_hours
+
+            using (SqlCommand cmd = new SqlCommand("usp_power_planner_get_default_hours", conn))
+            {
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@dateID", SqlDbType.Date).Value = _dateID;
+                cmd.Parameters.AddWithValue("@userID", SqlDbType.Int).Value = _staffID;
+
+                hours = Convert.ToDouble(cmd.ExecuteScalar().ToString());
+
+                //var temp = cmd.ExecuteScalar();
+            }
 
             using (SqlCommand cmd = new SqlCommand("insert into dbo.power_plan_staff (date_id,staff_id,department,placement_type,hours) VALUES(@dateID,@staffID,@department,@placementType,@hours)", conn))
             {
@@ -128,11 +147,12 @@ namespace ShopFloorPlacementPlanner
                 cmd.Parameters.AddWithValue("@staffID", _staffID);
                 cmd.Parameters.AddWithValue("@department", _department);
                 cmd.Parameters.AddWithValue("@placementType", _placement_type);
-                cmd.Parameters.AddWithValue("@hours", _hours);
-                conn.Open();
+                cmd.Parameters.AddWithValue("@hours", hours);
+                
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                
             }
+            conn.Close();
         }
 
         public void notPresent()

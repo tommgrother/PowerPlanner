@@ -707,6 +707,9 @@ namespace ShopFloorPlacementPlanner
                         int date_row_count = 0;
                         date_row_count = dt_date.Rows.Count;
 
+                        double hours_goal_total = 0;
+                        double hours_actual_total = 0;
+
                         for (int date_row = 0; date_row < dt_date.Rows.Count; date_row++)
                         {
                             //now we get the day of week/hours/actual/%
@@ -733,7 +736,9 @@ namespace ShopFloorPlacementPlanner
                                 xlWorksheet.Cells[1][current_excel_row].Value2 = Convert.ToDateTime(dt.Rows[0][0].ToString()).ToString("dd/MM/yyyy");
                                 xlWorksheet.Cells[2][current_excel_row].Value2 = dt.Rows[0][1].ToString();
                                 xlWorksheet.Cells[3][current_excel_row].Value2 = dt.Rows[0][2].ToString();
+                                hours_goal_total = hours_goal_total + Convert.ToDouble(dt.Rows[0][2].ToString());
                                 xlWorksheet.Cells[4][current_excel_row].Value2 = dt.Rows[0][3].ToString();
+                                hours_actual_total = hours_actual_total + Convert.ToDouble(dt.Rows[0][3].ToString());
                                 xlWorksheet.Cells[5][current_excel_row].Value2 = dt.Rows[0][4].ToString();
 
                                 //add conditional formatting to the last row (%)
@@ -761,9 +766,13 @@ namespace ShopFloorPlacementPlanner
                             current_excel_row++;
                         }
                         //average %
-                        xlWorksheet.Cells[4][current_excel_row].Value2 = "AVERAGE %";
+                        xlWorksheet.Cells[3][current_excel_row].Value2 = hours_goal_total.ToString();
+                        xlWorksheet.Cells[4][current_excel_row].Value2 = hours_actual_total.ToString();
                         xlWorksheet.Cells[5][current_excel_row].Value2 = "=AVERAGE(E" + (current_excel_row - 1 - date_row_count).ToString() + ":E" + (current_excel_row - 1).ToString() + ")";
-                        xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 3]].Merge();
+                        xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 2]].Merge();
+                        xlWorksheet.Cells[1][current_excel_row].Value2 = "TOTAL/AVERAGE";
+                        xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Bold = true;
+                        xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Size = 12;
                         current_excel_row++;
                     }
 
@@ -945,20 +954,30 @@ namespace ShopFloorPlacementPlanner
 
                 current_excel_row++;
 
-                sql = "SELECT AVG([percent]) as [percent] FROM (select datename(WEEKDAY,group_date) as [dayOfWeek],sum([hours]) as [hours],sum([actual]) as actual," +
-                      "coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent],group_date from " +
-                      "(select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours], 0 as actual,d.date_plan as group_date " +
-                      "from dbo.power_plan_staff s " +
-                      "left join dbo.power_plan_date d on s.date_id = d.id  " +
-                      "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
-                      "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
-                      "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "'  group by d.date_plan " +
-                      "union all " +
-                      "select 0 as [hours],sum(l.time_for_part) / 60 as actual,cast(part_complete_date as date) as group_date from dbo.door_part_completion_log l " +
-                      "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
-                      "where op = '" + department + "' AND cast(part_complete_date as date) >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and cast(part_complete_date as date) <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
-                      "group by part_complete_date ) as a group by group_date) as temp where ([hours] >  0 or actual > 0)";
+                if (department != "Punching")
+                {
+                    sql = "SELECT AVG([percent]) as [percent] FROM (select datename(WEEKDAY,group_date) as [dayOfWeek],sum([hours]) as [hours],sum([actual]) as actual," +
+                          "coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent],group_date from " +
+                          "(select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours], 0 as actual,d.date_plan as group_date " +
+                          "from dbo.power_plan_staff s " +
+                          "left join dbo.power_plan_date d on s.date_id = d.id  " +
+                          "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
+                          "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
+                          "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "'  group by d.date_plan " +
+                          "union all " +
+                          "select 0 as [hours],sum(l.time_for_part) / 60 as actual,cast(part_complete_date as date) as group_date from dbo.door_part_completion_log l " +
+                          "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
+                          "where op = '" + department + "' AND cast(part_complete_date as date) >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and cast(part_complete_date as date) <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
+                          "group by part_complete_date ) as a group by group_date) as temp where ([hours] >  0 or actual > 0)";
 
+                }
+                else
+                {
+                    sql = "select " +
+                          "coalesce(round(sum(actual_hours_punch) / nullif(sum(goal_hours_punch),0),2),0)  " +
+                          "from dbo.daily_department_goal " +
+                          "where date_goal >= '" + dteStart.Value.ToString("yyyyMMdd") + "' AND date_goal <= '" + dteEnd.Value.ToString("yyyyMMdd") + "'";
+                }
                 decimal overall_percent = 0;
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
@@ -1035,6 +1054,9 @@ namespace ShopFloorPlacementPlanner
                 xlWorksheet.Cells[4][current_excel_row].Value2 = "Actual";
                 xlWorksheet.Cells[5][current_excel_row].Value2 = "%";
 
+                double hours_goal_total = 0;
+                double hours_actual_total = 0;
+
                 //loop for each distinct date
                 for (int department_row = 0; department_row < dt_department.Rows.Count; department_row++)
                 {
@@ -1080,7 +1102,9 @@ namespace ShopFloorPlacementPlanner
                         xlWorksheet.Cells[1][current_excel_row].Value2 = dt.Rows[0][0].ToString();
                         xlWorksheet.Cells[2][current_excel_row].Value2 = dt.Rows[0][1].ToString();
                         xlWorksheet.Cells[3][current_excel_row].Value2 = dt.Rows[0][2].ToString();
+                        hours_goal_total = hours_goal_total + Convert.ToDouble(dt.Rows[0][2].ToString());
                         xlWorksheet.Cells[4][current_excel_row].Value2 = dt.Rows[0][3].ToString();
+                        hours_actual_total = hours_actual_total + Convert.ToDouble(dt.Rows[0][3].ToString());
                         xlWorksheet.Cells[5][current_excel_row].Value2 = dt.Rows[0][4].ToString();
 
                         //add conditional formatting to the last row (%)
@@ -1111,9 +1135,17 @@ namespace ShopFloorPlacementPlanner
                 }
                 //average %
                 current_excel_row++;
-                xlWorksheet.Cells[4][current_excel_row].Value2 = "AVERAGE %";
+                //xlWorksheet.Cells[4][current_excel_row].Value2 = "AVERAGE %";
+                //xlWorksheet.Cells[5][current_excel_row].Value2 = "=AVERAGE(E" + (current_excel_row - 1 - average_percent).ToString() + ":E" + (current_excel_row - 1).ToString() + ")";
+                //xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 3]].Merge();
+                //current_excel_row++;
+                xlWorksheet.Cells[3][current_excel_row].Value2 = hours_goal_total.ToString();
+                xlWorksheet.Cells[4][current_excel_row].Value2 = hours_actual_total.ToString();
                 xlWorksheet.Cells[5][current_excel_row].Value2 = "=AVERAGE(E" + (current_excel_row - 1 - average_percent).ToString() + ":E" + (current_excel_row - 1).ToString() + ")";
-                xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 3]].Merge();
+                xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 2]].Merge();
+                xlWorksheet.Cells[1][current_excel_row].Value2 = "TOTAL/AVERAGE";
+                xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Bold = true;
+                xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Size = 12;
                 current_excel_row++;
 
                 //supervisor attendence
@@ -1132,6 +1164,7 @@ namespace ShopFloorPlacementPlanner
                 DateTime current_supervisor_date = dteStart.Value;
                 for (int i = 0; i < supervisor_dates; i++)
                 {
+                    current_excel_row++;
                     if (current_supervisor_date.DayOfWeek == DayOfWeek.Saturday || current_supervisor_date.DayOfWeek == DayOfWeek.Sunday)
                     {
                         current_supervisor_date = current_supervisor_date.AddDays(1);
@@ -1192,8 +1225,8 @@ namespace ShopFloorPlacementPlanner
                         }
 
                     }
-
                     current_supervisor_date = current_supervisor_date.AddDays(1);
+                    
                 }
 
 
