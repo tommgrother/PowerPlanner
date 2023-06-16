@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -118,7 +119,8 @@ namespace ShopFloorPlacementPlanner
                 //    "AND CAST(part_complete_date as DATE)<= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + "' AND part_status = 'Complete' " +
                 //    "GROUP BY op,CAST(part_complete_date as date),dbo.door_part_completion_log.staff_id";
 
-                sql = "SELECT max(b.date_plan) as [Date],MAX(DATENAME(dw,b.date_plan)) as [day],max(department) as [department], MAX(a.[hours]) as [set_hours],'0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours],max(a.id) as [placement],max(placement_note) as [note] " +
+
+                sql = "SELECT max(b.date_plan) as [Date],MAX(DATENAME(dw,b.date_plan)) as [day],max(department) as [department], MAX(a.[hours]) as [set_hours],'0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours],max(a.id) as [placement],max(placement_note) as [note],'' as absent_type " +
                     "FROM dbo.power_plan_staff a LEFT JOIN dbo.power_plan_date b on a.date_id = b.id " +
                     "WHERE a.staff_id = " + staff_id.ToString() + " AND CAST(b.date_plan as DATE)>= '" + Convert.ToDateTime(dteStart.Value).ToString("yyyy-MM-dd") + "' AND CAST(b.date_plan as DATE)<= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + "' " +
                     "AND department <> 'Punching' AND department <> 'Stores' AND department<> 'Dispatch' AND department<> 'HS' AND department<> 'Cleaning' AND department<> 'ToolRoom' AND department<> 'Management' ";
@@ -127,6 +129,18 @@ namespace ShopFloorPlacementPlanner
                     sql = sql + " AND department = '" + cmbDepartment.Text + "' ";
 
                 sql = sql + " GROUP BY department,b.date_plan,a.staff_id";
+
+
+                sql = sql + " union all " +
+                    "SELECT date_absent as [Date],DATENAME(dw,date_absent) as [day],u.default_in_department as [department], 0 as [set_hours],'0' as [overtime]," +
+                    "'0' as [total_set_hours],'0' as [actual_hours],0 as [placement],null as [note] ,at.absent_type " +
+                    "from dbo.absent_holidays a " +
+                    "left join dbo.absent_holidays_type  at on a.absent_type = at.absent_number " +
+                    "left join [user_info].dbo.[user] u on a.staff_id = u.id " +
+                    "where a.staff_id = " + staff_id.ToString() + " AND " +
+                    "date_absent >= '" + Convert.ToDateTime(dteStart.Value).ToString("yyyy-MM-dd") + "' AND date_absent <= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + " ' " +
+                    "order by [date]";
+
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -149,6 +163,8 @@ namespace ShopFloorPlacementPlanner
                 int overtimeIndex = dataGridView1.Columns["overtime"].Index;
                 int placementIndex = dataGridView1.Columns["placement"].Index;
                 int noteIndex = dataGridView1.Columns["note"].Index;
+                int absentIndex = dataGridView1.Columns["absent_type"].Index;
+
                 double runningSet = 0, runningOvertime = 0, runningActual = 0, runningSetAndOvertime = 0;
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
@@ -177,6 +193,10 @@ namespace ShopFloorPlacementPlanner
                             lblDifference.Text = "Gained " + Math.Round(temp, 2).ToString() + " Hours";
                             lblDifference.BackColor = Color.DarkSeaGreen;
                         }
+
+                        if (row.Cells[absentIndex].Value.ToString().Length > 1)
+                            row.DefaultCellStyle.BackColor = Color.LightSkyBlue;
+
                         // lblDifference.Text = "Set Hours - Actual Hours = " + Convert.ToString(runningSetAndOvertime - runningActual);
                     }
                     else
@@ -216,12 +236,12 @@ namespace ShopFloorPlacementPlanner
 
                         if (hoursTemp < actualTemp)
                         {
-                            row.Cells[9].Value = "✔";
+                            row.Cells[10].Value = "✔";
                             row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                         }
                         else
                         {
-                            row.Cells[9].Value = "✖";
+                            row.Cells[10].Value = "✖";
                             row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
                         }
 
@@ -234,6 +254,9 @@ namespace ShopFloorPlacementPlanner
                         {
                             row.Cells[0].Style.BackColor = Color.Yellow;
                         }
+
+                        if (row.Cells[absentIndex].Value.ToString().Length > 1)
+                            row.DefaultCellStyle.BackColor = Color.LightSkyBlue;
 
                         //add set hours + overtime together
                         double totalHours = Math.Round(Convert.ToDouble(row.Cells[setHoursIndex].Value) + Convert.ToDouble(row.Cells[overtimeIndex].Value), 2);
@@ -254,6 +277,7 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns[4].HeaderText = "Overtime";
                 dataGridView1.Columns[5].HeaderText = "Set Hours + Overtime";
                 dataGridView1.Columns[6].HeaderText = "Actual Hours";
+                dataGridView1.Columns[absentIndex].HeaderText = "Absent Type";
                 dataGridView1.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns[7].Visible = false;
 
@@ -424,11 +448,20 @@ namespace ShopFloorPlacementPlanner
             //column headers
             current_excel_row++;
 
+            string dateFormatter;
+            DateTime dateFormatter2;
+
             //vvv we need to loop through dgv 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 int noteIndex = dataGridView1.Columns["note"].Index;
-                xlWorksheet.Cells[1][current_excel_row].Value2 = row.Cells[0].Value.ToString();
+
+                dateFormatter = row.Cells[0].Value.ToString();
+
+                DateTime.TryParse(dateFormatter, out dateFormatter2);
+                
+
+                xlWorksheet.Cells[1][current_excel_row].Value2 = dateFormatter2;
                 xlWorksheet.Cells[2][current_excel_row].Value2 = row.Cells[1].Value.ToString();
                 xlWorksheet.Cells[3][current_excel_row].Value2 = row.Cells[2].Value.ToString();
                 xlWorksheet.Cells[4][current_excel_row].Value2 = row.Cells[3].Value.ToString();

@@ -58,7 +58,7 @@ namespace ShopFloorPlacementPlanner
                 conn.Close();
             }
 
-            using (SqlCommand cmd = new SqlCommand("DELETE  FROM DBO.power_plan_staff where ID = @placementID", conn))
+            using (SqlCommand cmd = new SqlCommand("DELETE FROM DBO.power_plan_staff where ID = @placementID", conn))
             {
                 cmd.Parameters.AddWithValue("@placementID", placementID);
                 conn.Open();
@@ -147,7 +147,7 @@ namespace ShopFloorPlacementPlanner
                 cmd.Parameters.AddWithValue("@staffID", _staffID);
                 cmd.Parameters.AddWithValue("@department", _department);
                 cmd.Parameters.AddWithValue("@placementType", _placement_type);
-                cmd.Parameters.AddWithValue("@hours", hours);
+                cmd.Parameters.AddWithValue("@hours", _hours);
                 
                 cmd.ExecuteNonQuery();
                 

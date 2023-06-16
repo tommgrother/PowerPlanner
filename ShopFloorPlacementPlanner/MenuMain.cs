@@ -1010,6 +1010,9 @@ namespace ShopFloorPlacementPlanner
                     if (row.Cells[1].Value.ToString().Contains("ABSENT"))
                         row.DefaultCellStyle.BackColor = Color.Salmon;
 
+                    if (row.Cells[1].Value.ToString().Contains("ABSENT TAKEN HOLIDAY"))
+                        row.DefaultCellStyle.BackColor = Color.LightSteelBlue;
+
                     if (row.Cells[1].Value.ToString().Contains("UNPAID"))
                         row.DefaultCellStyle.BackColor = Color.DeepPink;
 
@@ -1055,7 +1058,7 @@ namespace ShopFloorPlacementPlanner
             //            row.DefaultCellStyle.BackColor = Color.DeepPink;
             //        }
             //    }
-            //    catch
+            //    catch 
             //    {
             //        continue;
             //    }
@@ -1871,7 +1874,7 @@ namespace ShopFloorPlacementPlanner
             cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Dressing";
             cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
-            var dataReader = cmdryucxd.ExecuteReader();
+             var dataReader = cmdryucxd.ExecuteReader();
             // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable workedHours = new DataTable();
             workedHours.Load(dataReader);
@@ -3226,7 +3229,7 @@ namespace ShopFloorPlacementPlanner
 
         private void dgNotPlaced_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgNotPlaced.Rows[e.RowIndex].Cells[1].Value.ToString().Contains("HOLIDAY"))
+            if (dgNotPlaced.Rows[e.RowIndex].DefaultCellStyle.BackColor != Color.Empty)//(dgNotPlaced.Rows[e.RowIndex].Cells[1].Value.ToString().Contains("HOLIDAY"))
             {
                 //if its a holiday show the form that displays when it was created
                 //grab user ud
@@ -4026,6 +4029,9 @@ namespace ShopFloorPlacementPlanner
             //check absents here 
             add_absents();
 
+            dgCleaning.ClearSelection();
+            dgvHSManagement.ClearSelection();
+
         }
 
 
@@ -4258,7 +4264,7 @@ namespace ShopFloorPlacementPlanner
                 using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {
                     conn.Open();
-                    if (row.Cells[1].Value.ToString() == "ABSENT")
+                    if (row.Cells[1].Value.ToString() == "ABSENT" || row.Cells[1].Value.ToString() == "ABSENT TAKEN HOLIDAY")
                     {
                         //find this users default placement and put him in that grid
                         sql = "Select default_in_department from [user_info].dbo.[user] " +
@@ -4395,6 +4401,42 @@ namespace ShopFloorPlacementPlanner
                             dgLaser.DataSource = dt;
 
                             foreach (DataGridViewRow dgvRow in dgLaser.Rows)
+                                if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
+                                    dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
+                        }
+                        else if (default_dept == "HS" || default_dept == "Management")
+                        {
+                            //copy the welding and then add my row and copy back
+
+                            DataTable dt = (DataTable)(dgvHSManagement.DataSource);
+
+                            DataRow dataRow;
+                            dataRow = dt.NewRow();
+                            dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
+                            // dataRow[2] = "ABSENT";
+                            dt.Rows.Add(dataRow);
+
+                            dgvHSManagement.DataSource = dt;
+
+                            foreach (DataGridViewRow dgvRow in dgvHSManagement.Rows)
+                                if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
+                                    dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
+                        }
+                        else if (default_dept == "Cleaning")
+                        {
+                            //copy the welding and then add my row and copy back
+
+                            DataTable dt = (DataTable)(dgCleaning.DataSource);
+
+                            DataRow dataRow;
+                            dataRow = dt.NewRow();
+                            dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
+                            // dataRow[2] = "ABSENT";
+                            dt.Rows.Add(dataRow);
+
+                            dgCleaning.DataSource = dt;
+
+                            foreach (DataGridViewRow dgvRow in dgCleaning.Rows)
                                 if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
                                     dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
                         }

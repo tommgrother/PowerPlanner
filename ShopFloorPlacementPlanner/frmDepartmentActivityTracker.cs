@@ -802,7 +802,7 @@ namespace ShopFloorPlacementPlanner
                     }
 
                     sql = "select coalesce([9_30],'Not Pressed'),coalesce([11_30],'Not Pressed'),coalesce([2_30],'Not Pressed'),coalesce([eos],'Not Pressed') " +
-                        "from dbo.supervisor_log where supervisor_date = '" + current_supervisor_date.ToString("yyyyMMdd") + "' AND department = '" + department.Replace("ing", "") + "'";
+                             "from dbo.supervisor_log where supervisor_date = '" + current_supervisor_date.ToString("yyyyMMdd") + "' AND department = '" + department.Replace("ing", "") + "'";
 
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
@@ -873,9 +873,6 @@ namespace ShopFloorPlacementPlanner
 
                 conn.Close();
             }
-
-
-
 
             Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
             xlPageSetUp.Zoom = false;

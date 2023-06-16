@@ -12,7 +12,7 @@ namespace ShopFloorPlacementPlanner
             InitializeComponent();
             //grab the holiday
             label1.Text = name;
-            string sql = "SELECT CAST(date_added as DATE) FROM DBO.absent_holidays where staff_id = " + staff_id + " AND date_absent = '" + tempDate.ToString("yyyy-MM-dd") + "'";
+            string sql = "SELECT CAST(date_added as DATE), COALESCE(added_by,'') FROM DBO.absent_holidays where staff_id = " + staff_id + " AND date_absent = '" + tempDate.ToString("yyyy-MM-dd") + "'";
 
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
@@ -22,8 +22,14 @@ namespace ShopFloorPlacementPlanner
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     dataGridView1.DataSource = dt;
+                    dataGridView1.Columns[1].Visible = false;
                     dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                     dataGridView1.ClearSelection();
+
+                    dataGridView2.DataSource = dt;
+                    dataGridView2.Columns[0].Visible = false;
+                    dataGridView2.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView2.ClearSelection();
                 }
             }
         }

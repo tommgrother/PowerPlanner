@@ -10,10 +10,28 @@ namespace ShopFloorPlacementPlanner
         public frmLogin()
         {
             InitializeComponent();
-            cmbStaff.Items.Add("Kevin Edwards");
-            cmbStaff.Items.Add("Damian Regis");
-            cmbStaff.Items.Add("Ethan Derrick");
-            cmbStaff.Items.Add("Chloe Bird");
+            //cmbStaff.Items.Add("Kevin Edwards");
+            //cmbStaff.Items.Add("Damian Regis");
+            //cmbStaff.Items.Add("Ethan Derrick");
+            //cmbStaff.Items.Add("Chloe Bird");
+
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand("SELECT forename + ' ' + surname FROM [user_info].dbo.[user] WHERE [current] = 1 AND isCalendarUser = -1 order by forename asc",conn))
+                {
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    foreach (DataRow row in dt.Rows)
+                        cmbStaff.Items.Add(row[0].ToString());
+                }
+
+                conn.Close();
+            }
+
             cmbStaff.Items.Add("Other Staff");
             login.formIsOpen = -1;
         }
