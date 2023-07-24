@@ -15,13 +15,26 @@ namespace ShopFloorPlacementPlanner
     public partial class frmProductivity : Form
     {
         public int skip_combo_box { get; set; }
+        public int current_staff_only { get; set; }
         public frmProductivity() //productivity_email 
         {
             InitializeComponent();
+            current_staff_only = 1;
+            chkCurrent.Checked = true;
             this.WindowState = FormWindowState.Maximized;
 
             //fill combobox
-            string sql = "SELECT [forename] + ' ' + [surname] AS full_name FROM dbo.[user] WHERE dbo.[user].ShopFloor = -1 AND dbo.[user].[current] = 1 AND forename<> 'Weld' AND forename <> 'Allocation' ORDER BY[forename] +' ' + [surname] ";
+            fill_combo();
+        }
+
+        private void fill_combo()
+        {
+            cmbEmployee.Items.Clear();
+
+            string sql = "SELECT [forename] + ' ' + [surname] AS full_name FROM dbo.[user] WHERE dbo.[user].ShopFloor = -1 AND " +
+                "dbo.[user].[current] = " + current_staff_only.ToString() + " AND forename<> 'Weld' AND forename <> 'Allocation' and (non_user = 0 or non_user is null) " +
+                "and forename + ' ' + surname is not null " +
+                "ORDER BY[forename] +' ' + [surname] ";
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionStringUser))
             {
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -82,8 +95,8 @@ namespace ShopFloorPlacementPlanner
                 //get all the departments that this user has been in between the selected dates
 
                 sql = "select distinct (s.department) from dbo.power_plan_staff  s " +
-                    "left join dbo.power_plan_date d on s.date_id = d.id " +
-                    "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND s.department = ot.department and s.staff_id = ot.staff_id " +
+                    "left merge join dbo.power_plan_date d on s.date_id = d.id " +
+                    "left merge join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND s.department = ot.department and s.staff_id = ot.staff_id " +
                     "where  s.staff_id = " + staff_id + " AND cast(date_plan as DATE) >= '" + Convert.ToDateTime(dteStart.Value).ToString("yyyy-MM-dd") + "' AND " +
                     "CAST(date_plan as DATE) <= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + "'";
 
@@ -459,7 +472,7 @@ namespace ShopFloorPlacementPlanner
                 dateFormatter = row.Cells[0].Value.ToString();
 
                 DateTime.TryParse(dateFormatter, out dateFormatter2);
-                
+
 
                 xlWorksheet.Cells[1][current_excel_row].Value2 = dateFormatter2;
                 xlWorksheet.Cells[2][current_excel_row].Value2 = row.Cells[1].Value.ToString();
@@ -533,6 +546,45 @@ namespace ShopFloorPlacementPlanner
         {
             skip_combo_box = -1;
             fillDataGrid();
+        }
+
+        private void chkCurrent_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkCurrent.Checked == false)
+                current_staff_only = 0;
+            else
+                current_staff_only = 1;
+
+
+            fill_combo();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.ColumnIndex == 0 && dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString() == "Slimline")
+            {
+                frmProductivitySlimlineNotes frm = new frmProductivitySlimlineNotes(cmbEmployee.Text, Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()).ToString("yyyyMMdd"), Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()));
+                frm.ShowDialog();
+            }
+            else if (e.ColumnIndex == 3)
+            {
+
+                if (e.RowIndex == dataGridView1.Rows.Count)
+                    return;
+
+                //9
+                if (string.IsNullOrEmpty(dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString()) == false)
+                    return;
+
+                login.productivity_hours = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[3].Value);
+
+                frmProductivityPlacement frm = new frmProductivityPlacement(cmbEmployee.Text, Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()), dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
+                frm.ShowDialog();
+
+                dataGridView1.Rows[e.RowIndex].Cells[3].Value = login.productivity_hours;
+
+            }
         }
     }
 }

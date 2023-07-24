@@ -1016,6 +1016,9 @@ namespace ShopFloorPlacementPlanner
                     if (row.Cells[1].Value.ToString().Contains("UNPAID"))
                         row.DefaultCellStyle.BackColor = Color.DeepPink;
 
+                    if (row.Cells[1].Value.ToString().Contains("LATE"))
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+
                     if (row.Cells[1].Value.ToString().Contains("MATERNITY/PATERNITY"))
                         row.DefaultCellStyle.BackColor = Color.Plum;
 

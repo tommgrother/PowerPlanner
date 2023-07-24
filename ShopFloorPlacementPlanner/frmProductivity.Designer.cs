@@ -41,6 +41,7 @@
             this.lblStartDate = new System.Windows.Forms.Label();
             this.lblDepartment = new System.Windows.Forms.Label();
             this.cmbDepartment = new System.Windows.Forms.ComboBox();
+            this.chkCurrent = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -112,6 +113,7 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(1068, 737);
             this.dataGridView1.TabIndex = 6;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // btnPrint
@@ -192,11 +194,23 @@
             this.cmbDepartment.Visible = false;
             this.cmbDepartment.SelectedIndexChanged += new System.EventHandler(this.cmbDepartment_SelectedIndexChanged);
             // 
+            // chkCurrent
+            // 
+            this.chkCurrent.AutoSize = true;
+            this.chkCurrent.Location = new System.Drawing.Point(142, 8);
+            this.chkCurrent.Name = "chkCurrent";
+            this.chkCurrent.Size = new System.Drawing.Size(115, 17);
+            this.chkCurrent.TabIndex = 52;
+            this.chkCurrent.Text = "Show Current Staff";
+            this.chkCurrent.UseVisualStyleBackColor = true;
+            this.chkCurrent.CheckedChanged += new System.EventHandler(this.chkCurrent_CheckedChanged);
+            // 
             // frmProductivity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1095, 859);
+            this.Controls.Add(this.chkCurrent);
             this.Controls.Add(this.lblDepartment);
             this.Controls.Add(this.cmbDepartment);
             this.Controls.Add(this.lblStartDate);
@@ -236,5 +250,6 @@
         private System.Windows.Forms.Label lblStartDate;
         private System.Windows.Forms.Label lblDepartment;
         private System.Windows.Forms.ComboBox cmbDepartment;
+        private System.Windows.Forms.CheckBox chkCurrent;
     }
 }

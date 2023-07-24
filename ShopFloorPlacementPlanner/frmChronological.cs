@@ -505,10 +505,10 @@ namespace ShopFloorPlacementPlanner
                 xlWorksheet.Cells[1][current_excel_row].Value2 = row.Cells[_status_index].Value.ToString();
                 xlWorksheet.Cells[2][current_excel_row].Value2 = row.Cells[_door_id_index].Value.ToString();
                 xlWorksheet.Cells[3][current_excel_row].Value2 = row.Cells[_door_type_index].Value.ToString();
-                xlWorksheet.Cells[4][current_excel_row].Value2 = row.Cells[_time_index].Value.ToString();
-                xlWorksheet.Cells[5][current_excel_row].Value2 = row.Cells[actionIndex].Value.ToString();
-                xlWorksheet.Cells[6][current_excel_row].Value2 = row.Cells[_part_index].Value.ToString();
-                xlWorksheet.Cells[7][current_excel_row].Value2 = row.Cells[_time_for_part_index].Value.ToString();
+                xlWorksheet.Cells[4][current_excel_row].Value2 = row.Cells[actionIndex].Value.ToString();
+                xlWorksheet.Cells[5][current_excel_row].Value2 = row.Cells[_part_index].Value.ToString();
+                xlWorksheet.Cells[6][current_excel_row].Value2 = row.Cells[_time_for_part_index].Value.ToString();
+                xlWorksheet.Cells[7][current_excel_row].Value2 = row.Cells[_time_index].Value.ToString();
                 //paint the row based on what the dgv is
                 if (row.DefaultCellStyle.BackColor != Color.Empty)
                     xlWorksheet.Range["A" + current_excel_row.ToString() + ":G" + current_excel_row.ToString()].Interior.Color = row.DefaultCellStyle.BackColor;
