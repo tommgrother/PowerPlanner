@@ -4283,7 +4283,7 @@ namespace ShopFloorPlacementPlanner
                         }
                         if (default_dept == "Punching")
                         {
-                            //copy the welding and then add my row and copy back
+                            //copy the punching and then add my row and copy back
 
                             DataTable dt = (DataTable)(dgPunch.DataSource);
 
@@ -4301,7 +4301,7 @@ namespace ShopFloorPlacementPlanner
                         }
                         else if (default_dept == "Bending")
                         {
-                            //copy the welding and then add my row and copy back
+                            //copy the bending and then add my row and copy back
 
                             DataTable dt = (DataTable)(dgBend.DataSource);
 
@@ -4337,7 +4337,7 @@ namespace ShopFloorPlacementPlanner
                         }
                         else if (default_dept == "Dressing" || default_dept == "Buffing")
                         {
-                            //copy the welding and then add my row and copy back
+                            //copy the dressing and then add my row and copy back
 
                             DataTable dt = (DataTable)(dgBuff.DataSource);
 
@@ -4355,7 +4355,7 @@ namespace ShopFloorPlacementPlanner
                         }
                         else if (default_dept == "Painting")
                         {
-                            //copy the welding and then add my row and copy back
+                            //copy the painting and then add my row and copy back
 
                             DataTable dt = (DataTable)(dgPaint.DataSource);
 
@@ -4373,7 +4373,7 @@ namespace ShopFloorPlacementPlanner
                         }
                         else if (default_dept == "Packing")
                         {
-                            //copy the welding and then add my row and copy back
+                            //copy the packin and then add my row and copy back
 
                             DataTable dt = (DataTable)(dgPack.DataSource);
 
