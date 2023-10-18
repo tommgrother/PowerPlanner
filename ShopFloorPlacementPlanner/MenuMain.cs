@@ -1006,7 +1006,7 @@ namespace ShopFloorPlacementPlanner
                 {
                     if (row.Cells[1].Value.ToString().Contains("HOLIDAY"))
                         row.DefaultCellStyle.BackColor = Color.MediumPurple;
-                    
+
                     if (row.Cells[1].Value.ToString().Contains("ABSENT"))
                         row.DefaultCellStyle.BackColor = Color.Salmon;
 
@@ -1379,7 +1379,7 @@ namespace ShopFloorPlacementPlanner
                     ////   "group by staff_id,da.door_id) as a";
                     ///
                     //old string
-                    sql = "select SUM(time_remaining)  from dbo.c_view_slimline_allocation where [Allocated to] = '" + dtStaffID.Rows[i][0].ToString()  + "'";
+                    sql = "select SUM(time_remaining)  from dbo.c_view_slimline_allocation where [Allocated to] = '" + dtStaffID.Rows[i][0].ToString() + "'";
 
                     //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
                     using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
@@ -1877,7 +1877,7 @@ namespace ShopFloorPlacementPlanner
             cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Dressing";
             cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
-             var dataReader = cmdryucxd.ExecuteReader();
+            var dataReader = cmdryucxd.ExecuteReader();
             // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
             DataTable workedHours = new DataTable();
             workedHours.Load(dataReader);
@@ -4624,5 +4624,25 @@ namespace ShopFloorPlacementPlanner
             }
         }
 
+        private void lastCalendarUser_Click(object sender, EventArgs e)
+        {
+            string sql = "select forename + ' ' + surname FROM last_calendar_user l " +
+                         "left join [user_info].dbo.[user] u on l.staff_id = u.id";
+
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    string calendarUser = cmd.ExecuteScalar().ToString();
+
+                    frmLastCalendarUser frm = new frmLastCalendarUser(calendarUser);
+                    frm.ShowDialog();
+                }
+
+                conn.Close();
+            }
+        }
     }
 }

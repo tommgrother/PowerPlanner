@@ -131,6 +131,7 @@
             this.weeklyPlacementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.departmentActivityTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -369,6 +370,7 @@
             this.btnOverTime = new System.Windows.Forms.Button();
             this.label114 = new System.Windows.Forms.Label();
             this.txtStockHours = new System.Windows.Forms.TextBox();
+            this.lastCalendarUser = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -1033,7 +1035,9 @@
             this.oVERTIMESHEETToolStripMenuItem,
             this.weeklyPlacementsToolStripMenuItem,
             this.toolStripMenuItem1,
-            this.departmentActivityTrackerToolStripMenuItem});
+            this.departmentActivityTrackerToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.lastCalendarUser});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1911, 24);
@@ -1169,6 +1173,11 @@
             this.departmentActivityTrackerToolStripMenuItem.Size = new System.Drawing.Size(165, 20);
             this.departmentActivityTrackerToolStripMenuItem.Text = "Department Activity Tracker";
             this.departmentActivityTrackerToolStripMenuItem.Click += new System.EventHandler(this.departmentActivityTrackerToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(12, 20);
             // 
             // label23
             // 
@@ -3753,6 +3762,13 @@
             this.txtStockHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtStockHours.Click += new System.EventHandler(this.txtStockHours_Click);
             // 
+            // lastCalendarUser
+            // 
+            this.lastCalendarUser.Name = "lastCalendarUser";
+            this.lastCalendarUser.Size = new System.Drawing.Size(116, 20);
+            this.lastCalendarUser.Text = "Last Calendar User";
+            this.lastCalendarUser.Click += new System.EventHandler(this.lastCalendarUser_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4396,6 +4412,8 @@
         private System.Windows.Forms.TextBox txtStockHours;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem departmentActivityTrackerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem lastCalendarUser;
     }
 }
 

@@ -507,7 +507,8 @@ namespace ShopFloorPlacementPlanner
                 xlWorksheet.Cells[3][current_excel_row].Value2 = row.Cells[_door_type_index].Value.ToString();
                 xlWorksheet.Cells[4][current_excel_row].Value2 = row.Cells[actionIndex].Value.ToString();
                 xlWorksheet.Cells[5][current_excel_row].Value2 = row.Cells[_part_index].Value.ToString();
-                xlWorksheet.Cells[6][current_excel_row].Value2 = row.Cells[_time_for_part_index].Value.ToString();
+                if (btnHideTimes.Text == "Hide Times")
+                    xlWorksheet.Cells[6][current_excel_row].Value2 = row.Cells[_time_for_part_index].Value.ToString();
                 xlWorksheet.Cells[7][current_excel_row].Value2 = row.Cells[_time_index].Value.ToString();
                 //paint the row based on what the dgv is
                 if (row.DefaultCellStyle.BackColor != Color.Empty)
@@ -705,6 +706,20 @@ namespace ShopFloorPlacementPlanner
                 getData(_staff, _dept);
             }
 
+        }
+
+        private void btnHideTimes_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Columns[_time_for_part_index].Visible == false)
+            {
+                dataGridView1.Columns[_time_for_part_index].Visible = true;
+                btnHideTimes.Text = "Hide Times";
+            }
+            else
+            {
+                dataGridView1.Columns[_time_for_part_index].Visible = false;
+                btnHideTimes.Text = "Show Times";
+            }
         }
     }
 }

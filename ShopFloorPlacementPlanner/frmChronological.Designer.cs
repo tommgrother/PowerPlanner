@@ -43,6 +43,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btnSort = new System.Windows.Forms.Button();
             this.lblStartDate = new System.Windows.Forms.Label();
+            this.btnHideTimes = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -219,11 +220,24 @@
             this.lblStartDate.Text = "INSERT STAFF NAME HERE";
             this.lblStartDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnHideTimes
+            // 
+            this.btnHideTimes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHideTimes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHideTimes.Location = new System.Drawing.Point(631, 44);
+            this.btnHideTimes.Name = "btnHideTimes";
+            this.btnHideTimes.Size = new System.Drawing.Size(113, 26);
+            this.btnHideTimes.TabIndex = 49;
+            this.btnHideTimes.Text = "Hide Times";
+            this.btnHideTimes.UseVisualStyleBackColor = true;
+            this.btnHideTimes.Click += new System.EventHandler(this.btnHideTimes_Click);
+            // 
             // frmChronological
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(855, 880);
+            this.Controls.Add(this.btnHideTimes);
             this.Controls.Add(this.lblStartDate);
             this.Controls.Add(this.btnSort);
             this.Controls.Add(this.label7);
@@ -267,5 +281,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnSort;
         private System.Windows.Forms.Label lblStartDate;
+        private System.Windows.Forms.Button btnHideTimes;
     }
 }
