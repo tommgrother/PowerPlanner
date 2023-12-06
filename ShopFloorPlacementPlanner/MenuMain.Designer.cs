@@ -132,6 +132,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.departmentActivityTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.lastCalendarUser = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -370,7 +371,7 @@
             this.btnOverTime = new System.Windows.Forms.Button();
             this.label114 = new System.Windows.Forms.Label();
             this.txtStockHours = new System.Windows.Forms.TextBox();
-            this.lastCalendarUser = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnWeldingDoorTypes = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -1178,6 +1179,13 @@
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(12, 20);
+            // 
+            // lastCalendarUser
+            // 
+            this.lastCalendarUser.Name = "lastCalendarUser";
+            this.lastCalendarUser.Size = new System.Drawing.Size(116, 20);
+            this.lastCalendarUser.Text = "Last Calendar User";
+            this.lastCalendarUser.Click += new System.EventHandler(this.lastCalendarUser_Click);
             // 
             // label23
             // 
@@ -3707,11 +3715,11 @@
             this.lblPressPrompt.BackColor = System.Drawing.SystemColors.Control;
             this.lblPressPrompt.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPressPrompt.ForeColor = System.Drawing.Color.Red;
-            this.lblPressPrompt.Location = new System.Drawing.Point(826, 27);
+            this.lblPressPrompt.Location = new System.Drawing.Point(430, 26);
             this.lblPressPrompt.Name = "lblPressPrompt";
             this.lblPressPrompt.Size = new System.Drawing.Size(346, 25);
             this.lblPressPrompt.TabIndex = 299;
-            this.lblPressPrompt.Text = "←PLEASE ASSIGN PRESS USERS";
+            this.lblPressPrompt.Text = "PLEASE ASSIGN PRESS USERS →";
             this.lblPressPrompt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // dgNotPlacementSL
@@ -3762,12 +3770,17 @@
             this.txtStockHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtStockHours.Click += new System.EventHandler(this.txtStockHours_Click);
             // 
-            // lastCalendarUser
+            // btnWeldingDoorTypes
             // 
-            this.lastCalendarUser.Name = "lastCalendarUser";
-            this.lastCalendarUser.Size = new System.Drawing.Size(116, 20);
-            this.lastCalendarUser.Text = "Last Calendar User";
-            this.lastCalendarUser.Click += new System.EventHandler(this.lastCalendarUser_Click);
+            this.btnWeldingDoorTypes.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
+            this.btnWeldingDoorTypes.Location = new System.Drawing.Point(891, 26);
+            this.btnWeldingDoorTypes.Name = "btnWeldingDoorTypes";
+            this.btnWeldingDoorTypes.Size = new System.Drawing.Size(164, 25);
+            this.btnWeldingDoorTypes.TabIndex = 304;
+            this.btnWeldingDoorTypes.Text = "Welding Door Types";
+            this.btnWeldingDoorTypes.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnWeldingDoorTypes.UseVisualStyleBackColor = true;
+            this.btnWeldingDoorTypes.Click += new System.EventHandler(this.btnWeldingDoorTypes_Click);
             // 
             // MenuMain
             // 
@@ -3775,6 +3788,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1911, 921);
+            this.Controls.Add(this.btnWeldingDoorTypes);
             this.Controls.Add(this.label114);
             this.Controls.Add(this.txtStockHours);
             this.Controls.Add(this.btnOverTime);
@@ -4414,6 +4428,7 @@
         private System.Windows.Forms.ToolStripMenuItem departmentActivityTrackerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem lastCalendarUser;
+        private System.Windows.Forms.Button btnWeldingDoorTypes;
     }
 }
 

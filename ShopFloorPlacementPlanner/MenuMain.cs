@@ -4644,5 +4644,11 @@ namespace ShopFloorPlacementPlanner
                 conn.Close();
             }
         }
+
+        private void btnWeldingDoorTypes_Click(object sender, EventArgs e)
+        {
+            frmWeldDoorType frm = new frmWeldDoorType();
+            frm.ShowDialog();
+        }
     }
 }

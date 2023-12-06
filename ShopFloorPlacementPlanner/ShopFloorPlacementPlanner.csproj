@@ -14,7 +14,7 @@
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</PublishUrl>
+    <PublishUrl>\\WIN-M9DQSBAPFO7\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -24,9 +24,9 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</InstallUrl>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>393</ApplicationRevision>
+    <ApplicationRevision>396</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -271,6 +271,12 @@
     <Compile Include="frmWeeklyShift.Designer.cs">
       <DependentUpon>frmWeeklyShift.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmWeldDoorType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWeldDoorType.Designer.cs">
+      <DependentUpon>frmWeldDoorType.cs</DependentUpon>
+    </Compile>
     <Compile Include="login.cs" />
     <Compile Include="shiftHours.cs" />
     <Compile Include="SqlDependencyEx.cs" />
@@ -490,6 +496,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmWeeklyShift.resx">
       <DependentUpon>frmWeeklyShift.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWeldDoorType.resx">
+      <DependentUpon>frmWeldDoorType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuMain.resx">
       <DependentUpon>MenuMain.cs</DependentUpon>
