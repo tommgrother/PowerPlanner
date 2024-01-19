@@ -372,6 +372,7 @@
             this.label114 = new System.Windows.Forms.Label();
             this.txtStockHours = new System.Windows.Forms.TextBox();
             this.btnWeldingDoorTypes = new System.Windows.Forms.Button();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -527,7 +528,7 @@
             // 
             // dteDateSelection
             // 
-            this.dteDateSelection.Location = new System.Drawing.Point(1752, 27);
+            this.dteDateSelection.Location = new System.Drawing.Point(1752, 34);
             this.dteDateSelection.Name = "dteDateSelection";
             this.dteDateSelection.Size = new System.Drawing.Size(154, 20);
             this.dteDateSelection.TabIndex = 6;
@@ -1038,7 +1039,8 @@
             this.toolStripMenuItem1,
             this.departmentActivityTrackerToolStripMenuItem,
             this.toolStripMenuItem2,
-            this.lastCalendarUser});
+            this.lastCalendarUser,
+            this.toolStripMenuItem3});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1911, 24);
@@ -2350,7 +2352,7 @@
             // 
             this.lbl_time.BackColor = System.Drawing.SystemColors.MenuBar;
             this.lbl_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_time.Location = new System.Drawing.Point(1382, 0);
+            this.lbl_time.Location = new System.Drawing.Point(1537, 0);
             this.lbl_time.Name = "lbl_time";
             this.lbl_time.Size = new System.Drawing.Size(364, 30);
             this.lbl_time.TabIndex = 165;
@@ -3782,6 +3784,13 @@
             this.btnWeldingDoorTypes.UseVisualStyleBackColor = true;
             this.btnWeldingDoorTypes.Click += new System.EventHandler(this.btnWeldingDoorTypes_Click);
             // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(108, 20);
+            this.toolStripMenuItem3.Text = "STAFF WARNING";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4429,6 +4438,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem lastCalendarUser;
         private System.Windows.Forms.Button btnWeldingDoorTypes;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
     }
 }
 

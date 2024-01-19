@@ -14,7 +14,7 @@
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>\\WIN-M9DQSBAPFO7\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</PublishUrl>
+    <PublishUrl>\\designsvr1\apps\Design and Supply CSharp\MiniApps\PowerPlanner\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>396</ApplicationRevision>
+    <ApplicationRevision>397</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -157,6 +157,12 @@
     <Compile Include="frmManualExtraHours.Designer.cs">
       <DependentUpon>frmManualExtraHours.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmNewWarning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNewWarning.Designer.cs">
+      <DependentUpon>frmNewWarning.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmOvertimeSelection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -228,6 +234,12 @@
     </Compile>
     <Compile Include="frmShiftHours.Designer.cs">
       <DependentUpon>frmShiftHours.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStaffWarnings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStaffWarnings.Designer.cs">
+      <DependentUpon>frmStaffWarnings.cs</DependentUpon>
     </Compile>
     <Compile Include="frmStockParts.cs">
       <SubType>Form</SubType>
@@ -405,6 +417,9 @@
     <EmbeddedResource Include="frmManualExtraHours.resx">
       <DependentUpon>frmManualExtraHours.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmNewWarning.resx">
+      <DependentUpon>frmNewWarning.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmOvertimeSelection.resx">
       <DependentUpon>frmOvertimeSelection.cs</DependentUpon>
     </EmbeddedResource>
@@ -463,6 +478,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmShiftHours.resx">
       <DependentUpon>frmShiftHours.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStaffWarnings.resx">
+      <DependentUpon>frmStaffWarnings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStockParts.resx">
       <DependentUpon>frmStockParts.cs</DependentUpon>

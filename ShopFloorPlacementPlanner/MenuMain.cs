@@ -4650,5 +4650,11 @@ namespace ShopFloorPlacementPlanner
             frmWeldDoorType frm = new frmWeldDoorType();
             frm.ShowDialog();
         }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            frmStaffWarnings frm = new frmStaffWarnings();
+            frm.ShowDialog();
+        }
     }
 }
