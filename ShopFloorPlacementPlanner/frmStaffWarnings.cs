@@ -26,7 +26,7 @@ namespace ShopFloorPlacementPlanner
         private void load_grid()
         {
             string temp_name = cmbStaff.Text;
-            string sql = "select forename + ' ' + surname as Staff,warning_number as [Warning Number],warning_note as [Warning Note],warning_department as [Department],warning_date as [Warning Date],warning_given_by as [Warning given By] FROM dbo.staff_warnings s " +
+            string sql = "select u.id as staff_id,forename + ' ' + surname as Staff,warning_number as [Warning Number],warning_note as [Warning Note],warning_department as [Department],warning_date as [Warning Date],warning_given_by as [Warning given By] FROM dbo.staff_warnings s " +
                 "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
                 "WHERE [current] = 1 ";
 
@@ -80,10 +80,11 @@ namespace ShopFloorPlacementPlanner
 
         private void format()
         {
-
+            dataGridView1.Columns[0].Visible = false;
             foreach (DataGridViewColumn col in dataGridView1.Columns)
             {
                 col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             //2 needs to be fill
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -111,6 +112,16 @@ namespace ShopFloorPlacementPlanner
         private void btnClear_Click(object sender, EventArgs e)
         {
             cmbStaff.SelectedIndex = -1;
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            frmViewWarning frm = new frmViewWarning(Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()),
+                                                    Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString()));
+            frm.ShowDialog();
         }
     }
 }
