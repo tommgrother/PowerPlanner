@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmStaffWarnings));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnNewWarning = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -96,7 +97,6 @@
             // 
             // btnClear
             // 
-            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F);
             this.btnClear.Location = new System.Drawing.Point(204, 28);
             this.btnClear.Name = "btnClear";
@@ -116,9 +116,10 @@
             this.Controls.Add(this.cmbStaff);
             this.Controls.Add(this.btnNewWarning);
             this.Controls.Add(this.dataGridView1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmStaffWarnings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "frmStaffWarnings";
+            this.Text = "Staff warnings";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmViewWarning));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbStaff = new System.Windows.Forms.ComboBox();
@@ -77,14 +78,14 @@
             this.txtWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.txtWarning.Location = new System.Drawing.Point(12, 122);
             this.txtWarning.Name = "txtWarning";
-            this.txtWarning.Size = new System.Drawing.Size(596, 340);
+            this.txtWarning.Size = new System.Drawing.Size(596, 453);
             this.txtWarning.TabIndex = 7;
             this.txtWarning.Text = "";
             // 
             // txtDepartment
             // 
             this.txtDepartment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.txtDepartment.Location = new System.Drawing.Point(107, 511);
+            this.txtDepartment.Location = new System.Drawing.Point(107, 601);
             this.txtDepartment.Name = "txtDepartment";
             this.txtDepartment.Size = new System.Drawing.Size(186, 26);
             this.txtDepartment.TabIndex = 8;
@@ -92,7 +93,7 @@
             // txtDateGiven
             // 
             this.txtDateGiven.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.txtDateGiven.Location = new System.Drawing.Point(326, 511);
+            this.txtDateGiven.Location = new System.Drawing.Point(326, 601);
             this.txtDateGiven.Name = "txtDateGiven";
             this.txtDateGiven.Size = new System.Drawing.Size(186, 26);
             this.txtDateGiven.TabIndex = 9;
@@ -100,7 +101,7 @@
             // txtDateLogged
             // 
             this.txtDateLogged.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.txtDateLogged.Location = new System.Drawing.Point(326, 584);
+            this.txtDateLogged.Location = new System.Drawing.Point(326, 674);
             this.txtDateLogged.Name = "txtDateLogged";
             this.txtDateLogged.Size = new System.Drawing.Size(186, 26);
             this.txtDateLogged.TabIndex = 10;
@@ -108,7 +109,7 @@
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label2.Location = new System.Drawing.Point(107, 488);
+            this.label2.Location = new System.Drawing.Point(107, 578);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(186, 23);
             this.label2.TabIndex = 11;
@@ -118,7 +119,7 @@
             // label3
             // 
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label3.Location = new System.Drawing.Point(326, 488);
+            this.label3.Location = new System.Drawing.Point(326, 578);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(186, 23);
             this.label3.TabIndex = 12;
@@ -128,7 +129,7 @@
             // label4
             // 
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label4.Location = new System.Drawing.Point(326, 561);
+            this.label4.Location = new System.Drawing.Point(326, 651);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(186, 23);
             this.label4.TabIndex = 13;
@@ -138,7 +139,7 @@
             // label5
             // 
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label5.Location = new System.Drawing.Point(107, 561);
+            this.label5.Location = new System.Drawing.Point(107, 651);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(186, 23);
             this.label5.TabIndex = 15;
@@ -148,7 +149,7 @@
             // txtWarningGivenBy
             // 
             this.txtWarningGivenBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.txtWarningGivenBy.Location = new System.Drawing.Point(107, 584);
+            this.txtWarningGivenBy.Location = new System.Drawing.Point(107, 674);
             this.txtWarningGivenBy.Name = "txtWarningGivenBy";
             this.txtWarningGivenBy.Size = new System.Drawing.Size(186, 26);
             this.txtWarningGivenBy.TabIndex = 14;
@@ -157,7 +158,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(618, 629);
+            this.ClientSize = new System.Drawing.Size(618, 710);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtWarningGivenBy);
             this.Controls.Add(this.label4);
@@ -170,6 +171,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbStaff);
             this.Controls.Add(this.tabControl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmViewWarning";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Staff Warning";
