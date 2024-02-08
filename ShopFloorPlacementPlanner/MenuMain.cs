@@ -4653,7 +4653,10 @@ namespace ShopFloorPlacementPlanner
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            frmStaffWarnings frm = new frmStaffWarnings();
+
+            //prompt for a passcode here...
+
+            frmWarningPasscode frm = new frmWarningPasscode();
             frm.ShowDialog();
         }
     }
