@@ -1801,7 +1801,7 @@ namespace ShopFloorPlacementPlanner
                 try
                 {
                     sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_weld * quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
-                        "left join dbo.door d on da.door_id = d.id where da.department = 'welding' and (time_remaining_weld > 0) and (status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                        "left join dbo.door d on da.door_id = d.id where (complete_weld = 0 or complete_weld is null) AND da.department = 'welding' and (time_remaining_weld > 0) and (status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
                         "group by staff_id,da.door_id) as a";
 
                     //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
@@ -1928,7 +1928,7 @@ namespace ShopFloorPlacementPlanner
                 try
                 {
                     sql = "SELECT sum(hours) FROM(select round(cast(sum(time_remaining_buff) as float) / 60, 2) as hours from dbo.door_allocation da left join dbo.door d on da.door_id = d.id " +
-                             "where da.department = 'dressing' and(status_id = 1 or status_id = 2) and time_remaining_buff > 0 and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                             "where (complete_buff = 0 or complete_buff is null) AND da.department = 'dressing' and(status_id = 1 or status_id = 2) and time_remaining_buff > 0 and staff_id = " + dtStaffID.Rows[i][0].ToString() +
                              "group by staff_id, da.door_id) as a";
 
                     using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
@@ -2154,7 +2154,7 @@ namespace ShopFloorPlacementPlanner
                 try
                 {
                     sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_pack * quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
-                        "left join dbo.door d on da.door_id = d.id where da.department = 'packing' and(status_id = 1 or status_id = 2) and time_remaining_pack > 0 and staff_id  = " + dtStaffID.Rows[i][0].ToString() +
+                        "left join dbo.door d on da.door_id = d.id where (complete_pack = 0 or complete_pack is null) AND da.department = 'packing' and (status_id = 1 or status_id = 2) and time_remaining_pack > 0 and staff_id  = " + dtStaffID.Rows[i][0].ToString() +
                         "group by staff_id,da.door_id) as a";
                     using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
                     {

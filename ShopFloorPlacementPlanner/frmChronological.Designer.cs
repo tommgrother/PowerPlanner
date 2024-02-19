@@ -104,6 +104,7 @@
             this.dteActionEnd.Name = "dteActionEnd";
             this.dteActionEnd.Size = new System.Drawing.Size(200, 20);
             this.dteActionEnd.TabIndex = 4;
+            this.dteActionEnd.CloseUp += new System.EventHandler(this.dteActionEnd_CloseUp);
             // 
             // label2
             // 

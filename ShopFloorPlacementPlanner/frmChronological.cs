@@ -469,9 +469,128 @@ namespace ShopFloorPlacementPlanner
 
             //^^ old way to print
 
-            print_excel();
+            print_excel_new();
         }
 
+        private void print_excel_new()
+        {
+            int current_excel_row = 1;
+            // Store the Excel processes before opening.
+            Process[] processesBefore = Process.GetProcessesByName("excel");
+            // Open the file in Excel.
+            string temp = @"\\designsvr1\public\Kevin Power Planner\Chronological.xlsx";
+            var xlApp = new Excel.Application();
+            var xlWorkbooks = xlApp.Workbooks;
+            var xlWorkbook = xlWorkbooks.Open(temp);
+            var xlWorksheet = xlWorkbook.Sheets[1]; // assume it is the first sheet
+            // Get Excel processes after opening the file.
+            Process[] processesAfter = Process.GetProcessesByName("excel");
+
+
+            int day_counter = 0;
+            DateTime current_date = Convert.ToDateTime(dataGridView1.Rows[0].Cells[_time_index].Value).Date;
+            int sheet_counter = 1;
+            int loop_counter = 0;
+            int max_loop_counter = dataGridView1.Rows.Count;
+
+            while (sheet_counter < 9999)
+            {
+                current_excel_row = 1;
+                Microsoft.Office.Interop.Excel.Worksheet xlWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Worksheets.Add
+                    (System.Reflection.Missing.Value, xlWorkbook.Worksheets[xlWorkbook.Worksheets.Count],
+                    System.Reflection.Missing.Value, System.Reflection.Missing.Value);
+
+                xlWorksheet = xlWorkbook.Sheets[sheet_counter];
+
+                xlWorkSheet.Name = "Sheet " + sheet_counter.ToString();
+                //add the title
+                xlWorksheet.Cells[1][current_excel_row].Value2 = label1.Text;
+
+                //
+                if (label1.BackColor != Color.Empty)
+                    xlWorksheet.Range["A" + current_excel_row.ToString() + ":G" + current_excel_row.ToString()].Interior.Color = label1.BackColor;
+
+                xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[1, 7]].Merge();
+                xlWorkSheet.Range["A1:G1"].Cells.Font.Size = 20;
+                current_excel_row++;
+
+                //column headers
+                current_excel_row++;
+
+                //vvv we need to loop through dgv 
+                for (int i = loop_counter; i < max_loop_counter;i++)
+                {
+                    if (current_date.Date < Convert.ToDateTime(dataGridView1.Rows[i].Cells[_time_index].Value).Date)
+                    {
+                        day_counter++;
+                        current_date = Convert.ToDateTime(dataGridView1.Rows[i].Cells[_time_index].Value).Date;
+                        if (day_counter == 5)
+                        {
+                            day_counter = 0;
+                            break;
+                        }
+                    }
+                    xlWorksheet.Cells[1][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_status_index].Value.ToString();
+                    xlWorksheet.Cells[2][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString();
+                    xlWorksheet.Cells[3][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_door_type_index].Value.ToString();
+                    xlWorksheet.Cells[4][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[actionIndex].Value.ToString();
+                    xlWorksheet.Cells[5][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_part_index].Value.ToString();
+                    if (btnHideTimes.Text == "Hide Times")
+                        xlWorksheet.Cells[6][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_for_part_index].Value.ToString();
+                    xlWorksheet.Cells[7][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_index].Value.ToString();
+                    //paint the row based on what the dgv is
+                    if (dataGridView1.Rows[i].DefaultCellStyle.BackColor != Color.Empty)
+                        xlWorksheet.Range["A" + current_excel_row.ToString() + ":G" + current_excel_row.ToString()].Interior.Color = dataGridView1.Rows[i].DefaultCellStyle.BackColor;
+                    current_excel_row++;
+                    loop_counter++;
+                }
+
+                //border
+                xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 7]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+
+
+                xlWorksheet.Columns.AutoFit();
+                xlWorksheet.Rows.AutoFit();
+
+                Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
+                xlPageSetUp.Zoom = false;
+                xlPageSetUp.FitToPagesWide = 1;
+                xlPageSetUp.Orientation = Excel.XlPageOrientation.xlPortrait;
+
+
+
+                xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                sheet_counter++;
+                if (loop_counter >= max_loop_counter)
+                    sheet_counter = 99999999;
+            }
+
+
+            //xlWorkbook.SaveAs(@"c:\temp\test.xlsx");  // or book.Save();
+
+            xlWorkbook.Close(false); //close the excel sheet without saving
+                                     // xlApp.Quit();
+
+
+            // Manual disposal because of COM
+            xlApp.Quit();
+
+            // Now find the process id that was created, and store it.
+            int processID = 0;
+            foreach (Process process in processesAfter)
+            {
+                if (!processesBefore.Select(p => p.Id).Contains(process.Id))
+                    processID = process.Id;
+
+            }
+
+            // And now kill the process.
+            if (processID != 0)
+            {
+                Process process = Process.GetProcessById(processID);
+                process.Kill();
+            }
+        }
 
         private void print_excel()
         {
@@ -720,6 +839,11 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns[_time_for_part_index].Visible = false;
                 btnHideTimes.Text = "Show Times";
             }
+        }
+
+        private void dteActionEnd_CloseUp(object sender, EventArgs e)
+        {
+            getData(_staff, _dept);
         }
     }
 }
