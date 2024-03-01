@@ -1,5 +1,6 @@
 ﻿
 
+using ExcelNumberFormat;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -626,8 +627,27 @@ namespace ShopFloorPlacementPlanner
 
                 //else we go next
 
+                int sheet_counter = 1;
+                int skipSheetIncrement = -1;
                 for (int i = 0; i < dt_staff.Rows.Count; i++)
                 {
+                    if (skipSheetIncrement == 0)
+                    {
+                        current_excel_row = 1;
+                        Microsoft.Office.Interop.Excel.Worksheet xlWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Worksheets.Add
+                            (System.Reflection.Missing.Value, xlWorkbook.Worksheets[xlWorkbook.Worksheets.Count],
+                            System.Reflection.Missing.Value, System.Reflection.Missing.Value);
+
+                        xlWorksheet = xlWorkbook.Sheets[sheet_counter];
+
+                        xlWorkSheet.Name = "Sheet " + sheet_counter.ToString();
+
+                        // Get the range of the column you want to format
+                        Excel.Range range2 = xlWorksheet.Columns[5];
+                        // Apply percentage format to the range
+                        range2.NumberFormat = "0.00%";
+
+                    }
                     sql = "SELECT AVG([percent]) as [percent] FROM (" +
                           "select datename(WEEKDAY,group_date) as [dayOfWeek],sum([hours]) as [hours]," +
                           "sum([actual]) as actual,coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent],group_date from (" +
@@ -663,6 +683,10 @@ namespace ShopFloorPlacementPlanner
                         }
                     }
 
+                    if (skip_staff == -1)
+                        skipSheetIncrement = -1;
+                    else
+                        skipSheetIncrement = 0;
 
                     if (skip_staff == 0)
                     {
@@ -776,10 +800,38 @@ namespace ShopFloorPlacementPlanner
                         current_excel_row++;
                     }
 
+                    //print
+                    if (skipSheetIncrement == 0)
+                    {
+                        xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row, 5]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+
+
+                        xlWorksheet.Columns.AutoFit();
+                        xlWorksheet.Rows.AutoFit();
+
+                        Excel.PageSetup xlPageSetUp2 = xlWorksheet.PageSetup;
+                        xlPageSetUp2.Zoom = false;
+                        xlPageSetUp2.FitToPagesWide = 1;
+                        xlPageSetUp2.Orientation = Excel.XlPageOrientation.xlPortrait;
+
+
+                        xlWorksheet.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                        sheet_counter++;
+                    }
                 }
 
 
+
                 //supervisor attendence
+                current_excel_row = 1;
+                //sheet_counter++;
+                xlWorksheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Worksheets.Add
+                    (System.Reflection.Missing.Value, xlWorkbook.Worksheets[xlWorkbook.Worksheets.Count],
+                    System.Reflection.Missing.Value, System.Reflection.Missing.Value);
+
+                xlWorksheet = xlWorkbook.Sheets[sheet_counter];
+
+                xlWorksheet.Name = "Sheet " + sheet_counter.ToString();
 
                 //we need to count how many days there are between the selected dates 
                 int supervisor_dates = 0;
@@ -865,7 +917,7 @@ namespace ShopFloorPlacementPlanner
 
                 xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 5]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
                 //autofit all rows
-                Microsoft.Office.Interop.Excel.Worksheet ws = xlApp.ActiveWorkbook.Worksheets[1];
+                Microsoft.Office.Interop.Excel.Worksheet ws = xlApp.ActiveWorkbook.Worksheets[sheet_counter];
                 Microsoft.Office.Interop.Excel.Range range = ws.UsedRange;
                 ws.Columns.AutoFit();
                 ws.Rows.AutoFit();
@@ -873,6 +925,7 @@ namespace ShopFloorPlacementPlanner
 
                 conn.Close();
             }
+
 
             Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
             xlPageSetUp.Zoom = false;
@@ -1103,6 +1156,7 @@ namespace ShopFloorPlacementPlanner
                         xlWorksheet.Cells[4][current_excel_row].Value2 = dt.Rows[0][3].ToString();
                         hours_actual_total = hours_actual_total + Convert.ToDouble(dt.Rows[0][3].ToString());
                         xlWorksheet.Cells[5][current_excel_row].Value2 = dt.Rows[0][4].ToString();
+                        xlWorksheet.Cells[5][current_excel_row].NumberFormat = "0.00%";
 
                         //add conditional formatting to the last row (%)
                         Excel.FormatCondition formatGreen3 = (Excel.FormatCondition)(xlWorksheet.Range("E" + current_excel_row.ToString(),
@@ -1223,7 +1277,7 @@ namespace ShopFloorPlacementPlanner
 
                     }
                     current_supervisor_date = current_supervisor_date.AddDays(1);
-                    
+
                 }
 
 

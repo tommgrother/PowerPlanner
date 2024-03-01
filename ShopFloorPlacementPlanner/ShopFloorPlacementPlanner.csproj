@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>402</ApplicationRevision>
+    <ApplicationRevision>405</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -120,6 +120,12 @@
     </Compile>
     <Compile Include="frmAddMessage.Designer.cs">
       <DependentUpon>frmAddMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAllocation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAllocation.Designer.cs">
+      <DependentUpon>frmAllocation.cs</DependentUpon>
     </Compile>
     <Compile Include="frmBendingPress.cs">
       <SubType>Form</SubType>
@@ -405,6 +411,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmAddMessage.resx">
       <DependentUpon>frmAddMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAllocation.resx">
+      <DependentUpon>frmAllocation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBatchPlacement.resx">
       <DependentUpon>frmBatchPlacement.cs</DependentUpon>

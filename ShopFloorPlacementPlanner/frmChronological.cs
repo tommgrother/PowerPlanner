@@ -30,6 +30,8 @@ namespace ShopFloorPlacementPlanner
         public int _time_for_part_index { get; set; }
         public string _hours { get; set; }
 
+        public int _allocation_staff_id { get; set; }
+        public string _allocation_staff_name { get; set; }
 
         public frmChronological(string staff, string dept, DateTime plannerDate, string hours)
         {
@@ -37,6 +39,7 @@ namespace ShopFloorPlacementPlanner
             dteAction.Value = plannerDate;
             dteActionEnd.Value = plannerDate;
             _staff = staff;
+            _allocation_staff_name = staff;
             _dept = dept;
             _hours = hours;
             getData(staff, dept);
@@ -64,6 +67,7 @@ namespace ShopFloorPlacementPlanner
                 {
 
                     staff_id = Convert.ToInt32(cmd.ExecuteScalar());
+                    _allocation_staff_id = staff_id;
 
                 }
                 //start date too
@@ -844,6 +848,12 @@ namespace ShopFloorPlacementPlanner
         private void dteActionEnd_CloseUp(object sender, EventArgs e)
         {
             getData(_staff, _dept);
+        }
+
+        private void btnAllocation_Click(object sender, EventArgs e)
+        {
+            frmAllocation frm = new frmAllocation(_allocation_staff_id, _dept,_allocation_staff_name);
+            frm.ShowDialog();
         }
     }
 }
