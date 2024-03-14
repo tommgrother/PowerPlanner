@@ -1314,16 +1314,16 @@ namespace ShopFloorPlacementPlanner
 
             dgSlimline.DataSource = dt;
 
-            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
-            cmdryucxd.CommandType = CommandType.StoredProcedure;
-            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Slimline";
-            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            //SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            //cmdryucxd.CommandType = CommandType.StoredProcedure;
+            //cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Slimline";
+            //cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
-            var dataReader = cmdryucxd.ExecuteReader();
-            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
-            DataTable workedHours = new DataTable();
-            workedHours.Load(dataReader);
-            //da2.Fill(workedHours);
+            //var dataReader = cmdryucxd.ExecuteReader();
+            //// SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            //DataTable workedHours = new DataTable();
+            //workedHours.Load(dataReader);
+            ////da2.Fill(workedHours);
 
             //overtime -- usp_power_planner_overtime_hours
             SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
@@ -1348,7 +1348,7 @@ namespace ShopFloorPlacementPlanner
             for (int i = 0; i < dgSlimline.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString()); //
-                dgSlimline[3, i].Value = workedHours.Rows[0][i].ToString();
+                //dgSlimline[3, i].Value = workedHours.Rows[0][i].ToString();
             }
 
 
@@ -1368,37 +1368,37 @@ namespace ShopFloorPlacementPlanner
             {
 
                 string allocated = "";
-                try
-                {
-                    ////sql = "SELECT sum(hours) FROM ( " +
-                    ////   "select round(cast((sum(time_remaining_cutting * quantity_same) + sum(time_remaining_prepping * quantity_same) + sum(time_remianing_assembly * quantity_same)) as float) /60,2) as hours from dbo.door_allocation da " +
-                    ////   "left join dbo.door d on da.door_id = d.id " +
-                    ////   "where (da.department = 'Assembly' or da.department = 'Cutting' or da.department = 'Prepping') and " +
-                    ////   "(time_remaining_cutting > 0 or time_remaining_prepping > 0 or time_remianing_assembly > 0) and " +
-                    ////   "(status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
-                    ////   "group by staff_id,da.door_id) as a";
-                    ///
-                    //old string
-                    sql = "select SUM(time_remaining)  from dbo.c_view_slimline_allocation where [Allocated to] = '" + dtStaffID.Rows[i][0].ToString() + "'";
+                ////try
+                ////{
+                ////    ////sql = "SELECT sum(hours) FROM ( " +
+                ////    ////   "select round(cast((sum(time_remaining_cutting * quantity_same) + sum(time_remaining_prepping * quantity_same) + sum(time_remianing_assembly * quantity_same)) as float) /60,2) as hours from dbo.door_allocation da " +
+                ////    ////   "left join dbo.door d on da.door_id = d.id " +
+                ////    ////   "where (da.department = 'Assembly' or da.department = 'Cutting' or da.department = 'Prepping') and " +
+                ////    ////   "(time_remaining_cutting > 0 or time_remaining_prepping > 0 or time_remianing_assembly > 0) and " +
+                ////    ////   "(status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                ////    ////   "group by staff_id,da.door_id) as a";
+                ////    ///
+                ////    //old string
+                ////    sql = "select SUM(time_remaining)  from dbo.c_view_slimline_allocation where [Allocated to] = '" + dtStaffID.Rows[i][0].ToString() + "'";
 
-                    //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
-                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
-                    {
-                        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
-                        if (allocated == "")
-                            allocated = "0";
-                    }
-                }
-                catch
-                {
-                    allocated = "0";
-                }
+                ////    //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
+                ////    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                ////    {
+                ////        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                ////        if (allocated == "")
+                ////            allocated = "0";
+                ////    }
+                ////}
+                ////catch
+                ////{
+                ////    allocated = "0";
+                ////}
 
 
                 double overtimeTemp = Convert.ToDouble(dgSlimline.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgSlimline.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));       //dgSlimline.Rows[i].Cells[1].Value.ToString();
-                worked = dgSlimline.Rows[i].Cells[3].Value.ToString();
-                dgSlimline[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
+                //worked = dgSlimline.Rows[i].Cells[3].Value.ToString();
+                dgSlimline[4, i].Value = hours;// + " / " + worked;// + " " + Environment.NewLine + "" + allocated + " Allo";
             }
 
 
@@ -1544,16 +1544,16 @@ namespace ShopFloorPlacementPlanner
 
             dgLaser.DataSource = dt;
 
-            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
-            cmdryucxd.CommandType = CommandType.StoredProcedure;
-            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Laser";
-            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            //SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            //cmdryucxd.CommandType = CommandType.StoredProcedure;
+            //cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Laser";
+            //cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
-            var dataReader = cmdryucxd.ExecuteReader();
-            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
-            DataTable workedHours = new DataTable();
-            workedHours.Load(dataReader);
-            //da2.Fill(workedHours);
+            //var dataReader = cmdryucxd.ExecuteReader();
+            //// SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            //DataTable workedHours = new DataTable();
+            //workedHours.Load(dataReader);
+            ////da2.Fill(workedHours);
 
             //overtime -- usp_power_planner_overtime_hours
             SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
@@ -1578,7 +1578,7 @@ namespace ShopFloorPlacementPlanner
             for (int i = 0; i < dgLaser.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
-                dgLaser[3, i].Value = workedHours.Rows[0][i].ToString();
+               // dgLaser[3, i].Value = workedHours.Rows[0][i].ToString();
             }
             //put the columns together into one column! :D
             string hours = "";
@@ -1587,8 +1587,8 @@ namespace ShopFloorPlacementPlanner
             {
                 double overtimeTemp = Convert.ToDouble(dgLaser.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgLaser.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));        //dgLaser.Rows[i].Cells[1].Value.ToString();
-                worked = dgLaser.Rows[i].Cells[3].Value.ToString();
-                dgLaser[4, i].Value = hours + " / " + worked;
+               // worked = dgLaser.Rows[i].Cells[3].Value.ToString();
+                dgLaser[4, i].Value = hours;// + " / " + worked;
             }
 
             dgLaser.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -1637,15 +1637,15 @@ namespace ShopFloorPlacementPlanner
             dgBend.DataSource = dt;
             ////////////////////////////////////////////////////
 
-            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
-            cmdryucxd.CommandType = CommandType.StoredProcedure;
-            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Bending";
-            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            //SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            //cmdryucxd.CommandType = CommandType.StoredProcedure;
+            //cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Bending";
+            //cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
-            var dataReader = cmdryucxd.ExecuteReader();
-            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
-            DataTable workedHours = new DataTable();
-            workedHours.Load(dataReader);
+            //var dataReader = cmdryucxd.ExecuteReader();
+            //// SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            //DataTable workedHours = new DataTable();
+            //workedHours.Load(dataReader);
             //da2.Fill(workedHours);
 
             //overtime -- usp_power_planner_overtime_hours
@@ -1671,7 +1671,7 @@ namespace ShopFloorPlacementPlanner
             for (int i = 0; i < dgBend.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
-                dgBend[3, i].Value = workedHours.Rows[0][i].ToString();
+                //dgBend[3, i].Value = workedHours.Rows[0][i].ToString();
             }
             //put the columns together into one column! :D
             string hours = "";
@@ -1680,8 +1680,8 @@ namespace ShopFloorPlacementPlanner
             {
                 double overtimeTemp = Convert.ToDouble(dgBend.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgBend.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));       //dgBend.Rows[i].Cells[1].Value.ToString();
-                worked = dgBend.Rows[i].Cells[3].Value.ToString();
-                dgBend[4, i].Value = hours + " / " + worked;
+                //worked = dgBend.Rows[i].Cells[3].Value.ToString();
+                dgBend[4, i].Value = hours;// + " / " + worked;
             }
 
             dgBend.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -1746,16 +1746,16 @@ namespace ShopFloorPlacementPlanner
 
             //this procedure works everything out, so if we just staple on another column and insert whatever we grab from the procedure life should be good
             //usp_power_planner_worked_hours
-            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
-            cmdryucxd.CommandType = CommandType.StoredProcedure;
-            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Welding";
-            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            //SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            //cmdryucxd.CommandType = CommandType.StoredProcedure;
+            //cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Welding";
+            //cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
-            var dataReader = cmdryucxd.ExecuteReader();
-            //SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
-            DataTable workedHours = new DataTable();
-            workedHours.Load(dataReader);
-            //da2.Fill(workedHours);
+            //var dataReader = cmdryucxd.ExecuteReader();
+            ////SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            //DataTable workedHours = new DataTable();
+            //workedHours.Load(dataReader);
+            ////da2.Fill(workedHours);
 
             //overtime -- usp_power_planner_overtime_hours~
             SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
@@ -1781,7 +1781,7 @@ namespace ShopFloorPlacementPlanner
             for (int i = 0; i < dgWeld.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 // MessageBox.Show(workedHours.Rows[0][i].ToString());
-                dgWeld[3, i].Value = workedHours.Rows[0][i].ToString();
+                //dgWeld[3, i].Value = workedHours.Rows[0][i].ToString();
             }
             string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Welding' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]"; //12324
             DataTable dtStaffID = new DataTable();
@@ -1797,29 +1797,29 @@ namespace ShopFloorPlacementPlanner
             string worked = "";
             for (int i = 0; i < dgWeld.Rows.Count; i++)
             {
-                string allocated = "";
-                try
-                {
-                    sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_weld * quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
-                        "left join dbo.door d on da.door_id = d.id where (complete_weld = 0 or complete_weld is null) AND da.department = 'welding' and (time_remaining_weld > 0) and (status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
-                        "group by staff_id,da.door_id) as a";
+                //string allocated = "";
+                //try
+                //{
+                //    sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_weld * quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
+                //        "left join dbo.door d on da.door_id = d.id where (complete_weld = 0 or complete_weld is null) AND da.department = 'welding' and (time_remaining_weld > 0) and (status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                //        "group by staff_id,da.door_id) as a";
 
-                    //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
-                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
-                    {
-                        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
-                        if (allocated == "")
-                            allocated = "0";
-                    }
-                }
-                catch
-                {
-                    allocated = "0";
-                }
+                //    //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
+                //    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                //    {
+                //        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                //        if (allocated == "")
+                //            allocated = "0";
+                //    }
+                //}
+                //catch
+                //{
+                //    allocated = "0";
+                //}
                 double overtimeTemp = Convert.ToDouble(dgWeld.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgWeld.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));   //dgWeld.Rows[i].Cells[1].Value.ToString();
-                worked = dgWeld.Rows[i].Cells[3].Value.ToString();
-                dgWeld[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
+         //       worked = dgWeld.Rows[i].Cells[3].Value.ToString();
+                dgWeld[4, i].Value = hours;// + " / " + worked;// + " " + Environment.NewLine + "" + allocated + " Allo";
 
 
             }
@@ -1872,16 +1872,16 @@ namespace ShopFloorPlacementPlanner
 
             dgBuff.DataSource = dt;
 
-            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
-            cmdryucxd.CommandType = CommandType.StoredProcedure;
-            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Dressing";
-            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            ////////SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            ////////cmdryucxd.CommandType = CommandType.StoredProcedure;
+            ////////cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Dressing";
+            ////////cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
-            var dataReader = cmdryucxd.ExecuteReader();
-            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
-            DataTable workedHours = new DataTable();
-            workedHours.Load(dataReader);
-            //da2.Fill(workedHours);
+            ////////var dataReader = cmdryucxd.ExecuteReader();
+            ////////// SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            ////////DataTable workedHours = new DataTable();
+            ////////workedHours.Load(dataReader);
+            //////////da2.Fill(workedHours);
 
             //overtime -- usp_power_planner_overtime_hours
             SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
@@ -1906,7 +1906,7 @@ namespace ShopFloorPlacementPlanner
             for (int i = 0; i < dgBuff.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
-                dgBuff[3, i].Value = workedHours.Rows[0][i].ToString();
+                ////dgBuff[3, i].Value = workedHours.Rows[0][i].ToString();
             }
             //this is wy
 
@@ -1925,28 +1925,28 @@ namespace ShopFloorPlacementPlanner
             for (int i = 0; i < dgBuff.Rows.Count; i++)
             {
                 string allocated = "";
-                try
-                {
-                    sql = "SELECT sum(hours) FROM(select round(cast(sum(time_remaining_buff) as float) / 60, 2) as hours from dbo.door_allocation da left join dbo.door d on da.door_id = d.id " +
-                             "where (complete_buff = 0 or complete_buff is null) AND da.department = 'dressing' and(status_id = 1 or status_id = 2) and time_remaining_buff > 0 and staff_id = " + dtStaffID.Rows[i][0].ToString() +
-                             "group by staff_id, da.door_id) as a";
+                //try
+                //{
+                //    sql = "SELECT sum(hours) FROM(select round(cast(sum(time_remaining_buff) as float) / 60, 2) as hours from dbo.door_allocation da left join dbo.door d on da.door_id = d.id " +
+                //             "where (complete_buff = 0 or complete_buff is null) AND da.department = 'dressing' and(status_id = 1 or status_id = 2) and time_remaining_buff > 0 and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                //             "group by staff_id, da.door_id) as a";
 
-                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
-                    {
-                        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
-                        if (allocated == "")
-                            allocated = "0";
-                    }
-                }
-                catch
-                {
-                    allocated = "0";
-                }
+                //    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                //    {
+                //        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                //        if (allocated == "")
+                //            allocated = "0";
+                //    }
+                //}
+                //catch
+                //{
+                //    allocated = "0";
+                //}
                 double overtimeTemp = Convert.ToDouble(dgBuff.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgBuff.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));    //dgBuff.Rows[i].Cells[1].Value.ToString();
-                worked = dgBuff.Rows[i].Cells[3].Value.ToString();
+                worked = "";// dgBuff.Rows[i].Cells[3].Value.ToString();
 
-                dgBuff[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
+                dgBuff[4, i].Value = hours;// + " / " + worked; //+ " " + Environment.NewLine + "" + allocated + " Allo";
             }
 
             //dgBuff.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -2087,16 +2087,16 @@ namespace ShopFloorPlacementPlanner
 
             dgPack.DataSource = dt;
 
-            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
-            cmdryucxd.CommandType = CommandType.StoredProcedure;
-            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Packing";
-            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            //SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            //cmdryucxd.CommandType = CommandType.StoredProcedure;
+            //cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Packing";
+            //cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
-            var dataReader = cmdryucxd.ExecuteReader();
-            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
-            DataTable workedHours = new DataTable();
-            workedHours.Load(dataReader);
-            //da2.Fill(workedHours);
+            //var dataReader = cmdryucxd.ExecuteReader();
+            //// SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            //DataTable workedHours = new DataTable();
+            //workedHours.Load(dataReader);
+            ////da2.Fill(workedHours);
 
             //overtime -- usp_power_planner_overtime_hours
             SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
@@ -2122,7 +2122,7 @@ namespace ShopFloorPlacementPlanner
             for (int i = 0; i < dgPack.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString());
-                dgPack[3, i].Value = workedHours.Rows[0][i].ToString();
+                //dgPack[3, i].Value = workedHours.Rows[0][i].ToString();
             }
 
             //get pack value
@@ -2150,27 +2150,27 @@ namespace ShopFloorPlacementPlanner
             string worked = "";
             for (int i = 0; i < dgPack.Rows.Count; i++)
             {
-                string allocated = "";
-                try
-                {
-                    sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_pack * quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
-                        "left join dbo.door d on da.door_id = d.id where (complete_pack = 0 or complete_pack is null) AND da.department = 'packing' and (status_id = 1 or status_id = 2) and time_remaining_pack > 0 and staff_id  = " + dtStaffID.Rows[i][0].ToString() +
-                        "group by staff_id,da.door_id) as a";
-                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
-                    {
-                        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
-                        if (allocated == "")
-                            allocated = "0";
-                    }
-                }
-                catch
-                {
-                    allocated = "0";
-                }
+                //string allocated = "";
+                //try
+                //{
+                //    sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_pack * quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
+                //        "left join dbo.door d on da.door_id = d.id where (complete_pack = 0 or complete_pack is null) AND da.department = 'packing' and (status_id = 1 or status_id = 2) and time_remaining_pack > 0 and staff_id  = " + dtStaffID.Rows[i][0].ToString() +
+                //        "group by staff_id,da.door_id) as a";
+                //    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                //    {
+                //        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                //        if (allocated == "")
+                //            allocated = "0";
+                //    }
+                //}
+                //catch
+                //{
+                //    allocated = "0";
+                //}
                 double overtimeTemp = Convert.ToDouble(dgPack.Rows[i].Cells[6].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgPack.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));   // dgPack.Rows[i].Cells[1].Value.ToString();
-                worked = dgPack.Rows[i].Cells[3].Value.ToString();
-                dgPack[4, i].Value = hours + " / " + worked + Environment.NewLine + "£" + packValue.Rows[0][i].ToString() + " " + Environment.NewLine + "" + allocated + " Allo";
+               // worked = dgPack.Rows[i].Cells[3].Value.ToString();
+                dgPack[4, i].Value = hours /*+ " / " + worked */ + Environment.NewLine + "£" + packValue.Rows[0][i].ToString();// + " " + Environment.NewLine + "" + allocated + " Allo";
             }
 
             //dgPack.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
