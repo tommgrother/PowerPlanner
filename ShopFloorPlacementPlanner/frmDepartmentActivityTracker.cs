@@ -31,7 +31,8 @@ namespace ShopFloorPlacementPlanner
                          "coalesce(round(sum(actual_hours_weld)  / nullif(sum(goal_hours_weld),0),2),0) * 100, " +
                          "coalesce(round(sum(actual_hours_buff)  / nullif(sum(goal_hours_buff),0),2),0) * 100, " +
                          "coalesce(round(sum(actual_hours)       / nullif(sum(goal_hours),0),2),0) * 100, " +
-                         "coalesce(round(sum(actual_hours_pack)  / nullif(sum(goal_hours_pack),0),2),0) * 100 " +
+                         "coalesce(round(sum(actual_hours_pack)  / nullif(sum(goal_hours_pack),0),2),0) * 100, " +
+                         "coalesce(round(sum(actual_hours_slimline)  / nullif(sum(goal_hours_slimline),0),2),0) * 100 " +
                          "from dbo.daily_department_goal " +
                          "where date_goal >= '" + dteStart.Value.ToString("yyyyMMdd") + "' AND date_goal <= '" + dteEnd.Value.ToString("yyyyMMdd") + "'";
 
@@ -49,6 +50,7 @@ namespace ShopFloorPlacementPlanner
                     txtBuffing.Text = dt.Rows[0][3].ToString();
                     txtPainting.Text = dt.Rows[0][4].ToString();
                     txtPacking.Text = dt.Rows[0][5].ToString();
+                    txtSlimline.Text = dt.Rows[0][6].ToString();
 
                 }
                 conn.Close();
@@ -97,6 +99,11 @@ namespace ShopFloorPlacementPlanner
                 txtPacking.BackColor = Color.LightSeaGreen;
             else
                 txtPacking.BackColor = Color.PaleVioletRed;
+
+            if (Convert.ToDouble(txtSlimline.Text) >= 100)
+                txtSlimline.BackColor = Color.LightSeaGreen;
+            else
+                txtSlimline.BackColor = Color.PaleVioletRed;
 
         }
 
@@ -737,19 +744,37 @@ namespace ShopFloorPlacementPlanner
                         for (int date_row = 0; date_row < dt_date.Rows.Count; date_row++)
                         {
                             //now we get the day of week/hours/actual/%
-
-                            sql = "select Convert(varchar,CAST('" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' as date),103),datename(WEEKDAY,'" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "'),sum([hours]) as [hours],sum([actual]) as actual,coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent] from (" +
-                                "select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours],0 as actual from dbo.power_plan_staff s " +
-                                "left join dbo.power_plan_date d on s.date_id = d.id " +
-                                "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
-                                "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
-                                "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND d.date_plan = '" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' " +
-                                "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' " +
-                                "union all " +
-                                "select 0 as [hours],sum(l.time_for_part) / 60 as actual from dbo.door_part_completion_log l " +
-                                "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
-                                "where op = '" + department + "' AND cast(part_complete_date as date) = '" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' " +
-                                "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "') as a";
+                            if (department == "Slimline")
+                            {
+                                sql = "select Convert(varchar,CAST('" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' as date),103),datename(WEEKDAY,'" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "'),sum([hours]) as [hours],sum([actual]) as actual,coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent] from (" +
+                                    "select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours],0 as actual from dbo.power_plan_staff s " +
+                                    "left join dbo.power_plan_date d on s.date_id = d.id " +
+                                    "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
+                                    "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
+                                    "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND d.date_plan = '" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' " +
+                                    "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' " +
+                                    "union all " +
+                                    "select 0 as [hours],sum(l.time_for_part) / 60 as actual from dbo.door_part_completion_log l " +
+                                    "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
+                                    "where (op = 'Prepping' OR op = 'Assembly' OR op = 'Cutting' or op = 'SL_pack' or op = 'SL_Buff' or op = 'Prep') " +
+                                    "AND cast(part_complete_date as date) = '" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' " +
+                                    "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "') as a";
+                            }
+                            else
+                            {
+                                sql = "select Convert(varchar,CAST('" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' as date),103),datename(WEEKDAY,'" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "'),sum([hours]) as [hours],sum([actual]) as actual,coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent] from (" +
+                                   "select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours],0 as actual from dbo.power_plan_staff s " +
+                                   "left join dbo.power_plan_date d on s.date_id = d.id " +
+                                   "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
+                                   "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
+                                   "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND d.date_plan = '" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' " +
+                                   "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' " +
+                                   "union all " +
+                                   "select 0 as [hours],sum(l.time_for_part) / 60 as actual from dbo.door_part_completion_log l " +
+                                   "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
+                                   "where op = '" + department + "' AND cast(part_complete_date as date) = '" + Convert.ToDateTime(dt_date.Rows[date_row][0]).ToString("yyyyMMdd") + "' " +
+                                   "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "') as a";
+                            }
 
                             using (SqlCommand cmd = new SqlCommand(sql, conn))
                             {
@@ -1553,6 +1578,17 @@ namespace ShopFloorPlacementPlanner
         private void txtPacking_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtPunching_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSlimline_MouseClick(object sender, MouseEventArgs e)
+        {
+            //print_department_sheet("Slimline");
+            print_new_staff_dropped_sheet("Slimline");
         }
     }
 }

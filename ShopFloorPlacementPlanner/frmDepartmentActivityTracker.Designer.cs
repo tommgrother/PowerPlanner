@@ -43,6 +43,8 @@
             this.txtPainting = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtPacking = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtSlimline = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // dteStart
@@ -63,17 +65,18 @@
             // 
             // txtPunching
             // 
-            this.txtPunching.Location = new System.Drawing.Point(12, 89);
+            this.txtPunching.Location = new System.Drawing.Point(118, 89);
             this.txtPunching.Name = "txtPunching";
             this.txtPunching.Size = new System.Drawing.Size(100, 20);
             this.txtPunching.TabIndex = 2;
             this.txtPunching.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtPunching.Click += new System.EventHandler(this.txtPunching_Click);
+            this.txtPunching.TextChanged += new System.EventHandler(this.txtPunching_TextChanged);
             // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.label1.Location = new System.Drawing.Point(12, 63);
+            this.label1.Location = new System.Drawing.Point(118, 63);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 23);
             this.label1.TabIndex = 3;
@@ -83,7 +86,7 @@
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.label2.Location = new System.Drawing.Point(118, 63);
+            this.label2.Location = new System.Drawing.Point(224, 63);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 23);
             this.label2.TabIndex = 5;
@@ -92,7 +95,7 @@
             // 
             // txtBending
             // 
-            this.txtBending.Location = new System.Drawing.Point(118, 89);
+            this.txtBending.Location = new System.Drawing.Point(224, 89);
             this.txtBending.Name = "txtBending";
             this.txtBending.Size = new System.Drawing.Size(100, 20);
             this.txtBending.TabIndex = 4;
@@ -103,7 +106,7 @@
             // label3
             // 
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.label3.Location = new System.Drawing.Point(224, 63);
+            this.label3.Location = new System.Drawing.Point(330, 63);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 23);
             this.label3.TabIndex = 7;
@@ -112,7 +115,7 @@
             // 
             // txtWelding
             // 
-            this.txtWelding.Location = new System.Drawing.Point(224, 89);
+            this.txtWelding.Location = new System.Drawing.Point(330, 89);
             this.txtWelding.Name = "txtWelding";
             this.txtWelding.Size = new System.Drawing.Size(100, 20);
             this.txtWelding.TabIndex = 6;
@@ -123,7 +126,7 @@
             // label4
             // 
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.label4.Location = new System.Drawing.Point(330, 63);
+            this.label4.Location = new System.Drawing.Point(436, 63);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 23);
             this.label4.TabIndex = 9;
@@ -132,7 +135,7 @@
             // 
             // txtBuffing
             // 
-            this.txtBuffing.Location = new System.Drawing.Point(330, 89);
+            this.txtBuffing.Location = new System.Drawing.Point(436, 89);
             this.txtBuffing.Name = "txtBuffing";
             this.txtBuffing.Size = new System.Drawing.Size(100, 20);
             this.txtBuffing.TabIndex = 8;
@@ -142,7 +145,7 @@
             // label5
             // 
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.label5.Location = new System.Drawing.Point(436, 63);
+            this.label5.Location = new System.Drawing.Point(542, 63);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(100, 23);
             this.label5.TabIndex = 11;
@@ -151,7 +154,7 @@
             // 
             // txtPainting
             // 
-            this.txtPainting.Location = new System.Drawing.Point(436, 89);
+            this.txtPainting.Location = new System.Drawing.Point(542, 89);
             this.txtPainting.Name = "txtPainting";
             this.txtPainting.Size = new System.Drawing.Size(100, 20);
             this.txtPainting.TabIndex = 10;
@@ -162,7 +165,7 @@
             // label6
             // 
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.label6.Location = new System.Drawing.Point(542, 63);
+            this.label6.Location = new System.Drawing.Point(648, 63);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(100, 23);
             this.label6.TabIndex = 13;
@@ -171,7 +174,7 @@
             // 
             // txtPacking
             // 
-            this.txtPacking.Location = new System.Drawing.Point(542, 89);
+            this.txtPacking.Location = new System.Drawing.Point(648, 89);
             this.txtPacking.Name = "txtPacking";
             this.txtPacking.Size = new System.Drawing.Size(100, 20);
             this.txtPacking.TabIndex = 12;
@@ -179,11 +182,32 @@
             this.txtPacking.Click += new System.EventHandler(this.txtPacking_Click);
             this.txtPacking.TextChanged += new System.EventHandler(this.txtPacking_TextChanged);
             // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.label7.Location = new System.Drawing.Point(12, 63);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(100, 23);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Slimline (%)";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // txtSlimline
+            // 
+            this.txtSlimline.Location = new System.Drawing.Point(12, 89);
+            this.txtSlimline.Name = "txtSlimline";
+            this.txtSlimline.Size = new System.Drawing.Size(100, 20);
+            this.txtSlimline.TabIndex = 14;
+            this.txtSlimline.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtSlimline.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSlimline_MouseClick);
+            // 
             // frmDepartmentActivityTracker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(653, 121);
+            this.ClientSize = new System.Drawing.Size(759, 121);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.txtSlimline);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtPacking);
             this.Controls.Add(this.label5);
@@ -225,5 +249,7 @@
         private System.Windows.Forms.TextBox txtPainting;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtPacking;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtSlimline;
     }
 }

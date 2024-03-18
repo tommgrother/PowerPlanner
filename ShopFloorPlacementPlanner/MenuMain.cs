@@ -1314,16 +1314,16 @@ namespace ShopFloorPlacementPlanner
 
             dgSlimline.DataSource = dt;
 
-            //SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
-            //cmdryucxd.CommandType = CommandType.StoredProcedure;
-            //cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Slimline";
-            //cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            cmdryucxd.CommandType = CommandType.StoredProcedure;
+            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Slimline";
+            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
-            //var dataReader = cmdryucxd.ExecuteReader();
-            //// SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
-            //DataTable workedHours = new DataTable();
-            //workedHours.Load(dataReader);
-            ////da2.Fill(workedHours);
+            var dataReader = cmdryucxd.ExecuteReader();
+            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable workedHours = new DataTable();
+            workedHours.Load(dataReader);
+            //da2.Fill(workedHours);
 
             //overtime -- usp_power_planner_overtime_hours
             SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
@@ -1348,7 +1348,7 @@ namespace ShopFloorPlacementPlanner
             for (int i = 0; i < dgSlimline.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
             {
                 //MessageBox.Show(workedHours.Rows[0][i].ToString()); //
-                //dgSlimline[3, i].Value = workedHours.Rows[0][i].ToString();
+                dgSlimline[3, i].Value = workedHours.Rows[0][i].ToString();
             }
 
 
@@ -1368,37 +1368,37 @@ namespace ShopFloorPlacementPlanner
             {
 
                 string allocated = "";
-                ////try
-                ////{
-                ////    ////sql = "SELECT sum(hours) FROM ( " +
-                ////    ////   "select round(cast((sum(time_remaining_cutting * quantity_same) + sum(time_remaining_prepping * quantity_same) + sum(time_remianing_assembly * quantity_same)) as float) /60,2) as hours from dbo.view_worked_hours da " +
-                ////    ////   "left join dbo.door d on da.door_id = d.id " +
-                ////    ////   "where (da.department = 'Assembly' or da.department = 'Cutting' or da.department = 'Prepping') and " +
-                ////    ////   "(time_remaining_cutting > 0 or time_remaining_prepping > 0 or time_remianing_assembly > 0) and " +
-                ////    ////   "(status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
-                ////    ////   "group by staff_id,da.door_id) as a";
-                ////    ///
-                ////    //old string
-                ////    sql = "select SUM(time_remaining)  from dbo.c_view_slimline_allocation where [Allocated to] = '" + dtStaffID.Rows[i][0].ToString() + "'";
+                try
+                {
+                    ////sql = "SELECT sum(hours) FROM ( " +
+                    ////   "select round(cast((sum(time_remaining_cutting * quantity_same) + sum(time_remaining_prepping * quantity_same) + sum(time_remianing_assembly * quantity_same)) as float) /60,2) as hours from dbo.view_worked_hours da " +
+                    ////   "left join dbo.door d on da.door_id = d.id " +
+                    ////   "where (da.department = 'Assembly' or da.department = 'Cutting' or da.department = 'Prepping') and " +
+                    ////   "(time_remaining_cutting > 0 or time_remaining_prepping > 0 or time_remianing_assembly > 0) and " +
+                    ////   "(status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                    ////   "group by staff_id,da.door_id) as a";
+                    ///
+                    //old string
+                    sql = "select SUM(time_remaining)  from dbo.c_view_slimline_allocation where [Allocated to] = '" + dtStaffID.Rows[i][0].ToString() + "'";
 
-                ////    //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
-                ////    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
-                ////    {
-                ////        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
-                ////        if (allocated == "")
-                ////            allocated = "0";
-                ////    }
-                ////}
-                ////catch
-                ////{
-                ////    allocated = "0";
-                ////}
+                    //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
+                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                    {
+                        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                        if (allocated == "")
+                            allocated = "0";
+                    }
+                }
+                catch
+                {
+                    allocated = "0";
+                }
 
 
                 double overtimeTemp = Convert.ToDouble(dgSlimline.Rows[i].Cells[5].Value) * 0.8;
                 hours = Convert.ToString(Convert.ToDecimal(dgSlimline.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));       //dgSlimline.Rows[i].Cells[1].Value.ToString();
-                //worked = dgSlimline.Rows[i].Cells[3].Value.ToString();
-                dgSlimline[4, i].Value = hours;// + " / " + worked;// + " " + Environment.NewLine + "" + allocated + " Allo";
+                worked = dgSlimline.Rows[i].Cells[3].Value.ToString();
+                dgSlimline[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
             }
 
 
@@ -1802,8 +1802,8 @@ namespace ShopFloorPlacementPlanner
              string allocated = "";
              try
              {
-                 sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_weld * quantity_same) as float) /60,2) as hours from dbo.view_worked_hours da " +
-                     "left join dbo.door d on da.door_id = d.id where da.op = 'welding' and (time_remaining_weld > 0) and (status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                 sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_weld * quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
+                     "left join dbo.door d on da.door_id = d.id where da.department = 'welding' and (time_remaining_weld > 0) and (status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
                      "group by staff_id,da.door_id) as a";
 
                  //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
@@ -2157,8 +2157,8 @@ namespace ShopFloorPlacementPlanner
                 string allocated = "";
                 try
                 {
-                    sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_pack * quantity_same) as float) /60,2) as hours from dbo.view_worked_hours da " +
-                        "left join dbo.door d on da.door_id = d.id where da.op = 'packing' and(status_id = 1 or status_id = 2) and time_remaining_pack > 0 and staff_id  = " + dtStaffID.Rows[i][0].ToString() +
+                    sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_pack * quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
+                        "left join dbo.door d on da.door_id = d.id where da.department = 'packing' and(status_id = 1 or status_id = 2) and time_remaining_pack > 0 and staff_id  = " + dtStaffID.Rows[i][0].ToString() +
                         "group by staff_id,da.door_id) as a";
                     using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
                     {

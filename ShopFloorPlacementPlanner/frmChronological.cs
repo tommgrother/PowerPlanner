@@ -18,8 +18,6 @@ namespace ShopFloorPlacementPlanner
         public string _staff { get; set; }
         public int _staff_id { get; set; }
         public string _dept { get; set; }
-
-
         public int _status_index { get; set; }
         public int _door_id_index { get; set; }
         public int _door_type_index { get; set; }
