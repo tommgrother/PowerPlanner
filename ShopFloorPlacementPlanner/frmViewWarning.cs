@@ -25,6 +25,9 @@ namespace ShopFloorPlacementPlanner
             remove_tabs = -1;
             load_cmb();
             load_data();
+            dteStart.Value = new DateTime(2023, 01, 01);
+            dteEnd.Value = DateTime.Now;
+            load_grids();
 
 
         }
@@ -91,7 +94,7 @@ namespace ShopFloorPlacementPlanner
                 }
 
 
-                    conn.Close();
+                conn.Close();
             }
 
         }
@@ -139,11 +142,12 @@ namespace ShopFloorPlacementPlanner
                     {
                         staff_id = temp_staff_id;
                         load_data();
+                        load_grids();
 
                     }
                 }
 
-                    conn.Close();
+                conn.Close();
             }
         }
 
@@ -155,5 +159,88 @@ namespace ShopFloorPlacementPlanner
                 load_data();
             }
         }
+
+        private void load_grids()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+
+                staff_id = 0;
+                string sql = "SELECT id FROM [user_info].dbo.[user] WHERE forename + ' ' + surname = '" + cmbStaff.Text + "' ";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    staff_id = Convert.ToInt32(cmd.ExecuteScalar());
+
+
+                //absent total
+                sql = "select  coalesce(sum(1),0) as [Total Absent] from dbo.absent_holidays " +
+                         "left join[user_info].dbo.[user] u on u.id = staff_id " +
+                         "where(absent_type = 5 or absent_type = 8) AND " +
+                         "staff_id = " + staff_id.ToString() +
+                         " AND date_absent >= '" + dteStart.Value.ToString("yyyy-MM-dd") + "' AND date_absent <= '" + dteEnd.Value.ToString("yyyy-MM-dd") + "' ";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    lblAbsent.Text = "Total Absent Days: " + cmd.ExecuteScalar().ToString();
+                }
+
+                //late total
+                sql = "select  coalesce(sum(1),0) as [ Total Late] from dbo.absent_holidays " +
+                        "left join[user_info].dbo.[user] u on u.id = staff_id " +
+                        "where(absent_type = 7) AND " +
+                        "staff_id = " + staff_id.ToString() +
+                        "AND date_absent >= '" + dteStart.Value.ToString("yyyy-MM-dd") + "' AND date_absent <= '" + dteEnd.Value.ToString("yyyy-MM-dd") + "' ";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    lblLate.Text = "Total Late Days: " + cmd.ExecuteScalar().ToString();
+
+                //absences
+                sql = "select  Convert(char,date_absent,103)  as [Absent Date],datename(WEEKDAY,date_absent) as [Day of Week],sum(1) [Absent] from dbo.absent_holidays " +
+                    "left join[user_info].dbo.[user] u on u.id = staff_id " +
+                    "where(absent_type = 5 or absent_type = 8) AND " +
+                    "staff_id =  " + staff_id.ToString() +
+                    " AND date_absent >= '" + dteStart.Value.ToString("yyyy-MM-dd") + "' AND date_absent <= '" + dteEnd.Value.ToString("yyyy-MM-dd") + "' " +
+                    "group by date_absent";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    dgvAbsent.DataSource = dt;
+                }
+                //lates 
+                sql = "select  Convert(char,date_absent,103)  as [Late Date],datename(WEEKDAY,date_absent) as [Day of Week],sum(1) [Late] from dbo.absent_holidays " +
+                    "left join[user_info].dbo.[user] u on u.id = staff_id " +
+                    "where(absent_type = 7) AND " +
+                    "staff_id =  " + staff_id.ToString() +
+                    "AND date_absent >= '" + dteStart.Value.ToString("yyyy-MM-dd") + "' AND date_absent <= '" + dteEnd.Value.ToString("yyyy-MM-dd") + "' " +
+                    "group by date_absent";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    dgvLate.DataSource = dt;
+                }
+
+                conn.Close();
+            }
+
+            format();
+
+        }
+        private void format()
+        {
+            foreach (DataGridViewColumn col in dgvAbsent.Columns)
+            {
+                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+            foreach (DataGridViewColumn col in dgvLate.Columns)
+            {
+                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+        }
+
     }
 }

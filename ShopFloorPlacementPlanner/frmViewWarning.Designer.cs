@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmViewWarning));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.label1 = new System.Windows.Forms.Label();
@@ -41,6 +43,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtWarningGivenBy = new System.Windows.Forms.TextBox();
+            this.lblLate = new System.Windows.Forms.Label();
+            this.lblAbsent = new System.Windows.Forms.Label();
+            this.dgvLate = new System.Windows.Forms.DataGridView();
+            this.dgvAbsent = new System.Windows.Forms.DataGridView();
+            this.dteStart = new System.Windows.Forms.DateTimePicker();
+            this.dteEnd = new System.Windows.Forms.DateTimePicker();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAbsent)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -154,11 +164,99 @@
             this.txtWarningGivenBy.Size = new System.Drawing.Size(186, 26);
             this.txtWarningGivenBy.TabIndex = 14;
             // 
+            // lblLate
+            // 
+            this.lblLate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLate.ForeColor = System.Drawing.Color.Red;
+            this.lblLate.Location = new System.Drawing.Point(1034, 64);
+            this.lblLate.Name = "lblLate";
+            this.lblLate.Size = new System.Drawing.Size(391, 28);
+            this.lblLate.TabIndex = 19;
+            this.lblLate.Text = "Total Late Days: 0";
+            this.lblLate.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // lblAbsent
+            // 
+            this.lblAbsent.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbsent.ForeColor = System.Drawing.Color.Red;
+            this.lblAbsent.Location = new System.Drawing.Point(614, 64);
+            this.lblAbsent.Name = "lblAbsent";
+            this.lblAbsent.Size = new System.Drawing.Size(392, 28);
+            this.lblAbsent.TabIndex = 18;
+            this.lblAbsent.Text = "Total Absent Days: 0";
+            this.lblAbsent.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // dgvLate
+            // 
+            this.dgvLate.AllowUserToAddRows = false;
+            this.dgvLate.AllowUserToDeleteRows = false;
+            this.dgvLate.AllowUserToResizeColumns = false;
+            this.dgvLate.AllowUserToResizeRows = false;
+            this.dgvLate.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvLate.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvLate.Location = new System.Drawing.Point(1039, 95);
+            this.dgvLate.Name = "dgvLate";
+            this.dgvLate.ReadOnly = true;
+            this.dgvLate.RowHeadersVisible = false;
+            this.dgvLate.Size = new System.Drawing.Size(392, 605);
+            this.dgvLate.TabIndex = 17;
+            // 
+            // dgvAbsent
+            // 
+            this.dgvAbsent.AllowUserToAddRows = false;
+            this.dgvAbsent.AllowUserToDeleteRows = false;
+            this.dgvAbsent.AllowUserToResizeColumns = false;
+            this.dgvAbsent.AllowUserToResizeRows = false;
+            this.dgvAbsent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvAbsent.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvAbsent.Location = new System.Drawing.Point(619, 95);
+            this.dgvAbsent.Name = "dgvAbsent";
+            this.dgvAbsent.ReadOnly = true;
+            this.dgvAbsent.RowHeadersVisible = false;
+            this.dgvAbsent.Size = new System.Drawing.Size(392, 605);
+            this.dgvAbsent.TabIndex = 16;
+            // 
+            // dteStart
+            // 
+            this.dteStart.Location = new System.Drawing.Point(770, 20);
+            this.dteStart.Name = "dteStart";
+            this.dteStart.Size = new System.Drawing.Size(139, 20);
+            this.dteStart.TabIndex = 20;
+            this.dteStart.Visible = false;
+            // 
+            // dteEnd
+            // 
+            this.dteEnd.Location = new System.Drawing.Point(915, 20);
+            this.dteEnd.Name = "dteEnd";
+            this.dteEnd.Size = new System.Drawing.Size(139, 20);
+            this.dteEnd.TabIndex = 21;
+            this.dteEnd.Visible = false;
+            // 
             // frmViewWarning
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(618, 710);
+            this.ClientSize = new System.Drawing.Size(1440, 710);
+            this.Controls.Add(this.dteEnd);
+            this.Controls.Add(this.dteStart);
+            this.Controls.Add(this.lblLate);
+            this.Controls.Add(this.lblAbsent);
+            this.Controls.Add(this.dgvLate);
+            this.Controls.Add(this.dgvAbsent);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtWarningGivenBy);
             this.Controls.Add(this.label4);
@@ -177,6 +275,8 @@
             this.Name = "frmViewWarning";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Staff Warning";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAbsent)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -196,5 +296,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtWarningGivenBy;
+        private System.Windows.Forms.Label lblLate;
+        private System.Windows.Forms.Label lblAbsent;
+        private System.Windows.Forms.DataGridView dgvLate;
+        private System.Windows.Forms.DataGridView dgvAbsent;
+        private System.Windows.Forms.DateTimePicker dteStart;
+        private System.Windows.Forms.DateTimePicker dteEnd;
     }
 }
