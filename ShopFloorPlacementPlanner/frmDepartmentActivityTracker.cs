@@ -823,6 +823,13 @@ namespace ShopFloorPlacementPlanner
                         xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Bold = true;
                         xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Size = 12;
                         current_excel_row++;
+                        //sales value of labor lost
+                        xlWorksheet.Cells[1][current_excel_row].Value2 = "TOTAL DROPPED:";
+                        xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Bold = true;
+                        xlWorksheet.Range[xlWorksheet.Cells[current_excel_row, 1], xlWorksheet.Cells[current_excel_row, 5]].Font.Size = 12;
+                        xlWorksheet.Cells[4][current_excel_row].Value2 = Math.Round(hours_goal_total - hours_actual_total,2).ToString();
+                        xlWorksheet.Cells[5][current_excel_row].Value2 = Math.Round((hours_goal_total - hours_actual_total) * 68,2).ToString();
+                        xlWorksheet.Cells[5][current_excel_row].NumberFormat = "£#,##0.00";
                     }
 
                     //print

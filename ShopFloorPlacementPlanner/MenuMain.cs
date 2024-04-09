@@ -2143,7 +2143,7 @@ namespace ShopFloorPlacementPlanner
 
             string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Packing' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]";
             DataTable dtStaffID = new DataTable();
-            using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
+            using (SqlCommand cmdStaffID = new SqlCommand(sql, conn)) 
             {
                 SqlDataAdapter daStaffID = new SqlDataAdapter(cmdStaffID);
                 daStaffID.Fill(dtStaffID);
@@ -4092,9 +4092,12 @@ namespace ShopFloorPlacementPlanner
 
         private void absentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //select between two dates and  view all absences/holidays
-            frmAbsentHolidaySearch frm = new frmAbsentHolidaySearch();
+
+            frmAbenstHolidayStaffDept frm = new frmAbenstHolidayStaffDept();
             frm.ShowDialog();
+
+            //select between two dates and  view all absences/holidays
+            
         }
 
         private void dgBend_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
