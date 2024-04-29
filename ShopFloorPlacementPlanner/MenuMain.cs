@@ -1074,6 +1074,9 @@ namespace ShopFloorPlacementPlanner
                     {
                         row.DefaultCellStyle.BackColor = Color.MediumPurple;
                     }
+
+                    if (row.Cells[1].Value.ToString().Contains("LATE"))
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
                 }
                 catch
                 {
@@ -4461,7 +4464,7 @@ namespace ShopFloorPlacementPlanner
                 using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
                 {
                     conn.Open();
-                    if (row.Cells[1].Value.ToString() == "ABSENT")
+                    if (row.Cells[1].Value.ToString() == "ABSENT" || row.Cells[1].Value.ToString() == "ABSENT TAKEN HOLIDAY")
                     {
                         //find this users default placement and put him in that grid
                         sql = "Select default_in_department from [user_info].dbo.[user] " +
