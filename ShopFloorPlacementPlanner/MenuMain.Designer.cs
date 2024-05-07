@@ -133,6 +133,7 @@
             this.departmentActivityTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.lastCalendarUser = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtSlimlineHours = new System.Windows.Forms.TextBox();
@@ -372,7 +373,7 @@
             this.label114 = new System.Windows.Forms.Label();
             this.txtStockHours = new System.Windows.Forms.TextBox();
             this.btnWeldingDoorTypes = new System.Windows.Forms.Button();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnBuffingDiscs = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -1188,6 +1189,13 @@
             this.lastCalendarUser.Size = new System.Drawing.Size(116, 20);
             this.lastCalendarUser.Text = "Last Calendar User";
             this.lastCalendarUser.Click += new System.EventHandler(this.lastCalendarUser_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(108, 20);
+            this.toolStripMenuItem3.Text = "STAFF WARNING";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // label23
             // 
@@ -3784,12 +3792,15 @@
             this.btnWeldingDoorTypes.UseVisualStyleBackColor = true;
             this.btnWeldingDoorTypes.Click += new System.EventHandler(this.btnWeldingDoorTypes_Click);
             // 
-            // toolStripMenuItem3
+            // btnBuffingDiscs
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(108, 20);
-            this.toolStripMenuItem3.Text = "STAFF WARNING";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            this.btnBuffingDiscs.Location = new System.Drawing.Point(1123, 75);
+            this.btnBuffingDiscs.Name = "btnBuffingDiscs";
+            this.btnBuffingDiscs.Size = new System.Drawing.Size(57, 23);
+            this.btnBuffingDiscs.TabIndex = 305;
+            this.btnBuffingDiscs.Text = "Discs";
+            this.btnBuffingDiscs.UseVisualStyleBackColor = true;
+            this.btnBuffingDiscs.Click += new System.EventHandler(this.btnBuffingDiscs_Click);
             // 
             // MenuMain
             // 
@@ -3797,6 +3808,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1911, 921);
+            this.Controls.Add(this.btnBuffingDiscs);
             this.Controls.Add(this.btnWeldingDoorTypes);
             this.Controls.Add(this.label114);
             this.Controls.Add(this.txtStockHours);
@@ -4439,6 +4451,7 @@
         private System.Windows.Forms.ToolStripMenuItem lastCalendarUser;
         private System.Windows.Forms.Button btnWeldingDoorTypes;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.Button btnBuffingDiscs;
     }
 }
 

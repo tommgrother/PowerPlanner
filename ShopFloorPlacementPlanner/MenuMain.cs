@@ -4670,5 +4670,11 @@ namespace ShopFloorPlacementPlanner
             frmWarningPasscode frm = new frmWarningPasscode();
             frm.ShowDialog();
         }
+
+        private void btnBuffingDiscs_Click(object sender, EventArgs e)
+        {
+            frmBuffingDiscs frm = new frmBuffingDiscs(dteDateSelection.Value);
+            frm.ShowDialog();
+        }
     }
 }

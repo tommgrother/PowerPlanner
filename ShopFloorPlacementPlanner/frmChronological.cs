@@ -490,7 +490,9 @@ namespace ShopFloorPlacementPlanner
 
 
             int day_counter = 0;
-            DateTime current_date = Convert.ToDateTime(dataGridView1.Rows[0].Cells[_time_index].Value).Date;
+                        
+           
+            
             int sheet_counter = 1;
             int loop_counter = 0;
             int max_loop_counter = dataGridView1.Rows.Count;
@@ -519,32 +521,40 @@ namespace ShopFloorPlacementPlanner
                 //column headers
                 current_excel_row++;
 
-                //vvv we need to loop through dgv 
-                for (int i = loop_counter; i < max_loop_counter;i++)
+                if (dataGridView1.Rows.Count <= 0)
                 {
-                    if (current_date.Date < Convert.ToDateTime(dataGridView1.Rows[i].Cells[_time_index].Value).Date)
+                    loop_counter = 99999999;
+                }
+                else
+                {
+                    DateTime current_date = Convert.ToDateTime(dataGridView1.Rows[0].Cells[_time_index].Value).Date;
+                    //vvv we need to loop through dgv 
+                    for (int i = loop_counter; i < max_loop_counter; i++)
                     {
-                        day_counter++;
-                        current_date = Convert.ToDateTime(dataGridView1.Rows[i].Cells[_time_index].Value).Date;
-                        if (day_counter == 5)
+                        if (current_date.Date < Convert.ToDateTime(dataGridView1.Rows[i].Cells[_time_index].Value).Date)
                         {
-                            day_counter = 0;
-                            break;
+                            day_counter++;
+                            current_date = Convert.ToDateTime(dataGridView1.Rows[i].Cells[_time_index].Value).Date;
+                            if (day_counter == 5)
+                            {
+                                day_counter = 0;
+                                break;
+                            }
                         }
+                        xlWorksheet.Cells[1][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_status_index].Value.ToString();
+                        xlWorksheet.Cells[2][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString();
+                        xlWorksheet.Cells[3][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_door_type_index].Value.ToString();
+                        xlWorksheet.Cells[4][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[actionIndex].Value.ToString();
+                        xlWorksheet.Cells[5][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_part_index].Value.ToString();
+                        if (btnHideTimes.Text == "Hide Times")
+                            xlWorksheet.Cells[6][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_for_part_index].Value.ToString();
+                        xlWorksheet.Cells[7][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_index].Value.ToString();
+                        //paint the row based on what the dgv is
+                        if (dataGridView1.Rows[i].DefaultCellStyle.BackColor != Color.Empty)
+                            xlWorksheet.Range["A" + current_excel_row.ToString() + ":G" + current_excel_row.ToString()].Interior.Color = dataGridView1.Rows[i].DefaultCellStyle.BackColor;
+                        current_excel_row++;
+                        loop_counter++;
                     }
-                    xlWorksheet.Cells[1][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_status_index].Value.ToString();
-                    xlWorksheet.Cells[2][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString();
-                    xlWorksheet.Cells[3][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_door_type_index].Value.ToString();
-                    xlWorksheet.Cells[4][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[actionIndex].Value.ToString();
-                    xlWorksheet.Cells[5][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_part_index].Value.ToString();
-                    if (btnHideTimes.Text == "Hide Times")
-                        xlWorksheet.Cells[6][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_for_part_index].Value.ToString();
-                    xlWorksheet.Cells[7][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_index].Value.ToString();
-                    //paint the row based on what the dgv is
-                    if (dataGridView1.Rows[i].DefaultCellStyle.BackColor != Color.Empty)
-                        xlWorksheet.Range["A" + current_excel_row.ToString() + ":G" + current_excel_row.ToString()].Interior.Color = dataGridView1.Rows[i].DefaultCellStyle.BackColor;
-                    current_excel_row++;
-                    loop_counter++;
                 }
 
                 //border

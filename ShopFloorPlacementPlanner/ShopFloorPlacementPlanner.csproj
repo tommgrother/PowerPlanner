@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>417</ApplicationRevision>
+    <ApplicationRevision>420</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -138,6 +138,12 @@
     </Compile>
     <Compile Include="frmBendingPress.Designer.cs">
       <DependentUpon>frmBendingPress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBuffingDiscs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBuffingDiscs.Designer.cs">
+      <DependentUpon>frmBuffingDiscs.cs</DependentUpon>
     </Compile>
     <Compile Include="frmChronological.cs">
       <SubType>Form</SubType>
@@ -436,6 +442,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBendingPress.resx">
       <DependentUpon>frmBendingPress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBuffingDiscs.resx">
+      <DependentUpon>frmBuffingDiscs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmChronological.resx">
       <DependentUpon>frmChronological.cs</DependentUpon>
