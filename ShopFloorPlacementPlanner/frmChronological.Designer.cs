@@ -45,6 +45,7 @@
             this.lblStartDate = new System.Windows.Forms.Label();
             this.btnHideTimes = new System.Windows.Forms.Button();
             this.btnAllocation = new System.Windows.Forms.Button();
+            this.btnTimeInMotion = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -120,7 +121,7 @@
             // 
             this.btnEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEmail.Location = new System.Drawing.Point(536, 73);
+            this.btnEmail.Location = new System.Drawing.Point(533, 44);
             this.btnEmail.Name = "btnEmail";
             this.btnEmail.Size = new System.Drawing.Size(92, 26);
             this.btnEmail.TabIndex = 6;
@@ -246,11 +247,24 @@
             this.btnAllocation.UseVisualStyleBackColor = true;
             this.btnAllocation.Click += new System.EventHandler(this.btnAllocation_Click);
             // 
+            // btnTimeInMotion
+            // 
+            this.btnTimeInMotion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTimeInMotion.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTimeInMotion.Location = new System.Drawing.Point(510, 73);
+            this.btnTimeInMotion.Name = "btnTimeInMotion";
+            this.btnTimeInMotion.Size = new System.Drawing.Size(115, 26);
+            this.btnTimeInMotion.TabIndex = 51;
+            this.btnTimeInMotion.Text = "Time in Motion";
+            this.btnTimeInMotion.UseVisualStyleBackColor = true;
+            this.btnTimeInMotion.Click += new System.EventHandler(this.btnTimeInMotion_Click);
+            // 
             // frmChronological
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(855, 880);
+            this.Controls.Add(this.btnTimeInMotion);
             this.Controls.Add(this.btnAllocation);
             this.Controls.Add(this.btnHideTimes);
             this.Controls.Add(this.lblStartDate);
@@ -298,5 +312,6 @@
         private System.Windows.Forms.Label lblStartDate;
         private System.Windows.Forms.Button btnHideTimes;
         private System.Windows.Forms.Button btnAllocation;
+        private System.Windows.Forms.Button btnTimeInMotion;
     }
 }

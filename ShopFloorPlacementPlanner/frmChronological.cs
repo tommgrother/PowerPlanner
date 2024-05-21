@@ -860,7 +860,13 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAllocation_Click(object sender, EventArgs e)
         {
-            frmAllocation frm = new frmAllocation(_allocation_staff_id, _dept,_allocation_staff_name);
+            frmAllocation frm = new frmAllocation(_allocation_staff_id, _dept,_allocation_staff_name.Trim() + " Time in Motion Doors Complete");
+            frm.ShowDialog();
+        }
+
+        private void btnTimeInMotion_Click(object sender, EventArgs e)
+        {
+            frmTimeInMotion frm = new frmTimeInMotion(dteAction.Value, dteActionEnd.Value, _allocation_staff_id, _dept,_allocation_staff_name);
             frm.ShowDialog();
         }
     }
