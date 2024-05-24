@@ -58,8 +58,8 @@ namespace ShopFloorPlacementPlanner
                 "left join dbo.door_type dt on d.door_type_id = dt.id " +
                 "left join dbo.door_allocation da on d.id = da.door_id " +
                 "where department = '" + department.Replace("Buffing","Dressing") + "' and da.staff_id = " + staff_id + " and " +
-                "started_" + short_dept + " > '" + dteStartDate.Value.ToString("yyyyMMdd") + "' " +
-                "and date_" + short_dept + "_complete < '" + dteEndDate.Value.ToString("yyyyMMdd") + "' and " +
+                "CAST(started_" + short_dept + " as date) >= '" + dteStartDate.Value.ToString("yyyyMMdd") + "' " +
+                "and CAST(date_" + short_dept + "_complete as date) <= '" + dteEndDate.Value.ToString("yyyyMMdd") + "' and " +
                 "complete_" + short_dept + " = 1 and " +
                 "d.id not in (select door_id FROM door_stoppages where door_id = d.id and department = '" + department.Replace("Buffing", "Dressing") + "') ";
 
