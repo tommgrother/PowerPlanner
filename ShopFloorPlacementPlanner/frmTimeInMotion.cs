@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -156,6 +157,67 @@ namespace ShopFloorPlacementPlanner
         private void chkNotTimed_CheckedChanged(object sender, EventArgs e)
         {
             load_data();
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            print_sheet();
+        }
+        private void print_sheet()
+        {
+            string file_name = @"C:\temp\temp" + DateTime.Now.ToString("mmss") + ".jpg";
+            try
+            {
+                Image bit = new Bitmap(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
+
+                Graphics gs = Graphics.FromImage(bit);
+
+                gs.CopyFromScreen(new Point(0, 0), new Point(0, 0), bit.Size);
+
+                //bit.Save(@"C:\temp\temp.jpg");
+
+
+                Rectangle bounds = this.Bounds;
+                using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
+                {
+                    using (Graphics g = Graphics.FromImage(bitmap))
+                    {
+                        g.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
+                    }
+                    bitmap.Save(file_name);
+                }
+
+
+                //var frm = Form.ActiveForm;
+                //using (var bmp = new Bitmap(frm.Width, frm.Height))
+                //{
+                //    frm.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                //    bmp.Save(@"C:\temp\temp.jpg");
+                //}
+
+                PrintDocument pd = new PrintDocument();
+                pd.PrintPage += (sender, args) =>
+                {
+                    Image i = Image.FromFile(file_name);
+                    Rectangle m = args.MarginBounds;
+                    if ((double)i.Width / (double)i.Height > (double)m.Width / (double)m.Height) // image is wider
+                    {
+                        m.Height = (int)((double)i.Height / (double)i.Width * (double)m.Width);
+                    }
+                    else
+                    {
+                        m.Width = (int)((double)i.Width / (double)i.Height * (double)m.Height);
+                    }
+                    args.Graphics.DrawImage(i, m);
+                };
+
+                pd.DefaultPageSettings.Landscape = false;
+                //Margins margins = new Margins(50, 50, 50, 50);
+                //pd.DefaultPageSettings.Margins = margins;
+                pd.Print();
+            }
+            catch
+            { }
         }
     }
 }

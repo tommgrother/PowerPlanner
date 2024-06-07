@@ -242,5 +242,12 @@ namespace ShopFloorPlacementPlanner
             }
         }
 
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            frmUpdateWarning frm = new frmUpdateWarning(staff_id, warning_number);
+            frm.ShowDialog();
+            remove_tabs = -1;
+            load_data();
+        }
     }
 }

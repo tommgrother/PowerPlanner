@@ -49,6 +49,7 @@
             this.dgvAbsent = new System.Windows.Forms.DataGridView();
             this.dteStart = new System.Windows.Forms.DateTimePicker();
             this.dteEnd = new System.Windows.Forms.DateTimePicker();
+            this.btnUpdate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAbsent)).BeginInit();
             this.SuspendLayout();
@@ -246,11 +247,23 @@
             this.dteEnd.TabIndex = 21;
             this.dteEnd.Visible = false;
             // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.btnUpdate.Location = new System.Drawing.Point(248, 706);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(121, 28);
+            this.btnUpdate.TabIndex = 22;
+            this.btnUpdate.Text = "Update Warning";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
             // frmViewWarning
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1440, 710);
+            this.ClientSize = new System.Drawing.Size(1440, 741);
+            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.dteEnd);
             this.Controls.Add(this.dteStart);
             this.Controls.Add(this.lblLate);
@@ -302,5 +315,6 @@
         private System.Windows.Forms.DataGridView dgvAbsent;
         private System.Windows.Forms.DateTimePicker dteStart;
         private System.Windows.Forms.DateTimePicker dteEnd;
+        private System.Windows.Forms.Button btnUpdate;
     }
 }

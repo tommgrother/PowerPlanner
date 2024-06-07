@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>426</ApplicationRevision>
+    <ApplicationRevision>429</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -289,6 +289,12 @@
     <Compile Include="frmTimeInMotion.Designer.cs">
       <DependentUpon>frmTimeInMotion.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmUpdateWarning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUpdateWarning.Designer.cs">
+      <DependentUpon>frmUpdateWarning.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmViewWarning.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -550,6 +556,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmTimeInMotion.resx">
       <DependentUpon>frmTimeInMotion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUpdateWarning.resx">
+      <DependentUpon>frmUpdateWarning.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmViewWarning.resx">
       <DependentUpon>frmViewWarning.cs</DependentUpon>

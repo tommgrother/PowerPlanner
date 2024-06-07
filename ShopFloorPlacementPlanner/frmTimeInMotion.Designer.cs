@@ -35,6 +35,7 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.chkTimed = new System.Windows.Forms.CheckBox();
             this.chkNotTimed = new System.Windows.Forms.CheckBox();
+            this.btnPrint = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -99,11 +100,22 @@
             this.chkNotTimed.UseVisualStyleBackColor = true;
             this.chkNotTimed.CheckedChanged += new System.EventHandler(this.chkNotTimed_CheckedChanged);
             // 
+            // btnPrint
+            // 
+            this.btnPrint.Location = new System.Drawing.Point(76, 45);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(75, 23);
+            this.btnPrint.TabIndex = 6;
+            this.btnPrint.Text = "Print";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            // 
             // frmTimeInMotion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(664, 859);
+            this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.chkNotTimed);
             this.Controls.Add(this.chkTimed);
             this.Controls.Add(this.lblTitle);
@@ -129,5 +141,6 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.CheckBox chkTimed;
         private System.Windows.Forms.CheckBox chkNotTimed;
+        private System.Windows.Forms.Button btnPrint;
     }
 }
