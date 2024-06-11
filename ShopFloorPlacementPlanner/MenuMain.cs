@@ -4676,5 +4676,11 @@ namespace ShopFloorPlacementPlanner
             frmBuffingDiscs frm = new frmBuffingDiscs(dteDateSelection.Value);
             frm.ShowDialog();
         }
+
+        private void btnShowIntervals_Click(object sender, EventArgs e)
+        {
+            frmPowerPlanStaffView frm = new frmPowerPlanStaffView(dteDateSelection.Value);
+            frm.ShowDialog();
+        }
     }
 }

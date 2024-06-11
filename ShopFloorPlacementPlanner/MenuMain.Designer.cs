@@ -374,6 +374,7 @@
             this.txtStockHours = new System.Windows.Forms.TextBox();
             this.btnWeldingDoorTypes = new System.Windows.Forms.Button();
             this.btnBuffingDiscs = new System.Windows.Forms.Button();
+            this.btnShowIntervals = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -3802,12 +3803,24 @@
             this.btnBuffingDiscs.UseVisualStyleBackColor = true;
             this.btnBuffingDiscs.Click += new System.EventHandler(this.btnBuffingDiscs_Click);
             // 
+            // btnShowIntervals
+            // 
+            this.btnShowIntervals.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnShowIntervals.Location = new System.Drawing.Point(1213, 24);
+            this.btnShowIntervals.Name = "btnShowIntervals";
+            this.btnShowIntervals.Size = new System.Drawing.Size(155, 23);
+            this.btnShowIntervals.TabIndex = 306;
+            this.btnShowIntervals.Text = "SHOW INTERVALS";
+            this.btnShowIntervals.UseVisualStyleBackColor = true;
+            this.btnShowIntervals.Click += new System.EventHandler(this.btnShowIntervals_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1911, 921);
+            this.Controls.Add(this.btnShowIntervals);
             this.Controls.Add(this.btnBuffingDiscs);
             this.Controls.Add(this.btnWeldingDoorTypes);
             this.Controls.Add(this.label114);
@@ -4452,6 +4465,7 @@
         private System.Windows.Forms.Button btnWeldingDoorTypes;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.Button btnBuffingDiscs;
+        private System.Windows.Forms.Button btnShowIntervals;
     }
 }
 

@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>429</ApplicationRevision>
+    <ApplicationRevision>430</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -198,6 +198,12 @@
     </Compile>
     <Compile Include="frmPaintingDetails.Designer.cs">
       <DependentUpon>frmPaintingDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPowerPlanStaffView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPowerPlanStaffView.Designer.cs">
+      <DependentUpon>frmPowerPlanStaffView.cs</DependentUpon>
     </Compile>
     <Compile Include="frmProductivityEmail.cs">
       <SubType>Form</SubType>
@@ -485,6 +491,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmPaintingDetails.resx">
       <DependentUpon>frmPaintingDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPowerPlanStaffView.resx">
+      <DependentUpon>frmPowerPlanStaffView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProductivityEmail.resx">
       <DependentUpon>frmProductivityEmail.cs</DependentUpon>
