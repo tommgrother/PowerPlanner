@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -474,6 +476,188 @@ namespace ShopFloorPlacementPlanner
         private void cmbStaff_SelectedIndexChanged(object sender, EventArgs e)
         {
             apply_filter();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (cmbStaff.Text == "")
+                return;
+
+            Excel.PageSetup xlPageSetUp;
+
+            object misValue = System.Reflection.Missing.Value;
+            // Store the Excel processes before opening. 
+            Process[] processesBefore = Process.GetProcessesByName("excel");
+
+            // Open the file in Excel. 
+            string fileName = @"C:\temp\" + cmbStaff.Text.Replace(" ", "_") + "Export_" + DateTime.Now.ToString("hh_mm_ss") + ".xls";
+            var xlApp = new Excel.Application();
+            var xlWorkbooks = xlApp.Workbooks;
+            var xlWorkbook = xlWorkbooks.Add(Type.Missing);
+            var xlWorksheet = xlWorkbook.Sheets[1];
+
+            xlApp.DisplayAlerts = false; //turn off annoying alerts that make me want to cryyyy
+
+            xlWorkbook.Worksheets[1].Name = "ABSENCE + LATES";
+
+            // Get Excel processes after opening the file. 
+            Process[] processesAfter = Process.GetProcessesByName("excel");
+
+
+
+      
+    
+
+                //xlWorksheet.Select(remakeSheet);
+
+                xlWorksheet.Range["A:A"].Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+
+                //target formatting
+                xlWorksheet.Range["A2:C2"].Merge();
+                xlWorksheet.Range["A2"].Value2 = "ABSENCE";
+                xlWorksheet.Range["A2"].Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                xlWorksheet.Range["A2"].Cells.Font.Size = 22;
+
+                xlWorksheet.Range["A3:C3"].Merge();
+                xlWorksheet.Range["A3"].Value2 = lblAbsent.Text;
+                xlWorksheet.Range["A3"].Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                xlWorksheet.Range["A3"].Cells.Font.Size = 22;
+
+                //headers
+                xlWorksheet.Range["A4"].Value2 = "Absence Date";
+                xlWorksheet.Range["B4"].Value2 = "Day of Week";
+                xlWorksheet.Range["C4"].Value2 = dgvAbsent.Columns[2].HeaderText;
+
+                xlWorksheet.Range["A:A"].NumberFormat = "dd/MM/yyyy";
+                //loop through the dgv and add to the table
+
+                int current_excel_row = 5;
+
+                for (int i = 0; i < dgvAbsent.Rows.Count; i++)
+                {
+                    xlWorksheet.Cells[1][current_excel_row].Value2 = dgvAbsent.Rows[i].Cells[0].Value.ToString().TrimEnd();
+                    xlWorksheet.Cells[2][current_excel_row].Value2 = dgvAbsent.Rows[i].Cells[1].Value.ToString();
+                    xlWorksheet.Cells[3][current_excel_row].Value2 = dgvAbsent.Rows[i].Cells[2].Value.ToString();
+
+                    current_excel_row++;
+                }
+
+                Microsoft.Office.Interop.Excel.Worksheet ws = xlApp.ActiveWorkbook.Worksheets[1];
+                Microsoft.Office.Interop.Excel.Range range = ws.UsedRange;
+                ws.Columns.AutoFit();
+                ws.Rows.AutoFit();
+
+                range.Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+                range.Borders.Color = ColorTranslator.ToOle(Color.Black);
+                xlWorksheet.Columns.AutoFit();
+                xlWorksheet.Rows.AutoFit();
+
+                xlWorksheet.Columns[2].ColumnWidth = 16.00;
+
+
+            
+
+
+
+   
+                //xlWorksheet.Select(remakeSheet);
+
+                xlWorksheet.Range["C:G"].Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+
+                xlWorksheet.Range["A1:G1"].Merge();
+                xlWorksheet.Range["A1:G1"].Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+                xlWorksheet.Range["A1"].Value2 = cmbStaff.Text + " - " + dteStart.Value.ToString("dd/MM/yyyy") + " to " + dteEnd.Value.ToString("dd/MM/yyyy");
+                xlWorksheet.Range["A1"].Cells.Font.Size = 22;
+                xlWorksheet.Range["A1:G1"].Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+                //target formatting
+                xlWorksheet.Range["E2:G2"].Merge();
+                xlWorksheet.Range["E2"].Value2 = "LATE";
+                xlWorksheet.Range["E2"].Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                xlWorksheet.Range["E2"].Cells.Font.Size = 22;
+
+                xlWorksheet.Range["E3:G3"].Merge();
+                xlWorksheet.Range["E3"].Value2 = lblLate.Text;
+                xlWorksheet.Range["E3"].Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                xlWorksheet.Range["E3"].Cells.Font.Size = 22;
+
+                //headers
+                xlWorksheet.Range["E4"].Value2 = "Late Date";
+                xlWorksheet.Range["F4"].Value2 = "Day of Week";
+                xlWorksheet.Range["G4"].Value2 = dgvLate.Columns[2].HeaderText;
+
+                xlWorksheet.Range["E:E"].NumberFormat = "dd/MM/yyyy";
+
+
+                
+                //loop through the dgv and add to the table
+
+                current_excel_row = 5;
+
+                for (int i = 0; i < dgvLate.Rows.Count; i++)
+                {
+                    xlWorksheet.Cells[5][current_excel_row].Value2 = dgvLate.Rows[i].Cells[0].Value;
+                    xlWorksheet.Cells[6][current_excel_row].Value2 = dgvLate.Rows[i].Cells[1].Value.ToString();
+                    xlWorksheet.Cells[7][current_excel_row].Value2 = dgvLate.Rows[i].Cells[2].Value.ToString();
+
+                    current_excel_row++;
+                }
+
+                 ws = xlApp.ActiveWorkbook.Worksheets[1];
+                 range = ws.UsedRange;
+                ws.Columns.AutoFit();
+                ws.Rows.AutoFit();
+
+                current_excel_row--;
+
+                xlWorksheet.Range["E1:G" + current_excel_row.ToString()].Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+                xlWorksheet.Range["E1:G" + current_excel_row.ToString()].Borders.Color = ColorTranslator.ToOle(Color.Black);
+                xlWorksheet.Columns.AutoFit();
+                xlWorksheet.Rows.AutoFit();
+
+                xlWorksheet.Columns[2].ColumnWidth = 16.00;
+                xlWorksheet.Columns[3].ColumnWidth = 16.00;
+                xlWorksheet.Columns[6].ColumnWidth = 16.00;
+                xlWorksheet.Columns[7].ColumnWidth = 10.00;
+
+
+
+            xlWorksheet.Range["D2:D" + current_excel_row.ToString()].Merge();
+
+
+
+
+            xlPageSetUp = xlWorksheet.PageSetup;
+            xlPageSetUp.Zoom = false;
+            xlPageSetUp.FitToPagesWide = 1;
+            xlPageSetUp.Orientation = Excel.XlPageOrientation.xlPortrait;
+            
+            xlWorkbook.PrintOut();
+
+
+            xlWorkbook.SaveAs(fileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+
+
+            xlWorkbook.Close(false); //close the excel sheet without saving 
+            xlApp.Quit();
+
+            // Now find the process id that was created, and store it. 
+            int processID = 0;
+            foreach (Process process in processesAfter)
+            {
+                if (!processesBefore.Select(p => p.Id).Contains(process.Id))
+                    processID = process.Id;
+            }
+
+            // And now kill the process we opened earlier. 
+            if (processID != 0)
+            {
+                Process process = Process.GetProcessById(processID);
+                process.Kill();
+            }
+
+           // Process.Start(fileName);
+
         }
     }
 }

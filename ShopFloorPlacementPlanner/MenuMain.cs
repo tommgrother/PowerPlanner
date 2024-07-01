@@ -1040,6 +1040,46 @@ namespace ShopFloorPlacementPlanner
                 {
                     continue;
                 }
+
+            foreach (DataGridViewRow row in dgNotPlacementSL.Rows)
+                try
+                {
+                    if (row.Cells[1].Value.ToString().Contains("HOLIDAY"))
+                        row.DefaultCellStyle.BackColor = Color.MediumPurple;
+
+                    if (row.Cells[1].Value.ToString().Contains("ABSENT"))
+                        row.DefaultCellStyle.BackColor = Color.Salmon;
+
+                    if (row.Cells[1].Value.ToString().Contains("ABSENT TAKEN HOLIDAY"))
+                        row.DefaultCellStyle.BackColor = Color.LightSteelBlue;
+
+                    if (row.Cells[1].Value.ToString().Contains("UNPAID"))
+                        row.DefaultCellStyle.BackColor = Color.DeepPink;
+
+                    if (row.Cells[1].Value.ToString().Contains("LATE"))
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+
+                    if (row.Cells[1].Value.ToString().Contains("MATERNITY/PATERNITY"))
+                        row.DefaultCellStyle.BackColor = Color.Plum;
+
+                    if (row.Cells[1].Value.ToString().Contains("BEREAVEMENT"))
+                        row.DefaultCellStyle.BackColor = Color.LightSalmon;
+
+                    if (row.Cells[1].Value.ToString().Contains("AWOL"))
+                        row.DefaultCellStyle.BackColor = Color.LightSkyBlue;
+
+                    if (row.Cells[1].Value.ToString().Contains("TRAVEL/WEATHER"))
+                        row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
+
+                    if (row.Cells[1].Value.ToString().Contains("DEPENDANT"))
+                        row.DefaultCellStyle.BackColor = Color.Peru;
+
+
+                }
+                catch
+                {
+                    continue;
+                }
             //foreach (DataGridViewRow row in dgNotPlaced.Rows)
             //    try
             //    {
