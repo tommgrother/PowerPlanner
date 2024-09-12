@@ -22,6 +22,9 @@ namespace ShopFloorPlacementPlanner
             current_staff_only = 1;
             chkCurrent.Checked = true;
             this.WindowState = FormWindowState.Maximized;
+            DateTime yesterday = DateTime.Today.AddDays(-1);
+            dteStart.Value = yesterday;
+            dteEnd.Value = yesterday;
 
             //fill combobox
             fill_combo();
@@ -54,7 +57,7 @@ namespace ShopFloorPlacementPlanner
         {
             skip_combo_box = 0;
             cmbDepartment.Text = "";
-            fillDataGrid();
+            //fillDataGrid();
         }
 
         private void dteStart_ValueChanged(object sender, EventArgs e)
@@ -133,20 +136,30 @@ namespace ShopFloorPlacementPlanner
                 //    "GROUP BY op,CAST(part_complete_date as date),dbo.door_part_completion_log.staff_id";
 
 
-                sql = "SELECT max(b.date_plan) as [Date],MAX(DATENAME(dw,b.date_plan)) as [day],max(department) as [department], MAX(a.[hours]) as [set_hours],'0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours],max(a.id) as [placement],max(placement_note) as [note],'' as absent_type " +
+                sql = "SELECT max(b.date_plan) as [Date],MAX(DATENAME(dw,b.date_plan)) as [day],max(a.department) as [department], MAX(a.[hours]) as [set_hours],'0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours],max(a.id) as [placement],max(placement_note) as [note],'' as absent_type," +
+                    //"CAST((max([9_30_percent]) * 100) as nvarchar(max)) + '%' as [9_30_percent]," +
+                    //"CAST((max([11_30_percent]) * 100) as nvarchar(max)) + '%' as [11_30_percent]," +
+                    //"CAST((max([2_30_percent]) * 100) as nvarchar(max)) + '%' as [2_30_percent]," +
+                    //"CAST((max([end_of_shift_percent]) * 100) as nvarchar(max)) + '%' as [end_of_shift_percent] " +
+                    "coalesce(max([9_30_percent]),0) as [9_30_percent]," +
+                    "coalesce(max([11_30_percent]),0) as [11_30_percent]," +
+                    "coalesce(max([2_30_percent]),0) as [2_30_percent]," +
+                    "coalesce(max([end_of_shift_percent]),0) as [end_of_shift_percent]" +
                     "FROM dbo.power_plan_staff a LEFT JOIN dbo.power_plan_date b on a.date_id = b.id " +
+                    "left join dbo.power_plan_staff_percent_log p on b.date_plan = p.log_date AND a.staff_id = p.staff_id AND a.department = p.department " +
                     "WHERE a.staff_id = " + staff_id.ToString() + " AND CAST(b.date_plan as DATE)>= '" + Convert.ToDateTime(dteStart.Value).ToString("yyyy-MM-dd") + "' AND CAST(b.date_plan as DATE)<= '" + Convert.ToDateTime(dteEnd.Value).ToString("yyyy-MM-dd") + "' " +
-                    "AND department <> 'Punching' AND department <> 'Stores' AND department<> 'Dispatch' AND department<> 'HS' AND department<> 'Cleaning' AND department<> 'ToolRoom' AND department<> 'Management' ";
+                    "AND a.department <> 'Punching' AND a.department <> 'Stores' AND a.department<> 'Dispatch' AND a.department<> 'HS' AND a.department<> 'Cleaning' AND a.department<> 'ToolRoom' AND a.department<> 'Management' ";
 
                 if (string.IsNullOrEmpty(cmbDepartment.Text) == false)
-                    sql = sql + " AND department = '" + cmbDepartment.Text + "' ";
+                    sql = sql + " AND a.department = '" + cmbDepartment.Text + "' ";
 
-                sql = sql + " GROUP BY department,b.date_plan,a.staff_id";
+                sql = sql + " GROUP BY a.department,b.date_plan,a.staff_id";
 
 
                 sql = sql + " union all " +
-                    "SELECT date_absent as [Date],DATENAME(dw,date_absent) as [day],u.default_in_department as [department], 0 as [set_hours],'0' as [overtime]," +
-                    "'0' as [total_set_hours],'0' as [actual_hours],0 as [placement],null as [note] ,at.absent_type " +
+                    "SELECT date_absent as [Date],DATENAME(dw,date_absent) as [day],replace(u.default_in_department,'Buffing','Dressing') as [department], 0 as [set_hours],'0' as [overtime]," +
+                    "'0' as [total_set_hours],'0' as [actual_hours],0 as [placement],null as [note] ,at.absent_type, " +
+                    "0 as [9_30_percent],0 as [11_30_percent],0 as [2_30_percent],0 as [end_of_shift_percent] " +
                     "from dbo.absent_holidays a " +
                     "left join dbo.absent_holidays_type  at on a.absent_type = at.absent_number " +
                     "left join [user_info].dbo.[user] u on a.staff_id = u.id " +
@@ -177,6 +190,10 @@ namespace ShopFloorPlacementPlanner
                 int placementIndex = dataGridView1.Columns["placement"].Index;
                 int noteIndex = dataGridView1.Columns["note"].Index;
                 int absentIndex = dataGridView1.Columns["absent_type"].Index;
+                int nine_thirty = dataGridView1.Columns["9_30_percent"].Index;
+                int eleven_thirty = dataGridView1.Columns["11_30_percent"].Index;
+                int two_thirty = dataGridView1.Columns["2_30_percent"].Index;
+                int EOS = dataGridView1.Columns["end_of_shift_percent"].Index;
 
                 double runningSet = 0, runningOvertime = 0, runningActual = 0, runningSetAndOvertime = 0;
                 foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -199,6 +216,10 @@ namespace ShopFloorPlacementPlanner
                         }
                         else
                         {
+
+
+
+
                             double temp = runningSetAndOvertime - runningActual;
                             if (temp < 0)
                                 temp = temp * -1;
@@ -228,7 +249,12 @@ namespace ShopFloorPlacementPlanner
                         {
                             temp = Convert.ToString(cmd.ExecuteScalar());
                             string test = row.Cells[actualHoursIndex].Value.ToString();
-                            row.Cells[actualHoursIndex].Value = Convert.ToString(temp);
+                            if (row.Cells[absentIndex].Value.ToString().Length > 0)
+                            {
+                                //do nothing
+                            }
+                            else
+                                row.Cells[actualHoursIndex].Value = Convert.ToString(temp);
                         }
                         sql = "SELECT COALESCE(overtime,0) from dbo.power_plan_overtime_remake LEFT JOIN dbo.power_plan_date on dbo.power_plan_overtime_remake.date_id = dbo.power_plan_date.id " +
                             "WHERE staff_id = " + staff_id.ToString() + " AND CAST(date_plan as DATE) = '" + Convert.ToDateTime(row.Cells[dateIndex].Value).ToString("yyyy-MM-dd") + "' AND department = '" + row.Cells[departmentIndex].Value.ToString() + "'";
@@ -249,12 +275,12 @@ namespace ShopFloorPlacementPlanner
 
                         if (hoursTemp < actualTemp)
                         {
-                            row.Cells[10].Value = "✔";
+                            row.Cells[14].Value = "✔";
                             row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                         }
                         else
                         {
-                            row.Cells[10].Value = "✖";
+                            row.Cells[14].Value = "✖";
                             row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
                         }
 
@@ -274,6 +300,13 @@ namespace ShopFloorPlacementPlanner
                         //add set hours + overtime together
                         double totalHours = Math.Round(Convert.ToDouble(row.Cells[setHoursIndex].Value) + Convert.ToDouble(row.Cells[overtimeIndex].Value), 2);
                         row.Cells[totalSetHoursIndex].Value = totalHours;
+
+                        //workout the 9_30 >> EOS % here
+                        row.Cells[nine_thirty].Value = Math.Round(totalHours * Convert.ToDouble(row.Cells[nine_thirty].Value.ToString()), 2);
+                        row.Cells[eleven_thirty].Value = Math.Round(totalHours * Convert.ToDouble(row.Cells[eleven_thirty].Value.ToString()), 2);
+                        row.Cells[two_thirty].Value = Math.Round(totalHours * Convert.ToDouble(row.Cells[two_thirty].Value.ToString()), 2);
+                        row.Cells[EOS].Value = Math.Round(totalHours * Convert.ToDouble(row.Cells[EOS].Value.ToString()), 2);
+
 
                         runningActual = runningActual + Convert.ToDouble(row.Cells[actualHoursIndex].Value);
                         runningOvertime = runningOvertime + Convert.ToDouble(row.Cells[overtimeIndex].Value);
@@ -351,12 +384,12 @@ namespace ShopFloorPlacementPlanner
 
         private void dteStart_CloseUp(object sender, EventArgs e)
         {
-            fillDataGrid();
+            //fillDataGrid();
         }
 
         private void dteEnd_CloseUp(object sender, EventArgs e)
         {
-            fillDataGrid();
+            //fillDataGrid();
         }
 
         private void frmProductivity_Load(object sender, EventArgs e)
@@ -495,7 +528,7 @@ namespace ShopFloorPlacementPlanner
             xlWorksheet.Range["E:E"].NumberFormat = "@";
 
             xlWorksheet.Columns.AutoFit();
-            xlWorksheet.Rows.AutoFit();
+            //xlWorksheet.Rows.AutoFit();
 
             Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
             xlPageSetUp.Zoom = false;
@@ -545,7 +578,7 @@ namespace ShopFloorPlacementPlanner
         private void cmbDepartment_SelectedIndexChanged(object sender, EventArgs e)
         {
             skip_combo_box = -1;
-            fillDataGrid();
+            //fillDataGrid();
         }
 
         private void chkCurrent_CheckedChanged(object sender, EventArgs e)
@@ -585,6 +618,11 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Rows[e.RowIndex].Cells[3].Value = login.productivity_hours;
 
             }
+        }
+
+        private void btnGenerate_Click(object sender, EventArgs e)
+        {
+            fillDataGrid();
         }
     }
 }

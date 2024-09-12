@@ -42,6 +42,7 @@
             this.lblDepartment = new System.Windows.Forms.Label();
             this.cmbDepartment = new System.Windows.Forms.ComboBox();
             this.chkCurrent = new System.Windows.Forms.CheckBox();
+            this.btnGenerate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -205,11 +206,22 @@
             this.chkCurrent.UseVisualStyleBackColor = true;
             this.chkCurrent.CheckedChanged += new System.EventHandler(this.chkCurrent_CheckedChanged);
             // 
+            // btnGenerate
+            // 
+            this.btnGenerate.Location = new System.Drawing.Point(532, 75);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Size = new System.Drawing.Size(90, 23);
+            this.btnGenerate.TabIndex = 53;
+            this.btnGenerate.Text = "Generate Data";
+            this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
+            // 
             // frmProductivity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1095, 859);
+            this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.chkCurrent);
             this.Controls.Add(this.lblDepartment);
             this.Controls.Add(this.cmbDepartment);
@@ -251,5 +263,6 @@
         private System.Windows.Forms.Label lblDepartment;
         private System.Windows.Forms.ComboBox cmbDepartment;
         private System.Windows.Forms.CheckBox chkCurrent;
+        private System.Windows.Forms.Button btnGenerate;
     }
 }

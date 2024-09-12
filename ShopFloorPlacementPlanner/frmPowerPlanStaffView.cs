@@ -35,15 +35,23 @@ namespace ShopFloorPlacementPlanner
                     "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [9_30_percent],2) as nvarchar(max)) + " +
                     "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.25 as nvarchar(max)) as [9:30]," +
                     "case when [9_30_percent] >= 0.25 then 'up' when  [9_30_percent] < 0.25 then 'down' else '' end as [ ]," +
+                    "[9_30_note]," +
+
                     "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [11_30_percent],2) as nvarchar(max)) + " +
                     "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.5 as nvarchar(max)) as [11:30]," +
                     "case when [11_30_percent] >= 0.5 then 'up' when  [11_30_percent] < 0.5 then 'down' else '' end as [  ]," +
+                    "[11_30_note]," +
+
                     "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [2_30_percent],2) as nvarchar(max)) + " +
                     "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.75 as nvarchar(max)) as [2:30]," +
                     "case when [2_30_percent] >= 0.75 then 'up' when  [2_30_percent] < 0.75 then 'down' else '' end as [   ]," +
+                    "[2_30_note]," +
+
                     "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [end_of_shift_percent],2) as nvarchar(max)) + " +
                     "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 1 as nvarchar(max)) as [EOS]," +
-                    "case when [end_of_shift_percent] >= 1 then 'up' when  [end_of_shift_percent] < 1 then 'down' else '' end as [    ] " +
+                    "case when [end_of_shift_percent] >= 1 then 'up' when  [end_of_shift_percent] < 1 then 'down' else '' end as [    ], " +
+                    "[end_of_shift_note] " +
+
                     "FROM view_planner_punch_staff s " +
                     "left join dbo.power_plan_date d on s.date_id = d.id " +
                     "left join dbo.power_plan_overtime_remake ot on s.date_id = ot.date_id AND s.staff_id = ot.staff_id AND s.department = ot.department " +
@@ -86,15 +94,25 @@ namespace ShopFloorPlacementPlanner
                                     "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [9_30_percent],2) as nvarchar(max)) + " +
                                     "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.25 as nvarchar(max)) as [9:30]," +
                                     "case when [9_30_percent] >= 0.25 then 'up' when  [9_30_percent] < 0.25 then 'down' else '' end as [ ]," +
+                                    "[9_30_note]," +
+
                                     "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [11_30_percent],2) as nvarchar(max)) + " +
                                     "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.5 as nvarchar(max)) as [11:30]," +
                                     "case when [11_30_percent] >= 0.5 then 'up' when  [11_30_percent] < 0.5 then 'down' else '' end as [  ]," +
+                                    "[11_30_note]," +
+
+
                                     "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [2_30_percent],2) as nvarchar(max)) + " +
                                     "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.75 as nvarchar(max)) as [2:30]," +
                                     "case when [2_30_percent] >= 0.75 then 'up' when  [2_30_percent] < 0.75 then 'down' else '' end as [   ]," +
+                                    "[2_30_note]," +
+
+
                                     "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [end_of_shift_percent],2) as nvarchar(max)) + " +
                                     "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 1 as nvarchar(max)) as [EOS]," +
-                                    "case when [end_of_shift_percent] >= 1 then 'up' when  [end_of_shift_percent] < 1 then 'down' else '' end as [    ] " +
+                                    "case when [end_of_shift_percent] >= 1 then 'up' when  [end_of_shift_percent] < 1 then 'down' else '' end as [    ] ," +
+                                    "[end_of_shift_note] " +
+
                                     "FROM view_planner_bend_staff s " +
                                     "left join dbo.power_plan_date d on s.date_id = d.id " +
                                     "left join dbo.power_plan_overtime_remake ot on s.date_id = ot.date_id AND s.staff_id = ot.staff_id AND s.department = ot.department " +
@@ -139,15 +157,23 @@ namespace ShopFloorPlacementPlanner
                            "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [9_30_percent],2) as nvarchar(max)) + " +
                            "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.25 as nvarchar(max)) as [9:30]," +
                            "case when [9_30_percent] >= 0.25 then 'up' when  [9_30_percent] < 0.25 then 'down' else '' end as [ ]," +
+                           "[9_30_note] ," +
+
                            "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [11_30_percent],2) as nvarchar(max)) + " +
                            "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.5 as nvarchar(max)) as [11:30]," +
                            "case when [11_30_percent] >= 0.5 then 'up' when  [11_30_percent] < 0.5 then 'down' else '' end as [  ]," +
+                           "[11_30_note]," +
+
                            "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [2_30_percent],2) as nvarchar(max)) + " +
                            "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.75 as nvarchar(max)) as [2:30]," +
                            "case when [2_30_percent] >= 0.75 then 'up' when  [2_30_percent] < 0.75 then 'down' else '' end as [   ]," +
+                           "[2_30_note] ," +
+
                            "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [end_of_shift_percent],2) as nvarchar(max)) + " +
                            "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 1 as nvarchar(max)) as [EOS]," +
-                           "case when [end_of_shift_percent] >= 1 then 'up' when  [end_of_shift_percent] < 1 then 'down' else '' end as [    ] " +
+                           "case when [end_of_shift_percent] >= 1 then 'up' when  [end_of_shift_percent] < 1 then 'down' else '' end as [    ], " +
+                           "[end_of_shift_note] " +
+
                            "FROM view_planner_punch_staff s " +
                            "left join dbo.power_plan_date d on s.date_id = d.id " +
                            "left join dbo.power_plan_overtime_remake ot on s.date_id = ot.date_id AND s.staff_id = ot.staff_id AND s.department = ot.department " +
@@ -212,13 +238,24 @@ namespace ShopFloorPlacementPlanner
                     {
                         row.Cells[col.Index].Style.BackColor = Color.PaleVioletRed;
                     }
+
+                    if (col.Index == 3 || col.Index == 6 || col.Index == 9 || col.Index == 12)
+                    {
+                        if (row.Cells[col.Index].Value.ToString().Length > 0)
+                            row.Cells[col.Index -1].Style.BackColor = Color.Yellow;
+                    }
                 }
             }
 
+            dgPack.Columns[3].Visible = false;
+            dgPack.Columns[6].Visible = false;
+            dgPack.Columns[9].Visible = false;
+            dgPack.Columns[12].Visible = false;
+
             dgPack.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgPack.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgPack.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgPack.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgPack.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgPack.Columns[11].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             //buff
             foreach (DataGridViewColumn col in dgBuff.Columns)
@@ -236,13 +273,24 @@ namespace ShopFloorPlacementPlanner
                     {
                         row.Cells[col.Index].Style.BackColor = Color.PaleVioletRed;
                     }
+ 
+                    if (col.Index == 3 || col.Index == 6 || col.Index == 9 || col.Index == 12)
+                    {
+                        if (row.Cells[col.Index].Value.ToString().Length > 0)
+                            row.Cells[col.Index -1].Style.BackColor = Color.Yellow;
+                    }
                 }
             }
 
+            dgBuff.Columns[3].Visible = false;
+            dgBuff.Columns[6].Visible = false;
+            dgBuff.Columns[9].Visible = false;
+            dgBuff.Columns[12].Visible = false;
+
             dgBuff.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgBuff.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgBuff.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgBuff.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgBuff.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgBuff.Columns[11].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             //weld
             foreach (DataGridViewColumn col in dgWeld.Columns)
@@ -261,13 +309,23 @@ namespace ShopFloorPlacementPlanner
                     {
                         row.Cells[col.Index].Style.BackColor = Color.PaleVioletRed;
                     }
+                    if (col.Index == 3 || col.Index == 6 || col.Index == 9 || col.Index == 12)
+                    {
+                        if (row.Cells[col.Index].Value.ToString().Length > 0)
+                            row.Cells[col.Index -1].Style.BackColor = Color.Yellow;
+                    }
                 }
             }
 
+            dgWeld.Columns[3].Visible = false;
+            dgWeld.Columns[6].Visible = false;
+            dgWeld.Columns[9].Visible = false;
+            dgWeld.Columns[12].Visible = false;
+
             dgWeld.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgWeld.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgWeld.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgWeld.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgWeld.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgWeld.Columns[11].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
 
 
@@ -601,6 +659,33 @@ namespace ShopFloorPlacementPlanner
             }
 
         }
+
+        private void dgWeld_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+           
+        }
+
+        private void dgWeld_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgWeld.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor == Color.Yellow)
+                MessageBox.Show(dgWeld.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value.ToString());
+        }
+
+        private void dgBuff_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgBuff.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor == Color.Yellow)
+                MessageBox.Show(dgBuff.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value.ToString());
+        }
+
+        private void dgPack_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgPack.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor == Color.Yellow)
+                MessageBox.Show(dgPack.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value.ToString());
+        }
+
+
+
+
 
     }
 }

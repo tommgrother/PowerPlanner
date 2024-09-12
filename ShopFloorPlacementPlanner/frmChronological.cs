@@ -516,6 +516,7 @@ namespace ShopFloorPlacementPlanner
 
                 xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[1, 7]].Merge();
                 xlWorkSheet.Range["A1:G1"].Cells.Font.Size = 20;
+                
                 current_excel_row++;
 
                 //column headers
@@ -550,6 +551,7 @@ namespace ShopFloorPlacementPlanner
                             xlWorksheet.Cells[6][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_for_part_index].Value.ToString();
                         xlWorksheet.Cells[7][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_index].Value.ToString();
                         //paint the row based on what the dgv is
+                       
                         if (dataGridView1.Rows[i].DefaultCellStyle.BackColor != Color.Empty)
                             xlWorksheet.Range["A" + current_excel_row.ToString() + ":G" + current_excel_row.ToString()].Interior.Color = dataGridView1.Rows[i].DefaultCellStyle.BackColor;
                         current_excel_row++;
@@ -560,9 +562,10 @@ namespace ShopFloorPlacementPlanner
                 //border
                 xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 7]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
 
-
+                
                 xlWorksheet.Columns.AutoFit();
-                xlWorksheet.Rows.AutoFit();
+                
+                //xlWorksheet.Rows.AutoFit();
 
                 Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
                 xlPageSetUp.Zoom = false;

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgPack = new System.Windows.Forms.DataGridView();
             this.dgBuff = new System.Windows.Forms.DataGridView();
             this.dgWeld = new System.Windows.Forms.DataGridView();
@@ -59,11 +59,12 @@
             this.dgPack.Name = "dgPack";
             this.dgPack.ReadOnly = true;
             this.dgPack.RowHeadersVisible = false;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgPack.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgPack.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgPack.RowTemplate.Height = 50;
             this.dgPack.Size = new System.Drawing.Size(536, 652);
             this.dgPack.TabIndex = 8;
+            this.dgPack.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgPack_CellClick);
             // 
             // dgBuff
             // 
@@ -79,11 +80,12 @@
             this.dgBuff.Name = "dgBuff";
             this.dgBuff.ReadOnly = true;
             this.dgBuff.RowHeadersVisible = false;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgBuff.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgBuff.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgBuff.RowTemplate.Height = 50;
             this.dgBuff.Size = new System.Drawing.Size(536, 652);
             this.dgBuff.TabIndex = 7;
+            this.dgBuff.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBuff_CellClick);
             // 
             // dgWeld
             // 
@@ -99,11 +101,13 @@
             this.dgWeld.Name = "dgWeld";
             this.dgWeld.ReadOnly = true;
             this.dgWeld.RowHeadersVisible = false;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgWeld.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgWeld.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgWeld.RowTemplate.Height = 50;
             this.dgWeld.Size = new System.Drawing.Size(536, 652);
             this.dgWeld.TabIndex = 6;
+            this.dgWeld.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeld_CellClick);
+            this.dgWeld.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeld_CellDoubleClick);
             // 
             // label6
             // 

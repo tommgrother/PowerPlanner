@@ -4051,6 +4051,7 @@ namespace ShopFloorPlacementPlanner
 
         private void MenuMain_Shown(object sender, EventArgs e)
         {
+            this.SuspendLayout();
             string sql = "";
             fillgrid();
             fillPunch();
@@ -4082,6 +4083,8 @@ namespace ShopFloorPlacementPlanner
 
             dgCleaning.ClearSelection();
             dgvHSManagement.ClearSelection();
+
+            this.ResumeLayout();
 
         }
 
