@@ -244,7 +244,7 @@ namespace ShopFloorPlacementPlanner
                             sql = "SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] FROM dbo.door_part_completion_log WHERE staff_id = " + staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + Convert.ToDateTime(row.Cells[dateIndex].Value).ToString("yyyy-MM-dd") + "' AND part_percent_complete IS NOT NULL  GROUP BY staff_id),0)";
                         else
                             sql = " SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] FROM dbo.door_part_completion_log " +
-                            "WHERE staff_id = " + staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + Convert.ToDateTime(row.Cells[dateIndex].Value).ToString("yyyy-MM-dd") + "' AND part_status = 'Complete'  AND op = '" + temp + "' GROUP BY staff_id),0)";
+                            "WHERE staff_id = " + staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + Convert.ToDateTime(row.Cells[dateIndex].Value).ToString("yyyy-MM-dd") + "' AND (part_status = 'Complete' or part_status = 'Partial')  AND op = '" + temp + "' GROUP BY staff_id),0)";
                         using (SqlCommand cmd = new SqlCommand(sql, conn))
                         {
                             temp = Convert.ToString(cmd.ExecuteScalar());

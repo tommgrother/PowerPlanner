@@ -782,7 +782,7 @@ namespace ShopFloorPlacementPlanner
                                 DataTable dt = new DataTable();
                                 da.Fill(dt);
 
-                                xlWorksheet.Cells[1][current_excel_row].Value2 = Convert.ToDateTime(dt.Rows[0][0].ToString()).ToString("dd/MM/yyyy");
+                                xlWorksheet.Cells[1][current_excel_row].Value2 = /*Convert.ToDateTime(*/dt.Rows[0][0].ToString();//).ToString("dd/MM/yyyy");
                                 xlWorksheet.Cells[2][current_excel_row].Value2 = dt.Rows[0][1].ToString();
                                 xlWorksheet.Cells[3][current_excel_row].Value2 = dt.Rows[0][2].ToString();
                                 hours_goal_total = hours_goal_total + Convert.ToDouble(dt.Rows[0][2].ToString());
