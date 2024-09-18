@@ -523,7 +523,7 @@ namespace ShopFloorPlacementPlanner
             //get all of the distinct staff in the department
 
             //vvv we need to loop through the staff 
-            string sql = "select distinct u.forename + ' ' + u.surname as fullName,coalesce(u.[start_date],'') as [start_date]  from dbo.power_plan_staff s " +
+            string sql = "select distinct u.forename + ' ' + u.surname as fullName,coalesce(u.[start_date],'') as [start_date],u.id  from dbo.power_plan_staff s " +
                          "left join dbo.power_plan_date d on s.date_id = d.id " +
                          "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
                          "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND (u.non_user = 0 or u.non_user is null) AND s.hours > 0 " +
@@ -655,25 +655,48 @@ namespace ShopFloorPlacementPlanner
                         range2.NumberFormat = "0.00%";
 
                     }
-                    sql = "SELECT AVG([percent]) as [percent] FROM (" +
-                          "select datename(WEEKDAY,group_date) as [dayOfWeek],sum([hours]) as [hours]," +
-                          "sum([actual]) as actual,coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent],group_date from (" +
-                          "select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours],0 as actual,d.date_plan as group_date from dbo.power_plan_staff s " +
-                          "left join dbo.power_plan_date d on s.date_id = d.id " +
-                          "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
-                          "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
-                          "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND " +
-                          "d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
-                          "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' " +
-                          "group by d.date_plan " +
-                          "union all " +
-                          "select 0 as [hours],sum(l.time_for_part) / 60 as actual,cast(part_complete_date as date) as group_date from dbo.door_part_completion_log l " +
-                          "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
-                          "where op = '" + department + "' AND " +
-                          "cast(part_complete_date as date) >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and cast(part_complete_date as date) <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
-                          "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' " +
-                          "group by part_complete_date ) as a " +
-                          "group by group_date) as temp where ([hours] >  0 or actual > 0)";
+
+                    //vvv this is being removed 2024-09-17 because kevin doesnt want the average percent to decide if they are printed or not
+                    //needs to print if they drop any hours (so that it matches productivity)
+
+                    ////sql = "SELECT AVG([percent]) as [percent] FROM (" +
+                    ////      "select datename(WEEKDAY,group_date) as [dayOfWeek],sum([hours]) as [hours]," +
+                    ////      "sum([actual]) as actual,coalesce(sum([actual]) / nullif(sum([hours]),0),0) as [percent],group_date from (" +
+                    ////      "select sum(s.[hours]) + sum((coalesce(ot.overtime,0) * 0.8)) as [hours],0 as actual,d.date_plan as group_date from dbo.power_plan_staff s " +
+                    ////      "left join dbo.power_plan_date d on s.date_id = d.id " +
+                    ////      "left join dbo.power_plan_overtime_remake ot on ot.date_id = d.id AND ot.department = s.department AND s.staff_id = ot.staff_id " +
+                    ////      "left join [user_info].dbo.[user] u on s.staff_id = u.id " +
+                    ////      "where s.department = '" + department.Replace("Buffing", "Dressing") + "' AND " +
+                    ////      "d.date_plan >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and d.date_plan <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
+                    ////      "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' " +
+                    ////      "group by d.date_plan " +
+                    ////      "union all " +
+                    ////      "select 0 as [hours],sum(l.time_for_part) / 60 as actual,cast(part_complete_date as date) as group_date from dbo.door_part_completion_log l " +
+                    ////      "left join [user_info].dbo.[user] u on l.staff_id = u.id " +
+                    ////      "where op = '" + department + "' AND " +
+                    ////      "cast(part_complete_date as date) >= '" + dteStart.Value.ToString("yyyyMMdd") + "' and cast(part_complete_date as date) <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
+                    ////      "AND u.forename + ' ' + u.surname = '" + dt_staff.Rows[i][0] + "' " +
+                    ////      "group by part_complete_date ) as a " +
+                    ////      "group by group_date) as temp where ([hours] >  0 or actual > 0)";
+
+                    sql = "SELECT " +
+                        "(SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] " +
+                        "FROM dbo.door_part_completion_log " +
+                        "WHERE staff_id = " + dt_staff.Rows[i][2] + " AND " +
+                        "CAST(part_complete_date as DATE) >= '" + dteStart.Value.ToString("yyyyMMdd") + "' " +
+                        "AND CAST(part_complete_date as DATE) <= '" + dteEnd.Value.ToString("yyyyMMdd") + "' " +
+                        "AND (part_status = 'Complete' or part_status = 'Partial')  AND op = '" + department + "' " +
+                        "GROUP BY staff_id),0) " +
+                        "- " +
+                        "(SELECT sum(a.[hours]) as [set_hours] " +
+                        "FROM dbo.power_plan_staff a " +
+                        "LEFT JOIN dbo.power_plan_date b on a.date_id = b.id  " +
+                        "left join dbo.power_plan_staff_percent_log p on b.date_plan = p.log_date AND a.staff_id = p.staff_id AND a.department = p.department " +
+                        "WHERE a.staff_id = " + dt_staff.Rows[i][2] + " AND " +
+                        "CAST(b.date_plan as DATE)>= '" + dteStart.Value.ToString("yyyyMMdd") + "' AND " +
+                        "CAST(b.date_plan as DATE)<= '" + dteEnd.Value.ToString("yyyyMMdd") + "' AND " +
+                        "a.department = '" + department + "' " +
+                        "GROUP BY  a.staff_id))";
 
                     int skip_staff = 0;
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -683,7 +706,8 @@ namespace ShopFloorPlacementPlanner
                             skip_staff = -1;
                         else
                         {
-                            if (Convert.ToDecimal(temp) < 1)
+                           // MessageBox.Show(dt_staff.Rows[i][2].ToString());
+                            if (Convert.ToDecimal(temp) < 0)
                                 skip_staff = 0;
                             else
                                 skip_staff = -1;
