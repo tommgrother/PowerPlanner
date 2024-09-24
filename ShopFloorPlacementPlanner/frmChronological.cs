@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,6 +27,7 @@ namespace ShopFloorPlacementPlanner
         public int _note_index { get; set; }
         public int _part_index { get; set; }
         public int _time_for_part_index { get; set; }
+        public int _time_for_part_minute_index { get; set; }
         public string _hours { get; set; }
 
         public int _allocation_staff_id { get; set; }
@@ -165,7 +167,7 @@ namespace ShopFloorPlacementPlanner
             //first step lets grab all of the indexes of each column we have
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            int status, action, part, part_time, action_time, action_date, fullname, door_id, sort_order, department, department_time, predicted_end, note, door_type, time;
+            int part_time_minutes,status, action, part, part_time, action_time, action_date, fullname, door_id, sort_order, department, department_time, predicted_end, note, door_type, time;
             if (_dept == "Bending")
             {
                 //status = dataGridView1.Columns["status"].Index;
@@ -177,6 +179,9 @@ namespace ShopFloorPlacementPlanner
                 _part_index = part;
                 part_time = dataGridView1.Columns["part_time"].Index;
                 _time_for_part_index = part_time;
+
+                part_time_minutes = dataGridView1.Columns["part_time_minutes"].Index;
+                _time_for_part_minute_index = part_time_minutes;
                 //action_time = dataGridView1.Columns["action_time"].Index;
                 action_date = dataGridView1.Columns["action_date"].Index;
                 fullname = dataGridView1.Columns["fullname"].Index;
@@ -190,8 +195,8 @@ namespace ShopFloorPlacementPlanner
                 _note_index = note;
                 door_type = dataGridView1.Columns["door_type"].Index;
                 _door_type_index = door_type;
-                //time = dataGridView1.Columns["Time"].Index;
-                //_time_index = time;
+                time = dataGridView1.Columns["Time"].Index;
+                _time_index = time;
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -228,6 +233,7 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns[action_date].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dataGridView1.Columns[part].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dataGridView1.Columns[part_time].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[part_time_minutes].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 //dataGridView1.Columns[time].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 //headertext
                 //dataGridView1.Columns[status].HeaderText = "Status";
@@ -257,6 +263,11 @@ namespace ShopFloorPlacementPlanner
                 _part_index = part;
                 part_time = dataGridView1.Columns["part_time"].Index;
                 _time_for_part_index = part_time;
+
+                part_time_minutes = dataGridView1.Columns["part_time_minutes"].Index;
+                _time_for_part_minute_index = part_time_minutes;
+
+
                 action_time = dataGridView1.Columns["action_time"].Index;
                 action_date = dataGridView1.Columns["action_date"].Index;
                 fullname = dataGridView1.Columns["fullname"].Index;
@@ -285,12 +296,16 @@ namespace ShopFloorPlacementPlanner
                     if (dataGridView1.Rows[i].Cells[action].Value.ToString() == "Door Start")
                     {
                         dataGridView1.Rows[i].Cells[status].Value = dataGridView1.Rows[i].Cells[action].Value.ToString() + " - Duration: " +
-                            Convert.ToString(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2)) + " >>";
+                            Convert.ToString(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2)) + " " +
+                            " ( " + Convert.ToString(Math.Round(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2) * 60,0)) + 
+                            " mins) >>";
                     }
                     else if (dataGridView1.Rows[i].Cells[action].Value.ToString().Contains("Live") == true)
                     {
                         dataGridView1.Rows[i].Cells[status].Value = dataGridView1.Rows[i].Cells[action].Value.ToString() + " - Duration: " +
-                            Convert.ToString(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2)) + " >>";
+                            Convert.ToString(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2)) + 
+                            " ( " + Convert.ToString(Math.Round(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2) * 60,0)) + 
+                            " mins) >>";
                     }
                     else if (dataGridView1.Rows[i].Cells[action].Value.ToString() != "Finish Part")
                     {
@@ -323,6 +338,7 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns[action].DisplayIndex = status + 3;
                 dataGridView1.Columns[part].DisplayIndex = status + 4;
                 dataGridView1.Columns[part_time].DisplayIndex = status + 5;
+                dataGridView1.Columns[part_time_minutes].DisplayIndex = status + 6;
 
                 //sizeeeees
                 dataGridView1.Columns[status].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -331,6 +347,7 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns[action].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dataGridView1.Columns[part].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dataGridView1.Columns[part_time].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[part_time_minutes].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dataGridView1.Columns[time].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 //headertext
                 dataGridView1.Columns[status].HeaderText = "Status";
@@ -339,6 +356,7 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns[action].HeaderText = "Action";
                 dataGridView1.Columns[part].HeaderText = "Part";
                 dataGridView1.Columns[part_time].HeaderText = "Time For Part";
+                dataGridView1.Columns[part_time_minutes].HeaderText = "Time For Part (mins)";
                 dataGridView1.Columns[time].HeaderText = "Time";
 
                 //messing with the colours
@@ -476,6 +494,30 @@ namespace ShopFloorPlacementPlanner
 
         private void print_excel_new()
         {
+            _status_index = dataGridView1.Columns["status"].Index;
+
+            _action_index = dataGridView1.Columns["action"].Index;
+
+
+            _part_index = dataGridView1.Columns["part"].Index;
+
+            _time_for_part_index = dataGridView1.Columns["part_time"].Index;
+
+            _time_for_part_minute_index = dataGridView1.Columns["part_time_minutes"].Index;
+
+            _door_id_index = dataGridView1.Columns["door_id"].Index;
+
+
+
+            _note_index = dataGridView1.Columns["note"].Index;
+
+            _door_type_index = dataGridView1.Columns["door_type"].Index;
+
+            _time_index = dataGridView1.Columns["Time"].Index;
+         
+
+
+
             int current_excel_row = 1;
             // Store the Excel processes before opening.
             Process[] processesBefore = Process.GetProcessesByName("excel");
@@ -512,7 +554,7 @@ namespace ShopFloorPlacementPlanner
 
                 //
                 if (label1.BackColor != Color.Empty)
-                    xlWorksheet.Range["A" + current_excel_row.ToString() + ":G" + current_excel_row.ToString()].Interior.Color = label1.BackColor;
+                    xlWorksheet.Range["A" + current_excel_row.ToString() + ":H" + current_excel_row.ToString()].Interior.Color = label1.BackColor;
 
                 xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[1, 7]].Merge();
                 xlWorkSheet.Range["A1:G1"].Cells.Font.Size = 20;
@@ -529,6 +571,9 @@ namespace ShopFloorPlacementPlanner
                 else
                 {
                     DateTime current_date = Convert.ToDateTime(dataGridView1.Rows[0].Cells[_time_index].Value).Date;
+
+                    //DateTime current_date = Convert.ToDateTime(Convert.ToDateTime(dataGridView1.Rows[0].Cells[_time_index].Value).Date.ToString("yyyyMMdd"));
+
                     //vvv we need to loop through dgv 
                     for (int i = loop_counter; i < max_loop_counter; i++)
                     {
@@ -542,25 +587,29 @@ namespace ShopFloorPlacementPlanner
                                 break;
                             }
                         }
+
                         xlWorksheet.Cells[1][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_status_index].Value.ToString();
                         xlWorksheet.Cells[2][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString();
                         xlWorksheet.Cells[3][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_door_type_index].Value.ToString();
                         xlWorksheet.Cells[4][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[actionIndex].Value.ToString();
                         xlWorksheet.Cells[5][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_part_index].Value.ToString();
                         if (btnHideTimes.Text == "Hide Times")
+                        {
                             xlWorksheet.Cells[6][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_for_part_index].Value.ToString();
-                        xlWorksheet.Cells[7][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_index].Value.ToString();
+                            xlWorksheet.Cells[7][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_for_part_minute_index].Value.ToString();
+                        }
+                        xlWorksheet.Cells[8][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_index].Value.ToString();
                         //paint the row based on what the dgv is
                        
                         if (dataGridView1.Rows[i].DefaultCellStyle.BackColor != Color.Empty)
-                            xlWorksheet.Range["A" + current_excel_row.ToString() + ":G" + current_excel_row.ToString()].Interior.Color = dataGridView1.Rows[i].DefaultCellStyle.BackColor;
+                            xlWorksheet.Range["A" + current_excel_row.ToString() + ":H" + current_excel_row.ToString()].Interior.Color = dataGridView1.Rows[i].DefaultCellStyle.BackColor;
                         current_excel_row++;
                         loop_counter++;
                     }
                 }
 
                 //border
-                xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 7]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 8]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
 
                 
                 xlWorksheet.Columns.AutoFit();
