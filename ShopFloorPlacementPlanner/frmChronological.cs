@@ -41,7 +41,7 @@ namespace ShopFloorPlacementPlanner
             _staff = staff;
             _allocation_staff_name = staff;
             _dept = dept;
-            _hours = hours;
+            _hours =  hours;
             getData(staff, dept);
         }
 
@@ -896,11 +896,13 @@ namespace ShopFloorPlacementPlanner
             if (dataGridView1.Columns[_time_for_part_index].Visible == false)
             {
                 dataGridView1.Columns[_time_for_part_index].Visible = true;
+                dataGridView1.Columns[_time_for_part_minute_index].Visible = true;
                 btnHideTimes.Text = "Hide Times";
             }
             else
             {
                 dataGridView1.Columns[_time_for_part_index].Visible = false;
+                dataGridView1.Columns[_time_for_part_minute_index].Visible = false;
                 btnHideTimes.Text = "Show Times";
             }
         }

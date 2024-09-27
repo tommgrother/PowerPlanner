@@ -3174,12 +3174,12 @@ namespace ShopFloorPlacementPlanner
                     staff_id = Convert.ToInt32(cmd.ExecuteScalar().ToString());
 
                 sql = "SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] FROM dbo.door_part_completion_log WHERE staff_id = " +
-                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND part_status = 'Complete' AND op = 'Welding'  GROUP BY staff_id),0)";
+                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND (part_status = 'Complete' or part_status = 'partial') AND op = 'Welding'  GROUP BY staff_id),0)";
                 double worked = 0;
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     worked = Convert.ToDouble(cmd.ExecuteScalar());
 
-                final_hours = hours - worked;
+                final_hours = Math.Round(hours - worked,2);
 
                 if (final_hours < 0)
                 {
@@ -3215,12 +3215,12 @@ namespace ShopFloorPlacementPlanner
                     staff_id = Convert.ToInt32(cmd.ExecuteScalar().ToString());
 
                 sql = "SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] FROM dbo.door_part_completion_log WHERE staff_id = " +
-                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND part_status = 'Complete' AND op = 'Packing'  GROUP BY staff_id),0)";
+                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND (part_status = 'Complete' or part_status = 'partial') AND op = 'Packing'  GROUP BY staff_id),0)";
                 double worked = 0;
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     worked = Convert.ToDouble(cmd.ExecuteScalar());
 
-                final_hours = hours - worked;
+                final_hours = Math.Round(hours - worked,2);
 
                 if (final_hours < 0)
                 {
@@ -3256,12 +3256,12 @@ namespace ShopFloorPlacementPlanner
                     staff_id = Convert.ToInt32(cmd.ExecuteScalar().ToString());
 
                 sql = "SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] FROM dbo.door_part_completion_log WHERE staff_id = " +
-                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND part_status = 'Complete' AND op = 'Buffing'  GROUP BY staff_id),0)";
+                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND (part_status = 'Complete' or part_status = 'partial') AND op = 'Buffing'  GROUP BY staff_id),0)";
                 double worked = 0;
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     worked = Convert.ToDouble(cmd.ExecuteScalar());
 
-                final_hours = hours - worked;
+                final_hours = Math.Round(hours - worked,2);
 
                 if (final_hours < 0)
                 {
@@ -4167,12 +4167,12 @@ namespace ShopFloorPlacementPlanner
 
 
                 sql = "SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] FROM dbo.door_part_completion_log WHERE staff_id = " +
-                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND part_status = 'Complete' AND op = 'Bending'  GROUP BY staff_id),0)";
+                    staff_id.ToString() + " AND CAST(part_complete_date as DATE) = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' AND (part_status = 'Complete' or part_status = 'partial') AND op = 'Bending'  GROUP BY staff_id),0)";
                 double worked = 0;
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     worked = Convert.ToDouble(cmd.ExecuteScalar());
 
-                final_hours = hours - worked;
+                final_hours = Math.Round(hours - worked,2);
 
                 if (final_hours < 0)
                 {
