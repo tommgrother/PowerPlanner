@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>447</ApplicationRevision>
+    <ApplicationRevision>448</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -204,6 +204,18 @@
     </Compile>
     <Compile Include="frmPowerPlanStaffView.Designer.cs">
       <DependentUpon>frmPowerPlanStaffView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPowerPlanStaffViewMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPowerPlanStaffViewMessage.Designer.cs">
+      <DependentUpon>frmPowerPlanStaffViewMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPowerPlanStaffViewMessageInsert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPowerPlanStaffViewMessageInsert.Designer.cs">
+      <DependentUpon>frmPowerPlanStaffViewMessageInsert.cs</DependentUpon>
     </Compile>
     <Compile Include="frmProductivityEmail.cs">
       <SubType>Form</SubType>
@@ -494,6 +506,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmPowerPlanStaffView.resx">
       <DependentUpon>frmPowerPlanStaffView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPowerPlanStaffViewMessage.resx">
+      <DependentUpon>frmPowerPlanStaffViewMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPowerPlanStaffViewMessageInsert.resx">
+      <DependentUpon>frmPowerPlanStaffViewMessageInsert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProductivityEmail.resx">
       <DependentUpon>frmProductivityEmail.cs</DependentUpon>

@@ -667,24 +667,87 @@ namespace ShopFloorPlacementPlanner
 
         private void dgWeld_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgWeld.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor == Color.Yellow)
-                MessageBox.Show(dgWeld.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value.ToString());
+            //if (dgWeld.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor == Color.Yellow)
+            //    MessageBox.Show(dgWeld.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value.ToString());
+
+            openNote(dgWeld, e, "Welding");
+
         }
 
         private void dgBuff_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgBuff.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor == Color.Yellow)
-                MessageBox.Show(dgBuff.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value.ToString());
+            //if (dgBuff.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor == Color.Yellow)
+            //    MessageBox.Show(dgBuff.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value.ToString());
+            openNote(dgBuff, e, "Buffing");
         }
 
         private void dgPack_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgPack.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor == Color.Yellow)
-                MessageBox.Show(dgPack.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value.ToString());
+            //if (dgPack.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor == Color.Yellow)
+            //    MessageBox.Show(dgPack.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value.ToString());
+
+            openNote(dgPack, e, "Packing");
+
         }
 
 
+        private void openNote(DataGridView dgv, DataGridViewCellEventArgs e, string department)
+        {
 
+            string note_time = "";
+            string label = "";
+            if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
+            {
+                note_time = "[9_30_note]";
+                label = "9:30";
+            }
+            else if (e.ColumnIndex == 4 || e.ColumnIndex == 5)
+            {
+                note_time = "[11_30_note]";
+                label = "11:30";
+            }
+            else if (e.ColumnIndex == 7 || e.ColumnIndex == 8)
+            {
+                note_time = "[2_30_note]";
+                label = "2:30";
+            }
+            else if (e.ColumnIndex == 10 || e.ColumnIndex == 11)
+            {
+                note_time = "[end_of_shift_note]";
+                label = "End of Shift";
+            }
+            else
+                return;
+
+            int staff_id = 0;
+            string staff = dgv.Rows[e.RowIndex].Cells[0].Value.ToString();
+            int second_space = staff.IndexOf(' ', staff.IndexOf(' ') + 1);
+
+            staff = staff.Substring(0, second_space);
+
+            string sql = "SELECT staff_id FROM dbo.view_planner_punch_staff WHERE [Full Placement] LIKE '%" + staff + "%'";
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    staff_id = (int)cmd.ExecuteScalar();
+                }
+
+                conn.Close();
+            }
+
+
+
+
+            frmPowerPlanStaffViewMessage frm = new frmPowerPlanStaffViewMessage(note_time, dteDateSelection.Value, staff_id, department.Replace("Buffing", "Dressing"), label);
+            frm.ShowDialog();
+
+
+            fillGrids();
+            paint_grid();
+        }
 
 
     }
