@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>448</ApplicationRevision>
+    <ApplicationRevision>450</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -132,6 +132,12 @@
     </Compile>
     <Compile Include="frmAllocation.Designer.cs">
       <DependentUpon>frmAllocation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBendAvailable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBendAvailable.Designer.cs">
+      <DependentUpon>frmBendAvailable.cs</DependentUpon>
     </Compile>
     <Compile Include="frmBendingPress.cs">
       <SubType>Form</SubType>
@@ -469,6 +475,9 @@
     <EmbeddedResource Include="frmBatchPlacement.resx">
       <DependentUpon>frmBatchPlacement.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBendAvailable.resx">
+      <DependentUpon>frmBendAvailable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBendingPress.resx">
       <DependentUpon>frmBendingPress.cs</DependentUpon>

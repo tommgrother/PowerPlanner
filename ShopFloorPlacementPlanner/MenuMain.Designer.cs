@@ -375,6 +375,7 @@
             this.btnWeldingDoorTypes = new System.Windows.Forms.Button();
             this.btnBuffingDiscs = new System.Windows.Forms.Button();
             this.btnShowIntervals = new System.Windows.Forms.Button();
+            this.btnBendAvailable = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgPunch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
@@ -3814,12 +3815,23 @@
             this.btnShowIntervals.UseVisualStyleBackColor = true;
             this.btnShowIntervals.Click += new System.EventHandler(this.btnShowIntervals_Click);
             // 
+            // btnBendAvailable
+            // 
+            this.btnBendAvailable.Location = new System.Drawing.Point(712, 144);
+            this.btnBendAvailable.Name = "btnBendAvailable";
+            this.btnBendAvailable.Size = new System.Drawing.Size(28, 23);
+            this.btnBendAvailable.TabIndex = 307;
+            this.btnBendAvailable.Text = "?";
+            this.btnBendAvailable.UseVisualStyleBackColor = true;
+            this.btnBendAvailable.Click += new System.EventHandler(this.btnBendAvailable_Click);
+            // 
             // MenuMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1911, 921);
+            this.Controls.Add(this.btnBendAvailable);
             this.Controls.Add(this.btnShowIntervals);
             this.Controls.Add(this.btnBuffingDiscs);
             this.Controls.Add(this.btnWeldingDoorTypes);
@@ -4466,6 +4478,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.Button btnBuffingDiscs;
         private System.Windows.Forms.Button btnShowIntervals;
+        private System.Windows.Forms.Button btnBendAvailable;
     }
 }
 

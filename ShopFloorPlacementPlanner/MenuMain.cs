@@ -4725,5 +4725,11 @@ namespace ShopFloorPlacementPlanner
             frmPowerPlanStaffView frm = new frmPowerPlanStaffView(dteDateSelection.Value);
             frm.ShowDialog();
         }
+
+        private void btnBendAvailable_Click(object sender, EventArgs e)
+        {
+            frmBendAvailable frm = new frmBendAvailable();
+            frm.ShowDialog();
+        }
     }
 }
