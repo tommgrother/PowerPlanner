@@ -589,20 +589,30 @@ namespace ShopFloorPlacementPlanner
                         }
 
                         xlWorksheet.Cells[1][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_status_index].Value.ToString();
+                        xlWorksheet.Cells[1][current_excel_row].Cells.Font.Size = 20;
                         xlWorksheet.Cells[2][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString();
+                        xlWorksheet.Cells[2][current_excel_row].Cells.Font.Size = 20;
                         xlWorksheet.Cells[3][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_door_type_index].Value.ToString();
+                        xlWorksheet.Cells[3][current_excel_row].Cells.Font.Size = 20;
                         xlWorksheet.Cells[4][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[actionIndex].Value.ToString();
+                        xlWorksheet.Cells[4][current_excel_row].Cells.Font.Size = 20;
                         xlWorksheet.Cells[5][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_part_index].Value.ToString();
+                        xlWorksheet.Cells[5][current_excel_row].Cells.Font.Size = 20;
                         if (btnHideTimes.Text == "Hide Times")
                         {
                             xlWorksheet.Cells[6][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_for_part_index].Value.ToString();
+                            xlWorksheet.Cells[6][current_excel_row].Cells.Font.Size = 20;
                             xlWorksheet.Cells[7][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_for_part_minute_index].Value.ToString();
+                            xlWorksheet.Cells[7][current_excel_row].Cells.Font.Size = 20;
                         }
                         xlWorksheet.Cells[8][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_index].Value.ToString();
                         //paint the row based on what the dgv is
                        
                         if (dataGridView1.Rows[i].DefaultCellStyle.BackColor != Color.Empty)
                             xlWorksheet.Range["A" + current_excel_row.ToString() + ":H" + current_excel_row.ToString()].Interior.Color = dataGridView1.Rows[i].DefaultCellStyle.BackColor;
+
+                        //xlWorkSheet.Range["A" + current_excel_row.ToString() + ":H" + current_excel_row.ToString()].Cells.Font.Size = 20;
+
                         current_excel_row++;
                         loop_counter++;
                     }
@@ -619,7 +629,7 @@ namespace ShopFloorPlacementPlanner
                 Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
                 xlPageSetUp.Zoom = false;
                 xlPageSetUp.FitToPagesWide = 1;
-                xlPageSetUp.Orientation = Excel.XlPageOrientation.xlPortrait;
+                xlPageSetUp.Orientation = Excel.XlPageOrientation.xlLandscape;
 
 
 

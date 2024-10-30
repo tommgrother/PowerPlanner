@@ -22,7 +22,7 @@ namespace ShopFloorPlacementPlanner
             string sql = "SELECT COALESCE((SELECT Sum(Round(([time_remaining_bend]*[quantity_same])/60,2)) " +
                          "FROM dbo.door " +
                          "WHERE (dbo.door.complete_punch='True') AND dbo.door.bend_staff_allocation is not null AND (dbo.door.status_id =1 Or dbo.door.status_id=2) AND " +
-                         "(dbo.door.test_identifier=0 Or dbo.door.test_identifier Is Null) AND (dbo.door.complete_bend='False') AND (dbo.door.date_bend Is Not Null)),0)";
+                         "(dbo.door.test_identifier = 0 Or dbo.door.test_identifier Is Null) AND (dbo.door.complete_bend='False') AND (dbo.door.date_bend Is Not Null)),0)";
 
             txtBendingAllocated.Text = runSQL(sql);
 

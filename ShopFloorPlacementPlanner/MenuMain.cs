@@ -382,7 +382,11 @@ namespace ShopFloorPlacementPlanner
             txtStockHours.Text = "0";
 
 
-            string sql = "SELECT ROUND(COALESCE(actual_hours_slimline,0),2) as slimline, ROUND(COALESCE(actual_hours_punch,0),2) as punch, ROUND(COALESCE(actual_hours_laser,0),2) as laser, ROUND(COALESCE(actual_hours_bend,0),2) as bend, ROUND(COALESCE(actual_hours_weld,0),2) as weld, ROUND(COALESCE(actual_hours_buff,0),2) as buff,ROUND(COALESCE(actual_hours,0),2) as paint , ROUND(COALESCE(actual_hours_pack,0),2) as boxes,ROUND(COALESCE(actual_hours_bend_stock,0),2) as stock_parts  FROM dbo.daily_department_goal WHERE date_goal ='" + dteDateSelection.Text + "'";
+            string sql = "SELECT ROUND(COALESCE(actual_hours_slimline,0),2) as slimline, ROUND(COALESCE(actual_hours_punch,0),2) as punch," +
+                " ROUND(COALESCE(actual_hours_laser,0),2) as laser, ROUND(COALESCE(actual_hours_bend,0),2) as bend," +
+                " ROUND(COALESCE(actual_hours_weld,0),2) as weld, ROUND(COALESCE(actual_hours_buff,0),2) as buff," +
+                "ROUND(COALESCE(actual_hours,0),2) as paint , ROUND(COALESCE(actual_hours_pack,0),2) as boxes," +
+                "ROUND(COALESCE(actual_hours_bend_stock,0),2) as stock_parts  FROM dbo.daily_department_goal WHERE date_goal ='" + dteDateSelection.Text + "'";
             //actual_hours paint is tbc
             using (SqlConnection conn2 = new SqlConnection(connectionStrings.ConnectionString))
             {
