@@ -2236,10 +2236,27 @@ namespace ShopFloorPlacementPlanner
 
             //also add the label that shows how much has been packed
 
-            sql = "select round(convert(float,sum(line_total)),2)  from dbo.door as a  inner join" +
-                " (SELECT dbo.door.id, COALESCE (dbo.door_payment.door_cost, 0) + COALESCE (dbo.door_payment.extra_cost_total, 0) AS line_total " +
-                " FROM dbo.door LEFT OUTER JOIN dbo.door_payment ON dbo.door.id = dbo.door_payment.door_id) as b on a.id = b.id    inner join dbo.door_type as c on a.door_type_id = c.id " +
-                                "where(date_pack_complete >= '" + Convert.ToDateTime(dteDateSelection.Text).ToString("yyyy-MM-dd") + "' and date_pack_complete <= dateadd(D, 1, '" + Convert.ToDateTime(dteDateSelection.Text).ToString("yyyy-MM-dd") + "')) and(c.slimline_y_n = 0 or c.slimline_y_n is null)";
+            //sql = "select round(convert(float,sum(line_total)),2)  from dbo.door as a  inner join" +
+            //    " (SELECT dbo.door.id, COALESCE (dbo.door_payment.door_cost, 0) + COALESCE (dbo.door_payment.extra_cost_total, 0) AS line_total " +
+            //    " FROM dbo.door LEFT OUTER JOIN dbo.door_payment ON dbo.door.id = dbo.door_payment.door_id) as b on a.id = b.id    inner join dbo.door_type as c on a.door_type_id = c.id " +
+            //                    "where(date_pack_complete >= '" + Convert.ToDateTime(dteDateSelection.Text).ToString("yyyy-MM-dd") + "' and date_pack_complete <= dateadd(D, 1, '" + Convert.ToDateTime(dteDateSelection.Text).ToString("yyyy-MM-dd") + "')) and(c.slimline_y_n = 0 or c.slimline_y_n is null)";
+
+            sql = "select  sum(convert(float,(COALESCE(line_total_no_install,0) - coalesce(extra_cost_total,0)  + coalesce(delivery_cost,0) + " +
+                "coalesce(dis.sumDisc,0) + coalesce(nondis.sumNonDisc,0))))  from dbo.door as a " +
+                "inner join (SELECT        dbo.door.id, COALESCE (dbo.door_payment.door_cost, 0)  + COALESCE (dbo.door_payment.extra_cost_total, 0) AS line_total_no_install " +
+                "FROM            dbo.door LEFT OUTER JOIN " +
+                "dbo.door_payment ON dbo.door.id = dbo.door_payment.door_id) as b on a.id = b.id " +
+                "inner join dbo.door_type as c on a.door_type_id = c.id " +
+                "LEFT JOIN (select sum(extra_price_per) as sumDisc, door_payment_id from dbo.door_payment_extra where discount_percent IS NOT NULL " +
+                "group by door_payment_id) as dis on a.id = dis.door_payment_id	" +
+                "LEFT JOIN (select sum(extra_price_per) as sumNonDisc, door_payment_id from dbo.door_payment_extra where discount_percent IS NULL " +
+                "group by door_payment_id) as nondis on a.id = nondis.door_payment_id " +
+                "LEFT JOIN dbo.door_payment dp on a.id = dp.door_id " +
+                "LEFT JOIN dbo.door_transport dt on a.id = dt.door_id " +
+                "where (date_pack_complete >= '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' and " +
+                "date_pack_complete <= dateadd(D,1,'" + dteDateSelection.Value.ToString("yyyyMMdd") + "')) and " +
+                "(c.slimline_y_n = 0 or c.slimline_y_n is null)";
+
             using (SqlCommand cmd2 = new SqlCommand(sql, conn))
             {
                 string temp = "";
@@ -2247,6 +2264,11 @@ namespace ShopFloorPlacementPlanner
                 temp = Convert.ToString(cmd2.ExecuteScalar());
                 if (temp == "")
                     temp = "0";
+                else
+                {
+                    double fuga = Convert.ToDouble(temp);
+                    temp = Math.Round(fuga, 2).ToString();
+                }
 
                 lblTotalPacked.Text = "Total Packed: £" + temp;
             }
