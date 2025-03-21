@@ -15,6 +15,7 @@ namespace ShopFloorPlacementPlanner
 {
     public partial class frmChronological : Form
     {
+        public int user_id { get; set; }
         public int actionIndex { get; set; }
         public string _staff { get; set; }
         public int _staff_id { get; set; }
@@ -41,7 +42,7 @@ namespace ShopFloorPlacementPlanner
             _staff = staff;
             _allocation_staff_name = staff;
             _dept = dept;
-            _hours =  hours;
+            _hours = hours;
             getData(staff, dept);
         }
 
@@ -167,7 +168,7 @@ namespace ShopFloorPlacementPlanner
             //first step lets grab all of the indexes of each column we have
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            int part_time_minutes,status, action, part, part_time, action_time, action_date, fullname, door_id, sort_order, department, department_time, predicted_end, note, door_type, time;
+            int part_time_minutes, status, action, part, part_time, action_time, action_date, fullname, door_id, sort_order, department, department_time, predicted_end, note, door_type, time;
             if (_dept == "Bending")
             {
                 //status = dataGridView1.Columns["status"].Index;
@@ -297,14 +298,14 @@ namespace ShopFloorPlacementPlanner
                     {
                         dataGridView1.Rows[i].Cells[status].Value = dataGridView1.Rows[i].Cells[action].Value.ToString() + " - Duration: " +
                             Convert.ToString(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2)) + " " +
-                            " ( " + Convert.ToString(Math.Round(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2) * 60,0)) + 
+                            " ( " + Convert.ToString(Math.Round(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2) * 60, 0)) +
                             " mins) >>";
                     }
                     else if (dataGridView1.Rows[i].Cells[action].Value.ToString().Contains("Live") == true)
                     {
                         dataGridView1.Rows[i].Cells[status].Value = dataGridView1.Rows[i].Cells[action].Value.ToString() + " - Duration: " +
-                            Convert.ToString(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2)) + 
-                            " ( " + Convert.ToString(Math.Round(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2) * 60,0)) + 
+                            Convert.ToString(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2)) +
+                            " ( " + Convert.ToString(Math.Round(Math.Round(Convert.ToDecimal(dataGridView1.Rows[i].Cells[department_time].Value) / 60, 2) * 60, 0)) +
                             " mins) >>";
                     }
                     else if (dataGridView1.Rows[i].Cells[action].Value.ToString() != "Finish Part")
@@ -514,7 +515,7 @@ namespace ShopFloorPlacementPlanner
             _door_type_index = dataGridView1.Columns["door_type"].Index;
 
             _time_index = dataGridView1.Columns["Time"].Index;
-         
+
 
 
 
@@ -532,9 +533,9 @@ namespace ShopFloorPlacementPlanner
 
 
             int day_counter = 0;
-                        
-           
-            
+
+
+
             int sheet_counter = 1;
             int loop_counter = 0;
             int max_loop_counter = dataGridView1.Rows.Count;
@@ -557,8 +558,8 @@ namespace ShopFloorPlacementPlanner
                     xlWorksheet.Range["A" + current_excel_row.ToString() + ":H" + current_excel_row.ToString()].Interior.Color = label1.BackColor;
 
                 xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[1, 7]].Merge();
-                xlWorkSheet.Range["A1:G1"].Cells.Font.Size = 20;
-                
+                xlWorkSheet.Range["A1:H2"].Cells.Font.Size = 20;
+
                 current_excel_row++;
 
                 //column headers
@@ -570,7 +571,7 @@ namespace ShopFloorPlacementPlanner
                 }
                 else
                 {
-                    DateTime current_date = Convert.ToDateTime(dataGridView1.Rows[0].Cells[_time_index].Value).Date;
+                    DateTime current_date = Convert.ToDateTime(dataGridView1.Rows[0].Cells["Time"].Value).Date;
 
                     //DateTime current_date = Convert.ToDateTime(Convert.ToDateTime(dataGridView1.Rows[0].Cells[_time_index].Value).Date.ToString("yyyyMMdd"));
 
@@ -606,8 +607,9 @@ namespace ShopFloorPlacementPlanner
                             xlWorksheet.Cells[7][current_excel_row].Cells.Font.Size = 20;
                         }
                         xlWorksheet.Cells[8][current_excel_row].Value2 = dataGridView1.Rows[i].Cells[_time_index].Value.ToString();
+                        xlWorksheet.Cells[8][current_excel_row].Cells.Font.Size = 20;
                         //paint the row based on what the dgv is
-                       
+
                         if (dataGridView1.Rows[i].DefaultCellStyle.BackColor != Color.Empty)
                             xlWorksheet.Range["A" + current_excel_row.ToString() + ":H" + current_excel_row.ToString()].Interior.Color = dataGridView1.Rows[i].DefaultCellStyle.BackColor;
 
@@ -621,9 +623,9 @@ namespace ShopFloorPlacementPlanner
                 //border
                 xlWorksheet.Range[xlWorksheet.Cells[1, 1], xlWorksheet.Cells[current_excel_row - 1, 8]].Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
 
-                
+
                 xlWorksheet.Columns.AutoFit();
-                
+
                 //xlWorksheet.Rows.AutoFit();
 
                 Excel.PageSetup xlPageSetUp = xlWorksheet.PageSetup;
@@ -821,10 +823,26 @@ namespace ShopFloorPlacementPlanner
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor == Color.Yellow)
+            if (_time_for_part_minute_index == e.ColumnIndex)
+            {
+
+                int door_id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[_door_id_index].Value.ToString());
+                string dept = _dept;
+                double time_for_part = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[_time_for_part_minute_index].Value.ToString());
+                int staff_id = _allocation_staff_id;
+                string part_name = dataGridView1.Rows[e.RowIndex].Cells[_part_index].Value.ToString();
+                string date = dataGridView1.Rows[e.RowIndex].Cells[_time_index].Value.ToString();
+
+                frmMoveTime frm = new frmMoveTime(door_id, dept, time_for_part, staff_id, part_name, date);
+                frm.ShowDialog();
+
+                getData(_staff, _dept);
+            }
+            else if (dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor == Color.Yellow)
             {
                 MessageBox.Show(dataGridView1.Rows[e.RowIndex].Cells[_note_index].Value.ToString());
             }
+
         }
 
         private void btnSort_Click(object sender, EventArgs e)
@@ -924,13 +942,13 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAllocation_Click(object sender, EventArgs e)
         {
-            frmAllocation frm = new frmAllocation(_allocation_staff_id, _dept,_allocation_staff_name.Trim() + " Time in Motion Doors Complete");
+            frmAllocation frm = new frmAllocation(_allocation_staff_id, _dept, _allocation_staff_name.Trim() + " Time in Motion Doors Complete");
             frm.ShowDialog();
         }
 
         private void btnTimeInMotion_Click(object sender, EventArgs e)
         {
-            frmTimeInMotion frm = new frmTimeInMotion(dteAction.Value, dteActionEnd.Value, _allocation_staff_id, _dept,_allocation_staff_name);
+            frmTimeInMotion frm = new frmTimeInMotion(dteAction.Value, dteActionEnd.Value, _allocation_staff_id, _dept, _allocation_staff_name);
             frm.ShowDialog();
         }
     }

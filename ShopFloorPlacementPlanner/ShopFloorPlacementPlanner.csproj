@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>459</ApplicationRevision>
+    <ApplicationRevision>462</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -186,6 +186,12 @@
     </Compile>
     <Compile Include="frmManualExtraHours.Designer.cs">
       <DependentUpon>frmManualExtraHours.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMoveTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMoveTime.Designer.cs">
+      <DependentUpon>frmMoveTime.cs</DependentUpon>
     </Compile>
     <Compile Include="frmNewWarning.cs">
       <SubType>Form</SubType>
@@ -503,6 +509,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmManualExtraHours.resx">
       <DependentUpon>frmManualExtraHours.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMoveTime.resx">
+      <DependentUpon>frmMoveTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmNewWarning.resx">
       <DependentUpon>frmNewWarning.cs</DependentUpon>
