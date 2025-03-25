@@ -1265,8 +1265,6 @@
             this.dgSlimline.AllowUserToDeleteRows = false;
             this.dgSlimline.AllowUserToResizeColumns = false;
             this.dgSlimline.AllowUserToResizeRows = false;
-            this.dgSlimline.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgSlimline.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
@@ -1292,7 +1290,7 @@
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgSlimline.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgSlimline.RowTemplate.Height = 50;
-            this.dgSlimline.Size = new System.Drawing.Size(200, 619);
+            this.dgSlimline.Size = new System.Drawing.Size(200, 380);
             this.dgSlimline.TabIndex = 54;
             this.dgSlimline.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgSlimline_CellDoubleClick);
             // 
@@ -1800,10 +1798,10 @@
             // 
             // label52
             // 
-            this.label52.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label52.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label52.AutoSize = true;
             this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.Location = new System.Drawing.Point(477, 720);
+            this.label52.Location = new System.Drawing.Point(265, 679);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(75, 26);
             this.label52.TabIndex = 124;
@@ -1811,8 +1809,8 @@
             // 
             // btnAddStores
             // 
-            this.btnAddStores.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAddStores.Location = new System.Drawing.Point(571, 723);
+            this.btnAddStores.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnAddStores.Location = new System.Drawing.Point(359, 682);
             this.btnAddStores.Name = "btnAddStores";
             this.btnAddStores.Size = new System.Drawing.Size(57, 23);
             this.btnAddStores.TabIndex = 123;
@@ -1889,7 +1887,7 @@
             // dgStores
             // 
             this.dgStores.AllowUserToAddRows = false;
-            this.dgStores.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.dgStores.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.dgStores.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
@@ -1909,13 +1907,13 @@
             dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgStores.DefaultCellStyle = dataGridViewCellStyle14;
             this.dgStores.Enabled = false;
-            this.dgStores.Location = new System.Drawing.Point(431, 752);
+            this.dgStores.Location = new System.Drawing.Point(219, 711);
             this.dgStores.Name = "dgStores";
             this.dgStores.RowHeadersVisible = false;
             dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgStores.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.dgStores.RowTemplate.Height = 50;
-            this.dgStores.Size = new System.Drawing.Size(197, 155);
+            this.dgStores.Size = new System.Drawing.Size(201, 198);
             this.dgStores.TabIndex = 128;
             // 
             // dgToolRoom
@@ -1974,13 +1972,13 @@
             dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgDispatch.DefaultCellStyle = dataGridViewCellStyle19;
             this.dgDispatch.Enabled = false;
-            this.dgDispatch.Location = new System.Drawing.Point(634, 755);
+            this.dgDispatch.Location = new System.Drawing.Point(635, 755);
             this.dgDispatch.Name = "dgDispatch";
             this.dgDispatch.RowHeadersVisible = false;
             dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgDispatch.RowsDefaultCellStyle = dataGridViewCellStyle20;
             this.dgDispatch.RowTemplate.Height = 50;
-            this.dgDispatch.Size = new System.Drawing.Size(200, 155);
+            this.dgDispatch.Size = new System.Drawing.Size(199, 155);
             this.dgDispatch.TabIndex = 125;
             // 
             // label56
@@ -2176,9 +2174,9 @@
             // 
             // txtStoresMen
             // 
-            this.txtStoresMen.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.txtStoresMen.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.txtStoresMen.Enabled = false;
-            this.txtStoresMen.Location = new System.Drawing.Point(438, 727);
+            this.txtStoresMen.Location = new System.Drawing.Point(226, 686);
             this.txtStoresMen.Name = "txtStoresMen";
             this.txtStoresMen.Size = new System.Drawing.Size(33, 20);
             this.txtStoresMen.TabIndex = 146;
@@ -2190,9 +2188,9 @@
             // 
             // label68
             // 
-            this.label68.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label68.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(441, 710);
+            this.label68.Location = new System.Drawing.Point(229, 669);
             this.label68.Name = "label68";
             this.label68.Size = new System.Drawing.Size(28, 13);
             this.label68.TabIndex = 148;
@@ -3251,7 +3249,7 @@
             dataGridViewCellStyle25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgvHSManagement.RowsDefaultCellStyle = dataGridViewCellStyle25;
             this.dgvHSManagement.RowTemplate.Height = 50;
-            this.dgvHSManagement.Size = new System.Drawing.Size(200, 119);
+            this.dgvHSManagement.Size = new System.Drawing.Size(200, 324);
             this.dgvHSManagement.TabIndex = 248;
             // 
             // dgSlDispatch
@@ -3268,7 +3266,7 @@
             dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgSlDispatch.DefaultCellStyle = dataGridViewCellStyle26;
             this.dgSlDispatch.Enabled = false;
-            this.dgSlDispatch.Location = new System.Drawing.Point(220, 713);
+            this.dgSlDispatch.Location = new System.Drawing.Point(9, 710);
             this.dgSlDispatch.Name = "dgSlDispatch";
             this.dgSlDispatch.RowHeadersVisible = false;
             dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3281,7 +3279,7 @@
             // 
             this.label109.AutoSize = true;
             this.label109.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label109.Location = new System.Drawing.Point(227, 679);
+            this.label109.Location = new System.Drawing.Point(16, 676);
             this.label109.Name = "label109";
             this.label109.Size = new System.Drawing.Size(130, 26);
             this.label109.TabIndex = 250;
@@ -3289,7 +3287,7 @@
             // 
             // btnSlimlineDispatch
             // 
-            this.btnSlimlineDispatch.Location = new System.Drawing.Point(360, 682);
+            this.btnSlimlineDispatch.Location = new System.Drawing.Point(153, 682);
             this.btnSlimlineDispatch.Name = "btnSlimlineDispatch";
             this.btnSlimlineDispatch.Size = new System.Drawing.Size(57, 23);
             this.btnSlimlineDispatch.TabIndex = 249;
@@ -3313,7 +3311,7 @@
             dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgSlStores.DefaultCellStyle = dataGridViewCellStyle28;
             this.dgSlStores.Enabled = false;
-            this.dgSlStores.Location = new System.Drawing.Point(220, 875);
+            this.dgSlStores.Location = new System.Drawing.Point(9, 872);
             this.dgSlStores.Name = "dgSlStores";
             this.dgSlStores.RowHeadersVisible = false;
             dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3326,7 +3324,7 @@
             // 
             this.label110.AutoSize = true;
             this.label110.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label110.Location = new System.Drawing.Point(225, 846);
+            this.label110.Location = new System.Drawing.Point(14, 843);
             this.label110.Name = "label110";
             this.label110.Size = new System.Drawing.Size(108, 26);
             this.label110.TabIndex = 253;
@@ -3334,7 +3332,7 @@
             // 
             // btnSlimlineStores
             // 
-            this.btnSlimlineStores.Location = new System.Drawing.Point(346, 848);
+            this.btnSlimlineStores.Location = new System.Drawing.Point(151, 843);
             this.btnSlimlineStores.Name = "btnSlimlineStores";
             this.btnSlimlineStores.Size = new System.Drawing.Size(57, 23);
             this.btnSlimlineStores.TabIndex = 252;

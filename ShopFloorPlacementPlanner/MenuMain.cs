@@ -4702,6 +4702,26 @@ namespace ShopFloorPlacementPlanner
 
                 dgSlimline.DataSource = dt;
             }
+
+            if ("Management" == "Management")
+            {
+                DataTable dt = (DataTable)(dgManagement.DataSource);
+
+                int count = dt.Rows.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    if (dt.Rows[i][0].ToString().Contains("ABSENT"))
+                    {
+                        dt.Rows[i].Delete();
+                        count--;
+                        i--;
+                    }
+                    //MessageBox.Show(dt.Rows[i][0].ToString());
+                }
+
+                dgManagement.DataSource = dt;
+            }
+
         }
 
         private void lastCalendarUser_Click(object sender, EventArgs e)
