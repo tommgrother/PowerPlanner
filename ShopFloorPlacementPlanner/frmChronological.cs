@@ -371,9 +371,26 @@ namespace ShopFloorPlacementPlanner
                         dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                         //grab the door id for this too
                         door_list.Add(dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString());
+
                     }
                     if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Door Start")) //mark started doors as green
                         dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.CornflowerBlue;
+
+                    if (dataGridView1.Rows[i].Cells["Status"].Value.ToString().Contains("Door Complete >>"))
+                    {
+
+                        //while we are here stick the value in this cell
+                        string value = "select '£' + format(line_total_no_install,'n0') FROM dbo.view_door_value where id = " + dataGridView1.Rows[i].Cells[_door_id_index].Value.ToString();
+                        using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+                        {
+                            conn.Open();
+                            using (SqlCommand cmd = new SqlCommand(value, conn))
+                                value = cmd.ExecuteScalar().ToString();
+
+                            dataGridView1.Rows[i].Cells["Status"].Value = dataGridView1.Rows[i].Cells["Status"].Value.ToString() + " Value: " + value;
+                            conn.Close();
+                        }
+                    }
                 }
                 string sql = "";
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -428,7 +445,11 @@ namespace ShopFloorPlacementPlanner
                 if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Door Start")) //mark started doors as green
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.CornflowerBlue;
                 if (dataGridView1.Rows[i].Cells[actionIndex].Value.ToString().Contains("Door Complete")) //mark started doors as green
+                {
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.PaleVioletRed;
+
+
+                }
             }
             string sql = "";
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
