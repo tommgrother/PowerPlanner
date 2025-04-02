@@ -50,9 +50,9 @@ namespace ShopFloorPlacementPlanner
                 return;
             }
             double time_to_move = Convert.ToDouble(txtTimeToMove.Text);
-            if (time_to_move > time_for_part - 1)
+            if (time_to_move > time_for_part)
             {
-                MessageBox.Show("The time to move cannot be more than " + (time_for_part - 1), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("The time to move cannot be more than " + (time_for_part ), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -80,6 +80,17 @@ namespace ShopFloorPlacementPlanner
                 //insert new record
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     cmd.ExecuteNonQuery();
+
+
+                //fire the procedure for the current day and the prev day
+                string daily_goals = "EXEC [dbo].[AAAAAAAAA_calibrate_daily_goals] " + date.ToString("yyyyMMdd");
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    cmd.ExecuteNonQuery();
+
+                daily_goals = "EXEC [dbo].[AAAAAAAAA_calibrate_daily_goals] dbo.func_work_days(CAST('" + date.ToString("yyyyMMdd") + "' as date),0)"
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    cmd.ExecuteNonQuery();
+
 
                 conn.Close();
             }

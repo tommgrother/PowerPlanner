@@ -46,6 +46,80 @@ namespace ShopFloorPlacementPlanner
             getData(staff, dept);
         }
 
+
+        private void getStaffDropped()
+        {
+            //work out hours for label
+            double hours = 0;
+            string sql_hours = "SELECT " +
+                         "cast(coalesce(sum(hours),0) as float) + coalesce(sum(cast(coalesce(o.overtime ,0)as float) * 0.8),0) " +
+                         "FROM dbo.power_plan_staff a " +
+                         "LEFT JOIN dbo.power_plan_date b on a.date_id = b.id " +
+                         "left join dbo.power_plan_staff_percent_log p on b.date_plan = p.log_date AND a.staff_id = p.staff_id AND a.department = p.department " +
+                         "left join dbo.power_plan_overtime_remake o on a.date_id = o.date_id AND a.department = o.department AND a.staff_id = o.staff_id " +
+                         "WHERE " +
+                         "a.staff_id = " + _allocation_staff_id + " AND " +
+                         "CAST(b.date_plan as DATE)>= '" + dteAction.Value.ToString("yyyyMMdd") + "' AND " +
+                         "CAST(b.date_plan as DATE)<= '" + dteActionEnd.Value.ToString("yyyyMMdd") + "' AND " +
+                         "a.department = '" + _dept + "' ";
+
+
+            double worked = 0;
+            string sql_worked = "SELECT COALESCE((SELECT ROUND((SUM(time_for_part) / 60),2) as [time_for_part] " +
+                   "FROM dbo.door_part_completion_log " +
+                   "WHERE staff_id = " + _allocation_staff_id + " AND " +
+                   "CAST(part_complete_date as DATE)>= '" + dteAction.Value.ToString("yyyyMMdd") + "' AND " +
+                   "CAST(part_complete_date as DATE)<= '" + dteActionEnd.Value.ToString("yyyyMMdd") + "' AND " +
+                   "(part_status = 'Complete' or part_status = 'Partial')  AND op = '" + _dept + "' GROUP BY staff_id),0)";
+
+
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(sql_hours, conn))
+                    hours = Convert.ToDouble(cmd.ExecuteScalar().ToString());
+
+                using (SqlCommand cmd = new SqlCommand(sql_worked, conn))
+                    worked = Convert.ToDouble(cmd.ExecuteScalar().ToString());
+
+
+                double fuga = hours - worked;
+                string a = "";
+                if (fuga < 0)
+                {
+                    
+                    fuga = fuga * -1;
+                }
+
+                label1.Text = _allocation_staff_name + " - " + fuga;
+
+                if (hours > worked)  //gained / dropped
+                {
+                    double temp = hours - worked;
+                    if (temp < 0)
+                        temp = temp * -1;
+                    label1.BackColor = Color.PaleVioletRed;
+                    label1.Text = "Dropped " + Math.Round(temp, 2).ToString() + " Hours";
+                }
+                else
+                {
+                    double temp = hours - worked;
+                    if (temp < 0)
+                        temp = temp * -1;
+
+                    label1.Text = "Gained " + Math.Round(temp, 2).ToString() + " Hours";
+                    label1.BackColor = Color.DarkSeaGreen;
+                }
+
+
+                conn.Close();
+            }
+
+        }
+
+
+
         private void getData(string staff, string dept)
         {
             int staff_id = 0;
@@ -55,6 +129,10 @@ namespace ShopFloorPlacementPlanner
             staff = staff.Substring(0, staff_id);
             //MessageBox.Show(staff);
             label1.Text = staff + " " + _hours + " Hours";
+            //
+            
+            //
+
             if (label1.Text.Contains("Dropped"))
                 label1.BackColor = Color.PaleVioletRed;
             else if (label1.Text.Contains("Gained"))
@@ -83,7 +161,7 @@ namespace ShopFloorPlacementPlanner
                 }
                 conn2.Close();
             }
-
+            getStaffDropped();
             //usp_power_planner_chronological_shop_actions_simline
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
