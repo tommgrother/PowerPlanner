@@ -87,7 +87,7 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     cmd.ExecuteNonQuery();
 
-                daily_goals = "EXEC [dbo].[AAAAAAAAA_calibrate_daily_goals] dbo.func_work_days(CAST('" + date.ToString("yyyyMMdd") + "' as date),0)"
+                daily_goals = "EXEC [dbo].[AAAAAAAAA_calibrate_daily_goals] dbo.func_work_days(CAST('" + date.ToString("yyyyMMdd") + "' as date),0)";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     cmd.ExecuteNonQuery();
 
