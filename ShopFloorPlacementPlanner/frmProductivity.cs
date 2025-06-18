@@ -136,7 +136,7 @@ namespace ShopFloorPlacementPlanner
                 //    "GROUP BY op,CAST(part_complete_date as date),dbo.door_part_completion_log.staff_id";
 
 
-                sql = "SELECT max(b.date_plan) as [Date],MAX(DATENAME(dw,b.date_plan)) as [day],max(a.department) as [department], MAX(a.[hours]) as [set_hours],'0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours],max(a.id) as [placement],max(placement_note) as [note],'' as absent_type," +
+                sql = "SELECT max(b.date_plan) as [Date],MAX(DATENAME(dw,b.date_plan)) as [day],max(a.department) as [department], MAX(a.[hours]) as [set_hours],'0' as [overtime],'0' as [total_set_hours],'0' as [actual_hours],0.0 as [Available Work at Start of Shift],max(a.id) as [placement],max(placement_note) as [note],'' as absent_type," +
                     //"CAST((max([9_30_percent]) * 100) as nvarchar(max)) + '%' as [9_30_percent]," +
                     //"CAST((max([11_30_percent]) * 100) as nvarchar(max)) + '%' as [11_30_percent]," +
                     //"CAST((max([2_30_percent]) * 100) as nvarchar(max)) + '%' as [2_30_percent]," +
@@ -158,7 +158,7 @@ namespace ShopFloorPlacementPlanner
 
                 sql = sql + " union all " +
                     "SELECT date_absent as [Date],DATENAME(dw,date_absent) as [day],replace(u.default_in_department,'Buffing','Dressing') as [department], 0 as [set_hours],'0' as [overtime]," +
-                    "'0' as [total_set_hours],'0' as [actual_hours],0 as [placement],null as [note] ,at.absent_type, " +
+                    "'0' as [total_set_hours],'0' as [actual_hours],0.0 as [Available Work at Start of Shift],0 as [placement],null as [note] ,at.absent_type, " +
                     "0 as [9_30_percent],0 as [11_30_percent],0 as [2_30_percent],0 as [end_of_shift_percent] " +
                     "from dbo.absent_holidays a " +
                     "left join dbo.absent_holidays_type  at on a.absent_type = at.absent_number " +
@@ -175,8 +175,25 @@ namespace ShopFloorPlacementPlanner
                     dt.Columns.Add(" ");
                     DataRow row = dt.NewRow();
                     dt.Rows.Add(row);
+
+
+                    //sort out the available work
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        if (dr["Date"].ToString() == "")
+                            continue;
+                        DateTime date = Convert.ToDateTime(dr["Date"].ToString());
+                        string dept = dr["Department"].ToString().Replace("ing","");
+                        sql = "SELECT " + dept + "_available_7_30 FROM dbo.power_plan_shop_goals where cast(date_goal as date) = '" + date.ToString("yyyyMMdd") + "' ";
+                        using (SqlCommand cmdAvailable = new SqlCommand(sql, conn))
+                            dr["Available Work at Start of Shift"] = cmdAvailable.ExecuteScalar().ToString();
+                    }
+
                     dataGridView1.DataSource = dt;
                 }
+
+
+
 
                 //Am currently having issues where time_for_part / 60 is not giving me the correct number, going to manually add it here instead~
                 //need to do the same for overtime
@@ -275,12 +292,12 @@ namespace ShopFloorPlacementPlanner
 
                         if (hoursTemp < actualTemp)
                         {
-                            row.Cells[14].Value = "✔";
+                            row.Cells[15].Value = "✔";
                             row.DefaultCellStyle.BackColor = Color.DarkSeaGreen;
                         }
                         else
                         {
-                            row.Cells[14].Value = "✖";
+                            row.Cells[15].Value = "✖";
                             row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
                         }
 
@@ -324,8 +341,8 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns[5].HeaderText = "Set Hours + Overtime";
                 dataGridView1.Columns[6].HeaderText = "Actual Hours";
                 dataGridView1.Columns[absentIndex].HeaderText = "Absent Type";
-                dataGridView1.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dataGridView1.Columns[7].Visible = false;
+                dataGridView1.Columns[9].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns[8].Visible = false;
 
                 foreach (DataGridViewColumn col in dataGridView1.Columns)
                 {
@@ -604,7 +621,7 @@ namespace ShopFloorPlacementPlanner
             {
                 //open the note
                 frmChronologicalDepartmentNote frm = new frmChronologicalDepartmentNote(
-                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Replace("ing",""),
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Replace("ing", ""),
                         Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells["Date"].Value.ToString())
                         );
                 frm.ShowDialog();

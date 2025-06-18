@@ -61,7 +61,7 @@ namespace ShopFloorPlacementPlanner
                          "a.staff_id = " + _allocation_staff_id + " AND " +
                          "CAST(b.date_plan as DATE)>= '" + dteAction.Value.ToString("yyyyMMdd") + "' AND " +
                          "CAST(b.date_plan as DATE)<= '" + dteActionEnd.Value.ToString("yyyyMMdd") + "' AND " +
-                         "a.department = '" + _dept + "' ";
+                         "a.department = '" + _dept.Replace("Buffing","Dressing") + "' ";
 
 
             double worked = 0;
