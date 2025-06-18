@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgPack = new System.Windows.Forms.DataGridView();
             this.dgBuff = new System.Windows.Forms.DataGridView();
             this.dgWeld = new System.Windows.Forms.DataGridView();
@@ -40,9 +41,12 @@
             this.dteDateSelection = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.btnPrint = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.dgvBend = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgPack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBuff)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBend)).BeginInit();
             this.SuspendLayout();
             // 
             // dgPack
@@ -55,7 +59,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgPack.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgPack.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgPack.Location = new System.Drawing.Point(1177, 91);
+            this.dgPack.Location = new System.Drawing.Point(1176, 91);
             this.dgPack.Name = "dgPack";
             this.dgPack.ReadOnly = true;
             this.dgPack.RowHeadersVisible = false;
@@ -72,18 +76,17 @@
             this.dgBuff.AllowUserToDeleteRows = false;
             this.dgBuff.AllowUserToResizeColumns = false;
             this.dgBuff.AllowUserToResizeRows = false;
-            this.dgBuff.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.dgBuff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dgBuff.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgBuff.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgBuff.Location = new System.Drawing.Point(588, 91);
+            this.dgBuff.Location = new System.Drawing.Point(579, 487);
             this.dgBuff.Name = "dgBuff";
             this.dgBuff.ReadOnly = true;
             this.dgBuff.RowHeadersVisible = false;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBuff.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgBuff.RowTemplate.Height = 50;
-            this.dgBuff.Size = new System.Drawing.Size(536, 652);
+            this.dgBuff.Size = new System.Drawing.Size(536, 256);
             this.dgBuff.TabIndex = 7;
             this.dgBuff.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBuff_CellClick);
             // 
@@ -97,14 +100,14 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgWeld.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgWeld.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgWeld.Location = new System.Drawing.Point(15, 91);
+            this.dgWeld.Location = new System.Drawing.Point(579, 91);
             this.dgWeld.Name = "dgWeld";
             this.dgWeld.ReadOnly = true;
             this.dgWeld.RowHeadersVisible = false;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgWeld.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgWeld.RowTemplate.Height = 50;
-            this.dgWeld.Size = new System.Drawing.Size(536, 652);
+            this.dgWeld.Size = new System.Drawing.Size(536, 353);
             this.dgWeld.TabIndex = 6;
             this.dgWeld.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeld_CellClick);
             this.dgWeld.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeld_CellDoubleClick);
@@ -121,8 +124,9 @@
             // 
             // label4
             // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(588, 62);
+            this.label4.Location = new System.Drawing.Point(579, 458);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(536, 26);
             this.label4.TabIndex = 20;
@@ -132,7 +136,7 @@
             // label3
             // 
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(15, 62);
+            this.label3.Location = new System.Drawing.Point(579, 62);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(536, 26);
             this.label3.TabIndex = 19;
@@ -170,11 +174,43 @@
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(12, 62);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(536, 26);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "Bending";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // dgvBend
+            // 
+            this.dgvBend.AllowUserToAddRows = false;
+            this.dgvBend.AllowUserToDeleteRows = false;
+            this.dgvBend.AllowUserToResizeColumns = false;
+            this.dgvBend.AllowUserToResizeRows = false;
+            this.dgvBend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.dgvBend.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvBend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBend.Location = new System.Drawing.Point(12, 91);
+            this.dgvBend.Name = "dgvBend";
+            this.dgvBend.ReadOnly = true;
+            this.dgvBend.RowHeadersVisible = false;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgvBend.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvBend.RowTemplate.Height = 50;
+            this.dgvBend.Size = new System.Drawing.Size(536, 652);
+            this.dgvBend.TabIndex = 25;
+            // 
             // frmPowerPlanStaffView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1725, 755);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.dgvBend);
             this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dteDateSelection);
@@ -191,6 +227,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgPack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBuff)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgWeld)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBend)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -206,5 +243,7 @@
         private System.Windows.Forms.DateTimePicker dteDateSelection;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnPrint;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView dgvBend;
     }
 }

@@ -600,6 +600,15 @@ namespace ShopFloorPlacementPlanner
                 frmProductivitySlimlineNotes frm = new frmProductivitySlimlineNotes(cmbEmployee.Text, Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()).ToString("yyyyMMdd"), Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()));
                 frm.ShowDialog();
             }
+            else if (dataGridView1.Columns[e.ColumnIndex].HeaderText.ToString() == "Department")
+            {
+                //open the note
+                frmChronologicalDepartmentNote frm = new frmChronologicalDepartmentNote(
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Replace("ing",""),
+                        Convert.ToDateTime(dataGridView1.Rows[e.RowIndex].Cells["Date"].Value.ToString())
+                        );
+                frm.ShowDialog();
+            }
             else if (e.ColumnIndex == 3)
             {
 

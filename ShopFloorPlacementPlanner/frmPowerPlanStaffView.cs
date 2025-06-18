@@ -211,6 +211,65 @@ namespace ShopFloorPlacementPlanner
                     dgBuff.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
 
+                //bend
+                sql = "SELECT [full placement] as 'Staff Placement'," +
+                           "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [9_30_percent],2) as nvarchar(max)) + " +
+                           "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.25 as nvarchar(max)) as [9:30]," +
+                           "case when [9_30_percent] >= 0.25 then 'up' when  [9_30_percent] < 0.25 then 'down' else '' end as [ ]," +
+                           "[9_30_note] ," +
+
+                           "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [11_30_percent],2) as nvarchar(max)) + " +
+                           "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.5 as nvarchar(max)) as [11:30]," +
+                           "case when [11_30_percent] >= 0.5 then 'up' when  [11_30_percent] < 0.5 then 'down' else '' end as [  ]," +
+                           "[11_30_note]," +
+
+                           "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [2_30_percent],2) as nvarchar(max)) + " +
+                           "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 0.75 as nvarchar(max)) as [2:30]," +
+                           "case when [2_30_percent] >= 0.75 then 'up' when  [2_30_percent] < 0.75 then 'down' else '' end as [   ]," +
+                           "[2_30_note] ," +
+
+                           "CAST(round((coalesce(hours,0) + COALESCE(ot.overtime,0)) * [end_of_shift_percent],2) as nvarchar(max)) + " +
+                           "' / ' +  CAST((coalesce(hours,0) + COALESCE(ot.overtime,0)) * 1 as nvarchar(max)) as [EOS]," +
+                           "case when [end_of_shift_percent] >= 1 then 'up' when  [end_of_shift_percent] < 1 then 'down' else '' end as [    ], " +
+                           "[end_of_shift_note] " +
+
+                           "FROM view_planner_punch_staff s " +
+                           "left join dbo.power_plan_date d on s.date_id = d.id " +
+                           "left join dbo.power_plan_overtime_remake ot on s.date_id = ot.date_id AND s.staff_id = ot.staff_id AND s.department = ot.department " +
+                           "left join dbo.[power_plan_staff_percent_log] p on s.staff_id = p.staff_id AND " +
+                           "s.department = p.department  and s.date_plan = p.log_date " +
+                           "where s.date_plan = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' and s.department = 'Bending' and [Full Placement] NOT LIKE '%Allocation Block%' ORDER BY [Staff Name]";
+
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    dgvBend.DataSource = dt;
+
+                    foreach (DataGridViewColumn col in dgvBend.Columns)
+                    {
+                        if (col.Index == 0)
+                            continue;
+                        foreach (DataGridViewRow row in dgvBend.Rows)
+                        {
+                            if (row.Cells[col.Index].Value.ToString() == "up")
+                                row.Cells[col.Index].Value = "✔";
+                            else if (row.Cells[col.Index].Value.ToString() == "down")
+                                row.Cells[col.Index].Value = "✖";
+                        }
+                    }
+                    foreach (DataGridViewColumn col in dgvBend.Columns)
+                    {
+                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    }
+
+                    dgvBend.Columns[0].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                    dgvBend.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    dgvBend.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+
                 conn.Close();
             }
         }
@@ -312,7 +371,7 @@ namespace ShopFloorPlacementPlanner
                     if (col.Index == 3 || col.Index == 6 || col.Index == 9 || col.Index == 12)
                     {
                         if (row.Cells[col.Index].Value.ToString().Length > 0)
-                            row.Cells[col.Index -1].Style.BackColor = Color.Yellow;
+                            row.Cells[col.Index - 1].Style.BackColor = Color.Yellow;
                     }
                 }
             }
@@ -327,11 +386,47 @@ namespace ShopFloorPlacementPlanner
             dgWeld.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgWeld.Columns[11].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
+            //bend
+            foreach (DataGridViewColumn col in dgvBend.Columns)
+            {
+                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+                if (col.Index == 0)
+                    continue;
+                foreach (DataGridViewRow row in dgvBend.Rows)
+                {
+                    if (row.Cells[col.Index].Value.ToString() == "✔")
+                    {
+                        row.Cells[col.Index].Style.BackColor = Color.DarkSeaGreen;
+                    }
+                    else if (row.Cells[col.Index].Value.ToString() == "✖")
+                    {
+                        row.Cells[col.Index].Style.BackColor = Color.PaleVioletRed;
+                    }
+                    if (col.Index == 3 || col.Index == 6 || col.Index == 9 || col.Index == 12)
+                    {
+                        if (row.Cells[col.Index].Value.ToString().Length > 0)
+                            row.Cells[col.Index - 1].Style.BackColor = Color.Yellow;
+                    }
+                }
+            }
+
+            dgvBend.Columns[3].Visible = false;
+            dgvBend.Columns[6].Visible = false;
+            dgvBend.Columns[9].Visible = false;
+            dgvBend.Columns[12].Visible = false;
+
+            dgvBend.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvBend.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvBend.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvBend.Columns[11].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
 
 
             dgPack.ClearSelection();
             dgBuff.ClearSelection();
             dgWeld.ClearSelection();
+            dgvBend.ClearSelection();
         }
 
         private void dteDateSelection_CloseUp(object sender, EventArgs e)
