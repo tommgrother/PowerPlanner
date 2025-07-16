@@ -322,6 +322,8 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns[part].HeaderText = "Part";
                 dataGridView1.Columns[action_date].HeaderText = "Action Date";
                 dataGridView1.Columns[part_time].HeaderText = "Time For Part";
+                dataGridView1.Columns[part_time_minutes].HeaderText = "Time For Part (Hours)";
+                dataGridView1.Columns[time].Visible = false;
                 //dataGridView1.Columns[time].HeaderText = "Time";
 
                 //messing with the colours
