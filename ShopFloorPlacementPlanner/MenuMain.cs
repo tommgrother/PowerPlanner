@@ -3384,6 +3384,20 @@ namespace ShopFloorPlacementPlanner
 
         private void fillShopGoals()
         {
+
+            //also fire the [AAAAAAAAA_calibrate_daily_goals] procedure here to make sure everything is up to date
+            string sql = "EXEC [dbo].[AAAAAAAAA_calibrate_daily_goals] @date = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "'";
+
+            using (SqlConnection connDaily = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, connDaily))
+                {
+                    connDaily.Open();
+                    cmd.ExecuteNonQuery();
+                    connDaily.Close();
+                }
+            }
+
             //first we null everything
             slimline_9_30.Text = "";
             slimline_11_30.Text = "";
@@ -3444,7 +3458,7 @@ namespace ShopFloorPlacementPlanner
             txtPackPercent.BackColor = Color.Empty;
 
             //read allt he data from the selected dte and put them into thje 100 textbnoxes
-            string sql = "SELECT COALESCE(round([9_30_slimline] * 100,2),'9999') as [9_30_slimline],COALESCE(round([11_30_slimline] * 100, 2),'9999') as [11_30_slimline],COALESCE(round([2_30_slimline] * 100, 2),'9999') as [2_30_slimline]," +
+            sql = "SELECT COALESCE(round([9_30_slimline] * 100,2),'9999') as [9_30_slimline],COALESCE(round([11_30_slimline] * 100, 2),'9999') as [11_30_slimline],COALESCE(round([2_30_slimline] * 100, 2),'9999') as [2_30_slimline]," +
                 "COALESCE(round([4_00_slimline] * 100, 2),'9999') as [4_00_slimline],COALESCE(round([9_30_punch] * 100, 2),'9999') as [9_30_punch] ,COALESCE(round([11_30_punch] * 100, 2),'9999') as [11_30_punch],COALESCE(round([2_30_punch] * 100, 2),'9999') as [2_30_punch]," +
                 "COALESCE(round([4_00_punch] * 100, 2),'9999') as [4_00_punch],COALESCE(round([9_30_laser] * 100, 2),'9999') as [9_30_laser],COALESCE(round([11_30_laser] * 100, 2),'9999') as [11_30_laser],COALESCE(round([2_30_laser] * 100, 2),'9999') as [2_30_laser] ," +
                 "COALESCE(round([4_00_laser] * 100, 2),'9999') as [4_00_laser] ,COALESCE(round([9_30_bend] * 100, 2),'9999') as [9_30_bend],COALESCE(round([11_30_bend] * 100, 2),'9999') as [11_30_bend],COALESCE(round([2_30_bend] * 100, 2),'9999') as [2_30_bend]," +
