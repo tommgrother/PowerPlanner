@@ -61,7 +61,7 @@ namespace ShopFloorPlacementPlanner
                          "a.staff_id = " + _allocation_staff_id + " AND " +
                          "CAST(b.date_plan as DATE)>= '" + dteAction.Value.ToString("yyyyMMdd") + "' AND " +
                          "CAST(b.date_plan as DATE)<= '" + dteActionEnd.Value.ToString("yyyyMMdd") + "' AND " +
-                         "a.department = '" + _dept.Replace("Buffing","Dressing") + "' ";
+                         "a.department = '" + _dept.Replace("Buffing", "Dressing") + "' ";
 
 
             double worked = 0;
@@ -88,7 +88,7 @@ namespace ShopFloorPlacementPlanner
                 string a = "";
                 if (fuga < 0)
                 {
-                    
+
                     fuga = fuga * -1;
                 }
 
@@ -130,7 +130,7 @@ namespace ShopFloorPlacementPlanner
             //MessageBox.Show(staff);
             label1.Text = staff + " " + _hours + " Hours";
             //
-            
+
             //
 
             if (label1.Text.Contains("Dropped"))
@@ -345,11 +345,17 @@ namespace ShopFloorPlacementPlanner
                 part_time = dataGridView1.Columns["part_time"].Index;
                 _time_for_part_index = part_time;
 
-                part_time_minutes = dataGridView1.Columns["part_time_minutes"].Index;
-                _time_for_part_minute_index = part_time_minutes;
+                if (dataGridView1.Columns["part_time_minutes"] != null)
+                {
+                    part_time_minutes = dataGridView1.Columns["part_time_minutes"].Index;
+                    _time_for_part_minute_index = part_time_minutes;
+                }
+                else
+                {
+                    part_time_minutes = 0;
+                }
 
-
-                action_time = dataGridView1.Columns["action_time"].Index;
+                    action_time = dataGridView1.Columns["action_time"].Index;
                 action_date = dataGridView1.Columns["action_date"].Index;
                 fullname = dataGridView1.Columns["fullname"].Index;
                 door_id = dataGridView1.Columns["door_id"].Index;
@@ -419,7 +425,8 @@ namespace ShopFloorPlacementPlanner
                 dataGridView1.Columns[action].DisplayIndex = status + 3;
                 dataGridView1.Columns[part].DisplayIndex = status + 4;
                 dataGridView1.Columns[part_time].DisplayIndex = status + 5;
-                dataGridView1.Columns[part_time_minutes].DisplayIndex = status + 6;
+                if (dataGridView1.Columns["part_time_minutes"] != null)
+                    dataGridView1.Columns[part_time_minutes].DisplayIndex = status + 6;
 
                 //sizeeeees
                 dataGridView1.Columns[status].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -918,7 +925,7 @@ namespace ShopFloorPlacementPlanner
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {  
+        {
 
         }
 
