@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlimlinePowerPlanner;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -140,19 +141,19 @@ namespace ShopFloorPlacementPlanner
             double paintAD = 0;
             double packAD = 0;
 
-            foreach (DataGridViewRow row in dgSlimline.Rows)
-            {
-                if (row.Cells[0].Value.ToString().Contains("Half"))
-                {
-                    slimlineMen = slimlineMen + 0.5;
-                }
-                else
-                {
-                    slimlineMen = slimlineMen + 1;
-                }
+            //foreach (DataGridViewRow row in dgSlimline.Rows)
+            //{
+            //    if (row.Cells[0].Value.ToString().Contains("Half"))
+            //    {
+            //        slimlineMen = slimlineMen + 0.5;
+            //    }
+            //    else
+            //    {
+            //        slimlineMen = slimlineMen + 1;
+            //    }
 
-                slimlineHours = slimlineHours + Convert.ToDouble(row.Cells[1].Value);
-            }
+            //    slimlineHours = slimlineHours + Convert.ToDouble(row.Cells[1].Value);
+            //}
 
             foreach (DataGridViewRow row in dgStores.Rows)
             {
@@ -461,108 +462,108 @@ namespace ShopFloorPlacementPlanner
         {
             int placementID = 0;
             //slimline
-            foreach (DataGridViewRow row in dgSlimline.Rows)
-                if (row.Cells[0].Value.ToString().Contains("Shift"))
-                {
-                    row.DefaultCellStyle.BackColor = Color.Red;
-                }
-            foreach (DataGridViewRow row in dgSlimline.Rows)
-                if (row.Cells[0].Value.ToString().Contains("Half"))
-                {
-                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
-                }
-            //corey added this 02/09/2020
-            foreach (DataGridViewRow row in dgSlimline.Rows)
-            {
-                if ((Convert.ToDouble(row.Cells["hours"].Value) + (Convert.ToDouble(row.Cells["overtime"].Value) * 0.8)) > Convert.ToDouble(row.Cells["worked"].Value))
-                {
-                    row.Cells[4].Style.BackColor = Color.PaleVioletRed;
-                }
-                if ((Convert.ToDouble(row.Cells["hours"].Value) + (Convert.ToDouble(row.Cells["overtime"].Value) * 0.8)) < Convert.ToDouble(row.Cells["worked"].Value))
-                {
-                    row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
-                }
-            }
+            //foreach (DataGridViewRow row in dgSlimline.Rows)
+            //    if (row.Cells[0].Value.ToString().Contains("Shift"))
+            //    {
+            //        row.DefaultCellStyle.BackColor = Color.Red;
+            //    }
+            //foreach (DataGridViewRow row in dgSlimline.Rows)
+            //    if (row.Cells[0].Value.ToString().Contains("Half"))
+            //    {
+            //        row.DefaultCellStyle.BackColor = Color.MediumPurple;
+            //    }
+            ////corey added this 02/09/2020
+            //foreach (DataGridViewRow row in dgSlimline.Rows)
+            //{
+            //    if ((Convert.ToDouble(row.Cells["hours"].Value) + (Convert.ToDouble(row.Cells["overtime"].Value) * 0.8)) > Convert.ToDouble(row.Cells["worked"].Value))
+            //    {
+            //        row.Cells[4].Style.BackColor = Color.PaleVioletRed;
+            //    }
+            //    if ((Convert.ToDouble(row.Cells["hours"].Value) + (Convert.ToDouble(row.Cells["overtime"].Value) * 0.8)) < Convert.ToDouble(row.Cells["worked"].Value))
+            //    {
+            //        row.Cells[4].Style.BackColor = Color.DarkSeaGreen;
+            //    }
+            //}
 
-            foreach (DataGridViewRow row in dgSlimline.Rows)
-            {
-                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
-                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
-                pnc.getNote();
+            //foreach (DataGridViewRow row in dgSlimline.Rows)
+            //{
+            //    placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
+            //    PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+            //    pnc.getNote();
 
-                if (row.Cells[0].Value.ToString().Contains("Shift"))
-                {
-                    row.DefaultCellStyle.BackColor = Color.Red;
-                }
-                if (row.Cells[0].Value.ToString().Contains("Half"))
-                {
-                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
-                }
+            //    if (row.Cells[0].Value.ToString().Contains("Shift"))
+            //    {
+            //        row.DefaultCellStyle.BackColor = Color.Red;
+            //    }
+            //    if (row.Cells[0].Value.ToString().Contains("Half"))
+            //    {
+            //        row.DefaultCellStyle.BackColor = Color.MediumPurple;
+            //    }
 
-                if (pnc._hasNote == true)
-                {
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
-                }
+            //    if (pnc._hasNote == true)
+            //    {
+            //        row.DefaultCellStyle.BackColor = Color.Yellow;
+            //    }
 
-                pnc.checkNonStandard();
+            //    pnc.checkNonStandard();
 
-                if (pnc._nonStandardPlacment == true)
-                {
-                    row.DefaultCellStyle.ForeColor = Color.Blue;
-                }
-            }
-            foreach (DataGridViewRow row in dgSlDispatch.Rows)
-            {
-                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
-                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
-                pnc.getNote();
+            //    if (pnc._nonStandardPlacment == true)
+            //    {
+            //        row.DefaultCellStyle.ForeColor = Color.Blue;
+            //    }
+            //}
+            //foreach (DataGridViewRow row in dgSlDispatch.Rows)
+            //{
+            //    placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
+            //    PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+            //    pnc.getNote();
 
-                if (pnc._hasNote == true)
-                {
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
-                }
+            //    if (pnc._hasNote == true)
+            //    {
+            //        row.DefaultCellStyle.BackColor = Color.Yellow;
+            //    }
 
-                pnc.checkNonStandard();
+            //    pnc.checkNonStandard();
 
-                if (pnc._nonStandardPlacment == true)
-                {
-                    row.DefaultCellStyle.ForeColor = Color.Blue;
-                }
-                if (row.Cells[0].Value.ToString().Contains("Shift"))
-                {
-                    row.DefaultCellStyle.BackColor = Color.Red;
-                }
-                if (row.Cells[0].Value.ToString().Contains("Half"))
-                {
-                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
-                }
-            }
-            foreach (DataGridViewRow row in dgSlStores.Rows)
-            {
-                placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
-                PlacementNoteClass pnc = new PlacementNoteClass(placementID);
-                pnc.getNote();
+            //    if (pnc._nonStandardPlacment == true)
+            //    {
+            //        row.DefaultCellStyle.ForeColor = Color.Blue;
+            //    }
+            //    if (row.Cells[0].Value.ToString().Contains("Shift"))
+            //    {
+            //        row.DefaultCellStyle.BackColor = Color.Red;
+            //    }
+            //    if (row.Cells[0].Value.ToString().Contains("Half"))
+            //    {
+            //        row.DefaultCellStyle.BackColor = Color.MediumPurple;
+            //    }
+            //}
+            //foreach (DataGridViewRow row in dgSlStores.Rows)
+            //{
+            //    placementID = Convert.ToInt32(row.Cells[2].Value.ToString());
+            //    PlacementNoteClass pnc = new PlacementNoteClass(placementID);
+            //    pnc.getNote();
 
-                if (pnc._hasNote == true)
-                {
-                    row.DefaultCellStyle.BackColor = Color.Yellow;
-                }
+            //    if (pnc._hasNote == true)
+            //    {
+            //        row.DefaultCellStyle.BackColor = Color.Yellow;
+            //    }
 
-                pnc.checkNonStandard();
+            //    pnc.checkNonStandard();
 
-                if (pnc._nonStandardPlacment == true)
-                {
-                    row.DefaultCellStyle.ForeColor = Color.Blue;
-                }
-                if (row.Cells[0].Value.ToString().Contains("Shift"))
-                {
-                    row.DefaultCellStyle.BackColor = Color.Red;
-                }
-                if (row.Cells[0].Value.ToString().Contains("Half"))
-                {
-                    row.DefaultCellStyle.BackColor = Color.MediumPurple;
-                }
-            }
+            //    if (pnc._nonStandardPlacment == true)
+            //    {
+            //        row.DefaultCellStyle.ForeColor = Color.Blue;
+            //    }
+            //    if (row.Cells[0].Value.ToString().Contains("Shift"))
+            //    {
+            //        row.DefaultCellStyle.BackColor = Color.Red;
+            //    }
+            //    if (row.Cells[0].Value.ToString().Contains("Half"))
+            //    {
+            //        row.DefaultCellStyle.BackColor = Color.MediumPurple;
+            //    }
+            //}
 
             //PUNCH
             foreach (DataGridViewRow row in dgPunch.Rows)
@@ -1199,26 +1200,26 @@ namespace ShopFloorPlacementPlanner
             countMen();
             currentAvailable();
 
-            DataGridViewColumn columnSlimlineID = dgSlimline.Columns[2];
-            columnSlimlineID.Visible = false;
-            DataGridViewColumn columnSlimline = dgSlimline.Columns[1];
-            columnSlimline.Width = 40;
-            dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dgSlimline.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            //DataGridViewColumn columnSlimlineID = dgSlimline.Columns[2];
+            //columnSlimlineID.Visible = false;
+            //DataGridViewColumn columnSlimline = dgSlimline.Columns[1];
+            //columnSlimline.Width = 40;
+            //dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            //dgSlimline.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
-            DataGridViewColumn columnSlimlineDispatchID = dgSlDispatch.Columns[2];
-            columnSlimlineDispatchID.Visible = false;
-            DataGridViewColumn columnSlimlineDispatch = dgSlDispatch.Columns[1];
-            columnSlimlineDispatch.Width = 40;
-            dgSlDispatch.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dgSlDispatch.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            //DataGridViewColumn columnSlimlineDispatchID = dgSlDispatch.Columns[2];
+            //columnSlimlineDispatchID.Visible = false;
+            //DataGridViewColumn columnSlimlineDispatch = dgSlDispatch.Columns[1];
+            //columnSlimlineDispatch.Width = 40;
+            //dgSlDispatch.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            //dgSlDispatch.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
-            DataGridViewColumn columnSlimlineStoresID = dgSlStores.Columns[2];
-            columnSlimlineStoresID.Visible = false;
-            DataGridViewColumn columnSlimlineStores = dgSlStores.Columns[1];
-            columnSlimlineStores.Width = 40;
-            dgSlStores.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dgSlStores.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            //DataGridViewColumn columnSlimlineStoresID = dgSlStores.Columns[2];
+            //columnSlimlineStoresID.Visible = false;
+            //DataGridViewColumn columnSlimlineStores = dgSlStores.Columns[1];
+            //columnSlimlineStores.Width = 40;
+            //dgSlStores.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            //dgSlStores.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
             DataGridViewColumn columnLaserID = dgLaser.Columns[2];
             columnLaserID.Visible = false;
@@ -1336,159 +1337,232 @@ namespace ShopFloorPlacementPlanner
 
         private void fillSlimline()
         {
-            if (dgSlimline.Columns.Contains("worked") == true)
+            //このコードは改善してSLIMLINEPOWERPLANNERを読み込むです
+            if ("old code" == "old code")
             {
-                dgSlimline.Columns.Remove("worked");
+                ////if (dgSlimline.Columns.Contains("worked") == true)
+                ////{
+                ////    dgSlimline.Columns.Remove("worked");
+                ////}
+                ////if (dgSlimline.Columns.Contains("set/worked") == true)
+                ////{
+                ////    dgSlimline.Columns.Remove("set/worked");
+                ////}
+                ////if (dgSlimline.Columns.Contains("overtime") == true)
+                ////{
+                ////    dgSlimline.Columns.Remove("overtime");
+                ////}
+
+                ////SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+                ////conn.Open();
+                ////SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+                ////cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+                ////cmd.Parameters.AddWithValue("@dept", "Slimline");
+
+                ////SqlDataAdapter da = new SqlDataAdapter(cmd);
+                ////DataTable dt = new DataTable();
+                ////da.Fill(dt);
+
+                ////dgSlimline.DataSource = dt;
+
+                ////SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+                ////cmdryucxd.CommandType = CommandType.StoredProcedure;
+                ////cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Slimline";
+                ////cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+
+                ////var dataReader = cmdryucxd.ExecuteReader();
+                ////// SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+                ////DataTable workedHours = new DataTable();
+                ////workedHours.Load(dataReader);
+                //////da2.Fill(workedHours);
+
+                //////overtime -- usp_power_planner_overtime_hours
+                ////SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
+                ////cmdOT.CommandType = CommandType.StoredProcedure;
+                ////cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Slimline";
+                ////cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+
+                ////var OTreader = cmdOT.ExecuteReader();
+                ////// SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+                ////DataTable overtimeHours = new DataTable();
+                ////overtimeHours.Load(OTreader);
+
+                ////dgSlimline.Columns.Add("worked", "worked");
+                ////dgSlimline.Columns.Add("set/worked", "set/worked");
+                ////dgSlimline.Columns.Add("overtime", "overtime");
+
+                ////for (int i = 0; i < dgSlimline.Rows.Count; i++)
+                ////{
+                ////    dgSlimline[5, i].Value = overtimeHours.Rows[0][i].ToString();
+                ////}
+
+                ////for (int i = 0; i < dgSlimline.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
+                ////{
+                ////    //MessageBox.Show(workedHours.Rows[0][i].ToString()); //
+                ////    dgSlimline[3, i].Value = workedHours.Rows[0][i].ToString();
+                ////}
+
+
+                ////string sql = "select [Staff Name] FROM view_planner_punch_staff WHERE department = 'Slimline' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]"; //12324
+                ////DataTable dtStaffID = new DataTable();
+                ////using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
+                ////{
+                ////    SqlDataAdapter daStaffID = new SqlDataAdapter(cmdStaffID);
+                ////    daStaffID.Fill(dtStaffID);
+                ////}
+
+
+                //////put the columns together into one column! :D
+                ////string hours = "";
+                ////string worked = "";
+                ////for (int i = 0; i < dgSlimline.Rows.Count; i++)
+                ////{
+
+                ////    string allocated = "";
+                ////    try
+                ////    {
+                ////        ////sql = "SELECT sum(hours) FROM ( " +
+                ////        ////   "select round(cast((sum(time_remaining_cutting * quantity_same) + sum(time_remaining_prepping * quantity_same) + sum(time_remianing_assembly * quantity_same)) as float) /60,2) as hours from dbo.view_worked_hours da " +
+                ////        ////   "left join dbo.door d on da.door_id = d.id " +
+                ////        ////   "where (da.department = 'Assembly' or da.department = 'Cutting' or da.department = 'Prepping') and " +
+                ////        ////   "(time_remaining_cutting > 0 or time_remaining_prepping > 0 or time_remianing_assembly > 0) and " +
+                ////        ////   "(status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                ////        ////   "group by staff_id,da.door_id) as a";
+                ////        ///
+                ////        //old string
+                ////        sql = "select SUM(time_remaining)  from dbo.c_view_slimline_allocation where [Allocated to] = '" + dtStaffID.Rows[i][0].ToString() + "'";
+
+                ////        //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
+                ////        using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                ////        {
+                ////            allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                ////            if (allocated == "")
+                ////                allocated = "0";
+                ////        }
+                ////    }
+                ////    catch
+                ////    {
+                ////        allocated = "0";
+                ////    }
+
+
+                ////    double overtimeTemp = Convert.ToDouble(dgSlimline.Rows[i].Cells[5].Value) * 0.8;
+                ////    hours = Convert.ToString(Convert.ToDecimal(dgSlimline.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));       //dgSlimline.Rows[i].Cells[1].Value.ToString();
+                ////    worked = dgSlimline.Rows[i].Cells[3].Value.ToString();
+                ////    dgSlimline[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
+                //}
+                //dgSlimline.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                //dgSlimline.Columns["set/worked"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                //dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                //dgSlimline.Columns["hours"].Visible = false;
+                //dgSlimline.Columns["worked"].Visible = false;
+                //dgSlimline.Columns["overtime"].Visible = false;
+                //conn.Close();
             }
-            if (dgSlimline.Columns.Contains("set/worked") == true)
+
+            //ここは新しいコード
+            string sql = "select " +
+                         "s.staff_id," +
+                         "CASE WHEN Allocated is null then [Staff] + CHAR(13) + CHAR(10) + department  ELSE [Staff] + CHAR(13) + CHAR(10) + department + CHAR(13) + CHAR(10) + 'Allocated ' + CAST([allocated] as nvarchar(max)) end as Staff,	" +
+                         "CASE WHEN part.dept is null then CAST(round(Hours + [Over Time],2) as nvarchar(max))        " +
+                         "ELSE CAST(round(Hours + [Over Time],2) as nvarchar(max)) + ' / ' + CAST(part.time as nvarchar(max))		 " +
+                         "END as [Hours],[Placement Note],case when round(Hours + [Over Time],2) <= coalesce(part.time,0) then -1 else 0 end as colour,department_id " +
+                         "FROM dbo.view_power_plan_slimline s " +
+                         "left join dbo.view_power_plan_slimline_part_completion_log part on s.staff_id = part.staff_id AND s.department_id = part.dept AND s.Date = part.part_date " +
+                         "left join (select d.id as dept_id,[Allocated to],[Op Date],sum(time_remaining) as [Allocated]    	     " +
+                         "FROM c_view_slimline_allocation c            " +
+                         "left join dbo.power_plan_slimline_department d on c.Section = d.part_completion_log_dept           " +
+                         "group by d.id,[Allocated to],[Op Date]) c on s.Date = [Op Date] AND s.[Staff Name] = c.[Allocated to] AND s.department_id = c.dept_id " +
+                         "WHERE  s.date = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' Order by department_id asc, Staff asc";
+
+
+            DataTable dtSource = new DataTable();
+            using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
-                dgSlimline.Columns.Remove("set/worked");
-            }
-            if (dgSlimline.Columns.Contains("overtime") == true)
-            {
-                dgSlimline.Columns.Remove("overtime");
-            }
+                conn.Open();
 
-            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
-            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
-            cmd.Parameters.AddWithValue("@dept", "Slimline");
-
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-
-            dgSlimline.DataSource = dt;
-
-            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
-            cmdryucxd.CommandType = CommandType.StoredProcedure;
-            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Slimline";
-            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
-
-            var dataReader = cmdryucxd.ExecuteReader();
-            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
-            DataTable workedHours = new DataTable();
-            workedHours.Load(dataReader);
-            //da2.Fill(workedHours);
-
-            //overtime -- usp_power_planner_overtime_hours
-            SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
-            cmdOT.CommandType = CommandType.StoredProcedure;
-            cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Slimline";
-            cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
-
-            var OTreader = cmdOT.ExecuteReader();
-            // SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
-            DataTable overtimeHours = new DataTable();
-            overtimeHours.Load(OTreader);
-
-            dgSlimline.Columns.Add("worked", "worked");
-            dgSlimline.Columns.Add("set/worked", "set/worked");
-            dgSlimline.Columns.Add("overtime", "overtime");
-
-            for (int i = 0; i < dgSlimline.Rows.Count; i++)
-            {
-                dgSlimline[5, i].Value = overtimeHours.Rows[0][i].ToString();
-            }
-
-            for (int i = 0; i < dgSlimline.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
-            {
-                //MessageBox.Show(workedHours.Rows[0][i].ToString()); //
-                dgSlimline[3, i].Value = workedHours.Rows[0][i].ToString();
-            }
-
-
-            string sql = "select [Staff Name] FROM view_planner_punch_staff WHERE department = 'Slimline' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]"; //12324
-            DataTable dtStaffID = new DataTable();
-            using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
-            {
-                SqlDataAdapter daStaffID = new SqlDataAdapter(cmdStaffID);
-                daStaffID.Fill(dtStaffID);
-            }
-
-
-            //put the columns together into one column! :D
-            string hours = "";
-            string worked = "";
-            for (int i = 0; i < dgSlimline.Rows.Count; i++)
-            {
-
-                string allocated = "";
-                try
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    ////sql = "SELECT sum(hours) FROM ( " +
-                    ////   "select round(cast((sum(time_remaining_cutting * quantity_same) + sum(time_remaining_prepping * quantity_same) + sum(time_remianing_assembly * quantity_same)) as float) /60,2) as hours from dbo.view_worked_hours da " +
-                    ////   "left join dbo.door d on da.door_id = d.id " +
-                    ////   "where (da.department = 'Assembly' or da.department = 'Cutting' or da.department = 'Prepping') and " +
-                    ////   "(time_remaining_cutting > 0 or time_remaining_prepping > 0 or time_remianing_assembly > 0) and " +
-                    ////   "(status_id = 1 or status_id = 2) and staff_id = " + dtStaffID.Rows[i][0].ToString() +
-                    ////   "group by staff_id,da.door_id) as a";
-                    ///
-                    //old string
-                    sql = "select SUM(time_remaining)  from dbo.c_view_slimline_allocation where [Allocated to] = '" + dtStaffID.Rows[i][0].ToString() + "'";
-
-                    //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
-                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
-                    {
-                        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
-                        if (allocated == "")
-                            allocated = "0";
-                    }
-                }
-                catch
-                {
-                    allocated = "0";
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dtSource);
                 }
 
-
-                double overtimeTemp = Convert.ToDouble(dgSlimline.Rows[i].Cells[5].Value) * 0.8;
-                hours = Convert.ToString(Convert.ToDecimal(dgSlimline.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));       //dgSlimline.Rows[i].Cells[1].Value.ToString();
-                worked = dgSlimline.Rows[i].Cells[3].Value.ToString();
-                dgSlimline[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
+                conn.Close();
             }
 
+            //DataTable　が空の場合は、関数を終了する
+            if (dtSource.Rows.Count > 0)
+            {
+                dgSlimline.DataSource = dtSource;
+
+                //DataGridViewのフォーマットをここで設定する
+                dgSlimline.Columns["Staff"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgSlimline.Columns["Hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+                dgSlimline.Columns["staff_id"].Visible = false;
+                dgSlimline.Columns["Placement Note"].Visible = false;
+                dgSlimline.Columns["colour"].Visible = false;
+                dgSlimline.Columns["department_id"].Visible = false;
 
 
+                //DataGridViewの列０を改行モードに設定する
+                dgSlimline.Columns["Staff"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                dgSlimline.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                //dgSlimline.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
-            dgSlimline.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dgSlimline.Columns["set/worked"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dgSlimline.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dgSlimline.Columns["hours"].Visible = false;
-            dgSlimline.Columns["worked"].Visible = false;
-            dgSlimline.Columns["overtime"].Visible = false;
 
-            conn.Close();
+                foreach (DataGridViewRow row in dgSlimline.Rows)
+                {
+                    if (row.Cells["Placement Note"].Value.ToString().Length > 0)
+                        row.DefaultCellStyle.BackColor = System.Drawing.Color.Gold;
+                }
+
+                //DataGridViewのセルに色を付ける
+                foreach (DataGridViewRow row in dgSlimline.Rows)
+                {
+                    if (row.Cells["colour"].Value.ToString() == "-1")
+                        row.DefaultCellStyle.BackColor = System.Drawing.Color.LightGreen;
+                    else
+                        row.DefaultCellStyle.BackColor = System.Drawing.Color.PaleVioletRed;
+                }
+
+
+                //DataGridViewのフォーカスを外す
+                dgSlimline.ClearSelection();
+
+
+            }
+
         }
 
         private void fillSlimlineDispatch()
         {
-            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
-            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
-            cmd.Parameters.AddWithValue("@dept", "SlimlineDispatch");
+            //SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            //conn.Open();
+            //SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            //cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            //cmd.Parameters.AddWithValue("@dept", "SlimlineDispatch");
 
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
+            //SqlDataAdapter da = new SqlDataAdapter(cmd);
+            //DataTable dt = new DataTable();
+            //da.Fill(dt);
 
-            dgSlDispatch.DataSource = dt;
+            //dgSlDispatch.DataSource = dt;
         }
 
         private void fillSlimlineStores()
         {
-            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
-            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
-            cmd.Parameters.AddWithValue("@dept", "SlimlineStores");
+            //SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            //conn.Open();
+            //SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            //cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            //cmd.Parameters.AddWithValue("@dept", "SlimlineStores");
 
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
+            //SqlDataAdapter da = new SqlDataAdapter(cmd);
+            //DataTable dt = new DataTable();
+            //da.Fill(dt);
 
-            dgSlStores.DataSource = dt;
+            //dgSlStores.DataSource = dt;
         }
 
         private void fillPunch()
@@ -1752,147 +1826,147 @@ namespace ShopFloorPlacementPlanner
         }
 
 
-   private void fillWeld()
-     {
-         if (dgWeld.Columns.Contains("worked") == true)
-         {
-             dgWeld.Columns.Remove("worked");
-         }
-         if (dgWeld.Columns.Contains("set/worked") == true)
-         {
-             dgWeld.Columns.Remove("set/worked");
-         }
-         if (dgWeld.Columns.Contains("overtime") == true)
-         {
-             dgWeld.Columns.Remove("overtime");
-         }
-         SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
-         conn.Open();
+        private void fillWeld()
+        {
+            if (dgWeld.Columns.Contains("worked") == true)
+            {
+                dgWeld.Columns.Remove("worked");
+            }
+            if (dgWeld.Columns.Contains("set/worked") == true)
+            {
+                dgWeld.Columns.Remove("set/worked");
+            }
+            if (dgWeld.Columns.Contains("overtime") == true)
+            {
+                dgWeld.Columns.Remove("overtime");
+            }
+            SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
+            conn.Open();
 
-         SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
-         cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
-         cmd.Parameters.AddWithValue("@dept", "Welding");
+            SqlCommand cmd = new SqlCommand("SELECT [full placement] as 'Staff Placement',hours,PlacementID FROM view_planner_punch_staff where date_plan = @datePlan and department = @dept ORDER BY [Staff Name]", conn);
+            cmd.Parameters.AddWithValue("@datePlan", dteDateSelection.Text);
+            cmd.Parameters.AddWithValue("@dept", "Welding");
 
-         //
-         //string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(a.placement_type,'')  AS [Staff Placement], a.hours, a.id " +
-         //                    "FROM dbo.power_plan_staff AS a " +
-         //                    "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
-         //                    "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
-         //                    "WHERE c.date_plan = '" + dteDateSelection.Text + "' and a.department = 'Welding'  order by b.forename + ' ' + b.surname";
-         //ryucxd
-         //SqlCommand cmd = new SqlCommand(sql, conn);
-         SqlDataAdapter da = new SqlDataAdapter(cmd);
-         //var dataReader = cmd.ExecuteReader();
-         // conn.Close();
-         DataTable dt = new DataTable();
-         //dt.Load(dataReader);
-         da.Fill(dt);
+            //
+            //string sql = "SELECT  b.forename + ' ' + b.surname + CHAR(13) + COALESCE(a.placement_type,'')  AS [Staff Placement], a.hours, a.id " +
+            //                    "FROM dbo.power_plan_staff AS a " +
+            //                    "INNER JOIN user_info.dbo.[user] AS b ON a.staff_id = b.id " +
+            //                    "INNER JOIN dbo.power_plan_date as c ON a.date_id = c.id " +
+            //                    "WHERE c.date_plan = '" + dteDateSelection.Text + "' and a.department = 'Welding'  order by b.forename + ' ' + b.surname";
+            //ryucxd
+            //SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            //var dataReader = cmd.ExecuteReader();
+            // conn.Close();
+            DataTable dt = new DataTable();
+            //dt.Load(dataReader);
+            da.Fill(dt);
 
-         dgWeld.DataSource = dt;
-         //dgWeld.Columns["hours"].Visible = false;
-         //dgWeld.Columns["Set hours / worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-         //dgWeld.Columns["workedHours"].Visible = false;
+            dgWeld.DataSource = dt;
+            //dgWeld.Columns["hours"].Visible = false;
+            //dgWeld.Columns["Set hours / worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dgWeld.Columns["workedHours"].Visible = false;
 
-         //this procedure works everything out, so if we just staple on another column and insert whatever we grab from the procedure life should be good
-         //usp_power_planner_worked_hours
-         SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
-         cmdryucxd.CommandType = CommandType.StoredProcedure;
-         cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Welding";
-         cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            //this procedure works everything out, so if we just staple on another column and insert whatever we grab from the procedure life should be good
+            //usp_power_planner_worked_hours
+            SqlCommand cmdryucxd = new SqlCommand("usp_power_planner_worked_hours", conn);
+            cmdryucxd.CommandType = CommandType.StoredProcedure;
+            cmdryucxd.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Welding";
+            cmdryucxd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
-         var dataReader = cmdryucxd.ExecuteReader();
-         //SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
-         DataTable workedHours = new DataTable();
-         workedHours.Load(dataReader);
-         //da2.Fill(workedHours);
+            var dataReader = cmdryucxd.ExecuteReader();
+            //SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable workedHours = new DataTable();
+            workedHours.Load(dataReader);
+            //da2.Fill(workedHours);
 
-         //overtime -- usp_power_planner_overtime_hours~
-         SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
-         cmdOT.CommandType = CommandType.StoredProcedure;
-         cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Welding";
-         cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+            //overtime -- usp_power_planner_overtime_hours~
+            SqlCommand cmdOT = new SqlCommand("usp_power_planner_overtime_hours", conn);
+            cmdOT.CommandType = CommandType.StoredProcedure;
+            cmdOT.Parameters.AddWithValue("@department", SqlDbType.Date).Value = "Welding";
+            cmdOT.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
 
-         var OTreader = cmdOT.ExecuteReader();
-         //SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
-         DataTable overtimeHours = new DataTable();
-         overtimeHours.Load(OTreader);
+            var OTreader = cmdOT.ExecuteReader();
+            //SqlDataAdapter da2 = new SqlDataAdapter(cmdryucxd);
+            DataTable overtimeHours = new DataTable();
+            overtimeHours.Load(OTreader);
 
-         dgWeld.Columns.Add("worked", "worked");
-         dgWeld.Columns.Add("set/worked", "set/worked");
-         dgWeld.Columns.Add("overtime", "overtime");
+            dgWeld.Columns.Add("worked", "worked");
+            dgWeld.Columns.Add("set/worked", "set/worked");
+            dgWeld.Columns.Add("overtime", "overtime");
 
-         for (int i = 0; i < dgWeld.Rows.Count; i++)
-         {
-             dgWeld[5, i].Value = overtimeHours.Rows[0][i].ToString();
-         }
-         //need to check the datatable for content
+            for (int i = 0; i < dgWeld.Rows.Count; i++)
+            {
+                dgWeld[5, i].Value = overtimeHours.Rows[0][i].ToString();
+            }
+            //need to check the datatable for content
 
-         for (int i = 0; i < dgWeld.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
-         {
-             // MessageBox.Show(workedHours.Rows[0][i].ToString());
-             dgWeld[3, i].Value = workedHours.Rows[0][i].ToString();
-         }
-         string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Welding' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]"; //12324
-         DataTable dtStaffID = new DataTable();
-         using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
-         {
-             SqlDataAdapter daStaffID = new SqlDataAdapter(cmdStaffID);
-             daStaffID.Fill(dtStaffID);
-         }
-
-
-         //put the columns together into one column! :D
-         string hours = "";
-         string worked = "";
-         for (int i = 0; i < dgWeld.Rows.Count; i++)
-         {
-             string allocated = "";
-             try
-             {
-                 sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_weld * quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
-                     "left join dbo.door d on da.door_id = d.id where da.department = 'welding' and (time_remaining_weld > 0) and (status_id = 1 or status_id = 2) and complete_weld = 0 and staff_id = " + dtStaffID.Rows[i][0].ToString() +
-                     "group by staff_id,da.door_id) as a";
-
-                 //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
-                 using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
-                 {
-                     allocated = (string)cmdAllocated.ExecuteScalar().ToString();
-                     if (allocated == "")
-                         allocated = "0";
-                 }
-             }
-             catch
-             {
-                 allocated = "0";
-             }
-             double overtimeTemp = Convert.ToDouble(dgWeld.Rows[i].Cells[5].Value) * 0.8;
-             hours = Convert.ToString(Convert.ToDecimal(dgWeld.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));   //dgWeld.Rows[i].Cells[1].Value.ToString();
-             worked = dgWeld.Rows[i].Cells[3].Value.ToString();
-             dgWeld[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
+            for (int i = 0; i < dgWeld.Rows.Count; i++) //because this is ordered by staff i can use the max rows to get the number for columns needed :)
+            {
+                // MessageBox.Show(workedHours.Rows[0][i].ToString());
+                dgWeld[3, i].Value = workedHours.Rows[0][i].ToString();
+            }
+            string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Welding' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]"; //12324
+            DataTable dtStaffID = new DataTable();
+            using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
+            {
+                SqlDataAdapter daStaffID = new SqlDataAdapter(cmdStaffID);
+                daStaffID.Fill(dtStaffID);
+            }
 
 
-         }
+            //put the columns together into one column! :D
+            string hours = "";
+            string worked = "";
+            for (int i = 0; i < dgWeld.Rows.Count; i++)
+            {
+                string allocated = "";
+                try
+                {
+                    sql = "SELECT sum(hours) FROM (select round(cast(sum(time_remaining_weld * quantity_same) as float) /60,2) as hours from dbo.door_allocation da " +
+                        "left join dbo.door d on da.door_id = d.id where da.department = 'welding' and (time_remaining_weld > 0) and (status_id = 1 or status_id = 2) and complete_weld = 0 and staff_id = " + dtStaffID.Rows[i][0].ToString() +
+                        "group by staff_id,da.door_id) as a";
 
-         //dgWeld.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-         //dgWeld.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-         dgWeld.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-         dgWeld.Columns["set/worked"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-         dgWeld.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-         dgWeld.Columns["hours"].Visible = false;
-         dgWeld.Columns["worked"].Visible = false;
-         dgWeld.Columns["overtime"].Visible = false;
+                    //and staff_id = " + dtStaffID.Rows[i][0].ToString() +        //
+                    using (SqlCommand cmdAllocated = new SqlCommand(sql, conn))
+                    {
+                        allocated = (string)cmdAllocated.ExecuteScalar().ToString();
+                        if (allocated == "")
+                            allocated = "0";
+                    }
+                }
+                catch
+                {
+                    allocated = "0";
+                }
+                double overtimeTemp = Convert.ToDouble(dgWeld.Rows[i].Cells[5].Value) * 0.8;
+                hours = Convert.ToString(Convert.ToDecimal(dgWeld.Rows[i].Cells[1].Value) + Convert.ToDecimal(overtimeTemp));   //dgWeld.Rows[i].Cells[1].Value.ToString();
+                worked = dgWeld.Rows[i].Cells[3].Value.ToString();
+                dgWeld[4, i].Value = hours + " / " + worked + " " + Environment.NewLine + "" + allocated + " Allo";
 
-         // conn.Close();
+
+            }
+
+            //dgWeld.Columns["Staff Placement"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dgWeld.Columns["hours"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgWeld.Columns["set/worked"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgWeld.Columns["set/worked"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgWeld.Columns["Staff Placement"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgWeld.Columns["hours"].Visible = false;
+            dgWeld.Columns["worked"].Visible = false;
+            dgWeld.Columns["overtime"].Visible = false;
+
+            // conn.Close();
 
 
-         //go through each row and hide allocation block
-         foreach (DataGridViewRow row in dgWeld.Rows)
-         {
-             //MessageBox.Show(row.Cells[0].Value.ToString());
-             if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
-                 row.Height = 0;
-         }
-     }
+            //go through each row and hide allocation block
+            foreach (DataGridViewRow row in dgWeld.Rows)
+            {
+                //MessageBox.Show(row.Cells[0].Value.ToString());
+                if (row.Cells[0].Value.ToString().Contains("Allocation Block"))
+                    row.Height = 0;
+            }
+        }
 
 
 
@@ -2190,7 +2264,7 @@ namespace ShopFloorPlacementPlanner
 
             string sql = "select staff_id FROM view_planner_punch_staff WHERE department = 'Packing' AND date_plan = cast('" + dteDateSelection.Value.ToString("yyyyMMdd") + "' as date) ORDER BY [Staff Name]";
             DataTable dtStaffID = new DataTable();
-            using (SqlCommand cmdStaffID = new SqlCommand(sql, conn)) 
+            using (SqlCommand cmdStaffID = new SqlCommand(sql, conn))
             {
                 SqlDataAdapter daStaffID = new SqlDataAdapter(cmdStaffID);
                 daStaffID.Fill(dtStaffID);
@@ -2466,18 +2540,22 @@ namespace ShopFloorPlacementPlanner
 
         private void btnAddSlimline_Click(object sender, EventArgs e)
         {
-            remove_absents();
-            skipMessageBox = 2;
+            //remove_absents();
+            //skipMessageBox = 2;
 
-            department_changed department_Changed = new department_changed();
+            //department_changed department_Changed = new department_changed();
 
-            frmSelectStaff frmSS = new frmSelectStaff("Slimline", Convert.ToDateTime(dteDateSelection.Text));
-            frmSS.ShowDialog();
+            //frmSelectStaff frmSS = new frmSelectStaff("Slimline", Convert.ToDateTime(dteDateSelection.Text));
+            //frmSS.ShowDialog();
 
-            //instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
-            // fillgrid();
-            refreshSelectedDepartments();
-            add_absents();
+            ////instead of fill grid we're going to use refreshSelectedDepartments and only refresh the ones that need it
+            //// fillgrid();
+            //refreshSelectedDepartments();
+            //add_absents();
+            SqlStatements s = new SqlStatements();
+            frmUpdateStaff frm = new frmUpdateStaff(s.GetDateId(dteDateSelection.Value));
+            frm.ShowDialog();
+
         }
 
         private void sendToDailyGoalsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3205,7 +3283,7 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     worked = Convert.ToDouble(cmd.ExecuteScalar());
 
-                final_hours = Math.Round(hours - worked,2);
+                final_hours = Math.Round(hours - worked, 2);
 
                 if (final_hours < 0)
                 {
@@ -3246,7 +3324,7 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     worked = Convert.ToDouble(cmd.ExecuteScalar());
 
-                final_hours = Math.Round(hours - worked,2);
+                final_hours = Math.Round(hours - worked, 2);
 
                 if (final_hours < 0)
                 {
@@ -3287,7 +3365,7 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     worked = Convert.ToDouble(cmd.ExecuteScalar());
 
-                final_hours = Math.Round(hours - worked,2);
+                final_hours = Math.Round(hours - worked, 2);
 
                 if (final_hours < 0)
                 {
@@ -3393,7 +3471,11 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand(sql, connDaily))
                 {
                     connDaily.Open();
-                    cmd.ExecuteNonQuery();
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch { }
                     connDaily.Close();
                 }
             }
@@ -3930,9 +4012,19 @@ namespace ShopFloorPlacementPlanner
         private void dgSlimline_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            dgSlimline.ClearSelection();
-            frmChronological frm = new frmChronological(Convert.ToString(dgSlimline.Rows[e.RowIndex].Cells[0].Value), "Slimline", dteDateSelection.Value, "");
+            //dgSlimline.ClearSelection();
+            //frmChronological frm = new frmChronological(Convert.ToString(dgSlimline.Rows[e.RowIndex].Cells[0].Value), "Slimline", dteDateSelection.Value, "");
+            //frm.ShowDialog();
+            //MessageBox.Show(dgSlimline.Rows[e.RowIndex].Cells["Staff"].Value.ToString());
+            SqlStatements s = new SqlStatements();
+            int staff_id = Convert.ToInt32(dgSlimline.Rows[e.RowIndex].Cells["staff_id"].Value.ToString());
+            int dept_id = Convert.ToInt32(dgSlimline.Rows[e.RowIndex].Cells["department_id"].Value.ToString());
+            int date_id = Convert.ToInt32(s.GetDateId(dteDateSelection.Value));
+            frmChronologicalSlimline frm = new frmChronologicalSlimline(staff_id, dept_id, date_id);
             frm.ShowDialog();
+
+            
+
         }
 
         private void btnSlimlineDispatch_Click(object sender, EventArgs e)
@@ -4183,7 +4275,7 @@ namespace ShopFloorPlacementPlanner
             frm.ShowDialog();
 
             //select between two dates and  view all absences/holidays
-            
+
         }
 
         private void dgBend_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -4212,7 +4304,7 @@ namespace ShopFloorPlacementPlanner
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                     worked = Convert.ToDouble(cmd.ExecuteScalar());
 
-                final_hours = Math.Round(hours - worked,2);
+                final_hours = Math.Round(hours - worked, 2);
 
                 if (final_hours < 0)
                 {
@@ -4561,24 +4653,24 @@ namespace ShopFloorPlacementPlanner
 
                             default_dept = dt.Rows[0][0].ToString();
                         }
-                        if (default_dept == "Slimline")
-                        {
-                            //copy the welding and then add my row and copy back
+                        //if (default_dept == "Slimline")
+                        //{
+                        //    //copy the welding and then add my row and copy back
 
-                            DataTable dt = (DataTable)(dgSlimline.DataSource);
+                        //    DataTable dt = (DataTable)(dgSlimline.DataSource);
 
-                            DataRow dataRow;
-                            dataRow = dt.NewRow();
-                            dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
-                            // dataRow[2] = "ABSENT";
-                            dt.Rows.Add(dataRow);
+                        //    DataRow dataRow;
+                        //    dataRow = dt.NewRow();
+                        //    dataRow[0] = row.Cells[0].Value.ToString() + Environment.NewLine + " ABSENT";
+                        //    // dataRow[2] = "ABSENT";
+                        //    dt.Rows.Add(dataRow);
 
-                            dgSlimline.DataSource = dt;
+                        //    dgSlimline.DataSource = dt;
 
-                            foreach (DataGridViewRow dgvRow in dgSlimline.Rows)
-                                if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
-                                    dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
-                        }
+                        //    foreach (DataGridViewRow dgvRow in dgSlimline.Rows)
+                        //        if (dgvRow.Cells[0].Value.ToString().Contains("ABSENT"))
+                        //            dgvRow.DefaultCellStyle.BackColor = Color.Salmon;
+                        //}
                     }
                     conn.Close();
                 }

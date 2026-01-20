@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>480</ApplicationRevision>
+    <ApplicationRevision>484</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -151,6 +151,12 @@
     <Compile Include="frmBuffingDiscs.Designer.cs">
       <DependentUpon>frmBuffingDiscs.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmChronologicalSlimline.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChronologicalSlimline.Designer.cs">
+      <DependentUpon>frmChronologicalSlimline.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmChronological.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +210,12 @@
     </Compile>
     <Compile Include="frmNewWarning.Designer.cs">
       <DependentUpon>frmNewWarning.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmNote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNote.Designer.cs">
+      <DependentUpon>frmNote.cs</DependentUpon>
     </Compile>
     <Compile Include="frmOvertimeSelection.cs">
       <SubType>Form</SubType>
@@ -325,6 +337,12 @@
     <Compile Include="frmTimeInMotion.Designer.cs">
       <DependentUpon>frmTimeInMotion.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmUpdateStaff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUpdateStaff.Designer.cs">
+      <DependentUpon>frmUpdateStaff.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmUpdateWarning.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -376,6 +394,7 @@
     <Compile Include="login.cs" />
     <Compile Include="shiftHours.cs" />
     <Compile Include="SqlDependencyEx.cs" />
+    <Compile Include="SqlStatements.cs" />
     <Compile Include="SubDeptClass.cs" />
     <Compile Include="connectionStrings.cs" />
     <Compile Include="dateInsert.cs" />
@@ -497,6 +516,9 @@
     <EmbeddedResource Include="frmBuffingDiscs.resx">
       <DependentUpon>frmBuffingDiscs.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmChronologicalSlimline.resx">
+      <DependentUpon>frmChronologicalSlimline.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmChronological.resx">
       <DependentUpon>frmChronological.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -524,6 +546,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmNewWarning.resx">
       <DependentUpon>frmNewWarning.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNote.resx">
+      <DependentUpon>frmNote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmOvertimeSelection.resx">
       <DependentUpon>frmOvertimeSelection.cs</DependentUpon>
@@ -610,6 +635,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmTimeInMotion.resx">
       <DependentUpon>frmTimeInMotion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUpdateStaff.resx">
+      <DependentUpon>frmUpdateStaff.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUpdateWarning.resx">
       <DependentUpon>frmUpdateWarning.cs</DependentUpon>

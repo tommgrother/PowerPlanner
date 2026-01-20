@@ -1265,6 +1265,8 @@
             this.dgSlimline.AllowUserToDeleteRows = false;
             this.dgSlimline.AllowUserToResizeColumns = false;
             this.dgSlimline.AllowUserToResizeRows = false;
+            this.dgSlimline.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgSlimline.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
@@ -1290,7 +1292,7 @@
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgSlimline.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgSlimline.RowTemplate.Height = 50;
-            this.dgSlimline.Size = new System.Drawing.Size(200, 380);
+            this.dgSlimline.Size = new System.Drawing.Size(200, 621);
             this.dgSlimline.TabIndex = 54;
             this.dgSlimline.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgSlimline_CellDoubleClick);
             // 
@@ -3274,6 +3276,7 @@
             this.dgSlDispatch.RowTemplate.Height = 50;
             this.dgSlDispatch.Size = new System.Drawing.Size(200, 126);
             this.dgSlDispatch.TabIndex = 251;
+            this.dgSlDispatch.Visible = false;
             // 
             // label109
             // 
@@ -3284,6 +3287,7 @@
             this.label109.Size = new System.Drawing.Size(130, 26);
             this.label109.TabIndex = 250;
             this.label109.Text = "SL Dispatch";
+            this.label109.Visible = false;
             // 
             // btnSlimlineDispatch
             // 
@@ -3293,6 +3297,7 @@
             this.btnSlimlineDispatch.TabIndex = 249;
             this.btnSlimlineDispatch.Text = "Update";
             this.btnSlimlineDispatch.UseVisualStyleBackColor = true;
+            this.btnSlimlineDispatch.Visible = false;
             this.btnSlimlineDispatch.Click += new System.EventHandler(this.btnSlimlineDispatch_Click);
             // 
             // dgSlStores
@@ -3319,6 +3324,7 @@
             this.dgSlStores.RowTemplate.Height = 50;
             this.dgSlStores.Size = new System.Drawing.Size(200, 32);
             this.dgSlStores.TabIndex = 254;
+            this.dgSlStores.Visible = false;
             // 
             // label110
             // 
@@ -3329,6 +3335,7 @@
             this.label110.Size = new System.Drawing.Size(108, 26);
             this.label110.TabIndex = 253;
             this.label110.Text = "SL Stores";
+            this.label110.Visible = false;
             // 
             // btnSlimlineStores
             // 
@@ -3338,6 +3345,7 @@
             this.btnSlimlineStores.TabIndex = 252;
             this.btnSlimlineStores.Text = "Update";
             this.btnSlimlineStores.UseVisualStyleBackColor = true;
+            this.btnSlimlineStores.Visible = false;
             this.btnSlimlineStores.Click += new System.EventHandler(this.btnSlimlineStores_Click);
             // 
             // label111
