@@ -1524,6 +1524,10 @@ namespace ShopFloorPlacementPlanner
                         row.DefaultCellStyle.BackColor = System.Drawing.Color.LightGreen;
                     else
                         row.DefaultCellStyle.BackColor = System.Drawing.Color.PaleVioletRed;
+
+                    //「Placement Note」列が入力されている行は背景色を黄色にする
+                    if (row.Cells["Placement Note"].Value.ToString().Length > 0)
+                        row.Cells["Staff"].Style.BackColor = Color.Gold;
                 }
 
 
