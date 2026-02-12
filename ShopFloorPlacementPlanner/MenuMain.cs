@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace ShopFloorPlacementPlanner
 {
@@ -277,7 +278,23 @@ namespace ShopFloorPlacementPlanner
                 packHours = packHours + Convert.ToDouble(row.Cells[1].Value);
             }
 
-            txtSlimlineHours.Text = slimlineHours.ToString();
+            //@goal_hours_slimline
+            string slimline_hours_sql = "select coalesce(SUM(hours + [Over time]),0) FROM dbo.view_power_plan_slimline where date = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "'";
+            using (SqlConnection conn_slimline_hours = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn_slimline_hours.Open();
+
+                using (SqlCommand cmd = new SqlCommand(slimline_hours_sql,conn_slimline_hours))
+                {
+                    var fuga = cmd.ExecuteScalar().ToString();
+                    if (fuga != null)
+                        txtSlimlineHours.Text = fuga.ToString();
+                }
+
+                conn_slimline_hours.Close();
+            }
+
+            //txtSlimlineHours.Text = slimlineHours.ToString();
             txtPunchHours.Text = punchHours.ToString();
             txtLaserHours.Text = laserHours.ToString();
             txtBendHours.Text = bendHours.ToString();
@@ -286,7 +303,25 @@ namespace ShopFloorPlacementPlanner
             txtPaintHours.Text = paintHours.ToString();
             txtPackHours.Text = packHours.ToString();
 
-            txtSlimlineMen.Text = slimlineMen.ToString();
+
+            using (SqlConnection conn_slimline_men = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn_slimline_men.Open();
+                string slimline_men_sql = "SELECT COUNT(staff_id) FROM " +
+                                          "	(select  distinct (staff_id) staff_id " +
+                                          "	FROM dbo.view_power_plan_slimline " +
+                                          "	where date = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' group by staff_id) as a";
+                using (SqlCommand cmd = new SqlCommand(slimline_men_sql,conn_slimline_men))
+                {
+                    var fuga = cmd.ExecuteScalar().ToString();
+                    if (fuga != null)
+                        txtSlimlineMen.Text = fuga.ToString();
+                }
+                conn_slimline_men.Close();
+            }
+            //txtSlimlineMen.Text = slimlineMen.ToString();
+
+
             txtPunchMen.Text = punchMen.ToString();
             txtLaserMen.Text = laserMen.ToString();
             txtBendMen.Text = bendMen.ToString();
@@ -339,7 +374,7 @@ namespace ShopFloorPlacementPlanner
                 conn.Close();
             }
 
-            txtSlimlineOT.Text = slimlineOT.ToString();
+            txtSlimlineOT.Text = slimlineOT.ToString(); //TODO: change to new slimline string
             txtLaserOT.Text = laserOT.ToString();
             txtPunchOT.Text = punchOT.ToString();
             txtBendOT.Text = bendOT.ToString();
@@ -1469,10 +1504,10 @@ namespace ShopFloorPlacementPlanner
                          "END as [Hours],[Placement Note],case when round(Hours + [Over Time],2) <= coalesce(part.time,0) then -1 else 0 end as colour,department_id " +
                          "FROM dbo.view_power_plan_slimline s " +
                          "left join dbo.view_power_plan_slimline_part_completion_log part on s.staff_id = part.staff_id AND s.department_id = part.dept AND s.Date = part.part_date " +
-                         "left join (select d.id as dept_id,[Allocated to],[Op Date],sum(time_remaining) as [Allocated]    	     " +
+                         "left join (select d.id as dept_id,[Allocated to],sum(time_remaining) as [Allocated]    	     " +
                          "FROM c_view_slimline_allocation c            " +
                          "left join dbo.power_plan_slimline_department d on c.Section = d.part_completion_log_dept           " +
-                         "group by d.id,[Allocated to],[Op Date]) c on s.Date = [Op Date] AND s.[Staff Name] = c.[Allocated to] AND s.department_id = c.dept_id " +
+                         "group by d.id,[Allocated to]) c on s.[Staff Name] = c.[Allocated to] AND s.department_id = c.dept_id " + // s.Date = [Op Date] AND 
                          "WHERE  s.date = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' Order by department_id asc, Staff asc";
 
 
@@ -2569,7 +2604,7 @@ namespace ShopFloorPlacementPlanner
 
         private void updateDailyGoals()
         {
-            double goalHoursSlimline;
+            //double goalHoursSlimline;
             double goalHoursLaser;
             double goalHoursPunch;
             double goalHoursBend;
@@ -2579,7 +2614,7 @@ namespace ShopFloorPlacementPlanner
             double goalHoursPack;
             double goalBoxes = 0;
 
-            double manPowerSlimline;
+            //double manPowerSlimline;
             double manPowerLaser;
             double manPowerPunch;
             double manPowerBend;
@@ -2589,7 +2624,7 @@ namespace ShopFloorPlacementPlanner
             double manPowerPack;
             double manPowerStores;
 
-            goalHoursSlimline = Convert.ToDouble(txtSlimlineHours.Text) + Convert.ToDouble(txtSlimlineOT.Text) + Convert.ToDouble(txtSlimlineAD.Text);
+            //goalHoursSlimline = Convert.ToDouble(txtSlimlineHours.Text) + Convert.ToDouble(txtSlimlineOT.Text) + Convert.ToDouble(txtSlimlineAD.Text);
             goalHoursLaser = Convert.ToDouble(txtLaserHours.Text) + Convert.ToDouble(txtLaserOT.Text) + Convert.ToDouble(txtLaserAD.Text);
             goalHoursPunch = Convert.ToDouble(txtPunchHours.Text) + Convert.ToDouble(txtPunchOT.Text) + Convert.ToDouble(txtPunchAD.Text);
             goalHoursBend = Convert.ToDouble(txtBendHours.Text) + Convert.ToDouble(txtBendOT.Text) + Convert.ToDouble(txtBendAD.Text);
@@ -2598,7 +2633,7 @@ namespace ShopFloorPlacementPlanner
             goalHoursPaint = Convert.ToDouble(txtPaintHours.Text) + Convert.ToDouble(txtPaintOT.Text) + Convert.ToDouble(txtPaintAD.Text);
             goalHoursPack = Convert.ToDouble(txtPackHours.Text) + Convert.ToDouble(txtPackOT.Text) + Convert.ToDouble(txtPackAD.Text);
 
-            manPowerSlimline = Convert.ToDouble(txtSlimlineMen.Text);
+            //manPowerSlimline = Convert.ToDouble(txtSlimlineMen.Text);
             manPowerLaser = Convert.ToDouble(txtLaserMen.Text);
             manPowerPunch = Convert.ToDouble(txtPunchMen.Text);
             manPowerBend = Convert.ToDouble(txtBendMen.Text);
@@ -2624,7 +2659,7 @@ namespace ShopFloorPlacementPlanner
             SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString);
             conn.Open();
             using (SqlCommand cmd = new SqlCommand("UPDATE dbo.daily_department_goal set " +
-                "goal_hours_slimline = @goalHoursSlimline, " +
+                //"goal_hours_slimline = @goalHoursSlimline, " +
                 "goal_hours_laser = @goalHoursLaser, " +
                 "goal_hours_punch = @goalHoursPunch, " +
                 "goal_hours_bend = @goalHoursBend, " +
@@ -2633,7 +2668,7 @@ namespace ShopFloorPlacementPlanner
                 "goal_hours = @goalHoursPaint, " +
                 "goal_hours_pack = @goalHoursPack, " +
                 "goal_boxes = @goalBoxes, " +
-                "man_power_slimline = @manPowerSlimline, " +
+                //"man_power_slimline = @manPowerSlimline, " +
                 "man_power_laser = @manPowerLaser, " +
                 "man_power_punch = @manPowerPunch, " +
                 "man_power_bend = @manPowerBend, " +
@@ -2644,7 +2679,7 @@ namespace ShopFloorPlacementPlanner
                 "man_power_stores = @manPowerStores " +
                 " WHERE date_goal = @dateGoal", conn))
             {
-                cmd.Parameters.AddWithValue("@goalHoursSlimline", goalHoursSlimline);
+                //cmd.Parameters.AddWithValue("@goalHoursSlimline", goalHoursSlimline);
                 cmd.Parameters.AddWithValue("@goalHoursLaser", goalHoursLaser);
                 cmd.Parameters.AddWithValue("@goalHoursPunch", goalHoursPunch);
                 cmd.Parameters.AddWithValue("@goalHoursBend", goalHoursBend);
@@ -2654,7 +2689,7 @@ namespace ShopFloorPlacementPlanner
                 cmd.Parameters.AddWithValue("@goalHoursPack", goalHoursPack);
                 cmd.Parameters.AddWithValue("@goalBoxes", goalBoxes);
 
-                cmd.Parameters.AddWithValue("@manPowerSlimline", manPowerSlimline);
+                //cmd.Parameters.AddWithValue("@manPowerSlimline", manPowerSlimline);
                 cmd.Parameters.AddWithValue("@manPowerLaser", manPowerLaser);
                 cmd.Parameters.AddWithValue("@manPowerPunch", manPowerPunch);
                 cmd.Parameters.AddWithValue("@manPowerBend", manPowerBend);
@@ -2684,6 +2719,19 @@ namespace ShopFloorPlacementPlanner
                 {
                     MessageBox.Show("An error has occured with automatic allocation script, if this error persists please contact IT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                }
+
+                using (SqlConnection conn2 = new SqlConnection(SqlStatements.ConnectionString))
+                {
+                    conn2.Open();
+                    using (SqlCommand cmd2 = new SqlCommand("usp_daily_goals", conn))
+                    {
+
+                        cmd2.CommandType = CommandType.StoredProcedure;
+                        cmd2.Parameters.AddWithValue("@date", SqlDbType.Date).Value = dteDateSelection.Text;
+                        cmd2.ExecuteNonQuery();
+                    }
+                    conn2.Close();
                 }
             }
         }

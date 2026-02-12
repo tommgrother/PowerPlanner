@@ -39,8 +39,6 @@ namespace ShopFloorPlacementPlanner
         private void get_hours()
         {
 
-
-
             using (SqlConnection conn = new SqlConnection(connectionStrings.ConnectionString))
             {
                 conn.Open();
