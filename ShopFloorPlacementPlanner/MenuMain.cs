@@ -279,7 +279,7 @@ namespace ShopFloorPlacementPlanner
             }
 
             //@goal_hours_slimline
-            string slimline_hours_sql = "select coalesce(SUM(hours + [Over time]),0) FROM dbo.view_power_plan_slimline where date = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "'";
+            string slimline_hours_sql = "select coalesce(SUM(hours),0) FROM dbo.view_power_plan_slimline where date = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "'";
             using (SqlConnection conn_slimline_hours = new SqlConnection(connectionStrings.ConnectionString))
             {
                 conn_slimline_hours.Open();
@@ -374,7 +374,22 @@ namespace ShopFloorPlacementPlanner
                 conn.Close();
             }
 
-            txtSlimlineOT.Text = slimlineOT.ToString(); //TODO: change to new slimline string
+            //@goal_hours_slimline
+            string slimline_overhours_sql = "select coalesce(SUM([Over time]),0) FROM dbo.view_power_plan_slimline where date = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "'";
+            using (SqlConnection conn_slimline_overtimehours = new SqlConnection(connectionStrings.ConnectionString))
+            {
+                conn_slimline_overtimehours.Open();
+
+                using (SqlCommand cmd = new SqlCommand(slimline_hours_sql, conn_slimline_overtimehours))
+                {
+                    var fuga = cmd.ExecuteScalar().ToString();
+                    if (fuga != null)
+                        txtSlimlineOT.Text = fuga.ToString();
+                }
+
+                conn_slimline_overtimehours.Close();
+            }
+            //txtSlimlineOT.Text = slimlineOT.ToString(); 
             txtLaserOT.Text = laserOT.ToString();
             txtPunchOT.Text = punchOT.ToString();
             txtBendOT.Text = bendOT.ToString();
@@ -1372,6 +1387,7 @@ namespace ShopFloorPlacementPlanner
 
         private void fillSlimline()
         {
+            dgSlimline.DataSource = null;
             //このコードは改善してSLIMLINEPOWERPLANNERを読み込むです
             if ("old code" == "old code")
             {
