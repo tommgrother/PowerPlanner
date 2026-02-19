@@ -4858,10 +4858,9 @@ namespace ShopFloorPlacementPlanner
                 dgPack.DataSource = dt;
             }
 
-            if ("Slimline" == "Slimline")
+            if ("Slimline" == "Slimline" && dgSlimline.Rows.Count > 0)
             {
                 DataTable dt = (DataTable)(dgSlimline.DataSource);
-
                 int count = dt.Rows.Count;
                 for (int i = 0; i < count; i++)
                 {
