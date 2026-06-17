@@ -284,7 +284,7 @@ namespace ShopFloorPlacementPlanner
             {
                 conn_slimline_hours.Open();
 
-                using (SqlCommand cmd = new SqlCommand(slimline_hours_sql,conn_slimline_hours))
+                using (SqlCommand cmd = new SqlCommand(slimline_hours_sql, conn_slimline_hours))
                 {
                     var fuga = cmd.ExecuteScalar().ToString();
                     if (fuga != null)
@@ -311,7 +311,7 @@ namespace ShopFloorPlacementPlanner
                                           "	(select  distinct (staff_id) staff_id " +
                                           "	FROM dbo.view_power_plan_slimline " +
                                           "	where date = '" + dteDateSelection.Value.ToString("yyyyMMdd") + "' group by staff_id) as a";
-                using (SqlCommand cmd = new SqlCommand(slimline_men_sql,conn_slimline_men))
+                using (SqlCommand cmd = new SqlCommand(slimline_men_sql, conn_slimline_men))
                 {
                     var fuga = cmd.ExecuteScalar().ToString();
                     if (fuga != null)
@@ -2760,8 +2760,8 @@ namespace ShopFloorPlacementPlanner
 
         private void clear_times(bool value)
         {
-
-            dgSlimline.Columns[4].Visible = value;
+            if (dgSlimline.Rows.Count > 0)
+                dgSlimline.Columns[2].Visible = value;
             dgLaser.Columns[4].Visible = value;
             dgPunch.Columns[4].Visible = value;
             dgBend.Columns[4].Visible = value;
@@ -2772,7 +2772,8 @@ namespace ShopFloorPlacementPlanner
 
             if (value == false) //we are hiding times
             {
-                dgSlimline.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                if (dgSlimline.Rows.Count > 0)
+                    dgSlimline.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgLaser.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgPunch.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgBend.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -2783,7 +2784,8 @@ namespace ShopFloorPlacementPlanner
             }
             else
             {
-                dgSlimline.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                if (dgSlimline.Rows.Count > 0)
+                    dgSlimline.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dgLaser.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dgPunch.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dgBend.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -4091,7 +4093,7 @@ namespace ShopFloorPlacementPlanner
             frmChronologicalSlimline frm = new frmChronologicalSlimline(staff_id, dept_id, date_id);
             frm.ShowDialog();
 
-            
+
 
         }
 
